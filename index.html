@@ -172,6 +172,21 @@
     </div>
   </div>
 
+  <div class="featured" style="grid-template-columns:1.1fr 1fr;margin-top:18px">
+    <div>
+      <div class="tag" style="color:#ff8a00">Featured map · fully built</div>
+      <h2>Back to the Future, Re-Paved</h2>
+      <p>Not a multiverse but one road through time that keeps getting edited in place — Marty's 1955 visit rewrites 1985 for the better, Old Biff's stolen almanac corrupts it into Hell Valley, and a lightning bolt strands Doc in 1885. One timeline, three rewrites, and the doomed alternate that gets erased.</p>
+      <a class="open" href="bttf-timeline-map.html" style="background:#ff8a00;color:#0b0e14">Open the interactive map →</a>
+    </div>
+    <div class="mini">
+      <div class="row"><span class="d" style="background:#28d7e0"></span> The Original Timeline — meek George, dominant Biff</div>
+      <div class="row"><span class="d" style="background:#39d98a"></span> The Improved 1985 — Marty's 1955 edits</div>
+      <div class="row"><span class="d" style="background:#ff2a1f"></span> Biff's Alternate 1985 — Hell Valley (erased)</div>
+      <div class="row"><span class="d" style="background:#ffb02e"></span> The 1885 Western Thread — Doc, Clara & the train</div>
+    </div>
+  </div>
+
   <div class="section-h"><h2>Explore timelines</h2><span>Click any card</span></div>
   <div class="grid" id="cards"></div>
 
@@ -205,7 +220,7 @@ const CARDS=[
   {t:"X-Men", s:"13 films · Days-of-Future-Past split", g:"linear-gradient(135deg,#2f80ed,#0a2540)", live:true, badge:"Live demo", href:"xmen-timeline-map.html"},
   {t:"Dune", s:"11 films/books · 5 epochs", g:"linear-gradient(135deg,#d9a441,#6b3e12)", live:true, badge:"Live demo", href:"dune-timeline.html"},
   {t:"Tenet", s:"1 film · 4 world-lines", g:"linear-gradient(135deg,#ff6b1f,#101a3a)", live:true, badge:"Live demo", href:"tenet-timeline-map.html"},
-  {t:"Back to the Future", s:"3 films · 4 timelines", g:"linear-gradient(135deg,#ff8a00,#b22f00)"},
+  {t:"Back to the Future", s:"3 films · 4 timelines", g:"linear-gradient(135deg,#ff8a00,#b22f00)", live:true, badge:"Live demo", href:"bttf-timeline-map.html"},
   {t:"Planet of the Apes", s:"Reboot & original loop", g:"linear-gradient(135deg,#5a7d3a,#1c2a12)"}
 ];
 const cards=document.getElementById('cards');
@@ -230,7 +245,8 @@ function searchToast(){const v=document.getElementById('q').value.trim();
   if(/x-?men|wolverine|deadpool|logan|mutant|phoenix|magneto|xavier/i.test(v)){location.href='xmen-timeline-map.html';return;}
   if(/dune|arrakis|atreides|paul|harkonnen|fremen|spice|muad/i.test(v)){location.href='dune-timeline.html';return;}
   if(/tenet|inversion|inverted|protagonist|sator|neil|algorithm|turnstile/i.test(v)){location.href='tenet-timeline-map.html';return;}
-  toast(v?`No map for "${v}" yet — try Terminator, X-Men, Dune or Tenet, or suggest it below.`:'Type a film or franchise to search.');}
+  if(/back to the future|bttf|delorean|marty|mcfly|doc brown|biff|flux capacitor/i.test(v)){location.href='bttf-timeline-map.html';return;}
+  toast(v?`No map for "${v}" yet — try Terminator, X-Men, Dune, Tenet or Back to the Future, or suggest it below.`:'Type a film or franchise to search.');}
 function suggestToast(){const v=document.getElementById('sug').value.trim();
   toast(v?`Thanks! "${v}" has been added to the review queue.`:'Enter a title to suggest.');
   document.getElementById('sug').value='';}

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline Map</title>
+<style>
+  :root{
+    --bg:#0a0c10; --panel:#11151c; --panel2:#161b24; --line:#222a36;
+    --accent:#ff2a1f; --cyan:#28d7e0; --amber:#ffb02e; --green:#39d98a; --purple:#b07cff;
+    --txt:#e7ecf3; --muted:#8b97a8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, #06121a 0%, transparent 55%),
+      var(--bg);
+    color:var(--txt);
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 22px 80px}
+  header.hero{
+    border:1px solid var(--line);border-radius:16px;padding:30px 30px 26px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%), var(--panel);
+  }
+  header.hero::after{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,.012) 38px 39px);pointer-events:none}
+  .eyebrow{letter-spacing:.34em;font-size:11px;color:var(--accent);text-transform:uppercase;font-weight:700}
+  h1{font-size:38px;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+  h1 .glow{color:var(--accent);text-shadow:0 0 22px color-mix(in srgb, var(--accent) 55%, transparent)}
+  .sub{color:var(--muted);max-width:780px;font-size:15px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+  .legend .chip{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 8px}
+  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--txt);padding:9px 15px;border-radius:999px;
+    cursor:pointer;font-size:13px;font-weight:600;transition:.15s;white-space:nowrap}
+  .btn:hover{border-color:var(--accent);color:#fff}
+  .btn.active{background:var(--accent);border-color:var(--accent);color:#fff;
+    box-shadow:0 0 18px color-mix(in srgb, var(--accent) 40%, transparent)}
+
+  .rail{display:flex;flex-direction:column;margin-top:20px}
+  .branch{border:1px solid var(--line);border-radius:14px;margin-bottom:22px;overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));transition:.2s}
+  .branch.dim{opacity:.32;filter:saturate(.4)}
+  .branch-head{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;border-left:5px solid var(--bcol,var(--accent))}
+  .branch-head .bt{flex:1}
+  .branch-head h2{margin:0;font-size:19px;font-weight:700}
+  .branch-head .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .branch-films{font-size:11.5px;color:var(--muted);text-align:right;line-height:1.4;max-width:38%}
+  .branch-body{padding:0 20px 8px}
+  .caret{color:var(--muted);font-size:13px;transition:.2s}
+  .branch.collapsed .branch-body{display:none}
+  .branch.collapsed .caret{transform:rotate(-90deg)}
+
+  .track{position:relative;margin:8px 0 18px;padding-left:26px}
+  .track::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--bcol),transparent);opacity:.6}
+  .node{position:relative;margin:0 0 14px;padding:0 0 0 4px}
+  .node::before{content:"";position:absolute;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--bcol)}
+  .node.turning-point::before{background:var(--bcol)}
+  .node.paradox::before{border-color:var(--purple);box-shadow:0 0 10px color-mix(in srgb,var(--purple) 60%,transparent)}
+  .node.death::before{border-color:var(--accent);background:var(--accent)}
+  .node.resolution::before{border-color:var(--green);background:var(--green)}
+  .node .yr{font-size:12px;font-weight:800;color:var(--bcol);letter-spacing:.04em}
+  .node .ev{font-size:14px;color:var(--txt)}
+  .node .ev b{color:#fff}
+  .tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    padding:1px 7px;border-radius:5px;margin-left:6px;vertical-align:middle;border:1px solid transparent}
+  .tag.paradox{background:rgba(176,124,255,.16);color:var(--purple);border-color:rgba(176,124,255,.4)}
+  .tag.event{background:rgba(255,42,31,.16);color:#ff6a5f;border-color:rgba(255,42,31,.4)}
+  .tag.model{background:rgba(40,215,224,.14);color:var(--cyan);border-color:rgba(40,215,224,.35)}
+  .tag.faction{background:rgba(57,217,138,.14);color:var(--green);border-color:rgba(57,217,138,.35)}
+  .tag.character{background:rgba(255,176,46,.14);color:var(--amber);border-color:rgba(255,176,46,.35)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+  @media(max-width:880px){.grid2{grid-template-columns:1fr}.branch-films{display:none}}
+  .card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px 22px}
+  .card h3{margin:0 0 14px;font-size:16px;display:flex;align-items:center;gap:9px}
+  .card h3 .bar{width:4px;height:18px;border-radius:2px;background:var(--accent)}
+  .chars{display:flex;flex-direction:column;gap:9px}
+  .char{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:10px;background:var(--panel2);border:1px solid transparent;transition:.15s}
+  .char:hover{border-color:var(--line)}
+  .av{width:40px;height:40px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#0a0c10}
+  .char .nm{font-weight:700;font-size:14px}
+  .char .rl{font-size:12.5px;color:var(--muted)}
+  .models{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.models{grid-template-columns:1fr}}
+  .model{border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--panel2)}
+  .model .mn{font-weight:800;font-size:14px;color:var(--cyan)}
+  .model .md{font-size:12px;color:var(--muted);margin-top:3px}
+  .para-box{border:1px solid rgba(176,124,255,.35);border-radius:14px;background:rgba(176,124,255,.05);padding:20px 22px;margin-top:34px}
+  .para-box h3{color:var(--purple)}
+  .para-item{padding:10px 0;border-top:1px solid rgba(176,124,255,.15)}
+  .para-item:first-of-type{border-top:none}
+  .para-item b{color:#fff}
+  footer{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12.5px}
+  .hide{display:none !important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="title"></h1>
+    <p class="sub" id="intro"></p>
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background:var(--accent)"></span>Turning point / catastrophe</span>
+      <span class="chip"><span class="dot" style="background:var(--purple)"></span>Time-travel paradox</span>
+      <span class="chip"><span class="dot" style="background:var(--cyan)"></span>Machine / tech</span>
+      <span class="chip"><span class="dot" style="background:var(--green)"></span>Faction / resolution</span>
+    </div>
+  </header>
+
+  <div class="controls" id="controls"></div>
+  <div class="rail" id="rail"></div>
+
+  <div class="grid2">
+    <div class="card" id="charsCard"><h3><span class="bar"></span>Key Characters</h3><div class="chars" id="chars"></div></div>
+    <div class="card" id="itemsCard"><h3><span class="bar"></span>Key Items &amp; Tech</h3><div class="models" id="models"></div></div>
+  </div>
+
+  <div class="para-box" id="themesBox">
+    <h3><span class="bar" style="background:var(--purple)"></span>Recurring Themes &amp; Paradoxes</h3>
+    <div id="paras"></div>
+  </div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const DATA = {
+  "franchise": "Back to the Future",
+  "tagline": "Three films, one DeLorean, and a 30-year stretch of road that the heroes keep re-paving behind them.",
+  "intro": "Back to the Future isn't a multiverse — it's a single road through time that gets edited in place. Each trip overwrites the future the travellers came from: Marty's 1955 visit rewrites 1985 into a better version, Old Biff's stolen almanac corrupts it into a dystopia that has to be erased, and a stray lightning bolt strands Doc in 1885. Read it as one timeline with three rewrites, plus the doomed alternate that the heroes undo.",
+  "accent": "#ff8a00",
+  "films": [
+    {
+      "title": "Back to the Future",
+      "year": 1985
+    },
+    {
+      "title": "Back to the Future Part II",
+      "year": 1989
+    },
+    {
+      "title": "Back to the Future Part III",
+      "year": 1990
+    }
+  ],
+  "branches": [
+    {
+      "id": "b1",
+      "title": "The Original Timeline",
+      "color": "#28d7e0",
+      "films": [
+        "Back to the Future"
+      ],
+      "summary": "The 1985 Marty grew up in — before he ever travelled. A meek George, a dominant Biff, a family going nowhere.",
+      "nodes": [
+        {
+          "era": "Nov 5, 1955",
+          "type": "event",
+          "text": "A teenage <b>George McFly<\/b> is spied on and bullied by <b>Biff Tannen<\/b>; he never finds the nerve to stand up for himself.",
+          "tags": [
+            {
+              "label": "George McFly",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Nov 12, 1955",
+          "type": "event",
+          "text": "George and <b>Lorraine<\/b> share their first kiss at the Enchantment Under the Sea dance and eventually marry — but as timid, unhappy adults.",
+          "tags": [
+            {
+              "label": "Lorraine",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Oct 26, 1985",
+          "type": "turning-point",
+          "text": "In the original 1985, the McFlys are downtrodden: George is bullied by his supervisor Biff, and Marty's siblings are dead-end. This is the world Marty is about to overwrite.",
+          "tags": [
+            {
+              "label": "Hill Valley",
+              "kind": "faction"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2",
+      "title": "The Improved 1985",
+      "color": "#39d98a",
+      "films": [
+        "Back to the Future",
+        "Back to the Future Part II"
+      ],
+      "summary": "Marty's accidental edits to 1955 rewrite his own present into a brighter one — the timeline the saga treats as 'correct'.",
+      "nodes": [
+        {
+          "era": "Oct 26, 1985 · 1:35 AM",
+          "type": "turning-point",
+          "text": "At Twin Pines Mall, <b>Doc Brown<\/b> debuts the DeLorean time machine. Libyans gun him down; <b>Marty<\/b> flees to <b>Nov 5, 1955<\/b> to escape.",
+          "tags": [
+            {
+              "label": "DeLorean",
+              "kind": "model"
+            },
+            {
+              "label": "Doc Brown",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Nov 5, 1955",
+          "type": "paradox",
+          "text": "Marty arrives, runs down one of the twin pines (rechristening it 'Lone Pine Mall'), and accidentally intercepts the moment his parents were meant to meet — erasing his own existence.",
+          "tags": [
+            {
+              "label": "Erasure Paradox",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "Nov 12, 1955 · 10:04 PM",
+          "type": "turning-point",
+          "text": "Marty engineers his parents' kiss at the dance and coaches George to deck Biff. A bolt of lightning on the clock tower powers the DeLorean home.",
+          "tags": [
+            {
+              "label": "Clock Tower",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Oct 26, 1985 · 1:24 AM",
+          "type": "resolution",
+          "text": "Marty returns to a transformed present: George is a confident published author, Biff waxes the family's cars, and the McFlys are thriving. A future Doc whisks Marty and Jennifer to 2015.",
+          "tags": [
+            {
+              "label": "Improved Future",
+              "kind": "faction"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b3",
+      "title": "Biff's Alternate 1985 — Hell Valley",
+      "color": "#ff2a1f",
+      "films": [
+        "Back to the Future Part II"
+      ],
+      "summary": "Old Biff hijacks the time machine and hands his younger self a sports almanac, spawning a dystopian 1985 the heroes must erase.",
+      "nodes": [
+        {
+          "era": "Oct 21, 2015",
+          "type": "turning-point",
+          "text": "Doc brings Marty to the future to fix his kids. While they're distracted, the aged <b>Biff<\/b> overhears how the DeLorean works and steals it.",
+          "tags": [
+            {
+              "label": "Old Biff",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Nov 12, 1955",
+          "type": "paradox",
+          "text": "Old Biff travels back and gives his teenage self the <b>Grays Sports Almanac<\/b> — 50 years of results to bet on — then quietly returns the car.",
+          "tags": [
+            {
+              "label": "Grays Almanac",
+              "kind": "model"
+            },
+            {
+              "label": "Bootstrap",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "1985 (alternate)",
+          "type": "death",
+          "text": "Biff's gambling empire warps reality: he runs a casino, married Lorraine, and had <b>George McFly murdered<\/b> on March 15, 1973. Hill Valley is a lawless 'Hell Valley'.",
+          "tags": [
+            {
+              "label": "George's Murder",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "Nov 12, 1955",
+          "type": "resolution",
+          "text": "Marty and Doc retrace the night, snatch the almanac back from young Biff, and burn it — collapsing the alternate timeline before it can take hold.",
+          "tags": [
+            {
+              "label": "Timeline Restored",
+              "kind": "faction"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b4",
+      "title": "The 1885 Western Thread",
+      "color": "#ffb02e",
+      "films": [
+        "Back to the Future Part II",
+        "Back to the Future Part III"
+      ],
+      "summary": "A lightning strike flings Doc to the Old West; Marty follows to save him from a date with a Tannen and a tombstone.",
+      "nodes": [
+        {
+          "era": "Nov 12, 1955",
+          "type": "paradox",
+          "text": "As Marty leaves 1955, lightning strikes the DeLorean and hurls <b>Doc<\/b> back to <b>Jan 1, 1885<\/b>. He mails Marty a letter explaining he's safe and living in the past.",
+          "tags": [
+            {
+              "label": "Lightning Jump",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "1885",
+          "type": "event",
+          "text": "Doc becomes the town blacksmith and falls for schoolteacher <b>Clara Clayton<\/b>. Marty learns from a gravestone that Doc is shot dead by <b>Buford 'Mad Dog' Tannen<\/b> on Sep 7, 1885.",
+          "tags": [
+            {
+              "label": "Clara Clayton",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Sep 2, 1885",
+          "type": "turning-point",
+          "text": "Marty drives the repaired DeLorean to 1885 to rescue Doc. With its fuel line torn, they plan to push the car to 88 mph using a stolen locomotive.",
+          "tags": [
+            {
+              "label": "DeLorean",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Sep 7, 1885",
+          "type": "turning-point",
+          "text": "A makeshift steam engine drives the DeLorean over a missing-track ravine. Marty makes the jump; Doc stays behind for Clara as the locomotive plunges into the gorge.",
+          "tags": [
+            {
+              "label": "Train Push",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Oct 27, 1985",
+          "type": "death",
+          "text": "Marty arrives in 1985 just as a freight train <b>destroys the DeLorean<\/b>. The time machine — and the temptation to keep editing time — is gone.",
+          "tags": [
+            {
+              "label": "DeLorean Destroyed",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "1985",
+          "type": "resolution",
+          "text": "Doc reappears in a flying, steam-powered time-train with Clara and their sons Jules and Verne — proof the family found its own happy ending off the main road.",
+          "tags": [
+            {
+              "label": "Time Train",
+              "kind": "model"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "name": "Marty McFly",
+      "role": "Reluctant time traveller who keeps having to repair the timelines he disturbs.",
+      "color": "#ff8a00"
+    },
+    {
+      "name": "Dr. Emmett 'Doc' Brown",
+      "role": "Inventor of the DeLorean time machine; mentor stranded across three eras.",
+      "color": "#28d7e0"
+    },
+    {
+      "name": "George McFly",
+      "role": "Marty's father — meek in one timeline, confident author in another, murdered in a third.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Lorraine Baines",
+      "role": "Marty's mother; her 1955 romance is the hinge the whole saga turns on.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Biff Tannen",
+      "role": "Bully across generations; the almanac makes his older self the saga's great spoiler.",
+      "color": "#ff2a1f"
+    },
+    {
+      "name": "Clara Clayton",
+      "role": "1885 schoolteacher who gives Doc a reason to stay in the past.",
+      "color": "#ffb02e"
+    },
+    {
+      "name": "Jennifer Parker",
+      "role": "Marty's girlfriend, swept along into 2015.",
+      "color": "#ff8a00"
+    }
+  ],
+  "items": [
+    {
+      "name": "DeLorean Time Machine",
+      "desc": "A converted DMC-12; reaches 88 mph and needs 1.21 gigawatts to jump."
+    },
+    {
+      "name": "Flux Capacitor",
+      "desc": "The component that 'makes time travel possible,' envisioned by Doc in 1955."
+    },
+    {
+      "name": "Grays Sports Almanac",
+      "desc": "1950-2000 results; Old Biff's gift that corrupts the timeline."
+    },
+    {
+      "name": "Mr. Fusion",
+      "desc": "Home energy reactor that powers the DeLorean on household garbage (post-2015)."
+    },
+    {
+      "name": "Hoverboard",
+      "desc": "The 2015 levitating board Marty borrows during the future sequence."
+    },
+    {
+      "name": "Steam Time-Train",
+      "desc": "Doc's rebuilt flying locomotive that replaces the destroyed DeLorean."
+    }
+  ],
+  "themes": [
+    "Editing in place: there's one timeline, and each trip overwrites the future the travellers left — no parallel worlds, just revisions.",
+    "The bootstrap almanac: Old Biff funds his own empire with knowledge that only exists because he travelled back to plant it.",
+    "Small hinges, big doors: a single 1955 kiss decides whether the McFlys thrive, suffer, or never exist.",
+    "Letting go: the saga ends by destroying the time machine — the only real fix is to stop rewriting and live forward."
+  ]
+};
+
+const esc = s => String(s==null?'':s);
+document.documentElement.style.setProperty('--accent', DATA.accent || '#ff2a1f');
+document.title = (DATA.franchise || 'Timeline') + ' — Timeline Map';
+document.getElementById('eyebrow').textContent = (DATA.films && DATA.films.length)
+  ? `${DATA.films.length} films · ${(DATA.branches||[]).length} branches`
+  : 'Interactive timeline';
+document.getElementById('title').innerHTML = `<span class="glow">${esc(DATA.franchise)}</span> — Timeline`;
+document.getElementById('intro').textContent = esc(DATA.tagline ? DATA.tagline + ' ' : '') + esc(DATA.intro||'');
+
+// controls
+const controls = document.getElementById('controls');
+controls.innerHTML = `<button class="btn active" data-f="all">All branches</button>` +
+  (DATA.branches||[]).map(b=>`<button class="btn" data-f="${b.id}">${esc(b.title)}</button>`).join('');
+
+// branches
+const rail = document.getElementById('rail');
+(DATA.branches||[]).forEach(b=>{
+  const el = document.createElement('div');
+  el.className='branch'; el.dataset.id=b.id; el.style.setProperty('--bcol', b.color||DATA.accent||'#ff2a1f');
+  el.innerHTML = `
+    <div class="branch-head" style="--bcol:${b.color||'#ff2a1f'}">
+      <span class="caret">▼</span>
+      <div class="bt"><h2>${esc(b.title)}</h2><div class="meta">${esc(b.summary||'')}</div></div>
+      <div class="branch-films">${(b.films||[]).map(esc).join(' · ')}</div>
+    </div>
+    <div class="branch-body"><div class="track">
+      ${(b.nodes||[]).map(n=>`
+        <div class="node ${esc(n.type||'event')}">
+          <div class="yr">${esc(n.era)}</div>
+          <div class="ev">${n.text||''}${(n.tags||[]).map(t=>`<span class="tag ${esc(t.kind||'event')}">${esc(t.label)}</span>`).join('')}</div>
+        </div>`).join('')}
+    </div></div>`;
+  el.querySelector('.branch-head').addEventListener('click',()=>el.classList.toggle('collapsed'));
+  rail.appendChild(el);
+});
+
+// characters
+const chars = document.getElementById('chars');
+if(DATA.characters && DATA.characters.length){
+  DATA.characters.forEach(c=>{
+    const initials = String(c.name||'?').split(/[\s\/]+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    chars.insertAdjacentHTML('beforeend',
+      `<div class="char"><div class="av" style="background:${c.color||DATA.accent||'#ff2a1f'}">${initials}</div>
+       <div><div class="nm">${esc(c.name)}</div><div class="rl">${esc(c.role)}</div></div></div>`);
+  });
+} else { document.getElementById('charsCard').classList.add('hide'); }
+
+// items
+const models = document.getElementById('models');
+if(DATA.items && DATA.items.length){
+  DATA.items.forEach(m=>models.insertAdjacentHTML('beforeend',
+    `<div class="model"><div class="mn">${esc(m.name)}</div><div class="md">${esc(m.desc)}</div></div>`));
+} else { document.getElementById('itemsCard').classList.add('hide'); }
+
+// themes
+const paras = document.getElementById('paras');
+if(DATA.themes && DATA.themes.length){
+  DATA.themes.forEach(t=>paras.insertAdjacentHTML('beforeend',`<div class="para-item">${t}</div>`));
+} else { document.getElementById('themesBox').classList.add('hide'); }
+
+// footer
+const order = (DATA.films||[]).map(f=>`${esc(f.title)} (${esc(f.year)})`).join(' · ');
+document.getElementById('footer').innerHTML =
+  (order?`<strong>Films in release order:</strong> ${order}.<br><br>`:'') +
+  `Built with the Movie Timeline Mapper skill. Because the series branches, there is no single chronological line — each divergent future is its own branch above.`;
+
+// filter
+controls.addEventListener('click',e=>{
+  const btn=e.target.closest('.btn'); if(!btn) return;
+  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f=btn.dataset.f;
+  document.querySelectorAll('.branch').forEach(br=>br.classList.toggle('dim', f!=='all' && br.dataset.id!==f));
+});
+</script>
+</body>
+</html>
