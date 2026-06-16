@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline Map</title>
+<style>
+  :root{
+    --bg:#0a0c10; --panel:#11151c; --panel2:#161b24; --line:#222a36;
+    --accent:#ff2a1f; --cyan:#28d7e0; --amber:#ffb02e; --green:#39d98a; --purple:#b07cff;
+    --txt:#e7ecf3; --muted:#8b97a8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, #06121a 0%, transparent 55%),
+      var(--bg);
+    color:var(--txt);
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 22px 80px}
+  header.hero{
+    border:1px solid var(--line);border-radius:16px;padding:30px 30px 26px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%), var(--panel);
+  }
+  header.hero::after{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,.012) 38px 39px);pointer-events:none}
+  .eyebrow{letter-spacing:.34em;font-size:11px;color:var(--accent);text-transform:uppercase;font-weight:700}
+  h1{font-size:38px;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+  h1 .glow{color:var(--accent);text-shadow:0 0 22px color-mix(in srgb, var(--accent) 55%, transparent)}
+  .sub{color:var(--muted);max-width:780px;font-size:15px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+  .legend .chip{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 8px}
+  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--txt);padding:9px 15px;border-radius:999px;
+    cursor:pointer;font-size:13px;font-weight:600;transition:.15s;white-space:nowrap}
+  .btn:hover{border-color:var(--accent);color:#fff}
+  .btn.active{background:var(--accent);border-color:var(--accent);color:#fff;
+    box-shadow:0 0 18px color-mix(in srgb, var(--accent) 40%, transparent)}
+
+  .rail{display:flex;flex-direction:column;margin-top:20px}
+  .branch{border:1px solid var(--line);border-radius:14px;margin-bottom:22px;overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));transition:.2s}
+  .branch.dim{opacity:.32;filter:saturate(.4)}
+  .branch-head{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;border-left:5px solid var(--bcol,var(--accent))}
+  .branch-head .bt{flex:1}
+  .branch-head h2{margin:0;font-size:19px;font-weight:700}
+  .branch-head .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .branch-films{font-size:11.5px;color:var(--muted);text-align:right;line-height:1.4;max-width:38%}
+  .branch-body{padding:0 20px 8px}
+  .caret{color:var(--muted);font-size:13px;transition:.2s}
+  .branch.collapsed .branch-body{display:none}
+  .branch.collapsed .caret{transform:rotate(-90deg)}
+
+  .track{position:relative;margin:8px 0 18px;padding-left:26px}
+  .track::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--bcol),transparent);opacity:.6}
+  .node{position:relative;margin:0 0 14px;padding:0 0 0 4px}
+  .node::before{content:"";position:absolute;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--bcol)}
+  .node.turning-point::before{background:var(--bcol)}
+  .node.paradox::before{border-color:var(--purple);box-shadow:0 0 10px color-mix(in srgb,var(--purple) 60%,transparent)}
+  .node.death::before{border-color:var(--accent);background:var(--accent)}
+  .node.resolution::before{border-color:var(--green);background:var(--green)}
+  .node .yr{font-size:12px;font-weight:800;color:var(--bcol);letter-spacing:.04em}
+  .node .ev{font-size:14px;color:var(--txt)}
+  .node .ev b{color:#fff}
+  .tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    padding:1px 7px;border-radius:5px;margin-left:6px;vertical-align:middle;border:1px solid transparent}
+  .tag.paradox{background:rgba(176,124,255,.16);color:var(--purple);border-color:rgba(176,124,255,.4)}
+  .tag.event{background:rgba(255,42,31,.16);color:#ff6a5f;border-color:rgba(255,42,31,.4)}
+  .tag.model{background:rgba(40,215,224,.14);color:var(--cyan);border-color:rgba(40,215,224,.35)}
+  .tag.faction{background:rgba(57,217,138,.14);color:var(--green);border-color:rgba(57,217,138,.35)}
+  .tag.character{background:rgba(255,176,46,.14);color:var(--amber);border-color:rgba(255,176,46,.35)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+  @media(max-width:880px){.grid2{grid-template-columns:1fr}.branch-films{display:none}}
+  .card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px 22px}
+  .card h3{margin:0 0 14px;font-size:16px;display:flex;align-items:center;gap:9px}
+  .card h3 .bar{width:4px;height:18px;border-radius:2px;background:var(--accent)}
+  .chars{display:flex;flex-direction:column;gap:9px}
+  .char{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:10px;background:var(--panel2);border:1px solid transparent;transition:.15s}
+  .char:hover{border-color:var(--line)}
+  .av{width:40px;height:40px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#0a0c10}
+  .char .nm{font-weight:700;font-size:14px}
+  .char .rl{font-size:12.5px;color:var(--muted)}
+  .models{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.models{grid-template-columns:1fr}}
+  .model{border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--panel2)}
+  .model .mn{font-weight:800;font-size:14px;color:var(--cyan)}
+  .model .md{font-size:12px;color:var(--muted);margin-top:3px}
+  .para-box{border:1px solid rgba(176,124,255,.35);border-radius:14px;background:rgba(176,124,255,.05);padding:20px 22px;margin-top:34px}
+  .para-box h3{color:var(--purple)}
+  .para-item{padding:10px 0;border-top:1px solid rgba(176,124,255,.15)}
+  .para-item:first-of-type{border-top:none}
+  .para-item b{color:#fff}
+  footer{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12.5px}
+  .hide{display:none !important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="title"></h1>
+    <p class="sub" id="intro"></p>
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background:var(--accent)"></span>Turning point / catastrophe</span>
+      <span class="chip"><span class="dot" style="background:var(--purple)"></span>Time-travel paradox</span>
+      <span class="chip"><span class="dot" style="background:var(--cyan)"></span>Machine / tech</span>
+      <span class="chip"><span class="dot" style="background:var(--green)"></span>Faction / resolution</span>
+    </div>
+  </header>
+
+  <div class="controls" id="controls"></div>
+  <div class="rail" id="rail"></div>
+
+  <div class="grid2">
+    <div class="card" id="charsCard"><h3><span class="bar"></span>Key Characters</h3><div class="chars" id="chars"></div></div>
+    <div class="card" id="itemsCard"><h3><span class="bar"></span>Key Items &amp; Tech</h3><div class="models" id="models"></div></div>
+  </div>
+
+  <div class="para-box" id="themesBox">
+    <h3><span class="bar" style="background:var(--purple)"></span>Recurring Themes &amp; Paradoxes</h3>
+    <div id="paras"></div>
+  </div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const DATA = {
+  "franchise": "Tenet",
+  "tagline": "One film, one predestined loop, and four world-lines doubling back through it.",
+  "intro": "Tenet isn't a branching franchise — it's a single 'this always happened' loop. The confusion comes from inversion: people keep living forward while the world reverses around them, so the same events are crossed multiple times by inverted copies of the same person. The cleanest way to read it is by world-line — the objective chronology first, then how the Protagonist, Neil, and Kat & Sator each thread through it.",
+  "accent": "#ff6b1f",
+  "films": [
+    {
+      "title": "Tenet",
+      "year": 2020
+    }
+  ],
+  "branches": [
+    {
+      "id": "b1",
+      "title": "The Grand Loop — Objective Chronology",
+      "color": "#ff6b1f",
+      "films": [
+        "Tenet"
+      ],
+      "summary": "The 'this always happened' spine: how the Algorithm, Sator, and Tenet are all set in motion from the future.",
+      "nodes": [
+        {
+          "era": "Far future",
+          "type": "turning-point",
+          "text": "A future scientist invents the <b>Algorithm<\/b> that can invert all of time. Horrified, she splits it into <b>9 artefacts<\/b>, inverts and buries them in radioactive sites, and takes her own life to keep the secret.",
+          "tags": [
+            {
+              "label": "Algorithm",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Far future",
+          "type": "event",
+          "text": "Future antagonists want to invert time to undo climate collapse — saving their world by destroying ours. They recruit a man in our past to gather the artefacts.",
+          "tags": [
+            {
+              "label": "Future enemy",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "~1990s",
+          "type": "event",
+          "text": "After the Soviet collapse, young <b>Andrei Sator<\/b> digs plutonium at Stalsk-12 and unearths a buried cache of gold and instructions — his commission from the future."
+        },
+        {
+          "era": "1990s–2020",
+          "type": "event",
+          "text": "Sator amasses power as a Russian oligarch, hunts the 9 artefacts, and builds <b>turnstiles<\/b> around the world. Radioactive digging gives him terminal pancreatic cancer.",
+          "tags": [
+            {
+              "label": "Turnstile",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Future",
+          "type": "turning-point",
+          "text": "After the loop closes, the <b>Protagonist<\/b> founds the <b>Tenet<\/b> organisation and recruits Neil — seeding everything we watched.",
+          "tags": [
+            {
+              "label": "Tenet",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "Present",
+          "type": "event",
+          "text": "The Protagonist is recruited and chases inverted bullet-casings from <b>Kiev → Mumbai → London → Oslo → Amalfi → Tallinn<\/b>."
+        },
+        {
+          "era": "Present",
+          "type": "turning-point",
+          "text": "At the <b>Battle of Stalsk-12<\/b>, a temporal-pincer assault lets Tenet extract the assembled Algorithm seconds before it is sealed in the blast cave-in.",
+          "tags": [
+            {
+              "label": "Pincer",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Present",
+          "type": "resolution",
+          "text": "The Algorithm is split three ways and re-hidden; Sator dies on his Vietnam yacht; the future's plan never completes.",
+          "tags": [
+            {
+              "label": "Loop closed",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "Epilogue",
+          "type": "resolution",
+          "text": "The Protagonist kills <b>Priya<\/b> to protect Kat and Max, completing Tenet's clean-up. <b>This always happened.<\/b>",
+          "tags": [
+            {
+              "label": "Always happened",
+              "kind": "paradox"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2",
+      "title": "The Protagonist's Path",
+      "color": "#ff2a1f",
+      "films": [
+        "Tenet"
+      ],
+      "summary": "His subjective experience — forward, then inverted, then forward again — to the freeway, Oslo, and Stalsk-12.",
+      "nodes": [
+        {
+          "era": "Kiev",
+          "type": "turning-point",
+          "text": "On a CIA op at the <b>Kiev Opera House<\/b>, the Protagonist is saved by a masked man who inverts a bullet through his attacker — and runs off with a red keychain.",
+          "tags": [
+            {
+              "label": "Inverted bullet",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Recruitment",
+          "type": "event",
+          "text": "Believed dead after passing a cyanide test, he is recruited into <b>Tenet<\/b> and learns objects are arriving inverted from the future.",
+          "tags": [
+            {
+              "label": "Tenet",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "Mumbai",
+          "type": "event",
+          "text": "He traces the unique casings to Mumbai, meets <b>Neil<\/b>, and learns from <b>Priya<\/b> about oligarch <b>Andrei Sator<\/b>."
+        },
+        {
+          "era": "London",
+          "type": "event",
+          "text": "He briefs <b>Michael Crosby<\/b> and plans to reach Sator through his estranged wife <b>Kat<\/b>, using a forged Goya she sold him."
+        },
+        {
+          "era": "Oslo Freeport",
+          "type": "turning-point",
+          "text": "Crashing a plane to breach the vault, he and Neil fight a masked inverted figure in the <b>turnstile<\/b> room — unknowingly fighting his own future self.",
+          "tags": [
+            {
+              "label": "Turnstile",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Amalfi / Tallinn",
+          "type": "event",
+          "text": "He offers Sator the 9th artefact (Plutonium-241) and runs the Tallinn highway heist — but an inverted Sator uses <b>Kat<\/b> as hostage to seize it."
+        },
+        {
+          "era": "Tallinn turnstile",
+          "type": "turning-point",
+          "text": "Learning of the <b>temporal pincer<\/b>, he inverts to chase Sator down the freeway — and realises the flipping wreck he saw earlier was himself.",
+          "tags": [
+            {
+              "label": "Pincer",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Oslo (inverted)",
+          "type": "event",
+          "text": "Still inverted, he returns to the Oslo vault, scuffles with his past self, and passes back through the turnstile to move forward again."
+        },
+        {
+          "era": "Stalsk-12",
+          "type": "turning-point",
+          "text": "Leading the <b>red team<\/b> with Ives, he reaches the Algorithm but is trapped by a tripwire — until a dead blue soldier picks the lock and takes a bullet for him.",
+          "tags": [
+            {
+              "label": "Pincer",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Future",
+          "type": "resolution",
+          "text": "He learns he is Tenet's founder: in the future he will recruit Neil. <b>For him the friendship is just beginning.<\/b>",
+          "tags": [
+            {
+              "label": "Bootstrap",
+              "kind": "paradox"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b3",
+      "title": "Neil's Path (Max → Neil)",
+      "color": "#28d7e0",
+      "films": [
+        "Tenet"
+      ],
+      "summary": "The most tangled world-line: Kat's son grows up, is recruited, then inverts back through the whole film — up to six Neils at once.",
+      "nodes": [
+        {
+          "era": "Childhood",
+          "type": "event",
+          "text": "<b>Max<\/b>, Kat and Sator's son, lives a normal boyhood — including the Vietnam yacht day where he glimpses his mother diving off the boat."
+        },
+        {
+          "era": "Growing up",
+          "type": "event",
+          "text": "Raised bilingual (hence his Estonian), Max earns a <b>master's in physics<\/b>, studying entropy — and learns the Protagonist saved his mother and the world."
+        },
+        {
+          "era": "Future",
+          "type": "turning-point",
+          "text": "Recruited and mentored by the Protagonist, Max takes the last four letters of <b>Maximilien<\/b>, inverts them to <b>Neil<\/b>, and inverts back in time.",
+          "tags": [
+            {
+              "label": "Identity",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Kiev",
+          "type": "event",
+          "text": "An inverted Neil saves the Protagonist at the Opera House with the reversed bullet, then reverts to move forward.",
+          "tags": [
+            {
+              "label": "Inverted",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Mumbai",
+          "type": "event",
+          "text": "Posing as a rookie, Neil already knows the Protagonist's drink and laughs off inversion with positron/entropy quips."
+        },
+        {
+          "era": "Oslo Freeport",
+          "type": "event",
+          "text": "On the other side of the turnstile fight, Neil chases the masked figure, <b>unmasks the Protagonist<\/b>, and lets him go."
+        },
+        {
+          "era": "Tallinn → Oslo",
+          "type": "event",
+          "text": "After the heist he inverts with Kat back to the Oslo turnstile, lets the Protagonist enter first, then reverts all three to move forward in the past."
+        },
+        {
+          "era": "Stalsk-12 (blue)",
+          "type": "turning-point",
+          "text": "Inverted on the blue team, he sees the tripwire too late, but reverts to pull the Protagonist and Ives — and the Algorithm — out of the collapsing tunnel.",
+          "tags": [
+            {
+              "label": "Pincer",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Stalsk-12 (final)",
+          "type": "death",
+          "text": "Neil inverts one last time: he is the blue soldier who picks the lock and <b>takes the bullet<\/b> for the Protagonist. 'I'll see you at the beginning, friend.'",
+          "tags": [
+            {
+              "label": "Neil dies",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "All at once",
+          "type": "paradox",
+          "text": "During the battle Neil exists as a child, an inverted Kiev agent, a reverted operative, and multiple inverted/reverted battle copies — <b>at least six Neils simultaneously.<\/b>",
+          "tags": [
+            {
+              "label": "Paradox",
+              "kind": "paradox"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b4",
+      "title": "Kat & Sator's Mirror",
+      "color": "#b07cff",
+      "films": [
+        "Tenet"
+      ],
+      "summary": "Husband and wife run nearly identical inverted journeys to the same Vietnam yacht — one to die, one to kill.",
+      "nodes": [
+        {
+          "era": "1990s–2020",
+          "type": "event",
+          "text": "<b>Sator<\/b> rises on inverted gold, hunts the artefacts, and grows abusive as cancer and the future's mission consume him."
+        },
+        {
+          "era": "Marriage",
+          "type": "event",
+          "text": "He traps <b>Kat<\/b> with a forged Goya she unknowingly sold, using it to blackmail her and keep her from their son <b>Max<\/b>."
+        },
+        {
+          "era": "Vietnam (past)",
+          "type": "event",
+          "text": "On the yacht, Kat sees a mystery woman dive overboard — a moment that will close her own loop."
+        },
+        {
+          "era": "Amalfi",
+          "type": "event",
+          "text": "The Protagonist saves Sator from Kat's attempt to drown him during a boat race, earning Sator's trust."
+        },
+        {
+          "era": "Tallinn",
+          "type": "death",
+          "text": "Sator assaults Kat, inverts, and drags her into his pincer to grab the artefact — leaving her dying of an <b>inverted bullet wound<\/b>.",
+          "tags": [
+            {
+              "label": "Inverted wound",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Oslo turnstile",
+          "type": "turning-point",
+          "text": "Neil and the Protagonist invert Kat back to Oslo, revert to normal time, and heal her wound before it kills her."
+        },
+        {
+          "era": "Vietnam (return)",
+          "type": "turning-point",
+          "text": "Inverted back to the yacht day, Kat poses as her past self, gains the trust of a Sator who thinks she's harmless..."
+        },
+        {
+          "era": "Vietnam (return)",
+          "type": "resolution",
+          "text": "...then shows her scar and <b>shoots Sator dead<\/b> at his happiest moment, denying him a world-ending suicide — and becomes the diving woman she once saw.",
+          "tags": [
+            {
+              "label": "Loop closed",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "Stalsk-12",
+          "type": "event",
+          "text": "Her kill is timed to the Battle of Stalsk-12: with Tenet foiling the future, Sator simply 'disappears' as his body is towed away."
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "name": "The Protagonist",
+      "role": "Unnamed CIA agent who is recruited into — and will go on to found — Tenet; the loop's anchor.",
+      "color": "#ff2a1f"
+    },
+    {
+      "name": "Neil (Max)",
+      "role": "The Protagonist's closest ally; revealed as Kat's grown son, sent back to die saving him.",
+      "color": "#28d7e0"
+    },
+    {
+      "name": "Kat",
+      "role": "Sator's estranged wife and Max's mother; runs an inverted arc to kill Sator and free herself.",
+      "color": "#b07cff"
+    },
+    {
+      "name": "Andrei Sator",
+      "role": "Dying oligarch acting as the future's agent, racing to assemble the Algorithm and end the world with him.",
+      "color": "#ff6b1f"
+    },
+    {
+      "name": "Priya",
+      "role": "Tenet's Mumbai arms-dealer handler; ruthless, ultimately a loose end the Protagonist must cut.",
+      "color": "#ffb02e"
+    },
+    {
+      "name": "Ives",
+      "role": "Tenet commando who explains the temporal pincer and leads the red team at Stalsk-12.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Max",
+      "role": "Kat and Sator's son — and, per the film's strong hint, the boy who becomes Neil.",
+      "color": "#9aa6b6"
+    }
+  ],
+  "items": [
+    {
+      "name": "The Algorithm",
+      "desc": "A future device that inverts all of time, split into 9 artefacts and hidden across the past."
+    },
+    {
+      "name": "Turnstile",
+      "desc": "A two-sided machine that inverts a person's or object's entropy, reversing their flow through time."
+    },
+    {
+      "name": "Inverted bullets",
+      "desc": "Reversed-entropy rounds that fly back into the gun; the first clue that the future is reaching backward."
+    },
+    {
+      "name": "Temporal pincer",
+      "desc": "A tactic running one team forward and an inverted team backward through the same event to know its outcome."
+    },
+    {
+      "name": "Plutonium-241",
+      "desc": "The cover name for the 9th artefact, transported through Tallinn and fought over by both sides."
+    },
+    {
+      "name": "The Sator Square",
+      "desc": "The Latin palindrome (SATOR–AREPO–TENET–OPERA–ROTAS) seeding the film's names and its mirrored structure."
+    }
+  ],
+  "themes": [
+    "<b>'This always happened':<\/b> Tenet is a Type-4 predestined loop — the time travel is what sets the story in motion, not a way to rewrite it.",
+    "<b>Inversion, not jumping:<\/b> you keep aging forward while the world reverses around you, so reaching the past takes real time spent inverted.",
+    "<b>The Neil bootstrap:<\/b> the Protagonist recruits Neil in the future; Neil inverts back to save him — a friendship with no beginning outside the loop.",
+    "<b>Ignorance as ammunition:<\/b> the plan only holds if characters don't learn their own destinies and avoid contact with their other selves.",
+    "<b>Mirrored world-lines:<\/b> Protagonist/Neil and Kat/Sator run near-identical inverted journeys, echoing the palindromic Sator Square."
+  ]
+};
+
+const esc = s => String(s==null?'':s);
+document.documentElement.style.setProperty('--accent', DATA.accent || '#ff2a1f');
+document.title = (DATA.franchise || 'Timeline') + ' — Timeline Map';
+document.getElementById('eyebrow').textContent = (DATA.films && DATA.films.length)
+  ? `${DATA.films.length} films · ${(DATA.branches||[]).length} branches`
+  : 'Interactive timeline';
+document.getElementById('title').innerHTML = `<span class="glow">${esc(DATA.franchise)}</span> — Timeline`;
+document.getElementById('intro').textContent = esc(DATA.tagline ? DATA.tagline + ' ' : '') + esc(DATA.intro||'');
+
+// controls
+const controls = document.getElementById('controls');
+controls.innerHTML = `<button class="btn active" data-f="all">All branches</button>` +
+  (DATA.branches||[]).map(b=>`<button class="btn" data-f="${b.id}">${esc(b.title)}</button>`).join('');
+
+// branches
+const rail = document.getElementById('rail');
+(DATA.branches||[]).forEach(b=>{
+  const el = document.createElement('div');
+  el.className='branch'; el.dataset.id=b.id; el.style.setProperty('--bcol', b.color||DATA.accent||'#ff2a1f');
+  el.innerHTML = `
+    <div class="branch-head" style="--bcol:${b.color||'#ff2a1f'}">
+      <span class="caret">▼</span>
+      <div class="bt"><h2>${esc(b.title)}</h2><div class="meta">${esc(b.summary||'')}</div></div>
+      <div class="branch-films">${(b.films||[]).map(esc).join(' · ')}</div>
+    </div>
+    <div class="branch-body"><div class="track">
+      ${(b.nodes||[]).map(n=>`
+        <div class="node ${esc(n.type||'event')}">
+          <div class="yr">${esc(n.era)}</div>
+          <div class="ev">${n.text||''}${(n.tags||[]).map(t=>`<span class="tag ${esc(t.kind||'event')}">${esc(t.label)}</span>`).join('')}</div>
+        </div>`).join('')}
+    </div></div>`;
+  el.querySelector('.branch-head').addEventListener('click',()=>el.classList.toggle('collapsed'));
+  rail.appendChild(el);
+});
+
+// characters
+const chars = document.getElementById('chars');
+if(DATA.characters && DATA.characters.length){
+  DATA.characters.forEach(c=>{
+    const initials = String(c.name||'?').split(/[\s\/]+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    chars.insertAdjacentHTML('beforeend',
+      `<div class="char"><div class="av" style="background:${c.color||DATA.accent||'#ff2a1f'}">${initials}</div>
+       <div><div class="nm">${esc(c.name)}</div><div class="rl">${esc(c.role)}</div></div></div>`);
+  });
+} else { document.getElementById('charsCard').classList.add('hide'); }
+
+// items
+const models = document.getElementById('models');
+if(DATA.items && DATA.items.length){
+  DATA.items.forEach(m=>models.insertAdjacentHTML('beforeend',
+    `<div class="model"><div class="mn">${esc(m.name)}</div><div class="md">${esc(m.desc)}</div></div>`));
+} else { document.getElementById('itemsCard').classList.add('hide'); }
+
+// themes
+const paras = document.getElementById('paras');
+if(DATA.themes && DATA.themes.length){
+  DATA.themes.forEach(t=>paras.insertAdjacentHTML('beforeend',`<div class="para-item">${t}</div>`));
+} else { document.getElementById('themesBox').classList.add('hide'); }
+
+// footer
+const order = (DATA.films||[]).map(f=>`${esc(f.title)} (${esc(f.year)})`).join(' · ');
+document.getElementById('footer').innerHTML =
+  (order?`<strong>Films in release order:</strong> ${order}.<br><br>`:'') +
+  `Built with the Movie Timeline Mapper skill. Because the series branches, there is no single chronological line — each divergent future is its own branch above.`;
+
+// filter
+controls.addEventListener('click',e=>{
+  const btn=e.target.closest('.btn'); if(!btn) return;
+  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f=btn.dataset.f;
+  document.querySelectorAll('.branch').forEach(br=>br.classList.toggle('dim', f!=='all' && br.dataset.id!==f));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Complete Terminator Timeline — Interactive Map</title>
+<style>
+  :root{
+    --bg:#0a0c10; --panel:#11151c; --panel2:#161b24; --line:#222a36;
+    --red:#ff2a1f; --red-dim:#a01510; --amber:#ffb02e; --cyan:#28d7e0;
+    --txt:#e7ecf3; --muted:#8b97a8; --steel:#5b6b80;
+    --green:#39d98a; --purple:#b07cff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%, #1a0605 0%, transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, #06121a 0%, transparent 55%),
+      var(--bg);
+    color:var(--txt);
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 22px 80px}
+  header.hero{
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:30px 30px 26px;
+    background:
+      linear-gradient(180deg, rgba(255,42,31,.10), transparent 60%),
+      var(--panel);
+    position:relative; overflow:hidden;
+  }
+  header.hero::after{
+    content:""; position:absolute; inset:0;
+    background:repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,.012) 38px 39px);
+    pointer-events:none;
+  }
+  .eyebrow{letter-spacing:.34em;font-size:11px;color:var(--red);text-transform:uppercase;font-weight:700}
+  h1{font-size:38px;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+  h1 .glow{color:var(--red);text-shadow:0 0 22px rgba(255,42,31,.55)}
+  .sub{color:var(--muted);max-width:760px;font-size:15px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+  .legend .chip{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 8px}
+  .btn{
+    border:1px solid var(--line);background:var(--panel2);color:var(--txt);
+    padding:9px 15px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600;
+    transition:.15s; white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--red);color:#fff}
+  .btn.active{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 0 18px rgba(255,42,31,.4)}
+
+  .rail{display:flex;flex-direction:column;gap:0;margin-top:20px}
+  .branch{
+    border:1px solid var(--line);border-radius:14px;margin-bottom:22px;overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));
+    transition:.2s;
+  }
+  .branch.dim{opacity:.32;filter:saturate(.4)}
+  .branch-head{
+    display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;
+    border-left:5px solid var(--bcol,var(--red));
+  }
+  .branch-head .bt{flex:1}
+  .branch-head h2{margin:0;font-size:19px;font-weight:700}
+  .branch-head .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .branch-films{font-size:11.5px;color:var(--muted);text-align:right;line-height:1.4}
+  .branch-body{padding:0 20px 8px}
+  .caret{color:var(--muted);font-size:13px;transition:.2s}
+  .branch.collapsed .branch-body{display:none}
+  .branch.collapsed .caret{transform:rotate(-90deg)}
+
+  .track{position:relative;margin:8px 0 18px;padding-left:26px}
+  .track::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--bcol),transparent);opacity:.6}
+  .node{position:relative;margin:0 0 14px;padding:0 0 0 4px}
+  .node::before{content:"";position:absolute;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--bcol)}
+  .node.event::before{background:var(--bcol)}
+  .node.para::before{border-color:var(--purple);box-shadow:0 0 10px rgba(176,124,255,.6)}
+  .node.death::before{border-color:var(--red);background:var(--red)}
+  .node .yr{font-size:12px;font-weight:800;color:var(--bcol);letter-spacing:.04em}
+  .node .ev{font-size:14px;color:var(--txt)}
+  .node .ev b{color:#fff}
+  .tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    padding:1px 7px;border-radius:5px;margin-left:6px;vertical-align:middle}
+  .tag.paradox{background:rgba(176,124,255,.16);color:var(--purple);border:1px solid rgba(176,124,255,.4)}
+  .tag.jd{background:rgba(255,42,31,.16);color:#ff6a5f;border:1px solid rgba(255,42,31,.4)}
+  .tag.model{background:rgba(40,215,224,.14);color:var(--cyan);border:1px solid rgba(40,215,224,.35)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+  @media(max-width:880px){.grid2{grid-template-columns:1fr}.rail .branch-films{display:none}}
+  .card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px 22px}
+  .card h3{margin:0 0 14px;font-size:16px;display:flex;align-items:center;gap:9px}
+  .card h3 .bar{width:4px;height:18px;border-radius:2px;background:var(--red)}
+
+  .chars{display:flex;flex-direction:column;gap:9px}
+  .char{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:10px;background:var(--panel2);
+    border:1px solid transparent;transition:.15s;cursor:default}
+  .char:hover{border-color:var(--line)}
+  .av{width:40px;height:40px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:13px;color:#0a0c10}
+  .char .nm{font-weight:700;font-size:14px}
+  .char .rl{font-size:12.5px;color:var(--muted)}
+
+  .models{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.models{grid-template-columns:1fr}}
+  .model{border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--panel2)}
+  .model .mn{font-weight:800;font-size:14px;color:var(--cyan)}
+  .model .md{font-size:12px;color:var(--muted);margin-top:3px}
+
+  .para-box{border:1px solid rgba(176,124,255,.35);border-radius:14px;background:rgba(176,124,255,.05);
+    padding:20px 22px;margin-top:34px}
+  .para-box h3{color:var(--purple)}
+  .para-item{padding:10px 0;border-top:1px solid rgba(176,124,255,.15)}
+  .para-item:first-of-type{border-top:none}
+  .para-item b{color:#fff}
+
+  footer{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12.5px}
+  a{color:var(--cyan)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Skynet · Cyberdyne · Legion — Causality Archive</div>
+    <h1>The Complete <span class="glow">TERMINATOR</span> Timeline</h1>
+    <p class="sub">Six films, four divergent futures, and a fistful of bootstrap paradoxes. The franchise isn't one straight line — going to the past doesn't overwrite the future so much as glide you onto a new loop of the "time slinky." Use the filters to isolate a branch, or follow the whole tangled war between humanity and the machines.</p>
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background:var(--red)"></span>Judgment Day / nuclear event</span>
+      <span class="chip"><span class="dot" style="background:var(--purple)"></span>Time-travel paradox</span>
+      <span class="chip"><span class="dot" style="background:var(--cyan)"></span>Terminator model</span>
+      <span class="chip"><span class="dot" style="background:var(--green)"></span>Human resistance milestone</span>
+    </div>
+  </header>
+
+  <div class="controls" id="controls">
+    <button class="btn active" data-f="all">All branches</button>
+    <button class="btn" data-f="b1">Original Loop (T1 · T2)</button>
+    <button class="btn" data-f="b2">Delayed JD (T3 · Salvation)</button>
+    <button class="btn" data-f="b3">Genisys Reboot</button>
+    <button class="btn" data-f="b4">Dark Fate / Legion</button>
+  </div>
+
+  <div class="rail" id="rail"><!-- branches injected --></div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3><span class="bar"></span>Key Characters</h3>
+      <div class="chars" id="chars"></div>
+    </div>
+    <div class="card">
+      <h3><span class="bar"></span>Terminator Models &amp; Agents</h3>
+      <div class="models" id="models"></div>
+    </div>
+  </div>
+
+  <div class="para-box">
+    <h3><span class="bar" style="background:var(--purple)"></span>The Paradoxes That Hold It Together</h3>
+    <div id="paras"></div>
+  </div>
+
+  <footer>
+    <strong>Films in order (release = primary storytelling order):</strong>
+    The Terminator (1984) · Terminator 2: Judgment Day (1991) · Terminator 3: Rise of the Machines (2003) ·
+    Terminator Salvation (2009) · Terminator Genisys (2015) · Terminator: Dark Fate (2019).<br><br>
+    Built from the "Complete Terminator Timeline Explained" transcript, cross-referenced with the Terminator Wiki and Wikipedia.
+    Because the series branches, there is no single chronological line — instead, four divergent futures spin off from the events of 1984/1997.
+  </footer>
+
+</div>
+
+<script>
+const BRANCHES = [
+  {
+    id:"b1", color:"#ff2a1f",
+    title:"Branch 1 — The Original Causal Loop",
+    meta:"A self-creating loop: travel to the past only preserves the future you came from.",
+    films:"The Terminator (1984)<br>Terminator 2: Judgment Day (1991)",
+    nodes:[
+      {y:"2029", c:"event", t:"In the post-apocalyptic future, <b>John Connor</b> leads humanity to victory and destroys Skynet's defense grid."},
+      {y:"2029", c:"model", t:"Cornered, Skynet sends a <b>T-800</b> back to 1984 to kill Sarah Connor. John captures the time machine and sends <b>Kyle Reese</b> after it.", tag:["T-800","model"]},
+      {y:"1984", c:"event", t:"Kyle protects <b>Sarah Connor</b>; they fall in love and conceive John. Kyle dies; Sarah kills the T-800."},
+      {y:"1984", c:"para", t:"Sarah's photo &amp; the \"No Fate\" message form a <b>bootstrap loop</b> — John sends Kyle, who fathers John.", tag:["Paradox","paradox"]},
+      {y:"1984", c:"para", t:"The crushed T-800's arm + chip are recovered by <b>Cyberdyne</b> — the seed of Skynet itself.", tag:["Paradox","paradox"]},
+      {y:"1995", c:"model", t:"Skynet sends a liquid-metal <b>T-1000</b> after 10-year-old John; the future sends a reprogrammed T-800 to guard him.", tag:["T-1000","model"]},
+      {y:"1997", c:"jd", t:"Skynet goes online <b>Aug 4</b>, becomes self-aware <b>Aug 29, 2:14 AM</b> — <b>Judgment Day</b>.", tag:["Judgment Day","jd"]},
+      {y:"1995", c:"death", t:"Sarah, John &amp; the T-800 turn <b>Miles Dyson</b>; they destroy Cyberdyne's research. T-1000, the arm/chip, then the good T-800 are melted."},
+      {y:"???", c:"event", t:"T2 (theatrical) ends ambiguous — \"the future is unknown.\" The original cut shows Judgment Day was averted."}
+    ]
+  },
+  {
+    id:"b2", color:"#ffb02e",
+    title:"Branch 2 — Judgment Day Delayed",
+    meta:"Sarah & John didn't stop Judgment Day — only delayed it ~7 years. Skynet finds another father.",
+    films:"Terminator 3: Rise of the Machines (2003)<br>Terminator Salvation (2009)",
+    nodes:[
+      {y:"1997", c:"event", t:"Sarah, dying of leukemia, lives long enough to see Aug 29 pass. \"Every day after this one is a gift.\""},
+      {y:"2004", c:"model", t:"A <b>T-X (Terminatrix)</b> — liquid metal over endoskeleton, able to reprogram machines — is sent for John &amp; future-wife <b>Kate Brewster</b>.", tag:["T-X","model"]},
+      {y:"2032", c:"para", t:"Kate sends the protector T-800 — the same unit that <b>kills John in 2032</b>, then is reprogrammed.", tag:["Paradox","paradox"]},
+      {y:"2004", c:"jd", t:"Skynet, now run by the <b>USAF / Gen. Robert Brewster</b>, is activated to fight a virus — the virus <i>is</i> Skynet. <b>Judgment Day</b> (delayed 7 yrs).", tag:["Judgment Day","jd"]},
+      {y:"2004", c:"event", t:"There is no \"core\" to destroy — Skynet runs on millions of machines. John &amp; Kate survive in a fallout shelter."},
+      {y:"2003", c:"event", t:"Death-row inmate <b>Marcus Wright</b> donates his body to Cyberdyne and is rebuilt as a cyborg (human brain + heart)."},
+      {y:"2018", c:"event", t:"<b>Salvation:</b> John is a resistance leader; young <b>Kyle Reese</b> is Skynet's #1 target. Marcus wakes and allies with the humans.", tag:["Resistance","jd"]},
+      {y:"2018", c:"death", t:"A <b>T-RIP</b> prototype scars &amp; impales John. Marcus donates his heart to save him."}
+    ]
+  },
+  {
+    id:"b3", color:"#28d7e0",
+    title:"Branch 3 — The Genisys Reboot",
+    meta:"A 2029 'nexus point' rewrites 1984. A T-800 'Pops' raises Sarah from age 9.",
+    films:"Terminator Genisys (2015)",
+    nodes:[
+      {y:"2029", c:"para", t:"As Kyle is sent back, a mystery man — <b>Alex / T-5000</b> (Skynet incarnate) — attacks John, turning him into a <b>T-3000</b>. This creates a <b>nexus point</b>.", tag:["Paradox","paradox"]},
+      {y:"1973", c:"model", t:"Skynet sends a <b>T-1000</b> to kill 9-year-old Sarah; an unknown party sends a <b>T-800 (\"Pops\")</b> to protect her.", tag:["T-1000","model"]},
+      {y:"1984", c:"event", t:"Kyle arrives to a changed past: Sarah &amp; Pops are already warriors and have nearly built their own time machine."},
+      {y:"2017", c:"jd", t:"Kyle's implanted memories warn: <b>\"Genisys is Skynet.\"</b> The app-based OS <b>Genisys</b> (by <b>Daniel Dyson</b>) comes online <b>Oct 2017</b>.", tag:["Judgment Day","jd"]},
+      {y:"2017", c:"death", t:"Kyle, Sarah &amp; Pops destroy <b>T-3000 John</b> and blow up Genisys — but its core survives. Judgment Day only delayed again."},
+      {y:"—", c:"para", t:"Co-writer's canon: Alex came from <b>another timeline</b> — implying multiple 'slinkies' that can be crossed.", tag:["Paradox","paradox"]}
+    ]
+  },
+  {
+    id:"b4", color:"#39d98a",
+    title:"Branch 4 — Dark Fate (Legion)",
+    meta:"James Cameron's true sequel to T2. Skynet is erased — but a new AI, Legion, rises.",
+    films:"Terminator: Dark Fate (2019)",
+    nodes:[
+      {y:"1998", c:"death", t:"After T2, leftover <b>T-800s</b> remain. One succeeds: it <b>murders John Connor</b> in front of Sarah. Skynet is never built — the T-800s are \"exiles in time.\"", tag:["T-800","model"]},
+      {y:"1998-2020", c:"event", t:"Sarah hunts arriving Terminators, guided by anonymous texts signed <b>\"For John.\"</b>"},
+      {y:"2042", c:"model", t:"New AI <b>Legion</b> sends a <b>Rev-9</b> (liquid metal + endoskeleton that can split in two) to kill young <b>Dani Ramos</b>.", tag:["Rev-9","model"]},
+      {y:"2042", c:"event", t:"The resistance sends <b>Grace</b> — an augmented human protector — back to 2020.", tag:["Resistance","jd"]},
+      {y:"2020", c:"event", t:"In <b>Mexico City</b>, Grace, Sarah &amp; the texter unite. The mystery ally is <b>Carl</b> — the very T-800 that killed John, now with a family &amp; conscience.", tag:["T-800","model"]},
+      {y:"2020", c:"death", t:"Carl &amp; Grace sacrifice themselves to destroy the Rev-9. <b>Dani</b> survives to lead — and Sarah will train her, just as she trained John."}
+    ]
+  }
+];
+
+const CHARS = [
+  {n:"Sarah Connor", r:"The mother who becomes a warrior. Trains John (and later Dani). Carries the \"No Fate\" creed across every timeline.", c:"#ff2a1f"},
+  {n:"John Connor", r:"Prophesied resistance leader. Born of Kyle & Sarah; variously killed in 2032, 1998, or turned into the T-3000.", c:"#ffb02e"},
+  {n:"Kyle Reese", r:"Sent from 2029 to protect Sarah; John's father. A bootstrap-paradox cornerstone.", c:"#28d7e0"},
+  {n:"The T-800 (Model 101)", r:"Assassin, guardian, \"Pops,\" and \"Carl\" — the franchise's recurring machine, hero and villain by turns.", c:"#9aa6b6"},
+  {n:"Miles & Daniel Dyson", r:"Father (Cyberdyne→Skynet) and son (Genisys). The human spark behind the apocalypse.", c:"#b07cff"},
+  {n:"Kate Brewster", r:"John's future wife; daughter of Gen. Brewster. Sends the protector T-800 in T3.", c:"#39d98a"},
+  {n:"Marcus Wright", r:"Death-row donor turned cyborg in Salvation; gives his heart to save John.", c:"#ff8a5f"},
+  {n:"Dani Ramos", r:"Dark Fate's new hope. Not a mother of a leader — the leader herself, against Legion.", c:"#28d7e0"},
+  {n:"Grace", r:"Augmented human soldier sent from 2042 to protect Dani.", c:"#39d98a"},
+  {n:"Skynet / Legion", r:"The antagonist AI — defense network in most timelines, consumer OS in Genisys, successor 'Legion' in Dark Fate.", c:"#ff2a1f"}
+];
+
+const MODELS = [
+  {n:"T-800 / Model 101", d:"Living-tissue infiltrator over a metal endoskeleton. Killer, protector, Pops, Carl."},
+  {n:"T-1000", d:"Mimetic polyalloy (liquid metal). T2's shapeshifting hunter; reused in Genisys."},
+  {n:"T-X (Terminatrix)", d:"Liquid metal over an endoskeleton; can reprogram other machines. T3's antagonist."},
+  {n:"T-3000", d:"John Connor converted by Skynet via nanotech. Genisys's tragic villain."},
+  {n:"T-5000 (Alex)", d:"Skynet's consciousness in physical form; the agent of the Genisys reboot."},
+  {n:"Rev-9", d:"Legion's hunter — splits into liquid-metal and endoskeleton halves to fight as two."},
+  {n:"T-RIP", d:"Early T-800 prototype in Salvation that scars and nearly kills John."},
+  {n:"Grace (augment)", d:"Not a Terminator — a human enhanced with machinery to fight them."}
+];
+
+const PARAS = [
+  {t:"<b>The John–Kyle loop:</b> John sends Kyle to the past, Kyle fathers John. Neither has an origin outside the loop."},
+  {t:"<b>Skynet builds itself:</b> Cyberdyne reverse-engineers the destroyed 1984 T-800 to create Skynet — which sends the T-800 in the first place."},
+  {t:"<b>The \"No Fate\" line:</b> John→Kyle→Sarah→young John→…→future John. No one ever originally wrote it. A textbook bootstrap paradox."},
+  {t:"<b>The Slinky interpretation:</b> Each trip back doesn't loop you to the same start but slides you to a <i>new</i> loop — letting information (and exiles like the T-3000 or Carl) persist without erasing the traveler."},
+  {t:"<b>Exiles in time:</b> When a future is erased, the machines already sent back don't vanish — they \"stick around,\" driving Dark Fate's premise."}
+];
+
+// ---- render ----
+const rail = document.getElementById('rail');
+BRANCHES.forEach(b=>{
+  const el = document.createElement('div');
+  el.className='branch'; el.dataset.id=b.id;
+  el.style.setProperty('--bcol', b.color);
+  el.innerHTML = `
+    <div class="branch-head" style="--bcol:${b.color}">
+      <span class="caret">▼</span>
+      <div class="bt">
+        <h2>${b.title}</h2>
+        <div class="meta">${b.meta}</div>
+      </div>
+      <div class="branch-films">${b.films}</div>
+    </div>
+    <div class="branch-body">
+      <div class="track">
+        ${b.nodes.map(n=>`
+          <div class="node ${n.c}">
+            <div class="yr">${n.y}</div>
+            <div class="ev">${n.t}${n.tag?`<span class="tag ${n.tag[1]}">${n.tag[0]}</span>`:''}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  el.querySelector('.branch-head').addEventListener('click',()=>el.classList.toggle('collapsed'));
+  rail.appendChild(el);
+});
+
+const chars=document.getElementById('chars');
+CHARS.forEach(c=>{
+  const initials=c.n.split(/[\s\/]+/).slice(0,2).map(w=>w[0]).join('');
+  chars.insertAdjacentHTML('beforeend',`
+    <div class="char">
+      <div class="av" style="background:${c.c}">${initials}</div>
+      <div><div class="nm">${c.n}</div><div class="rl">${c.r}</div></div>
+    </div>`);
+});
+
+const models=document.getElementById('models');
+MODELS.forEach(m=>models.insertAdjacentHTML('beforeend',
+  `<div class="model"><div class="mn">${m.n}</div><div class="md">${m.d}</div></div>`));
+
+const paras=document.getElementById('paras');
+PARAS.forEach(p=>paras.insertAdjacentHTML('beforeend',`<div class="para-item">${p.t}</div>`));
+
+// ---- filters ----
+document.getElementById('controls').addEventListener('click',e=>{
+  const btn=e.target.closest('.btn'); if(!btn) return;
+  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f=btn.dataset.f;
+  document.querySelectorAll('.branch').forEach(br=>{
+    br.classList.toggle('dim', f!=='all' && br.dataset.id!==f);
+  });
+});
+</script>
+</body>
+</html>

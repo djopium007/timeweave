@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TimeWeave — Explore Movie Timelines</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#141925; --panel2:#1b2230; --line:#27303f;
+    --accent:#6c8cff; --accent2:#28d7e0; --hot:#ff2a1f;
+    --txt:#eef2f8; --muted:#94a1b5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Arial,sans-serif;
+    background:radial-gradient(1000px 500px at 85% -10%,#16213f 0%,transparent 60%),var(--bg);
+    color:var(--txt);line-height:1.55}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+
+  nav{display:flex;align-items:center;gap:24px;padding:18px 0;border-bottom:1px solid var(--line)}
+  .logo{font-weight:800;font-size:20px;letter-spacing:-.3px}
+  .logo span{color:var(--accent)}
+  nav .links{display:flex;gap:22px;margin-left:auto;font-size:14px;color:var(--muted)}
+  nav .links a:hover{color:#fff}
+  .cta{background:var(--accent);color:#0b0e14;padding:8px 16px;border-radius:999px;font-weight:700;font-size:13px}
+
+  .hero{padding:64px 0 40px;text-align:center}
+  .hero h1{font-size:46px;margin:0 0 14px;font-weight:800;letter-spacing:-1px;line-height:1.05}
+  .hero h1 .g{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--muted);max-width:620px;margin:0 auto 26px;font-size:17px}
+  .search{display:flex;max-width:520px;margin:0 auto;gap:8px}
+  .search input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:999px;
+    padding:13px 20px;color:var(--txt);font-size:15px;outline:none}
+  .search input:focus{border-color:var(--accent)}
+  .search button{background:var(--accent);border:none;color:#0b0e14;font-weight:700;border-radius:999px;padding:0 22px;cursor:pointer}
+
+  .section-h{display:flex;align-items:baseline;gap:14px;margin:48px 0 18px}
+  .section-h h2{font-size:22px;margin:0}
+  .section-h span{color:var(--muted);font-size:13px}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel);
+    transition:.18s;cursor:pointer;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-4px);border-color:var(--accent)}
+  .thumb{height:120px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19px;
+    letter-spacing:.5px;position:relative;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+  .thumb.live::after{content:"LIVE DEMO";position:absolute;top:10px;right:10px;background:var(--hot);
+    font-size:10px;font-weight:800;letter-spacing:.1em;padding:3px 8px;border-radius:5px}
+  .thumb.soon{filter:grayscale(.4) brightness(.8)}
+  .card .body{padding:14px 16px}
+  .card .body h3{margin:0 0 5px;font-size:16px}
+  .card .body p{margin:0;color:var(--muted);font-size:13px}
+  .badge{display:inline-block;margin-top:10px;font-size:11px;color:var(--accent2);border:1px solid var(--line);
+    padding:2px 9px;border-radius:6px}
+  .badge.soon{color:var(--muted)}
+
+  .featured{margin-top:30px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,var(--panel),var(--panel2));
+    padding:30px;display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center}
+  @media(max-width:780px){.featured{grid-template-columns:1fr}}
+  .featured .tag{color:var(--hot);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+  .featured h2{font-size:30px;margin:8px 0 12px}
+  .featured p{color:var(--muted);margin:0 0 20px}
+  .featured a.open{display:inline-block;background:var(--hot);color:#fff;font-weight:700;padding:11px 22px;border-radius:999px}
+  .mini{border:1px solid var(--line);border-radius:12px;background:#0a0c10;padding:16px;font-size:12px}
+  .mini .row{display:flex;gap:8px;padding:7px 0;border-bottom:1px dashed #20262f;align-items:center}
+  .mini .row:last-child{border:none}
+  .mini .d{width:9px;height:9px;border-radius:50%;flex:none}
+
+  .how{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+  @media(max-width:700px){.how{grid-template-columns:1fr}}
+  .step{border:1px solid var(--line);border-radius:14px;padding:20px;background:var(--panel)}
+  .step .num{width:34px;height:34px;border-radius:9px;background:var(--accent);color:#0b0e14;font-weight:800;
+    display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+  .step h4{margin:0 0 6px;font-size:15px}
+  .step p{margin:0;color:var(--muted);font-size:13.5px}
+
+  .contrib{margin-top:40px;border:1px dashed var(--line);border-radius:16px;padding:26px;text-align:center;background:var(--panel)}
+  .contrib h3{margin:0 0 8px;font-size:20px}
+  .contrib p{color:var(--muted);max-width:560px;margin:0 auto 16px}
+
+  footer{margin:56px 0 30px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;
+    background:var(--panel2);border:1px solid var(--accent);padding:12px 20px;border-radius:10px;font-size:14px;
+    transition:.25s;pointer-events:none;z-index:50}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <div class="logo">Time<span>Weave</span></div>
+    <div class="links">
+      <a href="#explore">Explore</a>
+      <a href="#how">How it works</a>
+      <a href="#contribute">Contribute</a>
+      <a href="timeweave.html">Polished view ↗</a>
+      <a class="cta" href="#contribute">Submit a timeline</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>Untangle any movie's <span class="g">timeline</span>.</h1>
+    <p>Branching futures, time loops, and multiverse forks — mapped into clean, interactive visuals. Start with the franchises that broke our brains.</p>
+    <div class="search">
+      <input id="q" placeholder="Search a film or franchise…  e.g. Terminator, Dune, Tenet">
+      <button onclick="searchToast()">Search</button>
+    </div>
+  </section>
+
+  <div id="explore"></div>
+  <div class="featured">
+    <div>
+      <div class="tag">Featured map · fully built</div>
+      <h2>The Complete Terminator Timeline</h2>
+      <p>Six films, four divergent futures, and a tangle of bootstrap paradoxes — filterable by branch, with characters, machine models, and every Judgment Day.</p>
+      <a class="open" href="terminator-timeline-map.html">Open the interactive map →</a>
+    </div>
+    <div class="mini">
+      <div class="row"><span class="d" style="background:#ff2a1f"></span> Original Loop — T1 · T2 (1984 / JD 1997)</div>
+      <div class="row"><span class="d" style="background:#ffb02e"></span> Delayed JD — T3 · Salvation (JD 2004)</div>
+      <div class="row"><span class="d" style="background:#28d7e0"></span> Genisys Reboot — nexus point, JD 2017</div>
+      <div class="row"><span class="d" style="background:#39d98a"></span> Dark Fate — Skynet erased, Legion rises</div>
+    </div>
+  </div>
+
+  <div class="featured" style="grid-template-columns:1.1fr 1fr;margin-top:18px">
+    <div>
+      <div class="tag" style="color:var(--accent)">Featured map · fully built</div>
+      <h2>The Complete X-Men Timeline</h2>
+      <p>Thirteen films across one continuity that splits in 1973 — when Mystique's choice in Days of Future Past forks the saga into a doomed future and a corrected one. Filterable by branch, with characters, mutant tech, and every Phoenix.</p>
+      <a class="open" href="xmen-timeline-map.html" style="background:var(--accent);color:#0b0e14">Open the interactive map →</a>
+    </div>
+    <div class="mini">
+      <div class="row"><span class="d" style="background:#2f80ed"></span> Shared Origins — First Class · Origins (3600 BC–1973)</div>
+      <div class="row"><span class="d" style="background:#ff5b5b"></span> Original Timeline — trilogy · The Wolverine (dark future, erased)</div>
+      <div class="row"><span class="d" style="background:#39d98a"></span> Revised Timeline — Apocalypse · Dark Phoenix · Deadpool · Logan</div>
+    </div>
+  </div>
+
+  <div class="featured" style="grid-template-columns:1.1fr 1fr;margin-top:18px">
+    <div>
+      <div class="tag" style="color:#d9a441">Featured map · fully built</div>
+      <h2>The Complete Dune Chronology</h2>
+      <p>Not a multiverse but a single 16,000-year line, told in five epochs — from humanity's first launch off Old Earth, through the thinking-machine wars, the desert war on Arrakis, the God Emperor's 3,500-year peace, and the Scattering that folds back to where it began.</p>
+      <a class="open" href="dune-timeline.html" style="background:#d9a441;color:#0b0e14">Open the interactive map →</a>
+    </div>
+    <div class="mini">
+      <div class="row"><span class="d" style="background:#28d7e0"></span> Epoch I — The Old Empire & the Machines</div>
+      <div class="row"><span class="d" style="background:#ff5a3c"></span> Epoch II — The Butlerian Jihad</div>
+      <div class="row"><span class="d" style="background:#ffb02e"></span> Epoch III — House Corrino & the Desert War</div>
+      <div class="row"><span class="d" style="background:#39d98a"></span> Epoch IV — The Atreides Empire & the God Emperor</div>
+      <div class="row"><span class="d" style="background:#b07cff"></span> Epoch V — The Scattering & Kralizek</div>
+    </div>
+  </div>
+
+  <div class="featured" style="grid-template-columns:1.1fr 1fr;margin-top:18px">
+    <div>
+      <div class="tag" style="color:#ff6b1f">Featured map · fully built</div>
+      <h2>Tenet, Untangled</h2>
+      <p>One film, one predestined loop, and four world-lines doubling back through it. Read the objective chronology first, then trace how the Protagonist, Neil, and Kat & Sator each thread forward and backward through the same inverted events.</p>
+      <a class="open" href="tenet-timeline-map.html" style="background:#ff6b1f;color:#0b0e14">Open the interactive map →</a>
+    </div>
+    <div class="mini">
+      <div class="row"><span class="d" style="background:#ff6b1f"></span> The Grand Loop — Objective Chronology</div>
+      <div class="row"><span class="d" style="background:#ff2a1f"></span> The Protagonist's Path</div>
+      <div class="row"><span class="d" style="background:#28d7e0"></span> Neil's Path (Max → Neil)</div>
+      <div class="row"><span class="d" style="background:#b07cff"></span> Kat & Sator's Mirror</div>
+    </div>
+  </div>
+
+  <div class="section-h"><h2>Explore timelines</h2><span>Click any card</span></div>
+  <div class="grid" id="cards"></div>
+
+  <div class="section-h" id="how"><h2>How it works</h2></div>
+  <div class="how">
+    <div class="step"><div class="num">1</div><h4>Pick a franchise</h4><p>Choose any film series with non-linear time, sequels, reboots, or alternate cuts.</p></div>
+    <div class="step"><div class="num">2</div><h4>Follow the branches</h4><p>Each timeline splits into colored branches. Filter to one, or see how they interconnect.</p></div>
+    <div class="step"><div class="num">3</div><h4>Drill into the nodes</h4><p>Characters, milestones, and paradoxes are tagged and cross-linked across every film.</p></div>
+  </div>
+
+  <div class="contrib" id="contribute">
+    <h3>Know a timeline we're missing?</h3>
+    <p>The community builds TimeWeave together. Submit a new map, suggest a correction, or fork an existing one — every contribution is reviewed before it goes live.</p>
+    <div class="search" style="max-width:460px">
+      <input id="sug" placeholder="Suggest a film or franchise…">
+      <button onclick="suggestToast()">Submit</button>
+    </div>
+  </div>
+
+  <footer>
+    <div>© 2026 TimeWeave — a community movie-timeline wiki. Prototype.</div>
+    <div>Explore · API · Contribute · About</div>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CARDS=[
+  {t:"Terminator", s:"6 films · 4 branches", g:"linear-gradient(135deg,#ff2a1f,#7a0d08)", live:true, badge:"Live demo", href:"terminator-timeline-map.html"},
+  {t:"X-Men", s:"13 films · Days-of-Future-Past split", g:"linear-gradient(135deg,#2f80ed,#0a2540)", live:true, badge:"Live demo", href:"xmen-timeline-map.html"},
+  {t:"Dune", s:"11 films/books · 5 epochs", g:"linear-gradient(135deg,#d9a441,#6b3e12)", live:true, badge:"Live demo", href:"dune-timeline.html"},
+  {t:"Tenet", s:"1 film · 4 world-lines", g:"linear-gradient(135deg,#ff6b1f,#101a3a)", live:true, badge:"Live demo", href:"tenet-timeline-map.html"},
+  {t:"Back to the Future", s:"3 films · 4 timelines", g:"linear-gradient(135deg,#ff8a00,#b22f00)"},
+  {t:"Planet of the Apes", s:"Reboot & original loop", g:"linear-gradient(135deg,#5a7d3a,#1c2a12)"}
+];
+const cards=document.getElementById('cards');
+CARDS.forEach(c=>{
+  const el=document.createElement(c.live?'a':'div');
+  el.className='card';
+  if(c.live) el.href=c.href;
+  el.innerHTML=`
+    <div class="thumb ${c.live?'live':'soon'}" style="background:${c.g}">${c.t}</div>
+    <div class="body">
+      <h3>${c.t}</h3>
+      <p>${c.s}</p>
+      <span class="badge ${c.live?'':'soon'}">${c.live?'Interactive map ready':'Coming soon'}</span>
+    </div>`;
+  if(!c.live) el.onclick=()=>toast(`"${c.t}" map is on the roadmap — want to help build it? Scroll to Contribute.`);
+  cards.appendChild(el);
+});
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),2800);}
+function searchToast(){const v=document.getElementById('q').value.trim();
+  if(/terminator|skynet|sarah connor|john connor/i.test(v)){location.href='terminator-timeline-map.html';return;}
+  if(/x-?men|wolverine|deadpool|logan|mutant|phoenix|magneto|xavier/i.test(v)){location.href='xmen-timeline-map.html';return;}
+  if(/dune|arrakis|atreides|paul|harkonnen|fremen|spice|muad/i.test(v)){location.href='dune-timeline.html';return;}
+  if(/tenet|inversion|inverted|protagonist|sator|neil|algorithm|turnstile/i.test(v)){location.href='tenet-timeline-map.html';return;}
+  toast(v?`No map for "${v}" yet — try Terminator, X-Men, Dune or Tenet, or suggest it below.`:'Type a film or franchise to search.');}
+function suggestToast(){const v=document.getElementById('sug').value.trim();
+  toast(v?`Thanks! "${v}" has been added to the review queue.`:'Enter a title to suggest.');
+  document.getElementById('sug').value='';}
+</script>
+</body>
+</html>
