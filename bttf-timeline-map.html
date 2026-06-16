@@ -135,9 +135,9 @@
 <script>
 const DATA = {
   "franchise": "Back to the Future",
-  "tagline": "Three films, one DeLorean, and a 30-year stretch of road that the heroes keep re-paving behind them.",
-  "intro": "Back to the Future isn't a multiverse — it's a single road through time that gets edited in place. Each trip overwrites the future the travellers came from: Marty's 1955 visit rewrites 1985 into a better version, Old Biff's stolen almanac corrupts it into a dystopia that has to be erased, and a stray lightning bolt strands Doc in 1885. Read it as one timeline with three rewrites, plus the doomed alternate that the heroes undo.",
-  "accent": "#ff8a00",
+  "tagline": "Three films, one DeLorean, and a timeline overwritten so many times even Doc needs a whiteboard.",
+  "intro": "The Back to the Future trilogy isn't a branching multiverse so much as a single timeline that keeps getting erased and rewritten. Each trip to the past overwrites the present the travelers came from, so the 'branches' here are the successive realities Marty and Doc create: the world before any time travel, the improved 1985 that Marty's first trip produces, the dystopian 'Hell Valley' that Old Biff's stolen almanac spawns, and the restored timeline that the 1885 adventure finally locks in. Read them top to bottom as a chain of overwrites, not as parallel worlds.",
+  "accent": "#5ad1ff",
   "films": [
     {
       "title": "Back to the Future",
@@ -156,191 +156,17 @@ const DATA = {
     {
       "id": "b1",
       "title": "The Original Timeline",
-      "color": "#28d7e0",
-      "films": [
-        "Back to the Future"
-      ],
-      "summary": "The 1985 Marty grew up in — before he ever travelled. A meek George, a dominant Biff, a family going nowhere.",
-      "nodes": [
-        {
-          "era": "Nov 5, 1955",
-          "type": "event",
-          "text": "A teenage <b>George McFly<\/b> is spied on and bullied by <b>Biff Tannen<\/b>; he never finds the nerve to stand up for himself.",
-          "tags": [
-            {
-              "label": "George McFly",
-              "kind": "character"
-            }
-          ]
-        },
-        {
-          "era": "Nov 12, 1955",
-          "type": "event",
-          "text": "George and <b>Lorraine<\/b> share their first kiss at the Enchantment Under the Sea dance and eventually marry — but as timid, unhappy adults.",
-          "tags": [
-            {
-              "label": "Lorraine",
-              "kind": "character"
-            }
-          ]
-        },
-        {
-          "era": "Oct 26, 1985",
-          "type": "turning-point",
-          "text": "In the original 1985, the McFlys are downtrodden: George is bullied by his supervisor Biff, and Marty's siblings are dead-end. This is the world Marty is about to overwrite.",
-          "tags": [
-            {
-              "label": "Hill Valley",
-              "kind": "faction"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "b2",
-      "title": "The Improved 1985",
-      "color": "#39d98a",
+      "color": "#ff5e5e",
       "films": [
         "Back to the Future",
-        "Back to the Future Part II"
-      ],
-      "summary": "Marty's accidental edits to 1955 rewrite his own present into a brighter one — the timeline the saga treats as 'correct'.",
-      "nodes": [
-        {
-          "era": "Oct 26, 1985 · 1:35 AM",
-          "type": "turning-point",
-          "text": "At Twin Pines Mall, <b>Doc Brown<\/b> debuts the DeLorean time machine. Libyans gun him down; <b>Marty<\/b> flees to <b>Nov 5, 1955<\/b> to escape.",
-          "tags": [
-            {
-              "label": "DeLorean",
-              "kind": "model"
-            },
-            {
-              "label": "Doc Brown",
-              "kind": "character"
-            }
-          ]
-        },
-        {
-          "era": "Nov 5, 1955",
-          "type": "paradox",
-          "text": "Marty arrives, runs down one of the twin pines (rechristening it 'Lone Pine Mall'), and accidentally intercepts the moment his parents were meant to meet — erasing his own existence.",
-          "tags": [
-            {
-              "label": "Erasure Paradox",
-              "kind": "paradox"
-            }
-          ]
-        },
-        {
-          "era": "Nov 12, 1955 · 10:04 PM",
-          "type": "turning-point",
-          "text": "Marty engineers his parents' kiss at the dance and coaches George to deck Biff. A bolt of lightning on the clock tower powers the DeLorean home.",
-          "tags": [
-            {
-              "label": "Clock Tower",
-              "kind": "model"
-            }
-          ]
-        },
-        {
-          "era": "Oct 26, 1985 · 1:24 AM",
-          "type": "resolution",
-          "text": "Marty returns to a transformed present: George is a confident published author, Biff waxes the family's cars, and the McFlys are thriving. A future Doc whisks Marty and Jennifer to 2015.",
-          "tags": [
-            {
-              "label": "Improved Future",
-              "kind": "faction"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "b3",
-      "title": "Biff's Alternate 1985 — Hell Valley",
-      "color": "#ff2a1f",
-      "films": [
-        "Back to the Future Part II"
-      ],
-      "summary": "Old Biff hijacks the time machine and hands his younger self a sports almanac, spawning a dystopian 1985 the heroes must erase.",
-      "nodes": [
-        {
-          "era": "Oct 21, 2015",
-          "type": "turning-point",
-          "text": "Doc brings Marty to the future to fix his kids. While they're distracted, the aged <b>Biff<\/b> overhears how the DeLorean works and steals it.",
-          "tags": [
-            {
-              "label": "Old Biff",
-              "kind": "character"
-            }
-          ]
-        },
-        {
-          "era": "Nov 12, 1955",
-          "type": "paradox",
-          "text": "Old Biff travels back and gives his teenage self the <b>Grays Sports Almanac<\/b> — 50 years of results to bet on — then quietly returns the car.",
-          "tags": [
-            {
-              "label": "Grays Almanac",
-              "kind": "model"
-            },
-            {
-              "label": "Bootstrap",
-              "kind": "paradox"
-            }
-          ]
-        },
-        {
-          "era": "1985 (alternate)",
-          "type": "death",
-          "text": "Biff's gambling empire warps reality: he runs a casino, married Lorraine, and had <b>George McFly murdered<\/b> on March 15, 1973. Hill Valley is a lawless 'Hell Valley'.",
-          "tags": [
-            {
-              "label": "George's Murder",
-              "kind": "event"
-            }
-          ]
-        },
-        {
-          "era": "Nov 12, 1955",
-          "type": "resolution",
-          "text": "Marty and Doc retrace the night, snatch the almanac back from young Biff, and burn it — collapsing the alternate timeline before it can take hold.",
-          "tags": [
-            {
-              "label": "Timeline Restored",
-              "kind": "faction"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "b4",
-      "title": "The 1885 Western Thread",
-      "color": "#ffb02e",
-      "films": [
-        "Back to the Future Part II",
         "Back to the Future Part III"
       ],
-      "summary": "A lightning strike flings Doc to the Old West; Marty follows to save him from a date with a Tannen and a tombstone.",
+      "summary": "The world before Marty and Doc ever touch the past: a timid McFly family, a fatal 1885, and a Doc who dies in a parking lot.",
       "nodes": [
         {
-          "era": "Nov 12, 1955",
-          "type": "paradox",
-          "text": "As Marty leaves 1955, lightning strikes the DeLorean and hurls <b>Doc<\/b> back to <b>Jan 1, 1885<\/b>. He mails Marty a letter explaining he's safe and living in the past.",
-          "tags": [
-            {
-              "label": "Lightning Jump",
-              "kind": "paradox"
-            }
-          ]
-        },
-        {
           "era": "1885",
-          "type": "event",
-          "text": "Doc becomes the town blacksmith and falls for schoolteacher <b>Clara Clayton<\/b>. Marty learns from a gravestone that Doc is shot dead by <b>Buford 'Mad Dog' Tannen<\/b> on Sep 7, 1885.",
+          "type": "death",
+          "text": "New schoolteacher <b>Clara Clayton<\/b> arrives in Hill Valley; a snake spooks her horses and she plunges into Shonash Ravine and dies, never reaching her post. The gorge is renamed <b>Clayton Ravine<\/b> in her memory.",
           "tags": [
             {
               "label": "Clara Clayton",
@@ -349,9 +175,31 @@ const DATA = {
           ]
         },
         {
-          "era": "Sep 2, 1885",
+          "era": "Fall 1955",
+          "type": "event",
+          "text": "A teenage <b>George McFly<\/b> spies on his crush <b>Lorraine Baines<\/b> from a tree, falls into the road, and is hit by Lorraine's father's car. Pitied into their home, George wins Lorraine, and they kiss at the Enchantment Under the Sea dance.",
+          "tags": [
+            {
+              "label": "George & Lorraine",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Nov 5, 1955",
           "type": "turning-point",
-          "text": "Marty drives the repaired DeLorean to 1885 to rescue Doc. With its fuel line torn, they plan to push the car to 88 mph using a stolen locomotive.",
+          "text": "<b>Doc Brown<\/b> slips hanging a clock, bangs his head, and envisions the <b>flux capacitor<\/b> — the device that makes time travel possible.",
+          "tags": [
+            {
+              "label": "Flux Capacitor",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "1985",
+          "type": "event",
+          "text": "The McFlys are downtrodden: George is bullied by his boss <b>Biff Tannen<\/b>, Lorraine is unhappy, and 17-year-old <b>Marty<\/b> dreams of rock stardom while best friend Doc finally perfects the DeLorean time machine.",
           "tags": [
             {
               "label": "DeLorean",
@@ -360,35 +208,190 @@ const DATA = {
           ]
         },
         {
-          "era": "Sep 7, 1885",
-          "type": "turning-point",
-          "text": "A makeshift steam engine drives the DeLorean over a missing-track ravine. Marty makes the jump; Doc stays behind for Clara as the locomotive plunges into the gorge.",
+          "era": "Oct 26, 1985",
+          "type": "death",
+          "text": "Doc test-runs the time machine at <b>Twin Pines Mall<\/b> using plutonium swindled from Libyan terrorists, who arrive and shoot him dead. Fleeing, Marty accidentally drives the DeLorean back to 1955.",
           "tags": [
             {
-              "label": "Train Push",
+              "label": "Doc killed",
+              "kind": "event"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2",
+      "title": "The Improved 1985 (Lone Pine)",
+      "color": "#ffb02e",
+      "films": [
+        "Back to the Future"
+      ],
+      "summary": "Marty's 1955 trip accidentally rewrites his own family into a happier, more confident version — and saves Doc.",
+      "nodes": [
+        {
+          "era": "Nov 1955",
+          "type": "paradox",
+          "text": "Marty crashes into a farmer's pine tree on arrival and, in town, takes the car hit meant for George — so <b>Lorraine falls for Marty<\/b> (alias 'Calvin Klein') instead of his father, threatening to erase Marty from existence.",
+          "tags": [
+            {
+              "label": "Erasure paradox",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "Nov 1955",
+          "type": "event",
+          "text": "Marty plants the idea for George's future sci-fi novel and gives <b>Chuck Berry<\/b>'s cousin an early earful of 'Johnny B. Goode' — three years before it was written in the original timeline.",
+          "tags": [
+            {
+              "label": "Bootstrap song",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "Nov 12, 1955",
+          "type": "turning-point",
+          "text": "At the Enchantment Under the Sea dance, <b>George stands up to Biff<\/b> and kisses Lorraine, securing his children's existence. Marty harnesses the clock-tower lightning strike to power his return to 1985.",
+          "tags": [
+            {
+              "label": "Turning point",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "Oct 26, 1985",
+          "type": "resolution",
+          "text": "Marty returns to a <b>Lone Pine Mall<\/b> (he flattened one of the twin pines) and a far better family: George is a published novelist, Biff details their cars, and Doc survives the Libyans by secretly wearing a bulletproof vest after taping back together Marty's warning letter.",
+          "tags": [
+            {
+              "label": "Doc survives",
+              "kind": "character"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b3",
+      "title": "Biff's Dystopia — Hell Valley (1985-A)",
+      "color": "#b07cff",
+      "films": [
+        "Back to the Future Part II"
+      ],
+      "summary": "A 2015 detour lets Old Biff hand his teenage self a sports almanac, spawning a corrupt alternate 1985 where Biff rules Hill Valley.",
+      "nodes": [
+        {
+          "era": "Oct 21, 2015",
+          "type": "event",
+          "text": "Doc brings Marty and Jennifer forward to stop their future kids from a botched robbery with <b>Griff Tannen<\/b>. Marty buys a <b>Grays Sports Almanac<\/b> of results from 1950–2000; Doc makes him toss it.",
+          "tags": [
+            {
+              "label": "Sports Almanac",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Oct 21, 2015",
+          "type": "turning-point",
+          "text": "<b>Old Biff<\/b> recognizes the flying DeLorean as a time machine, swipes the discarded almanac, and steals the car to deliver his fortune-making secret to the past.",
+          "tags": [
+            {
+              "label": "Old Biff steals it",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "Nov 12, 1955",
+          "type": "paradox",
+          "text": "Old Biff gives the almanac to his teenage self, telling him to keep it hidden and to kill anyone — a kid or a 'wild-eyed old man' — who comes asking about it. This seeds the dystopian branch.",
+          "tags": [
+            {
+              "label": "Bootstrap gift",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "1985-A",
+          "type": "death",
+          "text": "Almanac-rich <b>Biff<\/b> builds BiffCo and a casino, murders <b>George McFly<\/b>, forces a marriage to Lorraine, and turns Hill Valley into a crime-ridden 'Hell Valley.' The committed Doc-D and a dead George greet the returning travelers.",
+          "tags": [
+            {
+              "label": "George murdered",
+              "kind": "event"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b4",
+      "title": "The Restored Timeline (Eastwood Ravine)",
+      "color": "#39d98a",
+      "films": [
+        "Back to the Future Part II",
+        "Back to the Future Part III"
+      ],
+      "summary": "Marty and Doc burn the almanac, then untangle an 1885 detour that ends with Doc choosing love and the timeline finally secured.",
+      "nodes": [
+        {
+          "era": "Nov 12, 1955",
+          "type": "turning-point",
+          "text": "Re-entering 1955 alongside their first-movie selves, Marty and Doc chase the almanac through a car crash and finally <b>burn it<\/b>, restoring Biff to a harmless auto-detailer — but lightning then strikes the DeLorean and hurls Doc back to 1885.",
+          "tags": [
+            {
+              "label": "Almanac burned",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "1885",
+          "type": "event",
+          "text": "Stranded with fried time circuits, <b>Doc becomes a blacksmith<\/b>, hides the DeLorean in a mineshaft, and mails Marty fix-it instructions plus an order not to come back for him.",
+          "tags": [
+            {
+              "label": "Doc stranded",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "1885",
+          "type": "turning-point",
+          "text": "Doc saves <b>Clara Clayton<\/b> from her fatal fall and they fall in love — rewriting the ravine's history. Marty, defying the letter, drives back to 1885 to rescue Doc from being shot by <b>Buford 'Mad Dog' Tannen<\/b>.",
+          "tags": [
+            {
+              "label": "Clara saved",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "1885",
+          "type": "turning-point",
+          "text": "Marty out-duels Mad Dog Tannen; he and Doc hijack a locomotive to push the fuel-less DeLorean to 88 mph. Doc leaps off to save Clara, and Marty rockets home alone.",
+          "tags": [
+            {
+              "label": "Train push",
               "kind": "model"
             }
           ]
         },
         {
           "era": "Oct 27, 1985",
-          "type": "death",
-          "text": "Marty arrives in 1985 just as a freight train <b>destroys the DeLorean<\/b>. The time machine — and the temptation to keep editing time — is gone.",
-          "tags": [
-            {
-              "label": "DeLorean Destroyed",
-              "kind": "event"
-            }
-          ]
-        },
-        {
-          "era": "1985",
           "type": "resolution",
-          "text": "Doc reappears in a flying, steam-powered time-train with Clara and their sons Jules and Verne — proof the family found its own happy ending off the main road.",
+          "text": "Marty returns for good to a timeline like the one he wanted — now with <b>Eastwood Ravine<\/b> — avoids the car crash that would have wrecked his music career, and watches Doc return in a flying steam-train time machine with Clara and sons <b>Jules and Verne<\/b>.",
           "tags": [
             {
-              "label": "Time Train",
-              "kind": "model"
+              "label": "Timeline secured",
+              "kind": "event"
             }
           ]
         }
@@ -398,71 +401,68 @@ const DATA = {
   "characters": [
     {
       "name": "Marty McFly",
-      "role": "Reluctant time traveller who keeps having to repair the timelines he disturbs.",
-      "color": "#ff8a00"
+      "role": "The teen who keeps accidentally rewriting his own family while trying to get home.",
+      "color": "#5ad1ff"
     },
     {
-      "name": "Dr. Emmett 'Doc' Brown",
-      "role": "Inventor of the DeLorean time machine; mentor stranded across three eras.",
-      "color": "#28d7e0"
+      "name": "Doc Brown",
+      "role": "Inventor of the flux capacitor; dies, survives, gets stranded in 1885, and ends up married to Clara.",
+      "color": "#ffb02e"
     },
     {
       "name": "George McFly",
-      "role": "Marty's father — meek in one timeline, confident author in another, murdered in a third.",
+      "role": "Timid father turned confident novelist — and, in Biff's dystopia, a murder victim.",
       "color": "#39d98a"
     },
     {
       "name": "Lorraine Baines",
-      "role": "Marty's mother; her 1955 romance is the hinge the whole saga turns on.",
-      "color": "#39d98a"
+      "role": "Marty's mother, whose 1955 affections nearly erase him from existence.",
+      "color": "#ff8fb0"
     },
     {
       "name": "Biff Tannen",
-      "role": "Bully across generations; the almanac makes his older self the saga's great spoiler.",
-      "color": "#ff2a1f"
+      "role": "Bully across generations; the almanac briefly makes him king of Hell Valley.",
+      "color": "#b07cff"
     },
     {
       "name": "Clara Clayton",
-      "role": "1885 schoolteacher who gives Doc a reason to stay in the past.",
-      "color": "#ffb02e"
+      "role": "The schoolteacher fated to die in the ravine until Doc saves her in the restored timeline.",
+      "color": "#ff5e5e"
     },
     {
-      "name": "Jennifer Parker",
-      "role": "Marty's girlfriend, swept along into 2015.",
-      "color": "#ff8a00"
+      "name": "Buford 'Mad Dog' Tannen",
+      "role": "Biff's 1885 ancestor; the gunslinger who shoots Doc in the original 1885.",
+      "color": "#c98a5a"
     }
   ],
   "items": [
     {
-      "name": "DeLorean Time Machine",
-      "desc": "A converted DMC-12; reaches 88 mph and needs 1.21 gigawatts to jump."
+      "name": "DeLorean DMC-12",
+      "desc": "Doc's time machine; needs 1.21 gigawatts and 88 mph to jump."
     },
     {
       "name": "Flux Capacitor",
-      "desc": "The component that 'makes time travel possible,' envisioned by Doc in 1955."
+      "desc": "The Y-shaped device, glimpsed in Doc's 1955 vision, that makes time travel possible."
     },
     {
       "name": "Grays Sports Almanac",
-      "desc": "1950-2000 results; Old Biff's gift that corrupts the timeline."
+      "desc": "1950–2000 results book; Old Biff's gift that creates the dystopian timeline."
     },
     {
       "name": "Mr. Fusion",
-      "desc": "Home energy reactor that powers the DeLorean on household garbage (post-2015)."
+      "desc": "Home reactor retrofit that lets the DeLorean run on garbage instead of plutonium."
     },
     {
-      "name": "Hoverboard",
-      "desc": "The 2015 levitating board Marty borrows during the future sequence."
-    },
-    {
-      "name": "Steam Time-Train",
-      "desc": "Doc's rebuilt flying locomotive that replaces the destroyed DeLorean."
+      "name": "Hover Conversion",
+      "desc": "2015 upgrade that lets the DeLorean — and later a steam train — fly."
     }
   ],
   "themes": [
-    "Editing in place: there's one timeline, and each trip overwrites the future the travellers left — no parallel worlds, just revisions.",
-    "The bootstrap almanac: Old Biff funds his own empire with knowledge that only exists because he travelled back to plant it.",
-    "Small hinges, big doors: a single 1955 kiss decides whether the McFlys thrive, suffer, or never exist.",
-    "Letting go: the saga ends by destroying the time machine — the only real fix is to stop rewriting and live forward."
+    "<b>Overwrite, not parallel:<\/b> each trip erases the present the travelers left, so the 'branches' are a chain of successive realities, not coexisting worlds.",
+    "<b>The bootstrap loop of Johnny B. Goode:<\/b> Marty learns the song from Chuck Berry, then plays it for Berry to copy — the tune has no original author.",
+    "<b>The almanac paradox:<\/b> Old Biff uses future knowledge to enrich his past self, spawning a timeline whose Biff could only exist because the almanac arrived from a future that the new timeline rewrites.",
+    "<b>A ravine renamed three times:<\/b> Clayton (Clara dies) → Shonash (its older name) → Eastwood (Marty's fake death) traces the timeline's edits in a single landmark.",
+    "<b>'No one's future is written':<\/b> Doc's closing creed — the films treat time as endlessly editable rather than fixed."
   ]
 };
 

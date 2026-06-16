@@ -3,28 +3,33 @@
 An interactive "timeline wiki" that maps branching movie timelines — sequels, reboots,
 time-loops, and multiverse forks — as clean, cinematic branch diagrams.
 
-**Live:** https://timeweave-three.vercel.app
+The site is the self-contained **TimeWeave** build: `index.html` is one file with all
+franchises embedded (hero, search, franchise grid, per-franchise timeline with a
+Rail ⇄ Fork-map toggle, branch filters, and character / item / theme panels).
 
-## What's here
+## Franchises (live)
 
-| File | Description |
-|------|-------------|
-| `index.html` | The hub — hero, search, featured maps, franchise grid, contribute CTA. Links to every map. |
-| `terminator-timeline-map.html` | Terminator — 6 films, 4 branches. |
-| `xmen-timeline-map.html` | X-Men — 13 films, 3 branches (the 1973 Days-of-Future-Past split). |
-| `dune-timeline.html` | Dune — 16,000-year chronology across 5 epochs. |
-| `tenet-timeline-map.html` | Tenet — 1 film, 4 world-lines through one predestined loop. |
-| `timeweave.html` | The polished single-file "TimeWeave" build with all 4 franchises embedded. |
+- **Terminator** — 6 films, 4 branches
+- **X-Men** — 13 films, 3 branches (the 1973 Days-of-Future-Past split)
+- **Dune** — 16,000-year chronology across 5 epochs
+- **Tenet** — 1 film, 4 world-lines through one predestined loop
+- **Back to the Future** — 3 films, 4 successive overwrites of one timeline
 
-## How it works
+Planet of the Apes remains a "coming soon" card.
 
-Every map is generated from a single JSON dataset per franchise, so **adding a new
-movie = adding one data file** — no layout changes. Branches carry a colour and a film
-list; nodes use a type (`event` / `turning-point` / `paradox` / `death` / `resolution`)
-and colour-coded tags. Characters, key items/tech, and recurring themes render in side
-panels.
+## Files
+
+- `index.html` — the deployable TimeWeave site (all data embedded). This is the homepage.
+- `*-timeline-map.html` — standalone single-franchise map pages (optional, not linked from the hub).
+- `timeweave.html` — a copy of the TimeWeave build.
+
+## Editing / adding a franchise
+
+Each franchise is one object in the `data` map inside the build. Adding a movie = adding
+one object (id, title, accent, tagline, blurb, meta, framing, forkLabel, films, branches,
+characters, items, themes). Node `type` ∈ event | turning-point | paradox | death |
+resolution; tag `kind` maps to a fixed colour.
 
 ## Deploy
 
-Pure static HTML — no build step. Hosted on Vercel; any static host works
-(`output directory: .`).
+Pure static HTML — no build step. Hosted on Vercel (`output directory: .`).
