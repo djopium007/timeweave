@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline Map</title>
+<style>
+  :root{
+    --bg:#0a0c10; --panel:#11151c; --panel2:#161b24; --line:#222a36;
+    --accent:#ff2a1f; --cyan:#28d7e0; --amber:#ffb02e; --green:#39d98a; --purple:#b07cff;
+    --txt:#e7ecf3; --muted:#8b97a8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, #06121a 0%, transparent 55%),
+      var(--bg);
+    color:var(--txt);
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 22px 80px}
+  header.hero{
+    border:1px solid var(--line);border-radius:16px;padding:30px 30px 26px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%), var(--panel);
+  }
+  header.hero::after{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,.012) 38px 39px);pointer-events:none}
+  .eyebrow{letter-spacing:.34em;font-size:11px;color:var(--accent);text-transform:uppercase;font-weight:700}
+  h1{font-size:38px;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+  h1 .glow{color:var(--accent);text-shadow:0 0 22px color-mix(in srgb, var(--accent) 55%, transparent)}
+  .sub{color:var(--muted);max-width:780px;font-size:15px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+  .legend .chip{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 8px}
+  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--txt);padding:9px 15px;border-radius:999px;
+    cursor:pointer;font-size:13px;font-weight:600;transition:.15s;white-space:nowrap}
+  .btn:hover{border-color:var(--accent);color:#fff}
+  .btn.active{background:var(--accent);border-color:var(--accent);color:#fff;
+    box-shadow:0 0 18px color-mix(in srgb, var(--accent) 40%, transparent)}
+
+  .rail{display:flex;flex-direction:column;margin-top:20px}
+  .branch{border:1px solid var(--line);border-radius:14px;margin-bottom:22px;overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));transition:.2s}
+  .branch.dim{opacity:.32;filter:saturate(.4)}
+  .branch-head{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;border-left:5px solid var(--bcol,var(--accent))}
+  .branch-head .bt{flex:1}
+  .branch-head h2{margin:0;font-size:19px;font-weight:700}
+  .branch-head .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .branch-films{font-size:11.5px;color:var(--muted);text-align:right;line-height:1.4;max-width:38%}
+  .branch-body{padding:0 20px 8px}
+  .caret{color:var(--muted);font-size:13px;transition:.2s}
+  .branch.collapsed .branch-body{display:none}
+  .branch.collapsed .caret{transform:rotate(-90deg)}
+
+  .track{position:relative;margin:8px 0 18px;padding-left:26px}
+  .track::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--bcol),transparent);opacity:.6}
+  .node{position:relative;margin:0 0 14px;padding:0 0 0 4px}
+  .node::before{content:"";position:absolute;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--bcol)}
+  .node.turning-point::before{background:var(--bcol)}
+  .node.paradox::before{border-color:var(--purple);box-shadow:0 0 10px color-mix(in srgb,var(--purple) 60%,transparent)}
+  .node.death::before{border-color:var(--accent);background:var(--accent)}
+  .node.resolution::before{border-color:var(--green);background:var(--green)}
+  .node .yr{font-size:12px;font-weight:800;color:var(--bcol);letter-spacing:.04em}
+  .node .ev{font-size:14px;color:var(--txt)}
+  .node .ev b{color:#fff}
+  .tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    padding:1px 7px;border-radius:5px;margin-left:6px;vertical-align:middle;border:1px solid transparent}
+  .tag.paradox{background:rgba(176,124,255,.16);color:var(--purple);border-color:rgba(176,124,255,.4)}
+  .tag.event{background:rgba(255,42,31,.16);color:#ff6a5f;border-color:rgba(255,42,31,.4)}
+  .tag.model{background:rgba(40,215,224,.14);color:var(--cyan);border-color:rgba(40,215,224,.35)}
+  .tag.faction{background:rgba(57,217,138,.14);color:var(--green);border-color:rgba(57,217,138,.35)}
+  .tag.character{background:rgba(255,176,46,.14);color:var(--amber);border-color:rgba(255,176,46,.35)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+  @media(max-width:880px){.grid2{grid-template-columns:1fr}.branch-films{display:none}}
+  .card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px 22px}
+  .card h3{margin:0 0 14px;font-size:16px;display:flex;align-items:center;gap:9px}
+  .card h3 .bar{width:4px;height:18px;border-radius:2px;background:var(--accent)}
+  .chars{display:flex;flex-direction:column;gap:9px}
+  .char{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:10px;background:var(--panel2);border:1px solid transparent;transition:.15s}
+  .char:hover{border-color:var(--line)}
+  .av{width:40px;height:40px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#0a0c10}
+  .char .nm{font-weight:700;font-size:14px}
+  .char .rl{font-size:12.5px;color:var(--muted)}
+  .models{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.models{grid-template-columns:1fr}}
+  .model{border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--panel2)}
+  .model .mn{font-weight:800;font-size:14px;color:var(--cyan)}
+  .model .md{font-size:12px;color:var(--muted);margin-top:3px}
+  .para-box{border:1px solid rgba(176,124,255,.35);border-radius:14px;background:rgba(176,124,255,.05);padding:20px 22px;margin-top:34px}
+  .para-box h3{color:var(--purple)}
+  .para-item{padding:10px 0;border-top:1px solid rgba(176,124,255,.15)}
+  .para-item:first-of-type{border-top:none}
+  .para-item b{color:#fff}
+  footer{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12.5px}
+  .hide{display:none !important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="title"></h1>
+    <p class="sub" id="intro"></p>
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background:var(--accent)"></span>Turning point / catastrophe</span>
+      <span class="chip"><span class="dot" style="background:var(--purple)"></span>Time-travel paradox</span>
+      <span class="chip"><span class="dot" style="background:var(--cyan)"></span>Machine / tech</span>
+      <span class="chip"><span class="dot" style="background:var(--green)"></span>Faction / resolution</span>
+    </div>
+  </header>
+
+  <div class="controls" id="controls"></div>
+  <div class="rail" id="rail"></div>
+
+  <div class="grid2">
+    <div class="card" id="charsCard"><h3><span class="bar"></span>Key Characters</h3><div class="chars" id="chars"></div></div>
+    <div class="card" id="itemsCard"><h3><span class="bar"></span>Key Items &amp; Tech</h3><div class="models" id="models"></div></div>
+  </div>
+
+  <div class="para-box" id="themesBox">
+    <h3><span class="bar" style="background:var(--purple)"></span>Recurring Themes &amp; Paradoxes</h3>
+    <div id="paras"></div>
+  </div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const DATA = {
+  "franchise": "Predator",
+  "tagline": "Nine films, three centuries of hunts, one disputed crossover — and a far future where the prey fights back.",
+  "intro": "The Predator saga isn't one line — it's layers. Earth-bound hunts from 1719 to the 2010s, a hotly disputed Alien crossover, and a new Trachtenberg era that reaches from Viking raids to the 25th century. Each branch below is one self-consistent slice of the hunt.",
+  "accent": "#39d98a",
+  "films": [
+    {
+      "title": "Predator",
+      "year": 1987
+    },
+    {
+      "title": "Predator 2",
+      "year": 1990
+    },
+    {
+      "title": "Alien vs. Predator",
+      "year": 2004
+    },
+    {
+      "title": "Aliens vs. Predator: Requiem",
+      "year": 2007
+    },
+    {
+      "title": "Predators",
+      "year": 2010
+    },
+    {
+      "title": "The Predator",
+      "year": 2018
+    },
+    {
+      "title": "Prey",
+      "year": 2022
+    },
+    {
+      "title": "Predator: Killer of Killers",
+      "year": 2025
+    },
+    {
+      "title": "Predator: Badlands",
+      "year": 2025
+    }
+  ],
+  "branches": [
+    {
+      "id": "b1",
+      "title": "First Hunts on Earth",
+      "color": "#ffb02e",
+      "films": [
+        "Prey"
+      ],
+      "summary": "The earliest live-action contact: a Feral Predator meets the Comanche — and a famous pistol enters the story.",
+      "nodes": [
+        {
+          "era": "1718",
+          "type": "paradox",
+          "text": "The comic <b>Predator: 1718<\/b> has pirate captain <b>Raphael Adolini<\/b> gift his flintlock to a Yautja — a story <b>Prey<\/b> retcons a year later with a different Adolini.",
+          "tags": [
+            {
+              "label": "Retcon",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "1719",
+          "type": "turning-point",
+          "text": "<b>Naru<\/b>, a Comanche healer on the Great Plains, realises the thing slaughtering animals and hunters is no mountain lion — it's a primitive <b>Feral Predator<\/b>.",
+          "tags": [
+            {
+              "label": "Naru",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "1719",
+          "type": "event",
+          "text": "<b>Raphael Adolini<\/b>, a translator with the French trappers, gives Naru his flintlock pistol before the Predator kills him.",
+          "tags": [
+            {
+              "label": "Adolini's pistol",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "1719",
+          "type": "resolution",
+          "text": "Naru lures the Feral Predator into a bog and kills it with its own targeting tech, returning to her tribe with its head."
+        },
+        {
+          "era": "After 1719",
+          "type": "event",
+          "text": "The credits animation shows Yautja ships returning. How the pistol left the tribe and got back to the clan is pure speculation — a gift, most likely.",
+          "tags": [
+            {
+              "label": "Adolini's pistol",
+              "kind": "model"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2",
+      "title": "The Classic Hunts",
+      "color": "#ff2a1f",
+      "films": [
+        "Predator",
+        "Predator 2"
+      ],
+      "summary": "Jungle and city: sport hunters test humanity's best, and the U.S. government starts paying attention.",
+      "nodes": [
+        {
+          "era": "1987",
+          "type": "event",
+          "text": "The <b>Jungle Hunter<\/b> stalks Major <b>Dutch Schaefer<\/b>'s commando team in Central America, picking them off one by one.",
+          "tags": [
+            {
+              "label": "Dutch",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "1987",
+          "type": "turning-point",
+          "text": "Knocked into cool river mud, Dutch discovers it masks his heat signature. He mortally wounds the Predator — which triggers its <b>self-destruct<\/b> to erase the failed hunt.",
+          "tags": [
+            {
+              "label": "Self-destruct",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "1997",
+          "type": "event",
+          "text": "The <b>City Hunter<\/b> hunts gang-war Los Angeles during a heat wave. <b>Peter Keyes<\/b>' federal team — the <b>OWLF<\/b> — springs a heat-masked slaughterhouse trap that fails; only Lt. <b>Mike Harrigan<\/b> survives the fallout.",
+          "tags": [
+            {
+              "label": "OWLF",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "1997",
+          "type": "turning-point",
+          "text": "Harrigan chases the City Hunter to its ship and kills it in single combat.",
+          "tags": [
+            {
+              "label": "Harrigan",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "1997",
+          "type": "paradox",
+          "text": "An <b>Elder Predator<\/b> hands Harrigan a trophy: <b>Raphael Adolini's flintlock<\/b> — the pistol last seen with Naru's tribe in 1719.",
+          "tags": [
+            {
+              "label": "Adolini's pistol",
+              "kind": "model"
+            },
+            {
+              "label": "Loop closed",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "1997",
+          "type": "event",
+          "text": "A <b>Xenomorph skull<\/b> on the ship's trophy wall plants the seed of the Alien crossover.",
+          "tags": [
+            {
+              "label": "Xenomorph",
+              "kind": "model"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b3",
+      "title": "The AVP Crossover — Disputed Canon",
+      "color": "#28d7e0",
+      "films": [
+        "Alien vs. Predator",
+        "Aliens vs. Predator: Requiem"
+      ],
+      "summary": "Predators bred Xenomorphs on Earth for millennia — a history the Alien prequels later ignored, leaving these films in canon limbo.",
+      "nodes": [
+        {
+          "era": "Ancient past",
+          "type": "event",
+          "text": "Yautja taught early humans to build pyramids; in exchange, sacrifices hosted <b>Xenomorphs<\/b> for a rite-of-passage hunt every 100 years."
+        },
+        {
+          "era": "2004",
+          "type": "turning-point",
+          "text": "<b>Charles Bishop Weyland<\/b>'s team finds a pyramid 2,000 feet under Antarctic ice — bait, it turns out, to become hosts for the hunt.",
+          "tags": [
+            {
+              "label": "Weyland",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2004",
+          "type": "event",
+          "text": "The humans take the Predators' shoulder cannons, waking the <b>Queen<\/b> early. Two of three Predators die fast; <b>Alexa Woods<\/b> allies with the third, <b>Scar<\/b>, to wipe out the outbreak.",
+          "tags": [
+            {
+              "label": "Alexa Woods",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2004",
+          "type": "death",
+          "text": "Scar dies of his wounds — and a <b>Predalien<\/b> hybrid bursts from his chest aboard the departing Yautja ship.",
+          "tags": [
+            {
+              "label": "Predalien",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2004",
+          "type": "death",
+          "text": "<b>Requiem:<\/b> the ship crashes in Gunnison, Colorado. A veteran Predator cleaner and the Predalien mortally wound each other — then the government nukes the town.",
+          "tags": [
+            {
+              "label": "Nuke",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2004",
+          "type": "event",
+          "text": "A recovered Predator weapon lands with <b>Ms. Yutani<\/b> — a wink at the Weyland-Yutani future of the Alien films.",
+          "tags": [
+            {
+              "label": "Yutani",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "Meta",
+          "type": "paradox",
+          "text": "Ridley Scott's <b>Prometheus<\/b> and <b>Covenant<\/b> ignore this Xenomorph origin, while Predator films kept winking at AVP as late as 2018 — canon status: disputed.",
+          "tags": [
+            {
+              "label": "Canon dispute",
+              "kind": "paradox"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b4",
+      "title": "The Hybrid War Era",
+      "color": "#39d98a",
+      "films": [
+        "The Predator",
+        "Predators"
+      ],
+      "summary": "The Yautja start splicing DNA — sparking a feud within the species and a warning gift to humanity.",
+      "nodes": [
+        {
+          "era": "2016",
+          "type": "event",
+          "text": "The <b>OWLF<\/b> is disbanded and replaced by <b>Project Stargazer<\/b> — which is itself later shuttered for greed and incompetence.",
+          "tags": [
+            {
+              "label": "Stargazer",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2018",
+          "type": "event",
+          "text": "A fugitive Predator carrying spliced <b>human DNA<\/b> crash-lands with a mysterious package; Ranger <b>Quinn McKenna<\/b> mails its gear home as proof.",
+          "tags": [
+            {
+              "label": "McKenna",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2018",
+          "type": "turning-point",
+          "text": "An 11-foot hybrid <b>Upgrade Predator<\/b> arrives with Predator Hounds and executes the fugitive to reclaim the tech."
+        },
+        {
+          "era": "2018",
+          "type": "resolution",
+          "text": "The package was a gift: the <b>Predator Killer<\/b> — an armored suit built to fight Predators, left for a warming Earth the Yautja plan to claim.",
+          "tags": [
+            {
+              "label": "Predator Killer suit",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "After 2018",
+          "type": "event",
+          "text": "<b>Predators:<\/b> elite human killers wake on an off-world <b>game preserve<\/b>, hunted by a new, larger breed — the <b>Super Predators<\/b>.",
+          "tags": [
+            {
+              "label": "Super Predators",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "After 2018",
+          "type": "event",
+          "text": "Castaway <b>Noland<\/b> reveals a blood feud: the Super Predators hunt the classic Yautja they deem inferior — likely fallout of the DNA-splicing schism.",
+          "tags": [
+            {
+              "label": "Blood feud",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "After 2018",
+          "type": "resolution",
+          "text": "Two survivors kill their hunters but stay stranded — so no one on Earth learns the hunt has moved off-planet."
+        }
+      ]
+    },
+    {
+      "id": "b5",
+      "title": "Killer of Killers → Badlands: The Far Future",
+      "color": "#b07cff",
+      "films": [
+        "Predator: Killer of Killers",
+        "Predator: Badlands"
+      ],
+      "summary": "Trachtenberg's arc: the Yautja have been collecting history's greatest killers all along — and by the 25th century, one runt Yautja breaks the code.",
+      "nodes": [
+        {
+          "era": "841",
+          "type": "event",
+          "text": "Viking raider <b>Ursa<\/b> avenges her father, then drowns the hulking <b>Brute Predator<\/b> in an underwater duel; her son Anders dies of his wounds.",
+          "tags": [
+            {
+              "label": "Ursa",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "1629",
+          "type": "event",
+          "text": "In Japan, shinobi <b>Kenji<\/b> and his samurai brother Kiyoshi end a 20-year feud to kill the <b>Ninja Predator<\/b> together; only Kenji survives.",
+          "tags": [
+            {
+              "label": "Kenji",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "1942",
+          "type": "event",
+          "text": "WWII pilot <b>John Torres<\/b> downs an advanced Predator ship over the Atlantic — and is abducted from his home soon after.",
+          "tags": [
+            {
+              "label": "Torres",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Centuries",
+          "type": "turning-point",
+          "text": "The twist: victors of great hunts aren't left alone — the Yautja collect them into <b>cryosleep<\/b> for the ultimate test.",
+          "tags": [
+            {
+              "label": "Cryo-collection",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "Far future",
+          "type": "death",
+          "text": "On a proving-ground planet, the <b>Warlord Predator<\/b> forces the three to fight. <b>Ursa sacrifices herself<\/b> so Kenji and Torres can escape; a Yautja fleet hunts them.",
+          "tags": [
+            {
+              "label": "Ursa",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Far future",
+          "type": "paradox",
+          "text": "Mid-credits: <b>Dutch, Harrigan and Naru<\/b> are among hundreds in cryosleep — every champion of the earlier films was collected.",
+          "tags": [
+            {
+              "label": "The collection",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "~25th century",
+          "type": "event",
+          "text": "<b>Badlands<\/b> — the furthest-future entry in Predator or Alien. Runt Yautja <b>Dek<\/b> flees <b>Yautja Prime<\/b> after his father Njohrr kills his brother Kwei for sparing him.",
+          "tags": [
+            {
+              "label": "Dek",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "~25th century",
+          "type": "event",
+          "text": "On death planet <b>Genna<\/b>, Dek allies with legless <b>Weyland-Yutani<\/b> synth <b>Thia<\/b> and the creature <b>Bud<\/b> to hunt the regenerating apex monster, the <b>Kalisk<\/b>.",
+          "tags": [
+            {
+              "label": "Kalisk",
+              "kind": "model"
+            },
+            {
+              "label": "Weyland-Yutani",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "~25th century",
+          "type": "turning-point",
+          "text": "Thia's twin <b>Tessa<\/b> and her synths want the Kalisk for a corporate super-drug. The Kalisk is Bud's mother — and Tessa kills it."
+        },
+        {
+          "era": "~25th century",
+          "type": "resolution",
+          "text": "Dek, Thia and Bud destroy the synthetics, return to Yautja Prime, and Dek kills his father — as his <b>mother's ship<\/b> appears on the horizon."
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "name": "Naru",
+      "role": "Comanche healer who killed the Feral Predator in 1719 — later seen in Yautja cryosleep.",
+      "color": "#ffb02e"
+    },
+    {
+      "name": "Dutch Schaefer",
+      "role": "Major who beat the Jungle Hunter with mud and traps in 1987; collected by the Yautja.",
+      "color": "#ff2a1f"
+    },
+    {
+      "name": "Mike Harrigan",
+      "role": "LA cop who killed the City Hunter and received Adolini's pistol; also collected.",
+      "color": "#ff2a1f"
+    },
+    {
+      "name": "Peter Keyes",
+      "role": "OWLF agent whose slaughterhouse trap failed; his son Sean carries on in the tie-ins.",
+      "color": "#9aa6b6"
+    },
+    {
+      "name": "Alexa Woods",
+      "role": "Antarctic guide who fought beside a Predator against the Xenomorphs in AVP.",
+      "color": "#28d7e0"
+    },
+    {
+      "name": "Quinn McKenna",
+      "role": "Army Ranger who inherits the Predator Killer suit — humanity's hedge against invasion.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Noland",
+      "role": "Scavenger castaway on the game preserve; explains the Yautja blood feud.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Ursa",
+      "role": "Viking raider, killer of the Brute Predator; sacrifices herself on the proving ground.",
+      "color": "#b07cff"
+    },
+    {
+      "name": "Kenji & Torres",
+      "role": "Shinobi and WWII pilot — fellow abductees who escape the Warlord's game together.",
+      "color": "#b07cff"
+    },
+    {
+      "name": "Dek",
+      "role": "Badlands' runt Yautja protagonist who rejects the honour code and starts a new clan.",
+      "color": "#b07cff"
+    },
+    {
+      "name": "Thia",
+      "role": "Weyland-Yutani synthetic who becomes Dek's unlikely family (evil twin: Tessa).",
+      "color": "#28d7e0"
+    }
+  ],
+  "items": [
+    {
+      "name": "Adolini's flintlock pistol",
+      "desc": "Given to Naru in 1719, handed to Harrigan in 1997 — the franchise's connective tissue."
+    },
+    {
+      "name": "Bio-mask & cloak",
+      "desc": "Thermal-vision helmet and light-bending camouflage — the hunt's signature tech."
+    },
+    {
+      "name": "Plasmacaster",
+      "desc": "Shoulder-mounted cannon; stolen ones triggered the AVP pyramid disaster."
+    },
+    {
+      "name": "Self-destruct gauntlet",
+      "desc": "Wrist device that erases all trace of a failed hunt — Dutch survived one."
+    },
+    {
+      "name": "Predator Killer suit",
+      "desc": "Anti-Predator armor gifted to humanity by the fugitive Predator in 2018."
+    },
+    {
+      "name": "Predalien",
+      "desc": "Xenomorph-Predator hybrid born from Scar's corpse; nuked in Colorado."
+    },
+    {
+      "name": "Kalisk",
+      "desc": "Genna's regenerating apex monster — Bud's mother, coveted by Weyland-Yutani."
+    },
+    {
+      "name": "Bud",
+      "desc": "Small alien who marks Dek as family for life. The Kalisk's offspring."
+    }
+  ],
+  "themes": [
+    "<b>The pistol loop:<\/b> Adolini's flintlock goes to Naru in 1719 and comes back to Harrigan in 1997 — while the comic's 1718 version was quietly retconned away.",
+    "<b>Layered canon:<\/b> the Predator films wink at AVP, but Ridley Scott's Alien prequels ignore it — both crossover films float in dispute.",
+    "<b>Escalation of the hunt:<\/b> sport kills on Earth → abductions to off-world preserves → a curated cryo-collection of history's champions.",
+    "<b>The hybrid schism:<\/b> DNA-splicing births Super Predators and Upgrades — and a blood feud inside the Yautja species.",
+    "<b>Humans in the know:<\/b> OWLF → Project Stargazer → OWLF again; the government has tracked Predators since at least 1987.",
+    "<b>Convergence with Alien:<\/b> Badlands puts Weyland-Yutani synths in the 25th century — the furthest future either franchise has shown."
+  ]
+};
+
+const esc = s => String(s==null?'':s);
+document.documentElement.style.setProperty('--accent', DATA.accent || '#ff2a1f');
+document.title = (DATA.franchise || 'Timeline') + ' — Timeline Map';
+document.getElementById('eyebrow').textContent = (DATA.films && DATA.films.length)
+  ? `${DATA.films.length} films · ${(DATA.branches||[]).length} branches`
+  : 'Interactive timeline';
+document.getElementById('title').innerHTML = `<span class="glow">${esc(DATA.franchise)}</span> — Timeline`;
+document.getElementById('intro').textContent = esc(DATA.tagline ? DATA.tagline + ' ' : '') + esc(DATA.intro||'');
+
+// controls
+const controls = document.getElementById('controls');
+controls.innerHTML = `<button class="btn active" data-f="all">All branches</button>` +
+  (DATA.branches||[]).map(b=>`<button class="btn" data-f="${b.id}">${esc(b.title)}</button>`).join('');
+
+// branches
+const rail = document.getElementById('rail');
+(DATA.branches||[]).forEach(b=>{
+  const el = document.createElement('div');
+  el.className='branch'; el.dataset.id=b.id; el.style.setProperty('--bcol', b.color||DATA.accent||'#ff2a1f');
+  el.innerHTML = `
+    <div class="branch-head" style="--bcol:${b.color||'#ff2a1f'}">
+      <span class="caret">▼</span>
+      <div class="bt"><h2>${esc(b.title)}</h2><div class="meta">${esc(b.summary||'')}</div></div>
+      <div class="branch-films">${(b.films||[]).map(esc).join(' · ')}</div>
+    </div>
+    <div class="branch-body"><div class="track">
+      ${(b.nodes||[]).map(n=>`
+        <div class="node ${esc(n.type||'event')}">
+          <div class="yr">${esc(n.era)}</div>
+          <div class="ev">${n.text||''}${(n.tags||[]).map(t=>`<span class="tag ${esc(t.kind||'event')}">${esc(t.label)}</span>`).join('')}</div>
+        </div>`).join('')}
+    </div></div>`;
+  el.querySelector('.branch-head').addEventListener('click',()=>el.classList.toggle('collapsed'));
+  rail.appendChild(el);
+});
+
+// characters
+const chars = document.getElementById('chars');
+if(DATA.characters && DATA.characters.length){
+  DATA.characters.forEach(c=>{
+    const initials = String(c.name||'?').split(/[\s\/]+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    chars.insertAdjacentHTML('beforeend',
+      `<div class="char"><div class="av" style="background:${c.color||DATA.accent||'#ff2a1f'}">${initials}</div>
+       <div><div class="nm">${esc(c.name)}</div><div class="rl">${esc(c.role)}</div></div></div>`);
+  });
+} else { document.getElementById('charsCard').classList.add('hide'); }
+
+// items
+const models = document.getElementById('models');
+if(DATA.items && DATA.items.length){
+  DATA.items.forEach(m=>models.insertAdjacentHTML('beforeend',
+    `<div class="model"><div class="mn">${esc(m.name)}</div><div class="md">${esc(m.desc)}</div></div>`));
+} else { document.getElementById('itemsCard').classList.add('hide'); }
+
+// themes
+const paras = document.getElementById('paras');
+if(DATA.themes && DATA.themes.length){
+  DATA.themes.forEach(t=>paras.insertAdjacentHTML('beforeend',`<div class="para-item">${t}</div>`));
+} else { document.getElementById('themesBox').classList.add('hide'); }
+
+// footer
+const order = (DATA.films||[]).map(f=>`${esc(f.title)} (${esc(f.year)})`).join(' · ');
+document.getElementById('footer').innerHTML =
+  (order?`<strong>Films in release order:</strong> ${order}.<br><br>`:'') +
+  `Built with the Movie Timeline Mapper skill. Because the series branches, there is no single chronological line — each divergent future is its own branch above.`;
+
+// filter
+controls.addEventListener('click',e=>{
+  const btn=e.target.closest('.btn'); if(!btn) return;
+  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f=btn.dataset.f;
+  document.querySelectorAll('.branch').forEach(br=>br.classList.toggle('dim', f!=='all' && br.dataset.id!==f));
+});
+</script>
+</body>
+</html>
