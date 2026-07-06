@@ -1,9 +1,9 @@
-# ReelOrder — Movie Timeline Hub
+# RealOrder — Movie Timeline Hub
 
 An interactive "timeline wiki" that maps branching movie timelines — sequels, reboots,
 time-loops, and multiverse forks — as clean, cinematic branch diagrams.
 
-The site is the self-contained **ReelOrder** build: `index.html` is one file with all
+The site is the self-contained **RealOrder** build: `index.html` is one file with all
 franchises embedded (hero, search, franchise grid, per-franchise timeline with a
 Rail ⇄ Fork-map toggle, branch filters, and character / item / theme panels).
 
@@ -19,9 +19,9 @@ Rail ⇄ Fork-map toggle, branch filters, and character / item / theme panels).
 
 ## Files
 
-- `index.html` — the deployable ReelOrder site (all data embedded). This is the homepage.
+- `index.html` — the deployable RealOrder site (all data embedded). This is the homepage.
 - `*-timeline-map.html` — standalone single-franchise map pages (optional, not linked from the hub).
-- `reelorder.html` — a copy of the ReelOrder build.
+- `realorder.html` — a copy of the RealOrder build.
 
 ## Editing / adding a franchise
 
