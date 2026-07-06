@@ -7,6 +7,7 @@
 <link rel="icon" type="image/png" sizes="64x64" href="assets/brand/favicon-64.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon-180.png">
 <script src="assets/asset-00.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <x-dc>
@@ -558,12 +559,23 @@
   <header style="position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px clamp(20px,5vw,56px);background:rgba(6,7,10,0.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.07);">
     <div onclick="{{ goHub }}" style="display:flex;align-items:center;gap:11px;cursor:pointer;">
       <svg width="30" height="30" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex:none;" aria-hidden="true"><g transform="translate(0 3.5)"><circle cx="12" cy="11" r="7" stroke="#E9EDF3" stroke-width="2.8"></circle><circle cx="12" cy="11" r="2" fill="#E9EDF3"></circle><circle cx="27" cy="11" r="5" stroke="#E9EDF3" stroke-width="2.8"></circle><circle cx="27" cy="11" r="1.8" fill="#E9EDF3"></circle><rect x="5" y="21" width="27" height="15" rx="4" stroke="#E9EDF3" stroke-width="2.8"></rect><path d="M34 26 L 46 21.5 M34 31 L 46 35.5" stroke="#FF2A1F" stroke-width="2.8" stroke-linecap="round"></path><circle cx="12" cy="28.5" r="3" fill="#FF2A1F"></circle></g></svg>
-      <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:21px;letter-spacing:0.04em;text-transform:uppercase;color:#E9EDF3;">Real<span style="color:#FF5747;">Order</span></span>
+      <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:21px;letter-spacing:0.04em;text-transform:uppercase;color:#E9EDF3;">Reel<span style="color:#FF5747;">Order</span></span>
     </div>
     <nav style="display:flex;align-items:center;gap:6px;">
       <button onclick="{{ goHub }}" style="{{ navHubStyle }}">Hub</button>
       <button onclick="{{ goExplore }}" style="{{ navExploreStyle }}">Timeline</button>
+      <button onclick="{{ goQueue }}" style="{{ navQueueStyle }}">Queue</button>
       <button onclick="{{ goContribute }}" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:9px;border:1px solid rgba(255,42,31,0.45);background:rgba(255,42,31,0.12);color:#FF7A6E;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;" style-hover="background:rgba(255,42,31,0.2);border-color:rgba(255,42,31,0.7);color:#fff;">Contribute</button>
+      <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}">
+        <button onclick="{{ openAuth }}" style="margin-left:6px;padding:9px 18px;border-radius:9px;border:none;background:#fff;color:#0a0c10;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:transform .16s ease;" style-hover="transform:translateY(-1px);">Sign in</button>
+      </sc-if>
+      <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:9px;margin-left:6px;padding:4px 6px 4px 5px;border-radius:999px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.04);">
+          <div style="{{ userAvatarStyle }}">{{ userInitials }}</div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;color:#E9EDF3;">{{ userHandle }}</span>
+          <button onclick="{{ signOut }}" title="Sign out" style="width:26px;height:26px;border-radius:50%;border:none;background:transparent;color:#7a8696;font-size:15px;line-height:1;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">⏻</button>
+        </div>
+      </sc-if>
     </nav>
   </header>
 
@@ -691,6 +703,14 @@
         </div>
       </div>
 
+      <!-- SERIES TABS -->
+      <div style="display:flex;gap:4px;padding:4px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(13,15,20,0.85);width:max-content;max-width:100%;margin-top:26px;">
+        <button onclick="{{ setMapTab }}" style="{{ mapTabStyle }}">⑃ Branch map</button>
+        <button onclick="{{ setCommunityTab }}" style="{{ communityTabStyle }}">◉ Community · {{ communityCount }}</button>
+      </div>
+
+      <sc-if value="{{ isMapTab }}" hint-placeholder-val="{{ true }}">
+      <div>
       <!-- CONTROLS -->
       <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin:26px 0 8px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.07);">
         <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
@@ -822,6 +842,158 @@
           </div>
         </aside>
       </div>
+      </div>
+      </sc-if>
+
+      <!-- COMMUNITY TAB -->
+      <sc-if value="{{ isCommunityTab }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:840px;margin-top:26px;display:flex;flex-direction:column;gap:16px;">
+
+        <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:14px;padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(180deg,rgba(18,21,27,0.85),rgba(11,13,17,0.85));">
+            <div style="{{ composerAvatarStyle }}">{{ userInitials }}</div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;">
+              <textarea value="{{ communityDraft }}" onchange="{{ onCommunityDraft }}" rows="3" placeholder="Add to the discussion — theories, corrections, deep cuts…" style="width:100%;resize:vertical;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:14.5px;line-height:1.5;padding:12px 14px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);"></textarea>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5a6573;">Posting as {{ userHandle }}</span>
+                <button onclick="{{ postCommunityComment }}" style="padding:10px 20px;border-radius:9px;border:none;background:#FF2A1F;color:#fff;font-family:'Oswald',sans-serif;font-weight:500;font-size:13.5px;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all .16s ease;" style-hover="background:#ff3a30;box-shadow:0 0 20px -2px rgba(255,42,31,0.7);">Post comment</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:20px 22px;border-radius:16px;border:1px dashed rgba(255,255,255,0.18);background:rgba(13,15,20,0.7);">
+            <div style="min-width:0;">
+              <div style="font-weight:600;font-size:15.5px;color:#fff;">Join the discussion</div>
+              <div style="color:#8b97a6;font-size:13.5px;margin-top:3px;text-wrap:pretty;">Sign in to comment — your posts and votes carry your handle.</div>
+            </div>
+            <button onclick="{{ openAuth }}" style="flex:none;padding:11px 22px;border-radius:10px;border:none;background:#fff;color:#0a0c10;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:transform .16s ease;" style-hover="transform:translateY(-1px);">Sign in</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ communityEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a6573;text-align:center;padding:14px 0 6px;">No comments yet — start the thread.</div>
+        </sc-if>
+
+        <sc-for list="{{ communityComments }}" as="cm" hint-placeholder-count="3">
+          <div style="display:flex;gap:14px;padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,0.08);background:rgba(13,15,20,0.6);">
+            <div style="{{ cm.avatarStyle }}">{{ cm.initials }}</div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;">
+                <span style="font-weight:600;font-size:14.5px;color:#fff;">{{ cm.name }}</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7a8696;">{{ cm.handle }}</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#5a6573;">· {{ cm.time }}</span>
+              </div>
+              <p style="margin:8px 0 0;color:#C4CDD8;font-size:14.5px;line-height:1.6;text-wrap:pretty;">{{ cm.body }}</p>
+              <div style="display:flex;gap:10px;margin-top:12px;">
+                <button onclick="{{ cm.onLike }}" style="{{ cm.likeStyle }}">▲ {{ cm.likeCount }}</button>
+                <button style="display:inline-flex;align-items:center;padding:6px 12px;border-radius:8px;border:1px solid transparent;background:transparent;color:#7a8696;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Reply</button>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <!-- ============ QUEUE ============ -->
+    <sc-if value="{{ isQueue }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:880px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(20px,5vw,40px) 96px;">
+      <button onclick="{{ goHub }}" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;margin-bottom:26px;" style-hover="border-color:rgba(255,255,255,0.25);color:#fff;">← Back to hub</button>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;">
+        <div style="max-width:56ch;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#B69CFF;">Community picks</div>
+          <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(32px,5vw,48px);line-height:1.02;margin:8px 0 12px;letter-spacing:0.01em;">The Queue</h1>
+          <p style="margin:0;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">Vote on which franchise gets mapped next. The top of the queue goes to the editors first — and every map has a discussion while it waits.</p>
+        </div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b7686;white-space:nowrap;">{{ queueCount }}</span>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;margin-top:30px;">
+        <sc-for list="{{ queueItems }}" as="q" hint-placeholder-count="4">
+          <div style="border-radius:16px;border:1px solid rgba(255,255,255,0.09);background:linear-gradient(180deg,rgba(18,21,27,0.8),rgba(11,13,17,0.8));overflow:hidden;">
+            <div style="display:flex;gap:18px;padding:18px 20px;align-items:flex-start;">
+              <div style="flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <button onclick="{{ q.onUp }}" style="{{ q.upStyle }}">▲</button>
+                <span style="{{ q.scoreStyle }}">{{ q.score }}</span>
+                <button onclick="{{ q.onDown }}" style="{{ q.downStyle }}">▼</button>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;">
+                  <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:22px;letter-spacing:0.01em;text-transform:uppercase;line-height:1.05;">{{ q.title }}</span>
+                  <span style="{{ q.statusStyle }}">{{ q.status }}</span>
+                </div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#7a8696;margin-top:4px;">{{ q.meta }}</div>
+                <p style="margin:10px 0 0;color:#9aa6b4;font-size:14px;line-height:1.55;text-wrap:pretty;">{{ q.pitch }}</p>
+                <button onclick="{{ q.onToggleThread }}" style="display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding:7px 13px;border-radius:8px;border:1px solid rgba(255,255,255,0.11);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s ease;" style-hover="border-color:rgba(255,255,255,0.28);color:#fff;">◉ {{ q.threadLabel }}</button>
+              </div>
+            </div>
+            <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
+              <div style="border-top:1px solid rgba(255,255,255,0.07);padding:18px 20px 20px;display:flex;flex-direction:column;gap:14px;background:rgba(6,7,10,0.45);">
+                <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;gap:12px;">
+                    <div style="{{ userAvatarStyle }}">{{ userInitials }}</div>
+                    <div style="flex:1;min-width:0;display:flex;gap:8px;">
+                      <input value="{{ q.draft }}" onchange="{{ q.onDraft }}" placeholder="Weigh in on this map…" style="flex:1;min-width:0;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:10px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 13px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);">
+                      <button onclick="{{ q.onPost }}" style="flex:none;padding:10px 16px;border-radius:9px;border:none;background:#FF2A1F;color:#fff;font-family:'Oswald',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all .16s ease;" style-hover="background:#ff3a30;">Post</button>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:12px 15px;border-radius:11px;border:1px dashed rgba(255,255,255,0.16);background:rgba(13,15,20,0.6);">
+                    <span style="flex:1;min-width:180px;color:#8b97a6;font-size:13.5px;">Sign in to join this discussion.</span>
+                    <button onclick="{{ openAuth }}" style="flex:none;padding:8px 16px;border-radius:8px;border:none;background:#fff;color:#0a0c10;font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Sign in</button>
+                  </div>
+                </sc-if>
+                <sc-for list="{{ q.comments }}" as="cm" hint-placeholder-count="2">
+                  <div style="display:flex;gap:12px;padding:14px 15px;border-radius:13px;border:1px solid rgba(255,255,255,0.07);background:rgba(13,15,20,0.55);">
+                    <div style="{{ cm.avatarStyle }}">{{ cm.initials }}</div>
+                    <div style="flex:1;min-width:0;">
+                      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;">
+                        <span style="font-weight:600;font-size:14px;color:#fff;">{{ cm.name }}</span>
+                        <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#7a8696;">{{ cm.handle }}</span>
+                        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5a6573;">· {{ cm.time }}</span>
+                      </div>
+                      <p style="margin:6px 0 0;color:#C4CDD8;font-size:14px;line-height:1.55;text-wrap:pretty;">{{ cm.body }}</p>
+                      <div style="display:flex;gap:10px;margin-top:10px;">
+                        <button onclick="{{ cm.onLike }}" style="{{ cm.likeStyle }}">▲ {{ cm.likeCount }}</button>
+                      </div>
+                    </div>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ q.noComments }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a6573;text-align:center;padding:6px 0 2px;">No comments yet — start the thread.</div>
+                </sc-if>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- SUGGEST A NEW ONE -->
+      <div style="margin-top:26px;border-radius:16px;border:1px dashed rgba(182,156,255,0.4);background:linear-gradient(180deg,rgba(110,50,255,0.1),rgba(11,13,17,0.7));padding:clamp(20px,3vw,26px);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#B69CFF;">Not seeing it?</div>
+        <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:26px;margin:6px 0 6px;letter-spacing:0.01em;">Suggest a franchise</h2>
+        <p style="margin:0;color:#A9B4C2;font-size:14.5px;line-height:1.55;text-wrap:pretty;">Anything with a fork, loop or reboot qualifies. It joins the queue with your vote already on it.</p>
+        <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:18px;">
+            <input value="{{ suggestTitle }}" onchange="{{ onSuggestTitle }}" placeholder="Franchise title — e.g. Donnie Darko" style="width:100%;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:14.5px;padding:12px 14px;transition:border-color .16s ease;" style-focus="border-color:rgba(182,156,255,0.6);">
+            <input value="{{ suggestNote }}" onchange="{{ onSuggestNote }}" placeholder="Why this one? (optional)" style="width:100%;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:14.5px;padding:12px 14px;transition:border-color .16s ease;" style-focus="border-color:rgba(182,156,255,0.6);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5a6573;">Suggesting as {{ userHandle }}</span>
+              <button onclick="{{ submitSuggest }}" style="padding:11px 22px;border-radius:10px;border:none;background:#FF2A1F;color:#fff;font-family:'Oswald',sans-serif;font-weight:500;font-size:13.5px;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all .16s ease;" style-hover="background:#ff3a30;box-shadow:0 0 20px -2px rgba(255,42,31,0.7);">Add to the queue</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:18px;padding:13px 16px;border-radius:11px;border:1px dashed rgba(255,255,255,0.16);background:rgba(13,15,20,0.6);">
+            <span style="flex:1;min-width:180px;color:#8b97a6;font-size:13.5px;">Sign in to suggest a franchise — it gets filed under your handle.</span>
+            <button onclick="{{ openAuth }}" style="flex:none;padding:9px 18px;border-radius:8px;border:none;background:#fff;color:#0a0c10;font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Sign in</button>
+          </div>
+        </sc-if>
+      </div>
     </div>
     </sc-if>
 
@@ -895,11 +1067,8 @@
     <div style="max-width:1240px;margin:0 auto;padding:clamp(40px,5vw,60px) clamp(20px,5vw,56px) 30px;display:flex;flex-wrap:wrap;gap:36px 56px;align-items:center;justify-content:space-between;">
       <div style="flex:1 1 280px;max-width:400px;display:flex;flex-direction:column;gap:14px;">
         <div style="display:flex;align-items:center;gap:11px;">
-          <div style="position:relative;width:28px;height:28px;display:grid;place-items:center;">
-            <div style="position:absolute;width:28px;height:28px;border-radius:8px;border:1.5px solid rgba(255,42,31,0.55);transform:rotate(45deg);box-shadow:0 0 12px rgba(255,42,31,0.3);"></div>
-            <div style="width:8px;height:8px;border-radius:50%;background:#FF2A1F;box-shadow:0 0 9px rgba(255,42,31,0.9);"></div>
-          </div>
-          <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:19px;letter-spacing:0.04em;text-transform:uppercase;">Time<span style="color:#FF5747;">Weave</span></span>
+          <svg width="26" height="26" viewBox="0 0 48 48" fill="none" aria-hidden="true"><g transform="translate(0 3.5)"><circle cx="12" cy="11" r="7" stroke="#E9EDF3" stroke-width="2.8"></circle><circle cx="12" cy="11" r="2" fill="#E9EDF3"></circle><circle cx="27" cy="11" r="5" stroke="#E9EDF3" stroke-width="2.8"></circle><circle cx="27" cy="11" r="1.8" fill="#E9EDF3"></circle><rect x="5" y="21" width="27" height="15" rx="4" stroke="#E9EDF3" stroke-width="2.8"></rect><path d="M34 26 L 46 21.5 M34 31 L 46 35.5" stroke="#FF2A1F" stroke-width="2.8" stroke-linecap="round"></path><circle cx="12" cy="28.5" r="3" fill="#FF2A1F"></circle></g></svg>
+          <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:19px;letter-spacing:0.04em;text-transform:uppercase;">Reel<span style="color:#FF5747;">Order</span></span>
         </div>
         <p style="margin:0;color:#8b97a6;font-size:14px;line-height:1.6;text-wrap:pretty;">A community-built atlas of branching movie timelines. Every map is generated from a single open data file — fork it, fix it, or add your own.</p>
       </div>
@@ -921,7 +1090,7 @@
 
       <div style="display:flex;flex-direction:column;gap:12px;">
         <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#6b7686;">Community</div>
-        <span style="color:#A9B4C2;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Review queue</span>
+        <span onclick="{{ goQueue }}" style="color:#A9B4C2;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">The Queue</span>
         <span style="color:#A9B4C2;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Contributors</span>
         <span style="color:#A9B4C2;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Style guide</span>
       </div>
@@ -933,6 +1102,48 @@
       <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#4f5867;max-width:62ch;text-wrap:pretty;">Film titles &amp; characters are property of their respective rights holders. Not affiliated with or endorsed by any studio.</span>
     </div>
   </footer>
+
+  <!-- AUTH MODAL -->
+  <sc-if value="{{ authOpen }}" hint-placeholder-val="{{ false }}">
+    <div onclick="{{ closeAuth }}" style="position:fixed;inset:0;z-index:90;background:rgba(3,4,6,0.72);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);display:grid;place-items:center;padding:20px;">
+      <div onclick="{{ stopClick }}" style="width:min(430px,94vw);max-height:92vh;overflow-y:auto;border-radius:20px;border:1px solid rgba(255,255,255,0.13);background:linear-gradient(180deg,#13161c,#0a0c10);box-shadow:0 40px 100px -30px rgba(0,0,0,0.95);padding:30px;position:relative;">
+        <button onclick="{{ closeAuth }}" style="position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:9px;border:none;background:transparent;color:#7a8696;font-size:20px;line-height:1;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">×</button>
+        <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true"><g transform="translate(0 3.5)"><circle cx="12" cy="11" r="7" stroke="#E9EDF3" stroke-width="2.8"></circle><circle cx="12" cy="11" r="2" fill="#E9EDF3"></circle><circle cx="27" cy="11" r="5" stroke="#E9EDF3" stroke-width="2.8"></circle><circle cx="27" cy="11" r="1.8" fill="#E9EDF3"></circle><rect x="5" y="21" width="27" height="15" rx="4" stroke="#E9EDF3" stroke-width="2.8"></rect><path d="M34 26 L 46 21.5 M34 31 L 46 35.5" stroke="#FF2A1F" stroke-width="2.8" stroke-linecap="round"></path><circle cx="12" cy="28.5" r="3" fill="#FF2A1F"></circle></g></svg>
+        <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:27px;letter-spacing:0.01em;margin:16px 0 8px;">Sign in to Reel<span style="color:#FF5747;">Order</span></h2>
+        <p style="margin:0;color:#9aa6b4;font-size:14.5px;line-height:1.55;text-wrap:pretty;">Vote, comment and get credit for your contributions. One account, every timeline.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:24px;">
+          <button onclick="{{ signGoogle }}" style="display:flex;align-items:center;justify-content:center;gap:11px;padding:13px 16px;border-radius:11px;border:none;background:#fff;color:#1a1d23;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;transition:transform .15s ease;" style-hover="transform:translateY(-1px);">
+            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20.4H24v8h11.3C33.7 33.7 29.2 36.9 24 36.9c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.3 0 6.3 1.2 8.6 3.3l5.7-5.7C34.6 5.1 29.6 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.2-.1-2.4-.4-3.5z"></path><path fill="#FF3D00" d="M5.4 14.7l6.6 4.8C13.8 15.1 18.5 11 24 11c3.3 0 6.3 1.2 8.6 3.3l5.7-5.7C34.6 5.1 29.6 3 24 3 15.9 3 8.9 7.7 5.4 14.7z"></path><path fill="#4CAF50" d="M24 45c5.5 0 10.4-2 14.1-5.4l-6.5-5.5c-2.1 1.6-4.8 2.5-7.6 2.5-5.2 0-9.6-3.2-11.3-7.7l-6.5 5C9.2 40.6 16 45 24 45z"></path><path fill="#1976D2" d="M43.6 20.5H42V20.4H24v8h11.3c-.9 2.4-2.5 4.4-4.7 5.9l6.5 5.5C40.8 36.4 45 30.9 45 24c0-1.2-.1-2.4-.4-3.5z"></path></svg>
+            Continue with Google
+          </button>
+          <button onclick="{{ signApple }}" style="display:flex;align-items:center;justify-content:center;gap:11px;padding:13px 16px;border-radius:11px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;transition:all .15s ease;" style-hover="border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);">
+            <svg width="16" height="19" viewBox="0 0 384 512" fill="#E9EDF3"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.7-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
+            Continue with Apple
+          </button>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <button onclick="{{ signFacebook }}" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 12px;border-radius:11px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .15s ease;" style-hover="border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);">
+              <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877F2"></circle><path d="M16.4 15.5l.5-3.5h-3.4V9.7c0-1 .5-1.9 2-1.9h1.5V4.8s-1.4-.2-2.7-.2c-2.7 0-4.5 1.6-4.5 4.7V12H6.7v3.5h3.1V24a12 12 0 0 0 3.7 0v-8.5h2.9z" fill="#fff"></path></svg>
+              Facebook
+            </button>
+            <button onclick="{{ signInstagram }}" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 12px;border-radius:11px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .15s ease;" style-hover="border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ro-ig" x1="4" y1="20" x2="20" y2="4"><stop offset="0" stop-color="#FFD600"></stop><stop offset="0.35" stop-color="#FF7A00"></stop><stop offset="0.65" stop-color="#FF0069"></stop><stop offset="1" stop-color="#7638FA"></stop></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" stroke="url(#ro-ig)" stroke-width="2.4"></rect><circle cx="12" cy="12" r="4.6" stroke="url(#ro-ig)" stroke-width="2.4"></circle><circle cx="17.4" cy="6.6" r="1.5" fill="url(#ro-ig)"></circle></svg>
+              Instagram
+            </button>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin:20px 0;">
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#5a6573;">or use email</span>
+          <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <input value="{{ authEmail }}" onchange="{{ onAuthEmail }}" onkeydown="{{ onAuthKey }}" placeholder="you@email.com" style="flex:1;min-width:0;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:14.5px;padding:12px 14px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);">
+          <button onclick="{{ signEmail }}" style="flex:none;padding:12px 20px;border-radius:10px;border:none;background:#FF2A1F;color:#fff;font-family:'Oswald',sans-serif;font-weight:500;font-size:13.5px;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all .16s ease;" style-hover="background:#ff3a30;box-shadow:0 0 20px -2px rgba(255,42,31,0.7);">Continue</button>
+        </div>
+        <p style="margin:18px 0 0;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6;color:#5a6573;text-wrap:pretty;">We only use your account for identity — no posts on your behalf, ever. Email sign-in sends you a magic link.</p>
+      </div>
+    </div>
+  </sc-if>
 
   <!-- TOAST -->
   <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
@@ -968,6 +1179,23 @@ class Component extends DCLogic {
     form: { type: 'new', name: '', handle: '', note: '' },
     submitted: false,
     queuePos: 47,
+    // community
+    seriesTab: 'map',
+    user: null,
+    authOpen: false,
+    authEmail: '',
+    pendingList: [],
+    votes: {},        // my current vote per project: {id: 1|-1}
+    serverMine: {},   // my vote as last fetched from the server
+    scores: {},       // sum of all vote directions per project (server)
+    likes: {},        // my current likes: {commentId: true}
+    serverLikes: {},  // my likes as last fetched
+    likeCounts: {},   // total like rows per comment (server)
+    comments: {},     // {contextKey: [{id,name,handle,color,time,likes,body}]}
+    openThreads: {},
+    drafts: {},
+    suggestTitle: '',
+    suggestNote: '',
   };
 
   // ---------- data (generic: one object per franchise) ----------
@@ -2325,7 +2553,7 @@ class Component extends DCLogic {
   toTop = () => { try { window.scrollTo({top:0,behavior:'auto'}); } catch(e){} };
 
   openFranchise = (id) => {
-    if (this.data[id]) { this.setState({ screen:'timeline', activeId:id, filter:'all', collapsed:{}, view:'rail' }); this.toTop(); }
+    if (this.data[id]) { this.setState({ screen:'timeline', activeId:id, filter:'all', collapsed:{}, view:'rail', seriesTab:'map' }); this.toTop(); }
   };
   comingSoonClick = (title) => {
     this.showToast({ kind:'soon', title:'Map not live yet', body:`${title} is on the roadmap — want to help build it?`, actionLabel:'Contribute', action:()=>this.goContribute(title) });
@@ -2361,6 +2589,231 @@ class Component extends DCLogic {
     this.toTop();
   };
   resetContribute = () => this.setState({ submitted:false, form:{ type:'new', name:'', handle:'', note:'' } });
+
+  // ---------- supabase backend ----------
+  SUPABASE_URL = 'https://fqcdslarscuplbdimgzs.supabase.co';
+  SUPABASE_KEY = 'sb_publishable_aKIXFW-6F5oVLEjFbJAcCA_8ZLvxasy';
+  db = null;
+
+  deviceKey() {
+    try {
+      let k = localStorage.getItem('reelorder_device');
+      if (!k) { k = 'dev-' + Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('reelorder_device', k); }
+      return k;
+    } catch(e) { return 'dev-anon'; }
+  }
+  voterKey() { return this.state.user ? this.state.user.id : this.deviceKey(); }
+  timeAgo(iso) {
+    const t = new Date(iso).getTime(); if (!t) return 'just now';
+    const sec = Math.max(0, (Date.now() - t) / 1000);
+    if (sec < 60) return 'just now';
+    if (sec < 3600) return Math.floor(sec/60) + 'm ago';
+    if (sec < 86400) return Math.floor(sec/3600) + 'h ago';
+    if (sec < 86400*30) return Math.floor(sec/86400) + 'd ago';
+    return Math.floor(sec/(86400*30)) + 'mo ago';
+  }
+
+  componentDidMount() {
+    try {
+      if (window.supabase && this.SUPABASE_KEY.indexOf('__') !== 0) {
+        this.db = window.supabase.createClient(this.SUPABASE_URL, this.SUPABASE_KEY);
+      }
+    } catch(e) { console.error('ReelOrder: backend init failed', e); }
+    if (!this.db) return;
+    this.db.auth.onAuthStateChange((event, session) => {
+      if (session && session.user) this.adoptSession(session.user);
+      else if (event === 'SIGNED_OUT') this.setState({ user:null });
+    });
+    // surface provider errors bounced back in the URL
+    try {
+      const h = new URLSearchParams((location.hash||'').replace(/^#/,''));
+      const q = new URLSearchParams(location.search);
+      const desc = h.get('error_description') || q.get('error_description');
+      if (desc) {
+        this.showToast({ kind:'unknown', title:'Sign-in failed', body: desc.replace(/\+/g,' ') });
+        try { history.replaceState(null, '', location.pathname); } catch(e){}
+      }
+    } catch(e){}
+    this.refreshCommunity();
+  }
+
+  adoptSession = async (authUser) => {
+    if (this.state.user && this.state.user.id === authUser.id) return;
+    const providerColors = { google:'#54DBFF', apple:'#B69CFF', facebook:'#3C7BE0', instagram:'#FF4D7D', email:'#3DDC84' };
+    let profile = null;
+    try {
+      const got = await this.db.from('profiles').select('*').eq('id', authUser.id).maybeSingle();
+      profile = got.data;
+      if (!profile) {
+        const email = authUser.email || '';
+        const meta = authUser.user_metadata || {};
+        const provider = (authUser.app_metadata && authUser.app_metadata.provider) || 'email';
+        const raw = (meta.full_name || meta.name || email.split('@')[0] || 'reel fan');
+        const name = raw.replace(/[._-]+/g,' ').replace(/\b\w/g, c => c.toUpperCase());
+        let handle = '@' + ((email.split('@')[0] || raw).replace(/[^a-z0-9_]/gi,'').toLowerCase().slice(0,14) || 'reelfan');
+        const color = providerColors[provider] || '#3DDC84';
+        let ins = await this.db.from('profiles').insert({ id:authUser.id, name, handle, avatar_color:color, provider }).select().maybeSingle();
+        if (ins.error) {
+          handle = handle.slice(0, 11) + Math.floor(Math.random()*900+100);
+          ins = await this.db.from('profiles').insert({ id:authUser.id, name, handle, avatar_color:color, provider }).select().maybeSingle();
+        }
+        profile = ins.data || { id:authUser.id, name, handle, avatar_color:color, provider };
+      }
+    } catch(e) { console.error(e); return; }
+    const user = { id:authUser.id, name:profile.name, handle:profile.handle, color:profile.avatar_color, provider:profile.provider };
+    this.setState({ user, authOpen:false, authEmail:'' });
+    this.showToast({ kind:'ok', title:`Signed in as ${user.handle}`, body:'Your votes and comments now carry your handle.' });
+    await this.migrateDeviceVotes(user.id);
+    this.refreshCommunity();
+  };
+
+  migrateDeviceVotes = async (uid) => {
+    try {
+      const dev = this.deviceKey();
+      const got = await this.db.from('votes').select('project_id,direction').eq('voter_key', dev);
+      if (got.data && got.data.length) {
+        for (const v of got.data) {
+          await this.db.from('votes').upsert({ project_id:v.project_id, voter_key:uid, direction:v.direction }, { onConflict:'project_id,voter_key', ignoreDuplicates:true });
+        }
+        await this.db.from('votes').delete().eq('voter_key', dev);
+      }
+    } catch(e){}
+  };
+
+  refreshCommunity = async () => {
+    if (!this.db) return;
+    try {
+      const me = this.voterKey();
+      const [pend, allVotes, cms, cls] = await Promise.all([
+        this.db.from('pending_projects').select('*').order('created_at', { ascending:true }),
+        this.db.from('votes').select('project_id,voter_key,direction'),
+        this.db.from('comments').select('*').order('created_at', { ascending:false }),
+        this.db.from('comment_likes').select('comment_id,liker_key'),
+      ]);
+      const patch = {};
+      if (pend.data) patch.pendingList = pend.data.map(p => ({ id:p.id, title:p.title, meta:p.meta, pitch:p.pitch, status:p.status, votes:p.base_votes||0 }));
+      if (allVotes.data) {
+        const scores = {}, mine = {};
+        for (const v of allVotes.data) {
+          scores[v.project_id] = (scores[v.project_id]||0) + v.direction;
+          if (v.voter_key === me) mine[v.project_id] = v.direction;
+        }
+        patch.scores = scores; patch.serverMine = mine; patch.votes = { ...mine };
+      }
+      if (cms.data) {
+        const grouped = {};
+        for (const c of cms.data) {
+          (grouped[c.context_key] = grouped[c.context_key] || []).push({ id:c.id, name:c.name, handle:c.handle, color:c.color, time:this.timeAgo(c.created_at), likes:c.base_likes||0, body:c.body });
+        }
+        patch.comments = grouped;
+      }
+      if (cls.data) {
+        const counts = {}, mine = {};
+        for (const l of cls.data) { counts[l.comment_id] = (counts[l.comment_id]||0) + 1; if (l.liker_key === me) mine[l.comment_id] = true; }
+        patch.likeCounts = counts; patch.serverLikes = mine; patch.likes = { ...mine };
+      }
+      this.setState(patch);
+    } catch(e) { console.error('ReelOrder: community refresh failed', e); }
+  };
+
+  // ---------- auth ----------
+  openAuth = () => this.setState({ authOpen:true });
+  closeAuth = () => this.setState({ authOpen:false });
+  stopClick = (e) => e.stopPropagation();
+  onAuthEmail = (e) => this.setState({ authEmail: e.target.value });
+  onAuthKey = (e) => { if (e.key === 'Enter') this.signEmail(); };
+  oauth = (provider) => {
+    if (!this.db) { this.showToast({ kind:'unknown', title:'Sign-in unavailable', body:'The community backend is not reachable right now.' }); return; }
+    this.db.auth.signInWithOAuth({ provider, options:{ redirectTo: window.location.origin + window.location.pathname } })
+      .then(({ error }) => { if (error) this.showToast({ kind:'unknown', title:'Sign-in failed', body:error.message }); });
+  };
+  signGoogle = () => this.oauth('google');
+  signApple = () => this.oauth('apple');
+  signFacebook = () => this.oauth('facebook');
+  signInstagram = () => this.showToast({ kind:'soon', title:'Instagram sign-in coming soon', body:'Instagram runs on your Meta account — use Facebook or email for now.' });
+  signEmail = async () => {
+    const em = (this.state.authEmail||'').trim();
+    if (!em || !em.includes('@')) { this.showToast({ kind:'unknown', title:'Enter a valid email', body:'We’ll use it as your identity — nothing else.' }); return; }
+    if (!this.db) { this.showToast({ kind:'unknown', title:'Sign-in unavailable', body:'The community backend is not reachable right now.' }); return; }
+    const { error } = await this.db.auth.signInWithOtp({ email: em, options:{ emailRedirectTo: window.location.origin + window.location.pathname } });
+    if (error) { this.showToast({ kind:'unknown', title:'Could not send the link', body:error.message }); return; }
+    this.setState({ authOpen:false, authEmail:'' });
+    this.showToast({ kind:'ok', title:'Check your email', body:`We sent a magic sign-in link to ${em}.` });
+  };
+  signOut = () => {
+    if (this.db) this.db.auth.signOut();
+    this.setState({ user:null });
+    this.refreshCommunity();
+  };
+
+  // ---------- queue: votes, threads, comments, suggestions ----------
+  goQueue = () => { this.setState({ screen:'queue' }); this.toTop(); };
+  vote = (id, dir) => {
+    const cur = this.state.votes[id] || 0;
+    const next = cur === dir ? 0 : dir;
+    this.setState(s => ({ votes: { ...s.votes, [id]: next } }));
+    if (!this.db) return;
+    const key = this.voterKey();
+    const op = next === 0
+      ? this.db.from('votes').delete().eq('project_id', id).eq('voter_key', key)
+      : this.db.from('votes').upsert({ project_id:id, voter_key:key, direction:next }, { onConflict:'project_id,voter_key' });
+    op.then(({ error }) => { if (error) console.error('ReelOrder: vote failed', error); });
+  };
+  toggleThread = (id) => this.setState(s => ({ openThreads: { ...s.openThreads, [id]: !s.openThreads[id] } }));
+  setDraft = (key) => (e) => { const v = e.target.value; this.setState(s => ({ drafts: { ...s.drafts, [key]: v } })); };
+  postComment = (key) => {
+    const u = this.state.user;
+    if (!u) { this.openAuth(); return; }
+    const body = (this.state.drafts[key]||'').trim();
+    if (!body) return;
+    const local = { id:'tmp-'+Date.now(), name:u.name, handle:u.handle, color:u.color, time:'just now', likes:0, body };
+    this.setState(s => ({ comments: { ...s.comments, [key]: [local, ...(s.comments[key]||[])] }, drafts: { ...s.drafts, [key]:'' } }));
+    if (!this.db) return;
+    this.db.from('comments').insert({ context_key:key, user_id:u.id, name:u.name, handle:u.handle, color:u.color, body }).select().maybeSingle()
+      .then(({ data, error }) => {
+        if (error) { this.showToast({ kind:'unknown', title:'Comment not saved', body:error.message }); return; }
+        if (data) this.setState(s => ({ comments: { ...s.comments, [key]: (s.comments[key]||[]).map(c => c.id === local.id ? { ...c, id:data.id } : c) } }));
+      });
+  };
+  toggleLike = (id) => {
+    const on = !this.state.likes[id];
+    this.setState(s => ({ likes: { ...s.likes, [id]: on } }));
+    if (!this.db || String(id).indexOf('tmp-') === 0) return;
+    const key = this.voterKey();
+    const op = on
+      ? this.db.from('comment_likes').upsert({ comment_id:id, liker_key:key }, { onConflict:'comment_id,liker_key' })
+      : this.db.from('comment_likes').delete().eq('comment_id', id).eq('liker_key', key);
+    op.then(({ error }) => { if (error) console.error('ReelOrder: like failed', error); });
+  };
+  onSuggestTitle = (e) => this.setState({ suggestTitle: e.target.value });
+  onSuggestNote = (e) => this.setState({ suggestNote: e.target.value });
+  submitSuggest = async () => {
+    const u = this.state.user;
+    if (!u) { this.openAuth(); return; }
+    const title = (this.state.suggestTitle||'').trim();
+    if (!title) { this.showToast({ kind:'unknown', title:'Add a title first', body:'Which franchise should join the queue?' }); return; }
+    const t = title.toLowerCase();
+    const dupe = Object.values(this.data).some(f => f.title.toLowerCase() === t)
+      || this.state.pendingList.some(p => p.title.toLowerCase() === t);
+    if (dupe) { this.showToast({ kind:'soon', title:'Already in the running', body:`${title} is on the board — throw it a vote instead.` }); return; }
+    const note = (this.state.suggestNote||'').trim();
+    const id = 'sug-' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+    const item = { id, title, meta:`suggested by ${u.handle}`, status:'Suggested', votes:0, pitch: note || 'Community suggestion — pitch pending. Add to the discussion below.' };
+    this.setState(s => ({ pendingList: [...s.pendingList, item], votes: { ...s.votes, [id]: 1 }, suggestTitle:'', suggestNote:'' }));
+    if (this.db) {
+      const { error } = await this.db.from('pending_projects').insert({ id, title, meta:item.meta, pitch:item.pitch, status:'Suggested', base_votes:0, suggested_by:u.handle });
+      if (error) {
+        this.setState(s => ({ pendingList: s.pendingList.filter(p => p.id !== id) }));
+        if (error.code === '23505') { this.showToast({ kind:'soon', title:'Already in the running', body:`${title} is on the board — throw it a vote instead.` }); }
+        else { this.showToast({ kind:'unknown', title:'Suggestion not saved', body:error.message }); }
+        return;
+      }
+      await this.db.from('votes').upsert({ project_id:id, voter_key:this.voterKey(), direction:1 }, { onConflict:'project_id,voter_key' });
+    }
+    this.showToast({ kind:'ok', title:`${title} joined the queue`, body:'Your upvote is already on it. Rally the others.' });
+  };
+  setMapTab = () => this.setState({ seriesTab:'map' });
+  setCommunityTab = () => this.setState({ seriesTab:'community' });
 
   toastTimer = null;
   showToast = (t) => {
@@ -2400,8 +2853,8 @@ class Component extends DCLogic {
     }));
     const soonCards = this.comingSoon.map(f => ({
       id: f.id, title: f.title, tagline: f.tagline, meta: f.meta,
-      badgeLabel: 'Coming soon', cta: 'Help build',
-      onOpen: () => this.comingSoonClick(f.title),
+      badgeLabel: 'In the queue', cta: 'Vote →',
+      onOpen: () => this.goQueue(),
       art: this.makeArtEl(this.kindFor(f.id), f.accent, 'card', true),
       cardStyle: { position:'relative', display:'flex', flexDirection:'column', borderRadius:'16px', overflow:'hidden', border:'1px dashed rgba(255,255,255,0.14)', background:'#0a0c10', cursor:'pointer', transition:'transform .18s ease, border-color .18s ease' },
       posterStyle: { position:'relative', minHeight:'150px', padding:'18px', display:'flex', alignItems:'flex-end', background:`radial-gradient(125% 130% at 82% 96%, ${this.rgba(f.accent,0.16)}, transparent 60%), linear-gradient(160deg, #0e0f13, #08090b)` },
@@ -2487,6 +2940,47 @@ class Component extends DCLogic {
     // crest for timeline header
     const crestStyle = { flex:'none', width:'60px', height:'60px', borderRadius:'15px', display:'grid', placeItems:'center', background:`radial-gradient(120% 120% at 30% 0%, ${this.rgba(a.accent,0.6)}, ${this.rgba(a.accent,0.08)})`, border:`1px solid ${this.rgba(a.accent,0.45)}`, boxShadow:`0 0 24px -6px ${this.rgba(a.accent,0.7)}` };
 
+    // community + queue + auth
+    const user = s.user;
+    const avatarStyleFor = (color, size) => ({ flex:'none', width:size+'px', height:size+'px', borderRadius:'10px', display:'grid', placeItems:'center', background:`linear-gradient(135deg, ${this.rgba(color||'#9DB0C4',0.4)}, rgba(255,255,255,0.05))`, border:'1px solid rgba(255,255,255,0.14)', fontFamily:"'Oswald', sans-serif", fontWeight:'600', fontSize:Math.round(size*0.37)+'px', letterSpacing:'0.02em', color:'#fff' });
+    const likeCountFor = (c) => (c.likes||0) + ((s.likeCounts[c.id]||0) - (s.serverLikes[c.id]?1:0) + (s.likes[c.id]?1:0));
+    const mkComment = (c) => ({
+      id:c.id, name:c.name, handle:c.handle, time:c.time, body:c.body,
+      initials: this.initials(c.name),
+      avatarStyle: avatarStyleFor(c.color, 38),
+      likeCount: likeCountFor(c),
+      onLike: () => this.toggleLike(c.id),
+      likeStyle: { display:'inline-flex', alignItems:'center', gap:'6px', padding:'6px 12px', borderRadius:'8px', border:`1px solid ${s.likes[c.id]?'rgba(255,42,31,0.5)':'rgba(255,255,255,0.1)'}`, background: s.likes[c.id]?'rgba(255,42,31,0.13)':'rgba(255,255,255,0.02)', color: s.likes[c.id]?'#FF7A6E':'#9DB0C4', fontFamily:"'JetBrains Mono', monospace", fontSize:'12px', fontWeight:'600', cursor:'pointer', transition:'all .15s ease' },
+    });
+    const communityComments = (s.comments[a.id]||[]).map(mkComment);
+    const statusColors = { 'Mapping now':'#3DDC84', 'In review':'#F5A623', 'Queued':'#9DB0C4', 'Suggested':'#B69CFF' };
+    const voteBtn = (active, up) => ({ width:'36px', height:'30px', borderRadius: up?'9px 9px 4px 4px':'4px 4px 9px 9px', border:`1px solid ${active?(up?'rgba(61,220,132,0.55)':'rgba(255,77,125,0.55)'):'rgba(255,255,255,0.12)'}`, background: active?(up?'rgba(61,220,132,0.16)':'rgba(255,77,125,0.16)'):'rgba(255,255,255,0.03)', color: active?(up?'#3DDC84':'#FF4D7D'):'#8b97a6', fontSize:'13px', lineHeight:'1', cursor:'pointer', transition:'all .15s ease' });
+    const queueItems = (s.pendingList||[])
+      .map(p => {
+        const v = s.votes[p.id]||0;
+        const othersScore = (s.scores[p.id]||0) - (s.serverMine[p.id]||0);
+        const cms = (s.comments[p.id]||[]).map(mkComment);
+        const open = !!s.openThreads[p.id];
+        const scolor = statusColors[p.status] || '#9DB0C4';
+        return {
+          id:p.id, title:p.title, meta:p.meta, pitch:p.pitch, status:p.status,
+          score: (p.votes||0) + othersScore + v,
+          onUp: () => this.vote(p.id, 1), onDown: () => this.vote(p.id, -1),
+          upStyle: voteBtn(v===1, true), downStyle: voteBtn(v===-1, false),
+          scoreStyle: { fontFamily:"'Oswald', sans-serif", fontWeight:'700', fontSize:'19px', lineHeight:'1.2', color: v===1?'#3DDC84':(v===-1?'#FF4D7D':'#E9EDF3') },
+          statusStyle: { display:'inline-flex', alignItems:'center', padding:'3px 10px', borderRadius:'999px', fontFamily:"'JetBrains Mono', monospace", fontSize:'10px', fontWeight:'700', letterSpacing:'0.1em', textTransform:'uppercase', color:scolor, background:this.rgba(scolor,0.12), border:`1px solid ${this.rgba(scolor,0.35)}` },
+          open,
+          onToggleThread: () => this.toggleThread(p.id),
+          threadLabel: (open?'Hide':'Show') + ' discussion · ' + cms.length,
+          comments: cms,
+          noComments: cms.length === 0,
+          draft: s.drafts[p.id]||'',
+          onDraft: this.setDraft(p.id),
+          onPost: () => this.postComment(p.id),
+        };
+      })
+      .sort((x,y) => y.score - x.score);
+
     // toast styling
     let toast = null;
     if (s.toast) {
@@ -2524,6 +3018,32 @@ class Component extends DCLogic {
       nameFieldLabel: isNew ? 'Franchise title' : 'Which map are you editing?',
       noteFieldLabel: isNew ? 'Outline the branches' : 'What needs fixing?',
       submitMessage, queuePosition:s.queuePos,
+      // series tabs + community tab
+      isMapTab: s.seriesTab !== 'community', isCommunityTab: s.seriesTab === 'community',
+      setMapTab:this.setMapTab, setCommunityTab:this.setCommunityTab,
+      mapTabStyle:this.tabBtn(s.seriesTab !== 'community'), communityTabStyle:this.tabBtn(s.seriesTab === 'community'),
+      communityCount: communityComments.length,
+      communityComments,
+      communityEmpty: communityComments.length === 0,
+      communityDraft: s.drafts[a.id]||'',
+      onCommunityDraft: this.setDraft(a.id),
+      postCommunityComment: () => this.postComment(a.id),
+      // auth
+      signedIn: !!user, signedOut: !user,
+      userInitials: user ? this.initials(user.name) : '',
+      userHandle: user ? user.handle : '',
+      userAvatarStyle: avatarStyleFor(user ? user.color : '#9DB0C4', 30),
+      composerAvatarStyle: avatarStyleFor(user ? user.color : '#9DB0C4', 38),
+      signOut:this.signOut,
+      authOpen: s.authOpen, openAuth:this.openAuth, closeAuth:this.closeAuth, stopClick:this.stopClick,
+      authEmail: s.authEmail, onAuthEmail:this.onAuthEmail, onAuthKey:this.onAuthKey,
+      signGoogle:this.signGoogle, signApple:this.signApple, signFacebook:this.signFacebook, signInstagram:this.signInstagram, signEmail:this.signEmail,
+      // queue
+      isQueue: s.screen === 'queue', goQueue:this.goQueue,
+      navQueueStyle: this.navBtn(s.screen === 'queue'),
+      queueItems, queueCount: (s.pendingList||[]).length + ' pending maps',
+      suggestTitle: s.suggestTitle, suggestNote: s.suggestNote,
+      onSuggestTitle:this.onSuggestTitle, onSuggestNote:this.onSuggestNote, submitSuggest:this.submitSuggest,
       // toast
       toast, dismissToast:this.dismissToast,
     };

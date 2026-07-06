@@ -1,4 +1,4 @@
-# RealOrder — Movie Timeline Hub
+# ReelOrder — Movie Timeline Hub
 
 An interactive "timeline wiki" that maps branching movie timelines — sequels, reboots,
 time-loops, and multiverse forks — as clean, cinematic branch diagrams.
@@ -30,6 +30,35 @@ Each franchise is one object in the `data` map inside the build. Adding a movie 
 one object (id, title, accent, tagline, blurb, meta, framing, forkLabel, films, branches,
 characters, items, themes). Node `type` ∈ event | turning-point | paradox | death |
 resolution; tag `kind` maps to a fixed colour.
+
+## Community features (Supabase-backed)
+
+Implements the "Community Features" requirements:
+
+- **The Queue** (nav → Queue): pending franchise maps with ▲/▼ voting. One active vote per
+  visitor per project — same direction removes it, opposite switches it — and the list
+  re-sorts live by score. Voting works signed-out (device key in localStorage) and follows
+  your account after sign-in. Each card has an inline discussion thread.
+- **Community tab** on every franchise page (⑃ Branch map / ◉ Community · n): comment feed
+  with likes and a composer for signed-in users; sign-in prompt otherwise.
+- **Suggest a franchise** at the end of the queue (sign-in required): duplicates are
+  blocked with a toast; valid suggestions join the queue as `Suggested` with the
+  submitter's upvote pre-applied (score 1).
+- **Auth**: Supabase Auth. Email magic link works out of the box; Google / Apple / Facebook
+  buttons call `signInWithOAuth` and light up once those providers are configured in the
+  Supabase dashboard (Instagram shows a "coming soon" toast — Supabase has no Instagram
+  provider). Commenting/suggesting are gated; browsing and voting are not.
+
+Backend: Supabase project `reelorder` (`fqcdslarscuplbdimgzs`, ap-southeast-2). Tables:
+`profiles`, `pending_projects`, `votes`, `comments`, `comment_likes`, all with RLS (public
+read; comments and suggestions require an authenticated user writing as themselves; votes
+and likes are open by design so signed-out visitors can vote). The publishable API key in
+`index.html` is safe to ship.
+
+Post-deploy configuration (Supabase dashboard → Authentication):
+1. Set **Site URL** (and redirect allow-list) to the production URL so email magic links
+   return to the site instead of localhost.
+2. Enable Google / Apple / Facebook providers (each needs an OAuth app + secret).
 
 ## Deploy
 
