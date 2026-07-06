@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline Map</title>
+<style>
+  :root{
+    --bg:#0a0c10; --panel:#11151c; --panel2:#161b24; --line:#222a36;
+    --accent:#ff2a1f; --cyan:#28d7e0; --amber:#ffb02e; --green:#39d98a; --purple:#b07cff;
+    --txt:#e7ecf3; --muted:#8b97a8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, #06121a 0%, transparent 55%),
+      var(--bg);
+    color:var(--txt);
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 22px 80px}
+  header.hero{
+    border:1px solid var(--line);border-radius:16px;padding:30px 30px 26px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%), var(--panel);
+  }
+  header.hero::after{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,.012) 38px 39px);pointer-events:none}
+  .eyebrow{letter-spacing:.34em;font-size:11px;color:var(--accent);text-transform:uppercase;font-weight:700}
+  h1{font-size:38px;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+  h1 .glow{color:var(--accent);text-shadow:0 0 22px color-mix(in srgb, var(--accent) 55%, transparent)}
+  .sub{color:var(--muted);max-width:780px;font-size:15px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+  .legend .chip{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 8px}
+  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--txt);padding:9px 15px;border-radius:999px;
+    cursor:pointer;font-size:13px;font-weight:600;transition:.15s;white-space:nowrap}
+  .btn:hover{border-color:var(--accent);color:#fff}
+  .btn.active{background:var(--accent);border-color:var(--accent);color:#fff;
+    box-shadow:0 0 18px color-mix(in srgb, var(--accent) 40%, transparent)}
+
+  .rail{display:flex;flex-direction:column;margin-top:20px}
+  .branch{border:1px solid var(--line);border-radius:14px;margin-bottom:22px;overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));transition:.2s}
+  .branch.dim{opacity:.32;filter:saturate(.4)}
+  .branch-head{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;border-left:5px solid var(--bcol,var(--accent))}
+  .branch-head .bt{flex:1}
+  .branch-head h2{margin:0;font-size:19px;font-weight:700}
+  .branch-head .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .branch-films{font-size:11.5px;color:var(--muted);text-align:right;line-height:1.4;max-width:38%}
+  .branch-body{padding:0 20px 8px}
+  .caret{color:var(--muted);font-size:13px;transition:.2s}
+  .branch.collapsed .branch-body{display:none}
+  .branch.collapsed .caret{transform:rotate(-90deg)}
+
+  .track{position:relative;margin:8px 0 18px;padding-left:26px}
+  .track::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--bcol),transparent);opacity:.6}
+  .node{position:relative;margin:0 0 14px;padding:0 0 0 4px}
+  .node::before{content:"";position:absolute;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--bcol)}
+  .node.turning-point::before{background:var(--bcol)}
+  .node.paradox::before{border-color:var(--purple);box-shadow:0 0 10px color-mix(in srgb,var(--purple) 60%,transparent)}
+  .node.death::before{border-color:var(--accent);background:var(--accent)}
+  .node.resolution::before{border-color:var(--green);background:var(--green)}
+  .node .yr{font-size:12px;font-weight:800;color:var(--bcol);letter-spacing:.04em}
+  .node .ev{font-size:14px;color:var(--txt)}
+  .node .ev b{color:#fff}
+  .tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    padding:1px 7px;border-radius:5px;margin-left:6px;vertical-align:middle;border:1px solid transparent}
+  .tag.paradox{background:rgba(176,124,255,.16);color:var(--purple);border-color:rgba(176,124,255,.4)}
+  .tag.event{background:rgba(255,42,31,.16);color:#ff6a5f;border-color:rgba(255,42,31,.4)}
+  .tag.model{background:rgba(40,215,224,.14);color:var(--cyan);border-color:rgba(40,215,224,.35)}
+  .tag.faction{background:rgba(57,217,138,.14);color:var(--green);border-color:rgba(57,217,138,.35)}
+  .tag.character{background:rgba(255,176,46,.14);color:var(--amber);border-color:rgba(255,176,46,.35)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+  @media(max-width:880px){.grid2{grid-template-columns:1fr}.branch-films{display:none}}
+  .card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px 22px}
+  .card h3{margin:0 0 14px;font-size:16px;display:flex;align-items:center;gap:9px}
+  .card h3 .bar{width:4px;height:18px;border-radius:2px;background:var(--accent)}
+  .chars{display:flex;flex-direction:column;gap:9px}
+  .char{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:10px;background:var(--panel2);border:1px solid transparent;transition:.15s}
+  .char:hover{border-color:var(--line)}
+  .av{width:40px;height:40px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#0a0c10}
+  .char .nm{font-weight:700;font-size:14px}
+  .char .rl{font-size:12.5px;color:var(--muted)}
+  .models{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.models{grid-template-columns:1fr}}
+  .model{border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--panel2)}
+  .model .mn{font-weight:800;font-size:14px;color:var(--cyan)}
+  .model .md{font-size:12px;color:var(--muted);margin-top:3px}
+  .para-box{border:1px solid rgba(176,124,255,.35);border-radius:14px;background:rgba(176,124,255,.05);padding:20px 22px;margin-top:34px}
+  .para-box h3{color:var(--purple)}
+  .para-item{padding:10px 0;border-top:1px solid rgba(176,124,255,.15)}
+  .para-item:first-of-type{border-top:none}
+  .para-item b{color:#fff}
+  footer{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12.5px}
+  .hide{display:none !important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="title"></h1>
+    <p class="sub" id="intro"></p>
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background:var(--accent)"></span>Turning point / catastrophe</span>
+      <span class="chip"><span class="dot" style="background:var(--purple)"></span>Time-travel paradox</span>
+      <span class="chip"><span class="dot" style="background:var(--cyan)"></span>Machine / tech</span>
+      <span class="chip"><span class="dot" style="background:var(--green)"></span>Faction / resolution</span>
+    </div>
+  </header>
+
+  <div class="controls" id="controls"></div>
+  <div class="rail" id="rail"></div>
+
+  <div class="grid2">
+    <div class="card" id="charsCard"><h3><span class="bar"></span>Key Characters</h3><div class="chars" id="chars"></div></div>
+    <div class="card" id="itemsCard"><h3><span class="bar"></span>Key Items &amp; Tech</h3><div class="models" id="models"></div></div>
+  </div>
+
+  <div class="para-box" id="themesBox">
+    <h3><span class="bar" style="background:var(--purple)"></span>Recurring Themes &amp; Paradoxes</h3>
+    <div id="paras"></div>
+  </div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const DATA = {
+  "franchise": "Star Trek",
+  "tagline": "Six decades, thirteen shows, fourteen films — and (at least) three timelines plus a mirror.",
+  "intro": "Star Trek mostly runs on one 'Prime' line from First Contact in 2063 to the 32nd century. But Nero's incursion in 2233 forked the Kelvin timeline, Strange New Worlds revealed that temporal agents shoved Khan and World War III decades forward, and the Mirror Universe has been running dark alongside all of it. Filter by branch to follow each line.",
+  "accent": "#ffb02e",
+  "films": [
+    {
+      "title": "The Original Series (TV)",
+      "year": 1966
+    },
+    {
+      "title": "The Animated Series (TV)",
+      "year": 1973
+    },
+    {
+      "title": "The Motion Picture",
+      "year": 1979
+    },
+    {
+      "title": "II: The Wrath of Khan",
+      "year": 1982
+    },
+    {
+      "title": "III: The Search for Spock",
+      "year": 1984
+    },
+    {
+      "title": "IV: The Voyage Home",
+      "year": 1986
+    },
+    {
+      "title": "V: The Final Frontier",
+      "year": 1989
+    },
+    {
+      "title": "VI: The Undiscovered Country",
+      "year": 1991
+    },
+    {
+      "title": "The Next Generation (TV)",
+      "year": 1987
+    },
+    {
+      "title": "Deep Space Nine (TV)",
+      "year": 1993
+    },
+    {
+      "title": "Generations",
+      "year": 1994
+    },
+    {
+      "title": "Voyager (TV)",
+      "year": 1995
+    },
+    {
+      "title": "First Contact",
+      "year": 1996
+    },
+    {
+      "title": "Insurrection",
+      "year": 1998
+    },
+    {
+      "title": "Enterprise (TV)",
+      "year": 2001
+    },
+    {
+      "title": "Nemesis",
+      "year": 2002
+    },
+    {
+      "title": "Star Trek (2009)",
+      "year": 2009
+    },
+    {
+      "title": "Into Darkness",
+      "year": 2013
+    },
+    {
+      "title": "Beyond",
+      "year": 2016
+    },
+    {
+      "title": "Discovery (TV)",
+      "year": 2017
+    },
+    {
+      "title": "Picard (TV)",
+      "year": 2020
+    },
+    {
+      "title": "Lower Decks (TV)",
+      "year": 2020
+    },
+    {
+      "title": "Prodigy (TV)",
+      "year": 2021
+    },
+    {
+      "title": "Strange New Worlds (TV)",
+      "year": 2022
+    },
+    {
+      "title": "Section 31",
+      "year": 2025
+    },
+    {
+      "title": "Starfleet Academy (TV)",
+      "year": 2026
+    }
+  ],
+  "branches": [
+    {
+      "id": "b1",
+      "title": "Prime Timeline",
+      "color": "#ffb02e",
+      "films": [
+        "Enterprise (TV)",
+        "The Original Series (TV)",
+        "The Animated Series (TV)",
+        "The Motion Picture",
+        "II: The Wrath of Khan",
+        "III: The Search for Spock",
+        "IV: The Voyage Home",
+        "V: The Final Frontier",
+        "VI: The Undiscovered Country",
+        "The Next Generation (TV)",
+        "Deep Space Nine (TV)",
+        "Voyager (TV)",
+        "Generations",
+        "First Contact",
+        "Insurrection",
+        "Nemesis",
+        "Lower Decks (TV)",
+        "Prodigy (TV)",
+        "Picard (TV)"
+      ],
+      "summary": "The original continuity: from Cochrane's warp flight to Picard's final voyage.",
+      "nodes": [
+        {
+          "era": "1992–1996",
+          "type": "event",
+          "text": "The <b>Eugenics Wars<\/b>: augment tyrant <b>Khan Noonien Singh<\/b> conquers a quarter of Earth, is overthrown, and flees aboard the sleeper ship <b>SS Botany Bay<\/b>.",
+          "tags": [
+            {
+              "label": "Khan",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2026–2053",
+          "type": "death",
+          "text": "<b>World War III<\/b> devastates Earth — 600 million dead, records erased, a post-atomic dark age.",
+          "tags": [
+            {
+              "label": "WWIII",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2063",
+          "type": "turning-point",
+          "text": "<b>Zefram Cochrane<\/b>'s first warp flight in the Phoenix draws a passing Vulcan ship: <b>First Contact<\/b> unites humanity.",
+          "tags": [
+            {
+              "label": "Warp drive",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2151–2161",
+          "type": "event",
+          "text": "Captain <b>Jonathan Archer<\/b> and the NX-01 Enterprise open deep space; the series ends with the founding of the <b>United Federation of Planets<\/b> in 2161.",
+          "tags": [
+            {
+              "label": "Federation",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2265–2269",
+          "type": "event",
+          "text": "<b>Kirk<\/b>'s five-year mission aboard the USS Enterprise. In 'Space Seed' the crew wakes Khan and exiles him to <b>Ceti Alpha V<\/b>.",
+          "tags": [
+            {
+              "label": "Khan",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2285",
+          "type": "death",
+          "text": "The Wrath of Khan: Khan escapes, detonates the <b>Genesis Device<\/b> — and <b>Spock dies<\/b> saving the Enterprise.",
+          "tags": [
+            {
+              "label": "Genesis",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2285–2286",
+          "type": "event",
+          "text": "Spock is reborn on the Genesis planet; the crew destroys the Enterprise to save him, then time-travels to 1986 to fetch two humpback whales and save Earth.",
+          "tags": [
+            {
+              "label": "Time travel",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "2293",
+          "type": "turning-point",
+          "text": "The <b>Khitomer Accords<\/b> end the Klingon cold war. On the Enterprise-B's maiden voyage, <b>Kirk is lost to the Nexus<\/b> — presumed dead.",
+          "tags": [
+            {
+              "label": "Kirk",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2364–2370",
+          "type": "event",
+          "text": "<b>Jean-Luc Picard<\/b> commands the Enterprise-D: encounters with <b>Q<\/b>, the Borg's arrival, and Picard's assimilation as <b>Locutus<\/b> before Wolf 359 (2367).",
+          "tags": [
+            {
+              "label": "Borg",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2369–2375",
+          "type": "event",
+          "text": "On station <b>Deep Space 9<\/b>, Sisko becomes Emissary of the wormhole Prophets; the <b>Dominion War<\/b> engulfs the quadrant before the Founders surrender.",
+          "tags": [
+            {
+              "label": "Dominion War",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2371–2378",
+          "type": "event",
+          "text": "<b>Voyager<\/b> is flung 70,000 light-years to the Delta Quadrant; Captain <b>Janeway<\/b> gets her crew (and ex-Borg <b>Seven of Nine<\/b>) home in seven years.",
+          "tags": [
+            {
+              "label": "Seven of Nine",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2371–2373",
+          "type": "turning-point",
+          "text": "Kirk returns from the Nexus to die stopping Soran (Generations); the Enterprise-E then follows the <b>Borg Queen<\/b> to 2063 to protect Cochrane's flight.",
+          "tags": [
+            {
+              "label": "Bootstrap",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "2379",
+          "type": "death",
+          "text": "Nemesis: Picard's clone <b>Shinzon<\/b> seizes Romulus; <b>Data sacrifices himself<\/b> to save the Enterprise.",
+          "tags": [
+            {
+              "label": "Data",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2385",
+          "type": "event",
+          "text": "Rogue synths (secretly triggered by the Romulan <b>Zhat Vash<\/b>) burn the Mars shipyards; the Federation bans synthetic life.",
+          "tags": [
+            {
+              "label": "Synth ban",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2387",
+          "type": "turning-point",
+          "text": "The <b>Romulan supernova<\/b> destroys Romulus. Ambassador Spock's red-matter black hole swallows him and Nero's ship — spawning the <b>Kelvin timeline<\/b>.",
+          "tags": [
+            {
+              "label": "Branch point",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "2399–2402",
+          "type": "resolution",
+          "text": "Picard: synths are legalised, Picard is reborn in a golem body, the TNG crew reunites to beat the Borg Queen one last time — and <b>Seven of Nine<\/b> captains the new Enterprise-G.",
+          "tags": [
+            {
+              "label": "Enterprise-G",
+              "kind": "model"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2",
+      "title": "Kelvin Timeline",
+      "color": "#28d7e0",
+      "films": [
+        "Star Trek (2009)",
+        "Into Darkness",
+        "Beyond"
+      ],
+      "summary": "Nero's revenge fork: the USS Kelvin dies in 2233 and a harder, faster universe grows from it.",
+      "nodes": [
+        {
+          "era": "2387 → 2233",
+          "type": "paradox",
+          "text": "Chasing Spock through the red-matter black hole, the Romulan miner <b>Nero<\/b> emerges 154 years early and attacks the <b>USS Kelvin<\/b>.",
+          "tags": [
+            {
+              "label": "Branch point",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "2233",
+          "type": "death",
+          "text": "<b>George Kirk<\/b> dies buying his crew time as his son <b>James T. Kirk<\/b> is born mid-evacuation — the moment the timelines split.",
+          "tags": [
+            {
+              "label": "Kirk",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2258",
+          "type": "death",
+          "text": "Nero drills into <b>Vulcan<\/b> and destroys it with red matter; Spock's mother dies and the Vulcans become an endangered species.",
+          "tags": [
+            {
+              "label": "Vulcan destroyed",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2258",
+          "type": "turning-point",
+          "text": "Cadet Kirk (with help from elderly Prime Spock) defeats Nero and jumps straight to captain of the Enterprise.",
+          "tags": [
+            {
+              "label": "Enterprise",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2259",
+          "type": "event",
+          "text": "Into Darkness: Section 31's Admiral Marcus wakes a 300-year-old superman — <b>Khan<\/b>, again — whose blood later revives a dead Kirk.",
+          "tags": [
+            {
+              "label": "Khan",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2263",
+          "type": "resolution",
+          "text": "Beyond: the Enterprise is destroyed by <b>Krall<\/b>'s swarm; the crew prevails and a new Enterprise-A is built. Ambassador Spock's death mirrors Leonard Nimoy's.",
+          "tags": [
+            {
+              "label": "Enterprise-A",
+              "kind": "model"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b3",
+      "title": "The Moved Timeline (Discovery era)",
+      "color": "#b07cff",
+      "films": [
+        "Discovery (TV)",
+        "Strange New Worlds (TV)",
+        "Lower Decks (TV)",
+        "Section 31",
+        "Starfleet Academy (TV)"
+      ],
+      "summary": "Temporal agents shoved Khan's birth ~55 years forward. Showrunners call it the same Prime line; the on-screen dates say otherwise.",
+      "nodes": [
+        {
+          "era": "1992 → 2022",
+          "type": "paradox",
+          "text": "SNW 'Tomorrow and Tomorrow and Tomorrow': Romulan agents have delayed human progress for decades — <b>Khan is a child in Toronto in 2022<\/b>, not a 1990s tyrant. Time itself 'pushes back.'",
+          "tags": [
+            {
+              "label": "Branch point",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "2022",
+          "type": "turning-point",
+          "text": "<b>La'an Noonien-Singh<\/b>, Khan's descendant, is sent by temporal investigators to keep her infamous ancestor alive — a Kirk from an alternate future dies helping her.",
+          "tags": [
+            {
+              "label": "La'an",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2256–2257",
+          "type": "event",
+          "text": "Discovery: <b>Michael Burnham<\/b>'s mutiny sparks the <b>Klingon War<\/b>; the spore-drive ship Discovery ends it — and brings back the Mirror Universe's Emperor <b>Georgiou<\/b>.",
+          "tags": [
+            {
+              "label": "Klingon War",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2258",
+          "type": "turning-point",
+          "text": "To starve the rogue AI <b>Control<\/b> of sphere data, Discovery and Burnham jump <b>930 years into the future<\/b>; Starfleet is ordered never to speak of them again.",
+          "tags": [
+            {
+              "label": "Time jump",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "2259–2260s",
+          "type": "event",
+          "text": "Strange New Worlds: <b>Pike<\/b> — who has foreseen the accident that will maim him — commands the Enterprise with Spock, Uhura, La'an and Chapel before Kirk's era.",
+          "tags": [
+            {
+              "label": "Pike",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2324",
+          "type": "event",
+          "text": "Section 31: in the 'lost era', ex-Emperor <b>Georgiou<\/b> runs black ops for Starfleet's secret police and faces her Terran past.",
+          "tags": [
+            {
+              "label": "Section 31",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2380–2382",
+          "type": "event",
+          "text": "Lower Decks: the USS Cerritos' ensigns handle Starfleet's dumbest missions; Boimler and Mariner even time-travel into the SNW era, welding the shows together.",
+          "tags": [
+            {
+              "label": "Cerritos",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "3069",
+          "type": "death",
+          "text": "<b>The Burn<\/b>: nearly all dilithium detonates at once, shattering warp travel and reducing the Federation to fragments.",
+          "tags": [
+            {
+              "label": "The Burn",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "3188–3191",
+          "type": "turning-point",
+          "text": "Discovery arrives in the 32nd century, finds the cause of the Burn, and rebuilds the Federation; Burnham finally takes the captain's chair.",
+          "tags": [
+            {
+              "label": "Burnham",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "3191+",
+          "type": "resolution",
+          "text": "Starfleet Academy reopens to its first new class in over a century — Tilly and the Doctor (Voyager's EMH) helping train the Federation's next generation.",
+          "tags": [
+            {
+              "label": "Academy",
+              "kind": "faction"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b4",
+      "title": "Mirror Universe",
+      "color": "#ff2a1f",
+      "films": [
+        "The Original Series (TV)",
+        "Enterprise (TV)",
+        "Deep Space Nine (TV)",
+        "Discovery (TV)",
+        "Section 31"
+      ],
+      "summary": "Not a branch but a parallel universe: the fascist Terran Empire, where the Federation's ideals are inverted.",
+      "nodes": [
+        {
+          "era": "2063",
+          "type": "turning-point",
+          "text": "The divergence in miniature: Mirror <b>Cochrane<\/b> shoots the first Vulcan visitor and humanity loots the ship — the <b>Terran Empire<\/b> is born of conquest.",
+          "tags": [
+            {
+              "label": "Terran Empire",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2155",
+          "type": "event",
+          "text": "'In a Mirror, Darkly': Archer's mirror self seizes a 23rd-century Federation ship from a rift and makes a grab for the throne.",
+          "tags": [
+            {
+              "label": "USS Defiant",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2250s",
+          "type": "event",
+          "text": "A young Terran <b>Philippa Georgiou<\/b> murders her way to the throne and rules as Emperor — with a Michael Burnham of her own at her side.",
+          "tags": [
+            {
+              "label": "Georgiou",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2257",
+          "type": "turning-point",
+          "text": "Discovery crosses over; Burnham topples the Emperor's reign and drags <b>Georgiou back to the Prime universe<\/b>, where Section 31 recruits her.",
+          "tags": [
+            {
+              "label": "Crossover",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "2267",
+          "type": "event",
+          "text": "'Mirror, Mirror': a transporter storm swaps Kirk's landing party with their goateed counterparts; Kirk plants doubt in Mirror Spock.",
+          "tags": [
+            {
+              "label": "Mirror Spock",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2370s",
+          "type": "resolution",
+          "text": "DS9 returns repeatedly: Mirror Spock's reforms let the Alliance crush the Empire, and Terran rebels fight back from a mirror DS9.",
+          "tags": [
+            {
+              "label": "Terran rebellion",
+              "kind": "faction"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "name": "James T. Kirk",
+      "role": "Captain of the Enterprise in two timelines; lost to the Nexus in 2293, reborn as a Kelvin cadet-captain.",
+      "color": "#ffb02e"
+    },
+    {
+      "name": "Spock",
+      "role": "The constant across all three timelines — his 2387 time-slip creates the Kelvin fork he then mentors.",
+      "color": "#28d7e0"
+    },
+    {
+      "name": "Jean-Luc Picard",
+      "role": "Enterprise-D/E captain, ex-Locutus of Borg; dies human, continues as a synthetic golem.",
+      "color": "#ffb02e"
+    },
+    {
+      "name": "Michael Burnham",
+      "role": "Spock's foster sister; starts the Klingon War, then saves all organic life and captains Discovery in the 3190s.",
+      "color": "#b07cff"
+    },
+    {
+      "name": "Khan Noonien Singh",
+      "role": "Augment tyrant of the 1990s — or a child in 2022, depending on which timeline you're standing in.",
+      "color": "#ff2a1f"
+    },
+    {
+      "name": "Philippa Georgiou",
+      "role": "Starfleet captain in Prime; genocidal Emperor in the Mirror; Section 31 operative in between.",
+      "color": "#ff2a1f"
+    },
+    {
+      "name": "Christopher Pike",
+      "role": "Enterprise captain who has seen his own maiming and accepts it to protect the future.",
+      "color": "#b07cff"
+    },
+    {
+      "name": "Benjamin Sisko",
+      "role": "DS9's commander and Emissary of the Prophets; wins the Dominion War, then joins the wormhole aliens.",
+      "color": "#ffb02e"
+    },
+    {
+      "name": "Kathryn Janeway",
+      "role": "Brought Voyager home across 70,000 light-years; returns as Prodigy's hologram and admiral.",
+      "color": "#ffb02e"
+    },
+    {
+      "name": "Seven of Nine",
+      "role": "Borg drone turned Voyager crew, Fenris Ranger, and finally captain of the Enterprise-G.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Data",
+      "role": "Soong's android who wanted to be human; dies in Nemesis, dies again (at peace) in Picard.",
+      "color": "#9aa6b6"
+    },
+    {
+      "name": "La'an Noonien-Singh",
+      "role": "SNW security chief and Khan's descendant — guardian of the very timeline shift that saves her ancestor.",
+      "color": "#b07cff"
+    }
+  ],
+  "items": [
+    {
+      "name": "USS Enterprise",
+      "desc": "NX-01 through NCC-1701-G: the flagship lineage every era rebuilds."
+    },
+    {
+      "name": "Genesis Device",
+      "desc": "Terraforming torpedo that creates life from lifelessness — and resurrects Spock."
+    },
+    {
+      "name": "Red matter",
+      "desc": "One drop makes a black hole; destroyed Nero's ship, birthed the Kelvin timeline."
+    },
+    {
+      "name": "SS Botany Bay",
+      "desc": "Khan's sleeper ship — adrift since the 1990s (or the 2040s, post-shift)."
+    },
+    {
+      "name": "Spore drive",
+      "desc": "Discovery's mycelial jump drive; instantaneous travel anywhere in the galaxy."
+    },
+    {
+      "name": "The Borg Collective",
+      "desc": "Hive-mind cyborgs; assimilated Picard, invaded 2063, finally beaten in 2402."
+    },
+    {
+      "name": "Bajoran wormhole",
+      "desc": "Stable passage to the Gamma Quadrant beside DS9; home of the Prophets."
+    },
+    {
+      "name": "Dilithium / The Burn",
+      "desc": "The crystal that powers warp — until 3069, when almost all of it exploded."
+    }
+  ],
+  "themes": [
+    "<b>Branches need a cause:<\/b> if Nero destroying one ship in 2233 forks a timeline, moving Khan's whole life 55 years must too — the core argument for counting Discovery/SNW as a third line.",
+    "<b>Time pushes back:<\/b> per SNW, repeated tampering with the Eugenics Wars made key events 'reassert' themselves later — Khan still rises, just decades late.",
+    "<b>The First Contact loop:<\/b> the Enterprise-E crew help launch the warp flight their own history depends on — Cochrane builds the future that comes back to save him.",
+    "<b>The whale loop:<\/b> Kirk's crew fetch whales from 1986 so a probe in 2286 finds someone to talk to — cause and effect shrug.",
+    "<b>The Mirror is parallel, not branched:<\/b> the Terran Empire diverged so early it's a separate universe you cross into, not a timeline you create.",
+    "<b>Canon is what's on screen:<\/b> showrunners may insist nothing changed, but once a child Khan appears in 2022, the map has to draw the line."
+  ]
+};
+
+const esc = s => String(s==null?'':s);
+document.documentElement.style.setProperty('--accent', DATA.accent || '#ff2a1f');
+document.title = (DATA.franchise || 'Timeline') + ' — Timeline Map';
+document.getElementById('eyebrow').textContent = (DATA.films && DATA.films.length)
+  ? `${DATA.films.length} films · ${(DATA.branches||[]).length} branches`
+  : 'Interactive timeline';
+document.getElementById('title').innerHTML = `<span class="glow">${esc(DATA.franchise)}</span> — Timeline`;
+document.getElementById('intro').textContent = esc(DATA.tagline ? DATA.tagline + ' ' : '') + esc(DATA.intro||'');
+
+// controls
+const controls = document.getElementById('controls');
+controls.innerHTML = `<button class="btn active" data-f="all">All branches</button>` +
+  (DATA.branches||[]).map(b=>`<button class="btn" data-f="${b.id}">${esc(b.title)}</button>`).join('');
+
+// branches
+const rail = document.getElementById('rail');
+(DATA.branches||[]).forEach(b=>{
+  const el = document.createElement('div');
+  el.className='branch'; el.dataset.id=b.id; el.style.setProperty('--bcol', b.color||DATA.accent||'#ff2a1f');
+  el.innerHTML = `
+    <div class="branch-head" style="--bcol:${b.color||'#ff2a1f'}">
+      <span class="caret">▼</span>
+      <div class="bt"><h2>${esc(b.title)}</h2><div class="meta">${esc(b.summary||'')}</div></div>
+      <div class="branch-films">${(b.films||[]).map(esc).join(' · ')}</div>
+    </div>
+    <div class="branch-body"><div class="track">
+      ${(b.nodes||[]).map(n=>`
+        <div class="node ${esc(n.type||'event')}">
+          <div class="yr">${esc(n.era)}</div>
+          <div class="ev">${n.text||''}${(n.tags||[]).map(t=>`<span class="tag ${esc(t.kind||'event')}">${esc(t.label)}</span>`).join('')}</div>
+        </div>`).join('')}
+    </div></div>`;
+  el.querySelector('.branch-head').addEventListener('click',()=>el.classList.toggle('collapsed'));
+  rail.appendChild(el);
+});
+
+// characters
+const chars = document.getElementById('chars');
+if(DATA.characters && DATA.characters.length){
+  DATA.characters.forEach(c=>{
+    const initials = String(c.name||'?').split(/[\s\/]+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    chars.insertAdjacentHTML('beforeend',
+      `<div class="char"><div class="av" style="background:${c.color||DATA.accent||'#ff2a1f'}">${initials}</div>
+       <div><div class="nm">${esc(c.name)}</div><div class="rl">${esc(c.role)}</div></div></div>`);
+  });
+} else { document.getElementById('charsCard').classList.add('hide'); }
+
+// items
+const models = document.getElementById('models');
+if(DATA.items && DATA.items.length){
+  DATA.items.forEach(m=>models.insertAdjacentHTML('beforeend',
+    `<div class="model"><div class="mn">${esc(m.name)}</div><div class="md">${esc(m.desc)}</div></div>`));
+} else { document.getElementById('itemsCard').classList.add('hide'); }
+
+// themes
+const paras = document.getElementById('paras');
+if(DATA.themes && DATA.themes.length){
+  DATA.themes.forEach(t=>paras.insertAdjacentHTML('beforeend',`<div class="para-item">${t}</div>`));
+} else { document.getElementById('themesBox').classList.add('hide'); }
+
+// footer
+const order = (DATA.films||[]).map(f=>`${esc(f.title)} (${esc(f.year)})`).join(' · ');
+document.getElementById('footer').innerHTML =
+  (order?`<strong>Films in release order:</strong> ${order}.<br><br>`:'') +
+  `Built with the Movie Timeline Mapper skill. Because the series branches, there is no single chronological line — each divergent future is its own branch above.`;
+
+// filter
+controls.addEventListener('click',e=>{
+  const btn=e.target.closest('.btn'); if(!btn) return;
+  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f=btn.dataset.f;
+  document.querySelectorAll('.branch').forEach(br=>br.classList.toggle('dim', f!=='all' && br.dataset.id!==f));
+});
+</script>
+</body>
+</html>

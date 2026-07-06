@@ -16,6 +16,7 @@ Rail ⇄ Fork-map toggle, branch filters, and character / item / theme panels).
 - **Back to the Future** — 3 films, 4 successive overwrites of one timeline
 - **Planet of the Apes** — 9 films, 3 branches (the original loop, Caesar's new lane, and the Simian Flu reboot)
 - **Predator** — 9 films, 5 branches (from Prey's 1719 first hunt to Badlands' 25th century)
+- **Star Trek** — 13 shows & 14 films, 4 branches (Prime, Kelvin, the "moved" Discovery-era line, and the Mirror Universe)
 
 ## Files
 
