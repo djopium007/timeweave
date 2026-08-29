@@ -17,6 +17,10 @@ Rail ⇄ Fork-map toggle, branch filters, and character / item / theme panels).
 - **Planet of the Apes** — 9 films, 3 branches (the original loop, Caesar's new lane, and the Simian Flu reboot)
 - **Predator** — 9 films, 5 branches (from Prey's 1719 first hunt to Badlands' 25th century)
 - **Star Trek** — 13 shows & 14 films, 4 branches (Prime, Kelvin, the "moved" Discovery-era line, and the Mirror Universe)
+- **Marvel Cinematic Universe** — 37 films, 5 branches (Sacred Timeline, time-heist splinters, TVA/unbound multiverse, incursions & neighbours, Earth-828)
+- **Star Wars** — 12 films & 19 series, 7 canon eras (Dawn of the Jedi → New Jedi Order) plus the Legends continuity as a fork
+- **Alien** — 7 films, 1 game & 1 series, 5 branches (Engineers & David, the Company's hunt from Nostromo to Romulus, Ripley's war, Resurrection, and Alien: Earth as a disputed 2120 fork)
+- **Transformers** — 8 films, 4 branches (Bay-era deep lore, the 2007–2017 Bay continuity, the Bumblebee/Rise of the Beasts soft reboot, and Transformers One's animated reboot)
 
 ## Files
 
@@ -58,7 +62,9 @@ and likes are open by design so signed-out visitors can vote). The publishable A
 Post-deploy configuration (Supabase dashboard → Authentication):
 1. Set **Site URL** (and redirect allow-list) to the production URL so email magic links
    return to the site instead of localhost.
-2. Enable Google / Apple / Facebook providers (each needs an OAuth app + secret).
+2. Enable Google / Apple / Facebook / X (Twitter) providers (each needs an OAuth app + secret).
+   X uses the Supabase `twitter` provider — create an app at the X Developer Portal and paste
+   its client ID/secret into Supabase → Authentication → Providers → Twitter.
 
 ## Deploy
 

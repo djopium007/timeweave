@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline Map</title>
+<style>
+  :root{
+    --bg:#0a0c10; --panel:#11151c; --panel2:#161b24; --line:#222a36;
+    --accent:#ff2a1f; --cyan:#28d7e0; --amber:#ffb02e; --green:#39d98a; --purple:#b07cff;
+    --txt:#e7ecf3; --muted:#8b97a8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, #06121a 0%, transparent 55%),
+      var(--bg);
+    color:var(--txt);
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 22px 80px}
+  header.hero{
+    border:1px solid var(--line);border-radius:16px;padding:30px 30px 26px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%), var(--panel);
+  }
+  header.hero::after{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,.012) 38px 39px);pointer-events:none}
+  .eyebrow{letter-spacing:.34em;font-size:11px;color:var(--accent);text-transform:uppercase;font-weight:700}
+  h1{font-size:38px;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+  h1 .glow{color:var(--accent);text-shadow:0 0 22px color-mix(in srgb, var(--accent) 55%, transparent)}
+  .sub{color:var(--muted);max-width:780px;font-size:15px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+  .legend .chip{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 8px}
+  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--txt);padding:9px 15px;border-radius:999px;
+    cursor:pointer;font-size:13px;font-weight:600;transition:.15s;white-space:nowrap}
+  .btn:hover{border-color:var(--accent);color:#fff}
+  .btn.active{background:var(--accent);border-color:var(--accent);color:#fff;
+    box-shadow:0 0 18px color-mix(in srgb, var(--accent) 40%, transparent)}
+
+  .rail{display:flex;flex-direction:column;margin-top:20px}
+  .branch{border:1px solid var(--line);border-radius:14px;margin-bottom:22px;overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));transition:.2s}
+  .branch.dim{opacity:.32;filter:saturate(.4)}
+  .branch-head{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;border-left:5px solid var(--bcol,var(--accent))}
+  .branch-head .bt{flex:1}
+  .branch-head h2{margin:0;font-size:19px;font-weight:700}
+  .branch-head .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .branch-films{font-size:11.5px;color:var(--muted);text-align:right;line-height:1.4;max-width:38%}
+  .branch-body{padding:0 20px 8px}
+  .caret{color:var(--muted);font-size:13px;transition:.2s}
+  .branch.collapsed .branch-body{display:none}
+  .branch.collapsed .caret{transform:rotate(-90deg)}
+
+  .track{position:relative;margin:8px 0 18px;padding-left:26px}
+  .track::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--bcol),transparent);opacity:.6}
+  .node{position:relative;margin:0 0 14px;padding:0 0 0 4px}
+  .node::before{content:"";position:absolute;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--bcol)}
+  .node.turning-point::before{background:var(--bcol)}
+  .node.paradox::before{border-color:var(--purple);box-shadow:0 0 10px color-mix(in srgb,var(--purple) 60%,transparent)}
+  .node.death::before{border-color:var(--accent);background:var(--accent)}
+  .node.resolution::before{border-color:var(--green);background:var(--green)}
+  .node .yr{font-size:12px;font-weight:800;color:var(--bcol);letter-spacing:.04em}
+  .node .ev{font-size:14px;color:var(--txt)}
+  .node .ev b{color:#fff}
+  .tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    padding:1px 7px;border-radius:5px;margin-left:6px;vertical-align:middle;border:1px solid transparent}
+  .tag.paradox{background:rgba(176,124,255,.16);color:var(--purple);border-color:rgba(176,124,255,.4)}
+  .tag.event{background:rgba(255,42,31,.16);color:#ff6a5f;border-color:rgba(255,42,31,.4)}
+  .tag.model{background:rgba(40,215,224,.14);color:var(--cyan);border-color:rgba(40,215,224,.35)}
+  .tag.faction{background:rgba(57,217,138,.14);color:var(--green);border-color:rgba(57,217,138,.35)}
+  .tag.character{background:rgba(255,176,46,.14);color:var(--amber);border-color:rgba(255,176,46,.35)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+  @media(max-width:880px){.grid2{grid-template-columns:1fr}.branch-films{display:none}}
+  .card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px 22px}
+  .card h3{margin:0 0 14px;font-size:16px;display:flex;align-items:center;gap:9px}
+  .card h3 .bar{width:4px;height:18px;border-radius:2px;background:var(--accent)}
+  .chars{display:flex;flex-direction:column;gap:9px}
+  .char{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:10px;background:var(--panel2);border:1px solid transparent;transition:.15s}
+  .char:hover{border-color:var(--line)}
+  .av{width:40px;height:40px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#0a0c10}
+  .char .nm{font-weight:700;font-size:14px}
+  .char .rl{font-size:12.5px;color:var(--muted)}
+  .models{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.models{grid-template-columns:1fr}}
+  .model{border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--panel2)}
+  .model .mn{font-weight:800;font-size:14px;color:var(--cyan)}
+  .model .md{font-size:12px;color:var(--muted);margin-top:3px}
+  .para-box{border:1px solid rgba(176,124,255,.35);border-radius:14px;background:rgba(176,124,255,.05);padding:20px 22px;margin-top:34px}
+  .para-box h3{color:var(--purple)}
+  .para-item{padding:10px 0;border-top:1px solid rgba(176,124,255,.15)}
+  .para-item:first-of-type{border-top:none}
+  .para-item b{color:#fff}
+  footer{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12.5px}
+  .hide{display:none !important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="title"></h1>
+    <p class="sub" id="intro"></p>
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background:var(--accent)"></span>Turning point / catastrophe</span>
+      <span class="chip"><span class="dot" style="background:var(--purple)"></span>Time-travel paradox</span>
+      <span class="chip"><span class="dot" style="background:var(--cyan)"></span>Machine / tech</span>
+      <span class="chip"><span class="dot" style="background:var(--green)"></span>Faction / resolution</span>
+    </div>
+  </header>
+
+  <div class="controls" id="controls"></div>
+  <div class="rail" id="rail"></div>
+
+  <div class="grid2">
+    <div class="card" id="charsCard"><h3><span class="bar"></span>Key Characters</h3><div class="chars" id="chars"></div></div>
+    <div class="card" id="itemsCard"><h3><span class="bar"></span>Key Items &amp; Tech</h3><div class="models" id="models"></div></div>
+  </div>
+
+  <div class="para-box" id="themesBox">
+    <h3><span class="bar" style="background:var(--purple)"></span>Recurring Themes &amp; Paradoxes</h3>
+    <div id="paras"></div>
+  </div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const DATA = {
+  "franchise": "Marvel Cinematic Universe",
+  "tagline": "Seventeen years, one Sacred Timeline, and a multiverse that refuses to stay pruned.",
+  "intro": "The MCU mostly plays out on a single line — Earth-616, the 'Sacred Timeline' — running from before the Big Bang to the late 2020s. Then Endgame's time heist splinters the past, Sylvie kills the being who kept every branch pruned, and neighbouring universes (Sony's Spider-Men, Earth-838's Illuminati, the Fantastic Four's Earth-828) start leaking in. Each branch below is one self-consistent line.",
+  "accent": "#e23636",
+  "films": [
+    {
+      "title": "Iron Man",
+      "year": 2008
+    },
+    {
+      "title": "The Incredible Hulk",
+      "year": 2008
+    },
+    {
+      "title": "Iron Man 2",
+      "year": 2010
+    },
+    {
+      "title": "Thor",
+      "year": 2011
+    },
+    {
+      "title": "Captain America: The First Avenger",
+      "year": 2011
+    },
+    {
+      "title": "The Avengers",
+      "year": 2012
+    },
+    {
+      "title": "Iron Man 3",
+      "year": 2013
+    },
+    {
+      "title": "Thor: The Dark World",
+      "year": 2013
+    },
+    {
+      "title": "Captain America: The Winter Soldier",
+      "year": 2014
+    },
+    {
+      "title": "Guardians of the Galaxy",
+      "year": 2014
+    },
+    {
+      "title": "Avengers: Age of Ultron",
+      "year": 2015
+    },
+    {
+      "title": "Ant-Man",
+      "year": 2015
+    },
+    {
+      "title": "Captain America: Civil War",
+      "year": 2016
+    },
+    {
+      "title": "Doctor Strange",
+      "year": 2016
+    },
+    {
+      "title": "Guardians of the Galaxy Vol. 2",
+      "year": 2017
+    },
+    {
+      "title": "Spider-Man: Homecoming",
+      "year": 2017
+    },
+    {
+      "title": "Thor: Ragnarok",
+      "year": 2017
+    },
+    {
+      "title": "Black Panther",
+      "year": 2018
+    },
+    {
+      "title": "Avengers: Infinity War",
+      "year": 2018
+    },
+    {
+      "title": "Ant-Man and the Wasp",
+      "year": 2018
+    },
+    {
+      "title": "Captain Marvel",
+      "year": 2019
+    },
+    {
+      "title": "Avengers: Endgame",
+      "year": 2019
+    },
+    {
+      "title": "Spider-Man: Far From Home",
+      "year": 2019
+    },
+    {
+      "title": "Black Widow",
+      "year": 2021
+    },
+    {
+      "title": "Shang-Chi and the Legend of the Ten Rings",
+      "year": 2021
+    },
+    {
+      "title": "Eternals",
+      "year": 2021
+    },
+    {
+      "title": "Spider-Man: No Way Home",
+      "year": 2021
+    },
+    {
+      "title": "Doctor Strange in the Multiverse of Madness",
+      "year": 2022
+    },
+    {
+      "title": "Thor: Love and Thunder",
+      "year": 2022
+    },
+    {
+      "title": "Black Panther: Wakanda Forever",
+      "year": 2022
+    },
+    {
+      "title": "Ant-Man and the Wasp: Quantumania",
+      "year": 2023
+    },
+    {
+      "title": "Guardians of the Galaxy Vol. 3",
+      "year": 2023
+    },
+    {
+      "title": "The Marvels",
+      "year": 2023
+    },
+    {
+      "title": "Deadpool & Wolverine",
+      "year": 2024
+    },
+    {
+      "title": "Captain America: Brave New World",
+      "year": 2025
+    },
+    {
+      "title": "Thunderbolts*",
+      "year": 2025
+    },
+    {
+      "title": "The Fantastic Four: First Steps",
+      "year": 2025
+    }
+  ],
+  "branches": [
+    {
+      "id": "b1",
+      "title": "The Sacred Timeline (Earth-616)",
+      "color": "#e23636",
+      "films": [
+        "Iron Man",
+        "The Incredible Hulk",
+        "Iron Man 2",
+        "Thor",
+        "Captain America: The First Avenger",
+        "The Avengers",
+        "Iron Man 3",
+        "Thor: The Dark World",
+        "Captain America: The Winter Soldier",
+        "Guardians of the Galaxy",
+        "Avengers: Age of Ultron",
+        "Ant-Man",
+        "Captain America: Civil War",
+        "Doctor Strange",
+        "Guardians of the Galaxy Vol. 2",
+        "Spider-Man: Homecoming",
+        "Thor: Ragnarok",
+        "Black Panther",
+        "Avengers: Infinity War",
+        "Ant-Man and the Wasp",
+        "Captain Marvel",
+        "Avengers: Endgame",
+        "Spider-Man: Far From Home",
+        "Black Widow",
+        "Shang-Chi and the Legend of the Ten Rings",
+        "Eternals",
+        "Spider-Man: No Way Home",
+        "Doctor Strange in the Multiverse of Madness",
+        "Thor: Love and Thunder",
+        "Black Panther: Wakanda Forever",
+        "Ant-Man and the Wasp: Quantumania",
+        "Guardians of the Galaxy Vol. 3",
+        "The Marvels",
+        "Captain America: Brave New World",
+        "Thunderbolts*"
+      ],
+      "summary": "The main MCU line: from the Celestials and the six singularities to the New Avengers — roughly release order once 2008 hits.",
+      "nodes": [
+        {
+          "era": "Pre–Big Bang",
+          "type": "event",
+          "text": "The <b>Celestials<\/b>, led by Arishem the Judge, predate the universe; the six singularities of the Big Bang become the <b>Infinity Stones<\/b>.",
+          "tags": [
+            {
+              "label": "Infinity Stones",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "Aeons ago",
+          "type": "event",
+          "text": "Celestials seed planets with embryonic gods; their Deviant monsters run amok, so they build the synthetic <b>Eternals<\/b> to keep worlds alive until each 'Emergence' destroys them."
+        },
+        {
+          "era": "Millions of years ago",
+          "type": "event",
+          "text": "Two <b>vibranium<\/b> meteors strike Earth — one shapes the future Wakanda and its Black Panther dynasty, the other mutates the plants that will birth Talokan.",
+          "tags": [
+            {
+              "label": "Vibranium",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "5000 BC",
+          "type": "event",
+          "text": "Ten Eternals — Sersi, Ikaris, Ajak and company — arrive on Earth to hunt Deviants, unknowingly ripening the planet for the Celestial <b>Tiamut<\/b>'s Emergence."
+        },
+        {
+          "era": "2988 BC",
+          "type": "event",
+          "text": "Bor of Asgard defeats <b>Malekith<\/b> and buries the Aether (the Reality Stone); the Dark Elves hibernate for five millennia."
+        },
+        {
+          "era": "Millennia ago",
+          "type": "event",
+          "text": "Odin conquers the Nine Realms with <b>Hela<\/b>, then imprisons her and erases her from history; Mjolnir is forged, Thor is born, and Loki is adopted from Jotunheim.",
+          "tags": [
+            {
+              "label": "Mjolnir",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "~1000 AD",
+          "type": "event",
+          "text": "Warlord <b>Xu Wenwu<\/b> finds the Ten Rings and builds a millennium-spanning shadow empire; Chthon's spells are copied into the <b>Darkhold<\/b>.",
+          "tags": [
+            {
+              "label": "Ten Rings",
+              "kind": "model"
+            },
+            {
+              "label": "Darkhold",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "16th century",
+          "type": "event",
+          "text": "A vibranium-mutated Mayan tribe founds the underwater kingdom of <b>Talokan<\/b>; the winged mutant child <b>Namor<\/b> becomes their god-king K'uk'ulkan.",
+          "tags": [
+            {
+              "label": "Namor",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "1693",
+          "type": "event",
+          "text": "<b>Agatha Harkness<\/b> drains her own coven, steals the Darkhold, and slips away for three centuries of trouble.",
+          "tags": [
+            {
+              "label": "Agatha",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "1942–1945",
+          "type": "turning-point",
+          "text": "Steve Rogers becomes <b>Captain America<\/b>; the Red Skull is cast to Vormir by the Tesseract; Bucky falls and is rebuilt as the <b>Winter Soldier<\/b>; Steve crashes into the Arctic ice.",
+          "tags": [
+            {
+              "label": "Captain America",
+              "kind": "character"
+            },
+            {
+              "label": "Tesseract",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "1946–1970",
+          "type": "event",
+          "text": "<b>HYDRA<\/b> secretly infiltrates S.H.I.E.L.D.; Zola's mind is digitised; Hank Pym develops Pym Particles; the Red Room churns out Black Widows; Isaiah Bradley is experimented on and erased.",
+          "tags": [
+            {
+              "label": "HYDRA",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "1987",
+          "type": "turning-point",
+          "text": "<b>Janet Van Dyne<\/b> shrinks into the Quantum Realm to stop a missile — and meets the exiled <b>Kang<\/b>, whose escape she sabotages by enlarging his power core.",
+          "tags": [
+            {
+              "label": "Kang",
+              "kind": "character"
+            },
+            {
+              "label": "Quantum Realm",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "1988–1995",
+          "type": "event",
+          "text": "Ego fathers and abandons <b>Peter Quill<\/b> (abducted by Yondu's Ravagers, 1988); Thanos adopts Gamora and Nebula; Rocket escapes the High Evolutionary."
+        },
+        {
+          "era": "1991",
+          "type": "death",
+          "text": "The Winter Soldier assassinates <b>Howard and Maria Stark<\/b> — a hit that will detonate the Avengers 25 years later.",
+          "tags": [
+            {
+              "label": "Stark murders",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "1995",
+          "type": "turning-point",
+          "text": "Carol Danvers becomes <b>Captain Marvel<\/b>, routs the Kree, and leaves Fury a pager — inspiring the <b>Avengers Initiative<\/b>.",
+          "tags": [
+            {
+              "label": "Captain Marvel",
+              "kind": "character"
+            },
+            {
+              "label": "Avengers Initiative",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2008",
+          "type": "turning-point",
+          "text": "<b>Tony Stark<\/b> builds the Iron Man armour in a cave, escapes, and announces 'I am Iron Man'; gamma radiation turns Bruce Banner into the <b>Hulk<\/b>.",
+          "tags": [
+            {
+              "label": "Iron Man",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2010–2011",
+          "type": "event",
+          "text": "War Machine debuts; Thor is exiled to Earth and proves worthy of Mjolnir; Captain America is thawed after 66 years in the ice."
+        },
+        {
+          "era": "2012",
+          "type": "turning-point",
+          "text": "Loki, armed by Thanos with the sceptre and the Chitauri, invades New York — and the <b>Avengers<\/b> assemble for the first time.",
+          "tags": [
+            {
+              "label": "Battle of New York",
+              "kind": "event"
+            },
+            {
+              "label": "Avengers",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2013",
+          "type": "event",
+          "text": "Killian's Extremis plot behind the fake <b>Mandarin<\/b> is exposed; Malekith returns and falls; Loki fakes his death and takes Odin's throne."
+        },
+        {
+          "era": "2014",
+          "type": "turning-point",
+          "text": "HYDRA's takeover of S.H.I.E.L.D. is exposed and the agency collapses; the <b>Guardians of the Galaxy<\/b> form and save Xandar's Power Stone from Ronan.",
+          "tags": [
+            {
+              "label": "S.H.I.E.L.D. falls",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2015",
+          "type": "event",
+          "text": "<b>Ultron<\/b> drops Sokovia from the sky; the Vision is born from the Mind Stone; Scott Lang becomes Ant-Man; Hulk exits to Sakaar.",
+          "tags": [
+            {
+              "label": "Ultron",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2016",
+          "type": "turning-point",
+          "text": "Zemo's revenge splits the Avengers in a <b>Civil War<\/b>; T'Challa becomes Black Panther; Doctor Strange traps Dormammu in a Time-Stone loop.",
+          "tags": [
+            {
+              "label": "Civil War",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2017",
+          "type": "event",
+          "text": "The Guardians kill <b>Ego<\/b>; Spider-Man downs the Vulture; Hela destroys Mjolnir and <b>Ragnarok<\/b> razes Asgard; Killmonger's coup in Wakanda fails."
+        },
+        {
+          "era": "2018",
+          "type": "death",
+          "text": "<b>Thanos<\/b> gathers all six Stones and snaps away half of all life; Gamora, Loki and Vision die; Ant-Man is stranded in the Quantum Realm.",
+          "tags": [
+            {
+              "label": "The Snap",
+              "kind": "event"
+            },
+            {
+              "label": "Infinity Gauntlet",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2023",
+          "type": "turning-point",
+          "text": "The <b>Time Heist<\/b> retrieves past Stones; Hulk snaps everyone back; every hero alive beats the invading 2014 Thanos.",
+          "tags": [
+            {
+              "label": "The Blip",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2023",
+          "type": "death",
+          "text": "<b>Tony Stark<\/b> wields the Stones and dies dealing the final blow; old Steve Rogers returns from his life with Peggy and hands the shield to <b>Sam Wilson<\/b>.",
+          "tags": [
+            {
+              "label": "Iron Man",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2024",
+          "type": "event",
+          "text": "Grieving Wanda warps Westview into a sitcom Hex, then embraces the <b>Scarlet Witch<\/b> and takes Agatha's Darkhold; the Hex rewires <b>Monica Rambeau<\/b>'s cells.",
+          "tags": [
+            {
+              "label": "Scarlet Witch",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2024",
+          "type": "event",
+          "text": "Sam Wilson takes up the mantle of <b>Captain America<\/b> against the Flag Smashers; Shang-Chi inherits the <b>Ten Rings<\/b>; Sersi petrifies the emerging Celestial Tiamut mid-birth.",
+          "tags": [
+            {
+              "label": "Tiamut",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2024",
+          "type": "turning-point",
+          "text": "Mysterio outs Peter Parker; Strange's botched forgetting spell cracks the <b>multiverse<\/b> open, and the world forgets Peter Parker entirely.",
+          "tags": [
+            {
+              "label": "No Way Home",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "2025",
+          "type": "death",
+          "text": "Darkhold-corrupted Wanda hunts America Chavez across realities, then destroys the Darkhold in every universe and brings Wundagore down on herself.",
+          "tags": [
+            {
+              "label": "Scarlet Witch",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2025",
+          "type": "event",
+          "text": "New heroes surge: <b>Ms. Marvel<\/b>, <b>She-Hulk<\/b>, <b>Moon Knight<\/b>, Echo; Thor defeats Gorr the God Butcher but loses <b>Jane Foster<\/b> to Valhalla."
+        },
+        {
+          "era": "2025",
+          "type": "event",
+          "text": "<b>T'Challa<\/b> dies of illness; Shuri becomes Black Panther, fights Namor's Talokan to a truce, and meets T'Challa's secret son.",
+          "tags": [
+            {
+              "label": "Black Panther",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2025",
+          "type": "turning-point",
+          "text": "In the Quantum Realm, the Lang–Pym family destroys <b>Kang the Conqueror<\/b> and his power core — while Kang variants stir across the multiverse.",
+          "tags": [
+            {
+              "label": "Kang",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2025",
+          "type": "event",
+          "text": "The Guardians defeat the <b>High Evolutionary<\/b> and save Rocket, who becomes captain of a new Guardians roster."
+        },
+        {
+          "era": "2025–2026",
+          "type": "event",
+          "text": "Gravik's <b>Skrull invasion<\/b> is crushed by G'iah; the Marvels entangle powers to stop Dar-Benn — and <b>Monica Rambeau<\/b> is stranded in another universe.",
+          "tags": [
+            {
+              "label": "Secret Invasion",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2026",
+          "type": "event",
+          "text": "Riri Williams builds <b>Ironheart<\/b>, unmasks the Hood, and strikes a bargain with <b>Mephisto<\/b> to resurrect her friend Natalie; Mayor Fisk wages war on New York's vigilantes.",
+          "tags": [
+            {
+              "label": "Mephisto",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2026–2027",
+          "type": "turning-point",
+          "text": "President Thaddeus Ross champions mining <b>adamantium<\/b> from Tiamut's corpse — then Sterns' gamma-laced revenge turns him into the <b>Red Hulk<\/b>.",
+          "tags": [
+            {
+              "label": "Adamantium",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2027",
+          "type": "resolution",
+          "text": "The Thunderbolts pull Bob back from the <b>Void<\/b>; Valentina rebrands them the <b>New Avengers<\/b> — just as the Fantastic Four's ship appears in Earth's orbit.",
+          "tags": [
+            {
+              "label": "New Avengers",
+              "kind": "faction"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2",
+      "title": "The Time Heist Splinters",
+      "color": "#ffb02e",
+      "films": [
+        "Avengers: Endgame"
+      ],
+      "summary": "Endgame's rule: travelling to the past doesn't rewrite it — it splits off a new branch.",
+      "nodes": [
+        {
+          "era": "Alt 2012",
+          "type": "paradox",
+          "text": "During the botched New York heist, the 2012 <b>Loki<\/b> escapes with the Tesseract — spawning a rogue branch and the TVA's next arrest.",
+          "tags": [
+            {
+              "label": "Nexus event",
+              "kind": "paradox"
+            },
+            {
+              "label": "Loki",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Alt 2014",
+          "type": "turning-point",
+          "text": "The 2014 <b>Thanos<\/b> and his entire armada abandon their timeline to invade 2023 — a branch whose own Snap now never happens.",
+          "tags": [
+            {
+              "label": "Thanos",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Alt 2014",
+          "type": "event",
+          "text": "The 2014 <b>Gamora<\/b> arrives in the present with no memory of the Guardians; she later resurfaces with the Ravagers.",
+          "tags": [
+            {
+              "label": "Gamora",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Alt 1949 onward",
+          "type": "resolution",
+          "text": "<b>Steve Rogers<\/b> stays in a branched past to live a full life with Peggy Carter, returning as an old man only to pass on the shield.",
+          "tags": [
+            {
+              "label": "Captain America",
+              "kind": "character"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b3",
+      "title": "The TVA & the Unbound Multiverse",
+      "color": "#39d98a",
+      "films": [
+        "Avengers: Endgame",
+        "Deadpool & Wolverine"
+      ],
+      "summary": "Outside time: the agency that pruned every branch, the murder that freed them all, and the god now holding them together.",
+      "nodes": [
+        {
+          "era": "Outside time",
+          "type": "event",
+          "text": "The <b>Time Variance Authority<\/b> prunes branching realities to protect <b>He Who Remains<\/b>' Sacred Timeline; escaped 2012 Loki is recruited by Agent Mobius.",
+          "tags": [
+            {
+              "label": "TVA",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "End of Time",
+          "type": "turning-point",
+          "text": "Loki and <b>Sylvie<\/b> reach the Citadel at the End of Time; Sylvie kills He Who Remains — a Kang variant — and infinite timelines bloom.",
+          "tags": [
+            {
+              "label": "Nexus event",
+              "kind": "paradox"
+            },
+            {
+              "label": "Kang",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "The multiverse",
+          "type": "event",
+          "text": "The <b>Watcher<\/b> breaks his oath of observation, assembling Guardians of the Multiverse to stop a Stone-hoarding variant <b>Ultron<\/b> (What If...?).",
+          "tags": [
+            {
+              "label": "Ultron",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "End of Time",
+          "type": "resolution",
+          "text": "Time-slipping <b>Loki<\/b> seizes the Temporal Loom's threads and becomes a god of time — holding every branch alive at the centre of a new multiverse.",
+          "tags": [
+            {
+              "label": "Loki",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Earth-10005",
+          "type": "event",
+          "text": "Rogue TVA agent Mr. Paradox schedules <b>Deadpool<\/b>'s dying universe for pruning; Wade drags a variant <b>Wolverine<\/b> into saving it.",
+          "tags": [
+            {
+              "label": "Deadpool",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Aftermath",
+          "type": "resolution",
+          "text": "The reformed TVA stops pruning, monitors <b>Kang variants<\/b> across the free multiverse, and keeps Deadpool and Wolverine on call.",
+          "tags": [
+            {
+              "label": "TVA",
+              "kind": "faction"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b4",
+      "title": "Incursions & Neighbouring Universes",
+      "color": "#b07cff",
+      "films": [
+        "Spider-Man: No Way Home",
+        "Doctor Strange in the Multiverse of Madness",
+        "The Marvels"
+      ],
+      "summary": "Once the multiverse runs free, other realities start leaking into — and out of — Earth-616.",
+      "nodes": [
+        {
+          "era": "2024",
+          "type": "paradox",
+          "text": "Strange's broken spell pulls Spider-Man villains — and two other <b>Peter Parkers<\/b> — from Sony's universes into the MCU before the world forgets Peter.",
+          "tags": [
+            {
+              "label": "No Way Home",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "2025 · Earth-838",
+          "type": "death",
+          "text": "Dreamwalking through her variant's body, the Scarlet Witch slaughters Earth-838's <b>Illuminati<\/b> — Professor X, Reed Richards, Captain Carter and all.",
+          "tags": [
+            {
+              "label": "Illuminati",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2025",
+          "type": "event",
+          "text": "<b>America Chavez<\/b>, the multiverse's only unduplicated traveller, escapes Wanda; Strange's Darkhold use triggers an <b>incursion<\/b>, and Clea pulls him into the Dark Dimension.",
+          "tags": [
+            {
+              "label": "Incursion",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "2025–2026",
+          "type": "event",
+          "text": "Closing Dar-Benn's rifts strands <b>Monica Rambeau<\/b> in a universe where Hank McCoy and the <b>X-Men<\/b> exist.",
+          "tags": [
+            {
+              "label": "Monica Rambeau",
+              "kind": "character"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b5",
+      "title": "Earth-828: First Steps",
+      "color": "#28d7e0",
+      "films": [
+        "The Fantastic Four: First Steps"
+      ],
+      "summary": "A retro-futurist parallel Earth where the Fantastic Four are the planet's first family — until Galactus comes to feed.",
+      "nodes": [
+        {
+          "era": "Earth-828",
+          "type": "event",
+          "text": "On a 1960s-styled Earth, the <b>Fantastic Four<\/b> are beloved heroes; <b>Sue Storm<\/b> and Reed Richards are expecting a child.",
+          "tags": [
+            {
+              "label": "Fantastic Four",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "Earth-828",
+          "type": "turning-point",
+          "text": "The <b>Silver Surfer<\/b> heralds <b>Galactus<\/b>, who offers to spare Earth — in exchange for baby Franklin and his immense cosmic power.",
+          "tags": [
+            {
+              "label": "Galactus",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Earth-828",
+          "type": "resolution",
+          "text": "With a repentant Silver Surfer's help, Sue pushes Galactus through a teleport portal to the universe's edge — dying in the effort, until newborn <b>Franklin<\/b> resurrects her.",
+          "tags": [
+            {
+              "label": "Franklin Richards",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "Years later",
+          "type": "turning-point",
+          "text": "<b>Doctor Doom<\/b> appears in the Baxter Building nursery, studying Franklin — the child's power has drawn exactly the wrong attention.",
+          "tags": [
+            {
+              "label": "Doctor Doom",
+              "kind": "character"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "name": "Tony Stark / Iron Man",
+      "role": "Launched the MCU in a cave with a box of scraps; died wielding the Stones to end Thanos.",
+      "color": "#e23636"
+    },
+    {
+      "name": "Steve Rogers → Sam Wilson",
+      "role": "Captain America is a mantle: Steve retires into a branched past, Sam carries the shield forward.",
+      "color": "#3b6fd4"
+    },
+    {
+      "name": "Thanos",
+      "role": "The Mad Titan whose Snap cuts the timeline in half — and whose 2014 self dies in 2023.",
+      "color": "#8a5cc7"
+    },
+    {
+      "name": "Loki",
+      "role": "From invader to TVA recruit to the god of time holding every branch of the multiverse together.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Wanda Maximoff",
+      "role": "Grief made her the Scarlet Witch; the Darkhold made her the multiverse's most feared threat.",
+      "color": "#c9184a"
+    },
+    {
+      "name": "Doctor Strange",
+      "role": "Time-loops Dormammu, breaks the multiverse for Peter Parker, and pays for dreamwalking with an incursion.",
+      "color": "#b07cff"
+    },
+    {
+      "name": "Kang (Nathaniel Richards)",
+      "role": "One man, infinite variants: Quantum Realm exile, He Who Remains, and every conqueror in between.",
+      "color": "#2ec4b6"
+    },
+    {
+      "name": "Carol Danvers / Captain Marvel",
+      "role": "The 1995 pager-holder who inspired the Avengers Initiative and still patrols the cosmos.",
+      "color": "#ffb02e"
+    },
+    {
+      "name": "Nick Fury",
+      "role": "The one-eyed architect of the Avengers — occasionally a Skrull, always scheming.",
+      "color": "#5c677d"
+    },
+    {
+      "name": "Peter Parker / Spider-Man",
+      "role": "Outed by Mysterio, then erased from every memory on Earth to seal the multiverse.",
+      "color": "#d90429"
+    },
+    {
+      "name": "Franklin Richards",
+      "role": "Earth-828's newborn with Celestial-scale power — coveted by Galactus, studied by Doom.",
+      "color": "#28d7e0"
+    }
+  ],
+  "items": [
+    {
+      "name": "Infinity Stones",
+      "desc": "Six singularities predating the Big Bang; assembled twice, destroyed once, stolen from four eras."
+    },
+    {
+      "name": "Infinity Gauntlet",
+      "desc": "The Dwarf-forged glove that channels all six Stones — used by Thanos, Hulk, and Tony Stark."
+    },
+    {
+      "name": "Tesseract / Space Stone",
+      "desc": "HYDRA's power source, Loki's prize, Carol Danvers' accidental power-up."
+    },
+    {
+      "name": "Mjolnir",
+      "desc": "Forged in a dying star; destroyed by Hela in 2017, borrowed from 2013 by the time heist."
+    },
+    {
+      "name": "Vibranium",
+      "desc": "Meteoric super-metal underpinning both Wakanda and Talokan."
+    },
+    {
+      "name": "Adamantium",
+      "desc": "New super-metal mined from the corpse of the petrified Celestial Tiamut."
+    },
+    {
+      "name": "The Ten Rings",
+      "desc": "Wenwu's immortality-granting arm-rings, now with Shang-Chi — and beaconing into space."
+    },
+    {
+      "name": "The Darkhold",
+      "desc": "Chthon's book of dark magic; corrupted Wanda before she burned it in every universe."
+    },
+    {
+      "name": "Pym Particles & the Quantum Realm",
+      "desc": "Size-changing physics that enabled the time heist — and hid Kang's exile kingdom."
+    },
+    {
+      "name": "The Temporal Loom",
+      "desc": "The TVA's failsafe that couldn't scale to infinite branches — until Loki became the loom."
+    }
+  ],
+  "themes": [
+    "<b>Branches, not rewrites:<\/b> Endgame time travel never changes your own past — it splits a new timeline, which is exactly what the TVA existed to prune.",
+    "<b>The Snap is the hinge:<\/b> a five-year hole (2018–2023) in the main timeline drives nearly every story that follows, from the Flag Smashers to the Emergence.",
+    "<b>Mantles outlive heroes:<\/b> the shield passes to Sam, Hawkeye to Kate, Black Panther to Shuri, and a Young Avengers roster is quietly assembling.",
+    "<b>One murder freed the multiverse:<\/b> Sylvie killing He Who Remains turned a single policed timeline into infinite branches — and every incursion since traces back to it.",
+    "<b>The calendar drifts:<\/b> the MCU runs 'roughly release order', but retcons (a 2026 presidential election, Secret Invasion's placement) keep fans arguing about exact years."
+  ]
+};
+
+const esc = s => String(s==null?'':s);
+document.documentElement.style.setProperty('--accent', DATA.accent || '#ff2a1f');
+document.title = (DATA.franchise || 'Timeline') + ' — Timeline Map';
+document.getElementById('eyebrow').textContent = (DATA.films && DATA.films.length)
+  ? `${DATA.films.length} films · ${(DATA.branches||[]).length} branches`
+  : 'Interactive timeline';
+document.getElementById('title').innerHTML = `<span class="glow">${esc(DATA.franchise)}</span> — Timeline`;
+document.getElementById('intro').textContent = esc(DATA.tagline ? DATA.tagline + ' ' : '') + esc(DATA.intro||'');
+
+// controls
+const controls = document.getElementById('controls');
+controls.innerHTML = `<button class="btn active" data-f="all">All branches</button>` +
+  (DATA.branches||[]).map(b=>`<button class="btn" data-f="${b.id}">${esc(b.title)}</button>`).join('');
+
+// branches
+const rail = document.getElementById('rail');
+(DATA.branches||[]).forEach(b=>{
+  const el = document.createElement('div');
+  el.className='branch'; el.dataset.id=b.id; el.style.setProperty('--bcol', b.color||DATA.accent||'#ff2a1f');
+  el.innerHTML = `
+    <div class="branch-head" style="--bcol:${b.color||'#ff2a1f'}">
+      <span class="caret">▼</span>
+      <div class="bt"><h2>${esc(b.title)}</h2><div class="meta">${esc(b.summary||'')}</div></div>
+      <div class="branch-films">${(b.films||[]).map(esc).join(' · ')}</div>
+    </div>
+    <div class="branch-body"><div class="track">
+      ${(b.nodes||[]).map(n=>`
+        <div class="node ${esc(n.type||'event')}">
+          <div class="yr">${esc(n.era)}</div>
+          <div class="ev">${n.text||''}${(n.tags||[]).map(t=>`<span class="tag ${esc(t.kind||'event')}">${esc(t.label)}</span>`).join('')}</div>
+        </div>`).join('')}
+    </div></div>`;
+  el.querySelector('.branch-head').addEventListener('click',()=>el.classList.toggle('collapsed'));
+  rail.appendChild(el);
+});
+
+// characters
+const chars = document.getElementById('chars');
+if(DATA.characters && DATA.characters.length){
+  DATA.characters.forEach(c=>{
+    const initials = String(c.name||'?').split(/[\s\/]+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    chars.insertAdjacentHTML('beforeend',
+      `<div class="char"><div class="av" style="background:${c.color||DATA.accent||'#ff2a1f'}">${initials}</div>
+       <div><div class="nm">${esc(c.name)}</div><div class="rl">${esc(c.role)}</div></div></div>`);
+  });
+} else { document.getElementById('charsCard').classList.add('hide'); }
+
+// items
+const models = document.getElementById('models');
+if(DATA.items && DATA.items.length){
+  DATA.items.forEach(m=>models.insertAdjacentHTML('beforeend',
+    `<div class="model"><div class="mn">${esc(m.name)}</div><div class="md">${esc(m.desc)}</div></div>`));
+} else { document.getElementById('itemsCard').classList.add('hide'); }
+
+// themes
+const paras = document.getElementById('paras');
+if(DATA.themes && DATA.themes.length){
+  DATA.themes.forEach(t=>paras.insertAdjacentHTML('beforeend',`<div class="para-item">${t}</div>`));
+} else { document.getElementById('themesBox').classList.add('hide'); }
+
+// footer
+const order = (DATA.films||[]).map(f=>`${esc(f.title)} (${esc(f.year)})`).join(' · ');
+document.getElementById('footer').innerHTML =
+  (order?`<strong>Films in release order:</strong> ${order}.<br><br>`:'') +
+  `Built with the Movie Timeline Mapper skill. Because the series branches, there is no single chronological line — each divergent future is its own branch above.`;
+
+// filter
+controls.addEventListener('click',e=>{
+  const btn=e.target.closest('.btn'); if(!btn) return;
+  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f=btn.dataset.f;
+  document.querySelectorAll('.branch').forEach(br=>br.classList.toggle('dim', f!=='all' && br.dataset.id!==f));
+});
+</script>
+</body>
+</html>

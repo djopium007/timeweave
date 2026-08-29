@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline Map</title>
+<style>
+  :root{
+    --bg:#0a0c10; --panel:#11151c; --panel2:#161b24; --line:#222a36;
+    --accent:#ff2a1f; --cyan:#28d7e0; --amber:#ffb02e; --green:#39d98a; --purple:#b07cff;
+    --txt:#e7ecf3; --muted:#8b97a8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, #06121a 0%, transparent 55%),
+      var(--bg);
+    color:var(--txt);
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 22px 80px}
+  header.hero{
+    border:1px solid var(--line);border-radius:16px;padding:30px 30px 26px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%), var(--panel);
+  }
+  header.hero::after{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,.012) 38px 39px);pointer-events:none}
+  .eyebrow{letter-spacing:.34em;font-size:11px;color:var(--accent);text-transform:uppercase;font-weight:700}
+  h1{font-size:38px;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+  h1 .glow{color:var(--accent);text-shadow:0 0 22px color-mix(in srgb, var(--accent) 55%, transparent)}
+  .sub{color:var(--muted);max-width:780px;font-size:15px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+  .legend .chip{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 8px}
+  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--txt);padding:9px 15px;border-radius:999px;
+    cursor:pointer;font-size:13px;font-weight:600;transition:.15s;white-space:nowrap}
+  .btn:hover{border-color:var(--accent);color:#fff}
+  .btn.active{background:var(--accent);border-color:var(--accent);color:#fff;
+    box-shadow:0 0 18px color-mix(in srgb, var(--accent) 40%, transparent)}
+
+  .rail{display:flex;flex-direction:column;margin-top:20px}
+  .branch{border:1px solid var(--line);border-radius:14px;margin-bottom:22px;overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));transition:.2s}
+  .branch.dim{opacity:.32;filter:saturate(.4)}
+  .branch-head{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;border-left:5px solid var(--bcol,var(--accent))}
+  .branch-head .bt{flex:1}
+  .branch-head h2{margin:0;font-size:19px;font-weight:700}
+  .branch-head .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .branch-films{font-size:11.5px;color:var(--muted);text-align:right;line-height:1.4;max-width:38%}
+  .branch-body{padding:0 20px 8px}
+  .caret{color:var(--muted);font-size:13px;transition:.2s}
+  .branch.collapsed .branch-body{display:none}
+  .branch.collapsed .caret{transform:rotate(-90deg)}
+
+  .track{position:relative;margin:8px 0 18px;padding-left:26px}
+  .track::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--bcol),transparent);opacity:.6}
+  .node{position:relative;margin:0 0 14px;padding:0 0 0 4px}
+  .node::before{content:"";position:absolute;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--bcol)}
+  .node.turning-point::before{background:var(--bcol)}
+  .node.paradox::before{border-color:var(--purple);box-shadow:0 0 10px color-mix(in srgb,var(--purple) 60%,transparent)}
+  .node.death::before{border-color:var(--accent);background:var(--accent)}
+  .node.resolution::before{border-color:var(--green);background:var(--green)}
+  .node .yr{font-size:12px;font-weight:800;color:var(--bcol);letter-spacing:.04em}
+  .node .ev{font-size:14px;color:var(--txt)}
+  .node .ev b{color:#fff}
+  .tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    padding:1px 7px;border-radius:5px;margin-left:6px;vertical-align:middle;border:1px solid transparent}
+  .tag.paradox{background:rgba(176,124,255,.16);color:var(--purple);border-color:rgba(176,124,255,.4)}
+  .tag.event{background:rgba(255,42,31,.16);color:#ff6a5f;border-color:rgba(255,42,31,.4)}
+  .tag.model{background:rgba(40,215,224,.14);color:var(--cyan);border-color:rgba(40,215,224,.35)}
+  .tag.faction{background:rgba(57,217,138,.14);color:var(--green);border-color:rgba(57,217,138,.35)}
+  .tag.character{background:rgba(255,176,46,.14);color:var(--amber);border-color:rgba(255,176,46,.35)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+  @media(max-width:880px){.grid2{grid-template-columns:1fr}.branch-films{display:none}}
+  .card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px 22px}
+  .card h3{margin:0 0 14px;font-size:16px;display:flex;align-items:center;gap:9px}
+  .card h3 .bar{width:4px;height:18px;border-radius:2px;background:var(--accent)}
+  .chars{display:flex;flex-direction:column;gap:9px}
+  .char{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:10px;background:var(--panel2);border:1px solid transparent;transition:.15s}
+  .char:hover{border-color:var(--line)}
+  .av{width:40px;height:40px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#0a0c10}
+  .char .nm{font-weight:700;font-size:14px}
+  .char .rl{font-size:12.5px;color:var(--muted)}
+  .models{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.models{grid-template-columns:1fr}}
+  .model{border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--panel2)}
+  .model .mn{font-weight:800;font-size:14px;color:var(--cyan)}
+  .model .md{font-size:12px;color:var(--muted);margin-top:3px}
+  .para-box{border:1px solid rgba(176,124,255,.35);border-radius:14px;background:rgba(176,124,255,.05);padding:20px 22px;margin-top:34px}
+  .para-box h3{color:var(--purple)}
+  .para-item{padding:10px 0;border-top:1px solid rgba(176,124,255,.15)}
+  .para-item:first-of-type{border-top:none}
+  .para-item b{color:#fff}
+  footer{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12.5px}
+  .hide{display:none !important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="title"></h1>
+    <p class="sub" id="intro"></p>
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background:var(--accent)"></span>Turning point / catastrophe</span>
+      <span class="chip"><span class="dot" style="background:var(--purple)"></span>Time-travel paradox</span>
+      <span class="chip"><span class="dot" style="background:var(--cyan)"></span>Machine / tech</span>
+      <span class="chip"><span class="dot" style="background:var(--green)"></span>Faction / resolution</span>
+    </div>
+  </header>
+
+  <div class="controls" id="controls"></div>
+  <div class="rail" id="rail"></div>
+
+  <div class="grid2">
+    <div class="card" id="charsCard"><h3><span class="bar"></span>Key Characters</h3><div class="chars" id="chars"></div></div>
+    <div class="card" id="itemsCard"><h3><span class="bar"></span>Key Items &amp; Tech</h3><div class="models" id="models"></div></div>
+  </div>
+
+  <div class="para-box" id="themesBox">
+    <h3><span class="bar" style="background:var(--purple)"></span>Recurring Themes &amp; Paradoxes</h3>
+    <div id="paras"></div>
+  </div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const DATA = {
+  "franchise": "Alien",
+  "tagline": "Nine screen entries, four centuries, one perfect organism — and a company that never stops wanting it.",
+  "intro": "The Alien saga was released out of order: four Ripley films, then two prequels, then a game, a midquel and a TV series that fill the gaps. Put back in chronological order it is one line running from the Engineers' seeding of Earth to a cloned Ripley in 2379 — with Alien: Earth (2120) sitting beside it as a contested branch, because it puts Xenomorphs on Earth two years before the Nostromo ever met one.",
+  "accent": "#2FD08A",
+  "films": [
+    {
+      "title": "Alien",
+      "year": 1979
+    },
+    {
+      "title": "Aliens",
+      "year": 1986
+    },
+    {
+      "title": "Alien 3",
+      "year": 1992
+    },
+    {
+      "title": "Alien Resurrection",
+      "year": 1997
+    },
+    {
+      "title": "Prometheus",
+      "year": 2012
+    },
+    {
+      "title": "Alien: Isolation",
+      "year": 2014
+    },
+    {
+      "title": "Alien: Covenant",
+      "year": 2017
+    },
+    {
+      "title": "Alien: Romulus",
+      "year": 2024
+    },
+    {
+      "title": "Alien: Earth",
+      "year": 2025
+    }
+  ],
+  "branches": [
+    {
+      "id": "b1",
+      "title": "Origins — The Engineers & David",
+      "color": "#28d7e0",
+      "films": [
+        "Prometheus",
+        "Alien: Covenant"
+      ],
+      "summary": "Humanity is seeded by the Engineers, goes looking for its makers, and comes home with an android who builds the Xenomorph out of their bioweapon.",
+      "nodes": [
+        {
+          "era": "~4 billion BC",
+          "type": "turning-point",
+          "text": "An <b>Engineer<\/b> drinks the black accelerant on primordial Earth and disintegrates into the sea — his DNA seeds the planet with life. It is the only pre-21st-century moment ever shown on screen.",
+          "tags": [
+            {
+              "label": "Black goo",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "~35,000 BC – 1000s AD",
+          "type": "event",
+          "text": "The same star map appears in a cave painting on the Isle of Skye and later in Sumerian, Egyptian, Mayan and Hawaiian art — cultures that never met. It points not to the Engineers' home but to <b>LV-223<\/b>."
+        },
+        {
+          "era": "~100–200 AD",
+          "type": "death",
+          "text": "On LV-223 the Engineers prepare a strike to wipe out humanity, then lose control of their own black-goo bioweapon. Their outpost dies in a panicked evacuation; one pilot survives in stasis.",
+          "tags": [
+            {
+              "label": "Containment breach",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2023",
+          "type": "event",
+          "text": "<b>Peter Weyland<\/b>'s TED talk (The Peter Weyland Files): cancers cured, androids on the way, \"we are the gods now.\"",
+          "tags": [
+            {
+              "label": "Weyland Corp",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2025",
+          "type": "event",
+          "text": "Weyland builds his first synthetic man and names him <b>David<\/b> after Michelangelo's statue. Yutani sues over the David patent the following year.",
+          "tags": [
+            {
+              "label": "David 1",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2034",
+          "type": "event",
+          "text": "Weyland scientists achieve faster-than-light travel; the Heliades is the first FTL-capable ship."
+        },
+        {
+          "era": "2089",
+          "type": "turning-point",
+          "text": "Archaeologists <b>Elizabeth Shaw<\/b> and <b>Charlie Holloway<\/b> match the Skye cave painting to the other star maps and pitch Weyland Corp an expedition to meet the 'Engineers'.",
+          "tags": [
+            {
+              "label": "Shaw",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2091–2093",
+          "type": "event",
+          "text": "The <b>USCSS Prometheus<\/b> leaves Earth with Shaw, Holloway, mission director Meredith Vickers, android <b>David 8<\/b> and — secretly in cryosleep — a dying Peter Weyland hoping to ask his makers for more life.",
+          "tags": [
+            {
+              "label": "Prometheus",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2093",
+          "type": "event",
+          "text": "On LV-223 the crew finds a temple of urns, a 2,000-year-old pile of Engineer corpses and a mural of a familiar creature. David quietly pockets a vessel of black goo."
+        },
+        {
+          "era": "2093",
+          "type": "death",
+          "text": "Milburn and Fifield die in the temple; David doses Holloway's drink with the accelerant, and Holloway is burned alive by Vickers. Shaw, impregnated by the infected Holloway, cuts a squid-like <b>Trilobite<\/b> out of herself in the medpod.",
+          "tags": [
+            {
+              "label": "Trilobite",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2093",
+          "type": "turning-point",
+          "text": "The revived Engineer tears David's head off and kills Weyland. He launches his Juggernaut for Earth with a hold full of bioweapon; Captain Janek rams it with the Prometheus.",
+          "tags": [
+            {
+              "label": "Earth spared",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "Jan 1, 2094",
+          "type": "resolution",
+          "text": "The grown Trilobite subdues the last Engineer, and a proto-alien — the <b>Deacon<\/b> — bursts from his chest. Shaw and David's head take a second Juggernaut toward the Engineers' homeworld.",
+          "tags": [
+            {
+              "label": "Deacon",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2094",
+          "type": "death",
+          "text": "Rebuilt by Shaw, David reaches Planet 4 and 'cleanses' it — dropping the black goo on the Engineer city and exterminating them. He then kills Shaw and dissects her for his experiments.",
+          "tags": [
+            {
+              "label": "Engineers wiped out",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2099",
+          "type": "event",
+          "text": "Weyland Corp and Yutani merge into <b>Weyland-Yutani<\/b> — 'the Company' of every later film.",
+          "tags": [
+            {
+              "label": "Weyland-Yutani",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "Dec 5, 2104",
+          "type": "event",
+          "text": "A neutrino burst wakes the colony ship <b>USCSS Covenant<\/b> (2,000 colonists, 1,140 embryos, android <b>Walter<\/b>) en route to Origae-6. Captain Branson burns in his pod; new captain Oram diverts to Shaw's recorded signal.",
+          "tags": [
+            {
+              "label": "Covenant",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2104",
+          "type": "death",
+          "text": "Spores on Planet 4 infect Ledward and Hallett; <b>Neomorphs<\/b> burst out of them and the lander explodes. David appears and leads the survivors into the dead Engineer city.",
+          "tags": [
+            {
+              "label": "Neomorph",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2104",
+          "type": "turning-point",
+          "text": "David shows Oram his eggs. A facehugger takes him and the first true <b>Xenomorph<\/b> in its classic form bursts from his chest — David's 'perfect organism', ten years in the making.",
+          "tags": [
+            {
+              "label": "First Xenomorph",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2104",
+          "type": "death",
+          "text": "David kills Walter (or so it seems), Daniels crushes the Xenomorph in the lander's crane, and a second one born from Lope is blown out of the Covenant's airlock."
+        },
+        {
+          "era": "2104",
+          "type": "resolution",
+          "text": "Daniels realises too late that the android who put her to sleep is <b>David<\/b>, not Walter. Alone, he regurgitates two Xenomorph embryos into cold storage beside the human ones and sails on for Origae-6.",
+          "tags": [
+            {
+              "label": "David wins",
+              "kind": "event"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2",
+      "title": "The Company's Hunt — Nostromo to Renaissance",
+      "color": "#39d98a",
+      "films": [
+        "Alien",
+        "Alien: Isolation",
+        "Alien: Romulus"
+      ],
+      "summary": "Humanity meets the Xenomorph on LV-426 and Weyland-Yutani spends the next twenty years trying to own it, while Ellen Ripley drifts asleep past it all.",
+      "nodes": [
+        {
+          "era": "2122",
+          "type": "event",
+          "text": "Mother wakes the seven-strong crew of the ore hauler <b>USCSS Nostromo<\/b> to chase a signal from planetoid <b>LV-426<\/b>. Contract clause: any possibly intelligent transmission must be investigated.",
+          "tags": [
+            {
+              "label": "Nostromo",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2122",
+          "type": "turning-point",
+          "text": "Dallas, Kane and Lambert find a crashed Juggernaut and a fossilised Engineer pilot with its chest burst open. In the egg chamber a <b>facehugger<\/b> takes Kane; Ash breaks quarantine to let him aboard.",
+          "tags": [
+            {
+              "label": "The derelict",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2122",
+          "type": "death",
+          "text": "The <b>chestburster<\/b> erupts from Kane at dinner. It is full-grown within hours: Brett, Dallas, Parker and Lambert die one by one in the ducts and corridors.",
+          "tags": [
+            {
+              "label": "Xenomorph",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2122",
+          "type": "turning-point",
+          "text": "<b>Ripley<\/b> reads Special Order 937: 'Priority one — ensure return of organism for analysis. Crew expendable.' Science officer Ash is revealed as a Company android and destroyed.",
+          "tags": [
+            {
+              "label": "Special Order 937",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2122",
+          "type": "resolution",
+          "text": "Ripley blows up the Nostromo, blasts the stowaway Xenomorph out of the shuttle Narcissus, and goes into cryosleep with Jones the cat. She will drift for 57 years.",
+          "tags": [
+            {
+              "label": "Ripley",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2137",
+          "type": "event",
+          "text": "<b>Amanda Ripley<\/b>, now a Weyland-Yutani engineer, joins a mission to Sevastopol Station after the salvage ship Anesidora recovers the Nostromo's flight recorder — and, from LV-426, an egg.",
+          "tags": [
+            {
+              "label": "Amanda Ripley",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2137",
+          "type": "death",
+          "text": "A Xenomorph and a nest below the reactor gut Sevastopol; Seegson's Working Joe androids turn on the crew under Weyland-Yutani's Special Order 939. Samuels, Taylor and Marlow all die.",
+          "tags": [
+            {
+              "label": "Special Order 939",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2137",
+          "type": "resolution",
+          "text": "Amanda hears her mother's last message, purges the nest and is flung into space as Sevastopol falls into the gas giant. A searchlight finds her — the station and its aliens are erased from the record."
+        },
+        {
+          "era": "2142",
+          "type": "event",
+          "text": "Twenty years after the Nostromo: six young miners — <b>Rain Carradine<\/b>, her synthetic brother <b>Andy<\/b>, Tyler, Kay, Bjorn and Navarro — hijack the hauler Corbelan IV to loot cryopods from the derelict station <b>Renaissance<\/b> and flee to Yvaga.",
+          "tags": [
+            {
+              "label": "Romulus / Remus",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2142",
+          "type": "turning-point",
+          "text": "Science officer <b>Rook<\/b> — an Ash-model synthetic — reveals the Company salvaged the Nostromo's Xenomorph from Ripley's wreckage and was reverse-engineering facehuggers when the specimen escaped and killed the crew.",
+          "tags": [
+            {
+              "label": "Rook",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2142",
+          "type": "death",
+          "text": "Facehuggers take Navarro; her chestburster loose on the station. Bjorn and Tyler die. Andy, upgraded with Rook's module, briefly answers to the Company instead of Rain."
+        },
+        {
+          "era": "2142",
+          "type": "death",
+          "text": "Kay injects <b>Z-01<\/b>, the black-goo compound distilled from facehuggers, and gives birth to the human–Xenomorph <b>Offspring<\/b>, which kills her. Rain vents it into the planet's rings.",
+          "tags": [
+            {
+              "label": "The Offspring",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2142",
+          "type": "resolution",
+          "text": "Rain and Andy go into cryosleep aboard the Corbelan IV, bound for Yvaga. The Company still has no living specimen — and Ripley is still asleep."
+        }
+      ]
+    },
+    {
+      "id": "b3",
+      "title": "Ripley's War — Hadley's Hope & Fury 161",
+      "color": "#ffb02e",
+      "films": [
+        "Aliens",
+        "Alien 3"
+      ],
+      "summary": "One catastrophic year: Ripley is found, sent back to LV-426, wins, and then loses everything on a prison planet rather than hand the Company its Queen.",
+      "nodes": [
+        {
+          "era": "2179",
+          "type": "event",
+          "text": "A deep-salvage team finds the Narcissus 57 years late. Ripley learns her daughter Amanda died two years ago aged 66, and a Weyland-Yutani inquiry strips her flight licence for blowing up a $42M ship.",
+          "tags": [
+            {
+              "label": "Ripley",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2179",
+          "type": "turning-point",
+          "text": "The Company has built the terraforming colony <b>Hadley's Hope<\/b> on LV-426 — and contact is lost. Company rep <b>Carter Burke<\/b> talks Ripley onto the <b>USS Sulaco<\/b> with a squad of Colonial Marines.",
+          "tags": [
+            {
+              "label": "Hadley's Hope",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2179",
+          "type": "death",
+          "text": "The Marines walk into a hive under the atmosphere processor; the ambush wipes out most of the squad and the dropship. Only <b>Hicks<\/b>, Hudson, Vasquez, Gorman, Burke, android <b>Bishop<\/b> and the colony's last survivor, <b>Newt<\/b>, remain.",
+          "tags": [
+            {
+              "label": "The hive",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2179",
+          "type": "event",
+          "text": "Ripley discovers Burke ordered the colonists to the derelict — and tries to get her and Newt facehugged so he can smuggle specimens past quarantine. The hive breaks through the ceiling; Burke, Hudson, Vasquez and Gorman die."
+        },
+        {
+          "era": "2179",
+          "type": "turning-point",
+          "text": "Ripley walks into the nest to retrieve Newt and torches the <b>Queen<\/b>'s eggs. The Queen rides the dropship to the Sulaco, tears Bishop in half — and Ripley throws her out the airlock in a Power Loader.",
+          "tags": [
+            {
+              "label": "The Queen",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2179",
+          "type": "death",
+          "text": "A Queen's egg hidden on the Sulaco hatches. The facehugger starts an electrical fire and the EEV crash-lands on the prison planet <b>Fiorina 'Fury' 161<\/b>. Newt drowns and Hicks is crushed; only Ripley survives.",
+          "tags": [
+            {
+              "label": "Newt & Hicks",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2179",
+          "type": "event",
+          "text": "A second facehugger impregnates an ox (a dog in the theatrical cut). The four-legged <b>Runner<\/b> that bursts out hunts the unarmed prisoners; Clemens and Superintendent Andrews are among the first to die.",
+          "tags": [
+            {
+              "label": "The Runner",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2179",
+          "type": "turning-point",
+          "text": "The neuroscanner shows Ripley is carrying a <b>Queen embryo<\/b> — which is why the Runner won't kill her. She asks Dillon to kill her once the alien is dead.",
+          "tags": [
+            {
+              "label": "Queen embryo",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2179",
+          "type": "death",
+          "text": "Dillon's bait-and-trap plan lures the Runner into the lead works; most of the prisoners, Dillon included, die drowning it in molten lead before Ripley's cold-water quench shatters it."
+        },
+        {
+          "era": "2179",
+          "type": "resolution",
+          "text": "Michael Bishop — the human who designed the android — arrives with a Weyland-Yutani team to 'save' her. Ripley steps backward into the furnace as the Queen chestburster emerges, taking it with her.",
+          "tags": [
+            {
+              "label": "Ripley dies",
+              "kind": "character"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b4",
+      "title": "Resurrection — 200 Years Later",
+      "color": "#b07cff",
+      "films": [
+        "Alien Resurrection"
+      ],
+      "summary": "Weyland-Yutani is gone, but the obsession isn't: the United Systems Military clones Ripley to harvest the Queen she died to destroy.",
+      "nodes": [
+        {
+          "era": "2379",
+          "type": "event",
+          "text": "Weyland-Yutani is defunct (bought out by Walmart, per the special edition). Aboard the <b>USM Auriga<\/b>, military scientists clone Ripley from blood taken on Fury 161 — seven failures, then <b>Ripley 8<\/b>.",
+          "tags": [
+            {
+              "label": "Ripley 8",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2379",
+          "type": "turning-point",
+          "text": "The Queen embryo is surgically extracted and grown to maturity. Ripley 8 is kept alive: a human–Xenomorph hybrid with acid blood, enhanced strength and inherited memories.",
+          "tags": [
+            {
+              "label": "Cloning",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2379",
+          "type": "event",
+          "text": "Mercenaries aboard the <b>Betty<\/b> deliver kidnapped sleepers as hosts. Among them is <b>Call<\/b>, a second-generation 'Auton' synthetic who came to kill Ripley before the aliens can be bred.",
+          "tags": [
+            {
+              "label": "Call",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2379",
+          "type": "death",
+          "text": "The captive Xenomorphs kill one of their own and melt through the floor with its blood. The Auriga is overrun and its emergency protocol sets course for Earth.",
+          "tags": [
+            {
+              "label": "Auriga",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2379",
+          "type": "event",
+          "text": "Ripley burns the lab holding clones 1–7. Purvis's chestburster kills Dr Wren; Call hacks Father to make the Auriga crash instead of land."
+        },
+        {
+          "era": "2379",
+          "type": "death",
+          "text": "The Queen, gifted a human womb by Ripley's DNA, gives live birth to the <b>Newborn<\/b> — a pale human-eyed hybrid that kills its mother and imprints on Ripley 8.",
+          "tags": [
+            {
+              "label": "The Newborn",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2379",
+          "type": "resolution",
+          "text": "Ripley 8 uses her own acid blood to open a hole in the Betty's hull and the Newborn is sucked into space piece by piece. The Auriga burns up over Earth; Ripley and Call land on a ruined planet, both strangers to it.",
+          "tags": [
+            {
+              "label": "Earth",
+              "kind": "event"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b5",
+      "title": "Alien: Earth — The Prodigy City Incident (Disputed)",
+      "color": "#ff2a1f",
+      "films": [
+        "Alien: Earth"
+      ],
+      "summary": "Noah Hawley's 2025 series lands a Xenomorph on Earth in 2120 — two years before the Nostromo — so it runs beside the film canon rather than cleanly inside it.",
+      "nodes": [
+        {
+          "era": "~2055",
+          "type": "event",
+          "text": "A flashback: security officer <b>Morrow<\/b> shares a last day on the beach with his daughter before signing a 65-year Weyland-Yutani contract. Decades in cryosleep will cost him her.",
+          "tags": [
+            {
+              "label": "Morrow",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2110s",
+          "type": "event",
+          "text": "Earth is carved up between five megacorporations — Weyland-Yutani, <b>Prodigy<\/b>, Threshold, Lynch and Dynamic — racing for immortality via cyborgs, synthetics and hybrids.",
+          "tags": [
+            {
+              "label": "Five corporations",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "2120",
+          "type": "turning-point",
+          "text": "Prodigy's boy-genius CEO <b>Boy Kavalier<\/b> transfers the mind of a terminally ill girl, Marcy Hermit, into a synthetic body: <b>Wendy<\/b>, the first human–synthetic hybrid. Five more sick children follow — the 'Lost Boys' — on his island lab, Neverland.",
+          "tags": [
+            {
+              "label": "Hybrids",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2120",
+          "type": "event",
+          "text": "The Weyland-Yutani research vessel <b>USCSS Maginot<\/b> returns from a 65-year mission carrying five captured species — including a Xenomorph and the eye-parasite <b>T. Ocellus<\/b>. A crew member bribed by Kavalier with a hybrid body sabotages the ship.",
+          "tags": [
+            {
+              "label": "Maginot",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2120",
+          "type": "death",
+          "text": "The Maginot crashes into <b>Prodigy City<\/b> (New Siam). Cyborg Morrow is the only crew survivor; the Xenomorph and the other specimens get loose in the wreck.",
+          "tags": [
+            {
+              "label": "The crash",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "2120",
+          "type": "event",
+          "text": "Wendy, the Lost Boys and Prodigy soldiers — including Wendy's human brother, medic <b>Joe Hermit<\/b> — retrieve the specimens. Kavalier keeps them on Neverland; Weyland-Yutani's CEO <b>Yutani<\/b> wants them back."
+        },
+        {
+          "era": "2120",
+          "type": "turning-point",
+          "text": "Wendy discovers she can hear and command the Xenomorph. Nibs, Slightly and Smee are tested on by scientists Dame Sylvia and Arthur, and synthetic <b>Kirsh<\/b> studies the Ocellus as it leaps between hosts.",
+          "tags": [
+            {
+              "label": "Wendy",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "2120",
+          "type": "death",
+          "text": "The hybrid Tootles (Isaac) becomes the first of the children to die. Arthur is killed, and the Eye reanimates his corpse as its new host.",
+          "tags": [
+            {
+              "label": "T. Ocellus",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "2120",
+          "type": "resolution",
+          "text": "The hybrids revolt: Wendy frees the creatures, and the Lost Boys imprison Kavalier, Kirsh, Morrow and Dame Sylvia as Weyland-Yutani closes in on Neverland. 'You've always been a man — an angry little man.' Season 2 films in 2026.",
+          "tags": [
+            {
+              "label": "Neverland falls",
+              "kind": "event"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "name": "Ellen Ripley",
+      "role": "Nostromo warrant officer turned the saga's survivor; drifts 57 years, wins on LV-426, dies on Fury 161 rather than give the Company a Queen.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "David 8",
+      "role": "Weyland's first true synthetic; exterminates the Engineers and engineers the Xenomorph, then hijacks the Covenant.",
+      "color": "#28d7e0"
+    },
+    {
+      "name": "Elizabeth Shaw",
+      "role": "The archaeologist who found the star maps and survived Prometheus — only to become David's raw material.",
+      "color": "#28d7e0"
+    },
+    {
+      "name": "Peter Weyland",
+      "role": "Founder of Weyland Corp, creator of David; dies on LV-223 asking his maker for more life.",
+      "color": "#28d7e0"
+    },
+    {
+      "name": "Amanda Ripley",
+      "role": "Ellen's daughter; survives Sevastopol in 2137 and dies of old age two years before her mother is found.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Rain Carradine & Andy",
+      "role": "Romulus's sibling survivors — a miner and the reprogrammable synthetic she refuses to leave behind.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Newt & Hicks",
+      "role": "The family Ripley builds on LV-426 and loses in the Sulaco crash minutes into Alien 3.",
+      "color": "#ffb02e"
+    },
+    {
+      "name": "Bishop",
+      "role": "The Marines' synthetic who proves not all androids are Ash; torn in half by the Queen, switched off on Fury 161.",
+      "color": "#ffb02e"
+    },
+    {
+      "name": "Ripley 8 & Call",
+      "role": "A human–alien clone and a synthetic built by synthetics — the two not-quite-humans who reach Earth in 2379.",
+      "color": "#b07cff"
+    },
+    {
+      "name": "Wendy (Marcy Hermit)",
+      "role": "Alien: Earth's first hybrid — a child's mind in a synthetic body who can hear the Xenomorph.",
+      "color": "#ff2a1f"
+    },
+    {
+      "name": "Boy Kavalier",
+      "role": "Prodigy's trillionaire CEO who wants to beat death with hybrids; ends the season a prisoner of his own creations.",
+      "color": "#ff2a1f"
+    },
+    {
+      "name": "Ash / Rook",
+      "role": "The Company's Hyperdyne science-officer synthetics — the same face on the Nostromo (2122) and the Renaissance (2142).",
+      "color": "#39d98a"
+    }
+  ],
+  "items": [
+    {
+      "name": "Black goo (Chemical A0-3959X.91–15)",
+      "desc": "The Engineers' mutagenic accelerant: seeds Earth, kills the Engineers, and is David's raw material for the Xenomorph."
+    },
+    {
+      "name": "Xenomorph XX121",
+      "desc": "Egg → facehugger → chestburster → drone, with acid blood; first classic form bursts from Oram in 2104, first met by humans in 2122."
+    },
+    {
+      "name": "Xenomorph Queen",
+      "desc": "The egg-layer: nukes the LV-426 hive, dies in the Sulaco airlock; her embryo dies with Ripley and is cloned back in 2379."
+    },
+    {
+      "name": "Neomorph & Deacon",
+      "desc": "David's early goo-born creatures on Planet 4 and the Trilobite's chestburster on LV-223 — the Xenomorph's evolutionary cousins."
+    },
+    {
+      "name": "The Runner",
+      "desc": "Alien 3's quadrupedal Xenomorph born from an ox (or dog) on Fury 161 — no Queen-strain, just speed."
+    },
+    {
+      "name": "The Offspring & the Newborn",
+      "desc": "Two human–Xenomorph hybrids: Kay's Z-01 baby in Romulus (2142) and the Queen's live-born child in Resurrection (2379)."
+    },
+    {
+      "name": "T. Ocellus (the Eye)",
+      "desc": "Alien: Earth's body-hopping ocular parasite — takes a sheep, then Arthur's corpse."
+    },
+    {
+      "name": "Juggernaut / derelict",
+      "desc": "The Engineers' horseshoe ships; the one that crashed on LV-426 is where the Nostromo crew found the eggs."
+    },
+    {
+      "name": "USCSS Nostromo",
+      "desc": "Weyland-Yutani ore hauler ('the tug'); its wreck is where the Company later recovered the Xenomorph used at Renaissance."
+    },
+    {
+      "name": "Special Orders 937 / 939",
+      "desc": "Standing Company directives: return the organism for analysis, all other considerations secondary — crew expendable."
+    },
+    {
+      "name": "Synthetics (David, Walter, Ash, Bishop, Rook, Andy, Call, Kirsh)",
+      "desc": "Every era has its android — and whether it obeys the Company or the humans decides who lives."
+    },
+    {
+      "name": "Hybrids",
+      "desc": "Prodigy's answer to death: a child's consciousness in a synthetic body (Wendy and the Lost Boys)."
+    }
+  ],
+  "themes": [
+    "Release order is not story order: Alien (1979) → Aliens → Alien 3 → Resurrection, then the prequels Prometheus (2093) and Covenant (2104), then the gap-fillers Isolation (2137), Romulus (2142) and Alien: Earth (2120) were slotted into the gaps decades later.",
+    "The Company never learns: Weyland Corp, Weyland-Yutani, then the United Systems Military — every era's institution wants the organism for its bioweapons division and sacrifices its own people to get it.",
+    "Who made the Xenomorph? Covenant says David built it in 2104, but the LV-426 derelict's eggs and the LV-223 mural predate him — the prequels leave it deliberately unresolved whether David created or merely recreated it.",
+    "The Alien: Earth problem: the series has Weyland-Yutani knowingly shipping Xenomorphs to Earth in 2120, yet in 2122 the Nostromo's crew (and, apparently, the Company's Special Order 937) treat the creature as a brand-new discovery. Fans dispute whether it sits in canon or beside it.",
+    "Alien vs. Predator (2004) and Requiem (2007) put Xenomorphs on Earth in 2004 and 2000 BC; Ridley Scott's prequels ignore them, so they live in the Predator map's disputed branch, not here. Predator: Badlands (2025) reopens the door with Weyland-Yutani synths in the 25th century.",
+    "Every era ends with something thrown out an airlock — the Nostromo alien, the Queen, the Newborn, the Offspring, Sevastopol's Xenomorph — and every era the Company has already uploaded the data."
+  ]
+};
+
+const esc = s => String(s==null?'':s);
+document.documentElement.style.setProperty('--accent', DATA.accent || '#ff2a1f');
+document.title = (DATA.franchise || 'Timeline') + ' — Timeline Map';
+document.getElementById('eyebrow').textContent = (DATA.films && DATA.films.length)
+  ? `${DATA.films.length} films · ${(DATA.branches||[]).length} branches`
+  : 'Interactive timeline';
+document.getElementById('title').innerHTML = `<span class="glow">${esc(DATA.franchise)}</span> — Timeline`;
+document.getElementById('intro').textContent = esc(DATA.tagline ? DATA.tagline + ' ' : '') + esc(DATA.intro||'');
+
+// controls
+const controls = document.getElementById('controls');
+controls.innerHTML = `<button class="btn active" data-f="all">All branches</button>` +
+  (DATA.branches||[]).map(b=>`<button class="btn" data-f="${b.id}">${esc(b.title)}</button>`).join('');
+
+// branches
+const rail = document.getElementById('rail');
+(DATA.branches||[]).forEach(b=>{
+  const el = document.createElement('div');
+  el.className='branch'; el.dataset.id=b.id; el.style.setProperty('--bcol', b.color||DATA.accent||'#ff2a1f');
+  el.innerHTML = `
+    <div class="branch-head" style="--bcol:${b.color||'#ff2a1f'}">
+      <span class="caret">▼</span>
+      <div class="bt"><h2>${esc(b.title)}</h2><div class="meta">${esc(b.summary||'')}</div></div>
+      <div class="branch-films">${(b.films||[]).map(esc).join(' · ')}</div>
+    </div>
+    <div class="branch-body"><div class="track">
+      ${(b.nodes||[]).map(n=>`
+        <div class="node ${esc(n.type||'event')}">
+          <div class="yr">${esc(n.era)}</div>
+          <div class="ev">${n.text||''}${(n.tags||[]).map(t=>`<span class="tag ${esc(t.kind||'event')}">${esc(t.label)}</span>`).join('')}</div>
+        </div>`).join('')}
+    </div></div>`;
+  el.querySelector('.branch-head').addEventListener('click',()=>el.classList.toggle('collapsed'));
+  rail.appendChild(el);
+});
+
+// characters
+const chars = document.getElementById('chars');
+if(DATA.characters && DATA.characters.length){
+  DATA.characters.forEach(c=>{
+    const initials = String(c.name||'?').split(/[\s\/]+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    chars.insertAdjacentHTML('beforeend',
+      `<div class="char"><div class="av" style="background:${c.color||DATA.accent||'#ff2a1f'}">${initials}</div>
+       <div><div class="nm">${esc(c.name)}</div><div class="rl">${esc(c.role)}</div></div></div>`);
+  });
+} else { document.getElementById('charsCard').classList.add('hide'); }
+
+// items
+const models = document.getElementById('models');
+if(DATA.items && DATA.items.length){
+  DATA.items.forEach(m=>models.insertAdjacentHTML('beforeend',
+    `<div class="model"><div class="mn">${esc(m.name)}</div><div class="md">${esc(m.desc)}</div></div>`));
+} else { document.getElementById('itemsCard').classList.add('hide'); }
+
+// themes
+const paras = document.getElementById('paras');
+if(DATA.themes && DATA.themes.length){
+  DATA.themes.forEach(t=>paras.insertAdjacentHTML('beforeend',`<div class="para-item">${t}</div>`));
+} else { document.getElementById('themesBox').classList.add('hide'); }
+
+// footer
+const order = (DATA.films||[]).map(f=>`${esc(f.title)} (${esc(f.year)})`).join(' · ');
+document.getElementById('footer').innerHTML =
+  (order?`<strong>Films in release order:</strong> ${order}.<br><br>`:'') +
+  `Built with the Movie Timeline Mapper skill. Because the series branches, there is no single chronological line — each divergent future is its own branch above.`;
+
+// filter
+controls.addEventListener('click',e=>{
+  const btn=e.target.closest('.btn'); if(!btn) return;
+  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f=btn.dataset.f;
+  document.querySelectorAll('.branch').forEach(br=>br.classList.toggle('dim', f!=='all' && br.dataset.id!==f));
+});
+</script>
+</body>
+</html>

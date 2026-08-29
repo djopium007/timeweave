@@ -1120,14 +1120,18 @@
             <svg width="16" height="19" viewBox="0 0 384 512" fill="#E9EDF3"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.7-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
             Continue with Apple
           </button>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <button onclick="{{ signFacebook }}" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 12px;border-radius:11px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .15s ease;" style-hover="border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+            <button onclick="{{ signFacebook }}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 8px;border-radius:11px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:13.5px;cursor:pointer;transition:all .15s ease;" style-hover="border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);">
               <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877F2"></circle><path d="M16.4 15.5l.5-3.5h-3.4V9.7c0-1 .5-1.9 2-1.9h1.5V4.8s-1.4-.2-2.7-.2c-2.7 0-4.5 1.6-4.5 4.7V12H6.7v3.5h3.1V24a12 12 0 0 0 3.7 0v-8.5h2.9z" fill="#fff"></path></svg>
               Facebook
             </button>
-            <button onclick="{{ signInstagram }}" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 12px;border-radius:11px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .15s ease;" style-hover="border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);">
+            <button onclick="{{ signInstagram }}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 8px;border-radius:11px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:13.5px;cursor:pointer;transition:all .15s ease;" style-hover="border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ro-ig" x1="4" y1="20" x2="20" y2="4"><stop offset="0" stop-color="#FFD600"></stop><stop offset="0.35" stop-color="#FF7A00"></stop><stop offset="0.65" stop-color="#FF0069"></stop><stop offset="1" stop-color="#7638FA"></stop></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" stroke="url(#ro-ig)" stroke-width="2.4"></rect><circle cx="12" cy="12" r="4.6" stroke="url(#ro-ig)" stroke-width="2.4"></circle><circle cx="17.4" cy="6.6" r="1.5" fill="url(#ro-ig)"></circle></svg>
               Instagram
+            </button>
+            <button onclick="{{ signX }}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 8px;border-radius:11px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:13.5px;cursor:pointer;transition:all .15s ease;" style-hover="border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E9EDF3"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+              X
             </button>
           </div>
         </div>
@@ -2450,14 +2454,3188 @@ class Component extends DCLogic {
         "<b>Canon is what's on screen:</b> showrunners may insist nothing changed, but once a child Khan appears in 2022, the map has to draw the line."
       ]
     },
+    marvel: {
+      "id": "marvel",
+      "title": "Marvel Cinematic Universe",
+      "accent": "#E23636",
+      "tagline": "Seventeen years, one Sacred Timeline, and a multiverse that refuses to stay pruned.",
+      "blurb": "One policed timeline from before the Big Bang to the New Avengers — until the time heist splinters the past and one murder at the End of Time sets the multiverse loose.",
+      "meta": "37 films · 5 branches",
+      "framing": "The MCU mostly plays out on a single line — Earth-616, the 'Sacred Timeline' — in roughly release order. Then Endgame proves time travel splits branches instead of rewriting them, Sylvie kills the being who kept every branch pruned, and neighbouring universes (Sony's Spider-Men, Earth-838's Illuminati, the Fantastic Four's Earth-828) start leaking in. Pick a branch to isolate one thread.",
+      "forkLabel": "2023 · The Sacred Timeline Fractures",
+      "films": [
+        "Iron Man (2008)",
+        "The Incredible Hulk (2008)",
+        "Iron Man 2 (2010)",
+        "Thor (2011)",
+        "Captain America: The First Avenger (2011)",
+        "The Avengers (2012)",
+        "Iron Man 3 (2013)",
+        "Thor: The Dark World (2013)",
+        "Captain America: The Winter Soldier (2014)",
+        "Guardians of the Galaxy (2014)",
+        "Avengers: Age of Ultron (2015)",
+        "Ant-Man (2015)",
+        "Captain America: Civil War (2016)",
+        "Doctor Strange (2016)",
+        "Guardians of the Galaxy Vol. 2 (2017)",
+        "Spider-Man: Homecoming (2017)",
+        "Thor: Ragnarok (2017)",
+        "Black Panther (2018)",
+        "Avengers: Infinity War (2018)",
+        "Ant-Man and the Wasp (2018)",
+        "Captain Marvel (2019)",
+        "Avengers: Endgame (2019)",
+        "Spider-Man: Far From Home (2019)",
+        "Black Widow (2021)",
+        "Shang-Chi and the Legend of the Ten Rings (2021)",
+        "Eternals (2021)",
+        "Spider-Man: No Way Home (2021)",
+        "Doctor Strange in the Multiverse of Madness (2022)",
+        "Thor: Love and Thunder (2022)",
+        "Black Panther: Wakanda Forever (2022)",
+        "Ant-Man and the Wasp: Quantumania (2023)",
+        "Guardians of the Galaxy Vol. 3 (2023)",
+        "The Marvels (2023)",
+        "Deadpool & Wolverine (2024)",
+        "Captain America: Brave New World (2025)",
+        "Thunderbolts* (2025)",
+        "The Fantastic Four: First Steps (2025)"
+      ],
+      "branches": [
+        {
+          "id": "b1",
+          "title": "The Sacred Timeline (Earth-616)",
+          "color": "#e23636",
+          "films": [
+            "Iron Man",
+            "The Incredible Hulk",
+            "Iron Man 2",
+            "Thor",
+            "Captain America: The First Avenger",
+            "The Avengers",
+            "Iron Man 3",
+            "Thor: The Dark World",
+            "Captain America: The Winter Soldier",
+            "Guardians of the Galaxy",
+            "Avengers: Age of Ultron",
+            "Ant-Man",
+            "Captain America: Civil War",
+            "Doctor Strange",
+            "Guardians of the Galaxy Vol. 2",
+            "Spider-Man: Homecoming",
+            "Thor: Ragnarok",
+            "Black Panther",
+            "Avengers: Infinity War",
+            "Ant-Man and the Wasp",
+            "Captain Marvel",
+            "Avengers: Endgame",
+            "Spider-Man: Far From Home",
+            "Black Widow",
+            "Shang-Chi and the Legend of the Ten Rings",
+            "Eternals",
+            "Spider-Man: No Way Home",
+            "Doctor Strange in the Multiverse of Madness",
+            "Thor: Love and Thunder",
+            "Black Panther: Wakanda Forever",
+            "Ant-Man and the Wasp: Quantumania",
+            "Guardians of the Galaxy Vol. 3",
+            "The Marvels",
+            "Captain America: Brave New World",
+            "Thunderbolts*"
+          ],
+          "summary": "The main MCU line: from the Celestials and the six singularities to the New Avengers — roughly release order once 2008 hits.",
+          "nodes": [
+            {
+              "era": "Pre–Big Bang",
+              "type": "event",
+              "text": "The Celestials, led by Arishem the Judge, predate the universe; the six singularities of the Big Bang become the Infinity Stones.",
+              "tags": [
+                {
+                  "label": "Infinity Stones",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "Aeons ago",
+              "type": "event",
+              "text": "Celestials seed planets with embryonic gods; their Deviant monsters run amok, so they build the synthetic Eternals to keep worlds alive until each 'Emergence' destroys them."
+            },
+            {
+              "era": "Millions of years ago",
+              "type": "event",
+              "text": "Two vibranium meteors strike Earth — one shapes the future Wakanda and its Black Panther dynasty, the other mutates the plants that will birth Talokan.",
+              "tags": [
+                {
+                  "label": "Vibranium",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "5000 BC",
+              "type": "event",
+              "text": "Ten Eternals — Sersi, Ikaris, Ajak and company — arrive on Earth to hunt Deviants, unknowingly ripening the planet for the Celestial Tiamut's Emergence."
+            },
+            {
+              "era": "2988 BC",
+              "type": "event",
+              "text": "Bor of Asgard defeats Malekith and buries the Aether (the Reality Stone); the Dark Elves hibernate for five millennia."
+            },
+            {
+              "era": "Millennia ago",
+              "type": "event",
+              "text": "Odin conquers the Nine Realms with Hela, then imprisons her and erases her from history; Mjolnir is forged, Thor is born, and Loki is adopted from Jotunheim.",
+              "tags": [
+                {
+                  "label": "Mjolnir",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "~1000 AD",
+              "type": "event",
+              "text": "Warlord Xu Wenwu finds the Ten Rings and builds a millennium-spanning shadow empire; Chthon's spells are copied into the Darkhold.",
+              "tags": [
+                {
+                  "label": "Ten Rings",
+                  "kind": "tech"
+                },
+                {
+                  "label": "Darkhold",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "16th century",
+              "type": "event",
+              "text": "A vibranium-mutated Mayan tribe founds the underwater kingdom of Talokan; the winged mutant child Namor becomes their god-king K'uk'ulkan.",
+              "tags": [
+                {
+                  "label": "Namor",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "1693",
+              "type": "event",
+              "text": "Agatha Harkness drains her own coven, steals the Darkhold, and slips away for three centuries of trouble.",
+              "tags": [
+                {
+                  "label": "Agatha",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "1942–1945",
+              "type": "turning-point",
+              "text": "Steve Rogers becomes Captain America; the Red Skull is cast to Vormir by the Tesseract; Bucky falls and is rebuilt as the Winter Soldier; Steve crashes into the Arctic ice.",
+              "tags": [
+                {
+                  "label": "Captain America",
+                  "kind": "character"
+                },
+                {
+                  "label": "Tesseract",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "1946–1970",
+              "type": "event",
+              "text": "HYDRA secretly infiltrates S.H.I.E.L.D.; Zola's mind is digitised; Hank Pym develops Pym Particles; the Red Room churns out Black Widows; Isaiah Bradley is experimented on and erased.",
+              "tags": [
+                {
+                  "label": "HYDRA",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "1987",
+              "type": "turning-point",
+              "text": "Janet Van Dyne shrinks into the Quantum Realm to stop a missile — and meets the exiled Kang, whose escape she sabotages by enlarging his power core.",
+              "tags": [
+                {
+                  "label": "Kang",
+                  "kind": "character"
+                },
+                {
+                  "label": "Quantum Realm",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "1988–1995",
+              "type": "event",
+              "text": "Ego fathers and abandons Peter Quill (abducted by Yondu's Ravagers, 1988); Thanos adopts Gamora and Nebula; Rocket escapes the High Evolutionary."
+            },
+            {
+              "era": "1991",
+              "type": "death",
+              "text": "The Winter Soldier assassinates Howard and Maria Stark — a hit that will detonate the Avengers 25 years later.",
+              "tags": [
+                {
+                  "label": "Stark murders",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "1995",
+              "type": "turning-point",
+              "text": "Carol Danvers becomes Captain Marvel, routs the Kree, and leaves Fury a pager — inspiring the Avengers Initiative.",
+              "tags": [
+                {
+                  "label": "Captain Marvel",
+                  "kind": "character"
+                },
+                {
+                  "label": "Avengers Initiative",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2008",
+              "type": "turning-point",
+              "text": "Tony Stark builds the Iron Man armour in a cave, escapes, and announces 'I am Iron Man'; gamma radiation turns Bruce Banner into the Hulk.",
+              "tags": [
+                {
+                  "label": "Iron Man",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2010–2011",
+              "type": "event",
+              "text": "War Machine debuts; Thor is exiled to Earth and proves worthy of Mjolnir; Captain America is thawed after 66 years in the ice."
+            },
+            {
+              "era": "2012",
+              "type": "turning-point",
+              "text": "Loki, armed by Thanos with the sceptre and the Chitauri, invades New York — and the Avengers assemble for the first time.",
+              "tags": [
+                {
+                  "label": "Battle of New York",
+                  "kind": "event"
+                },
+                {
+                  "label": "Avengers",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2013",
+              "type": "event",
+              "text": "Killian's Extremis plot behind the fake Mandarin is exposed; Malekith returns and falls; Loki fakes his death and takes Odin's throne."
+            },
+            {
+              "era": "2014",
+              "type": "turning-point",
+              "text": "HYDRA's takeover of S.H.I.E.L.D. is exposed and the agency collapses; the Guardians of the Galaxy form and save Xandar's Power Stone from Ronan.",
+              "tags": [
+                {
+                  "label": "S.H.I.E.L.D. falls",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2015",
+              "type": "event",
+              "text": "Ultron drops Sokovia from the sky; the Vision is born from the Mind Stone; Scott Lang becomes Ant-Man; Hulk exits to Sakaar.",
+              "tags": [
+                {
+                  "label": "Ultron",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2016",
+              "type": "turning-point",
+              "text": "Zemo's revenge splits the Avengers in a Civil War; T'Challa becomes Black Panther; Doctor Strange traps Dormammu in a Time-Stone loop.",
+              "tags": [
+                {
+                  "label": "Civil War",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2017",
+              "type": "event",
+              "text": "The Guardians kill Ego; Spider-Man downs the Vulture; Hela destroys Mjolnir and Ragnarok razes Asgard; Killmonger's coup in Wakanda fails."
+            },
+            {
+              "era": "2018",
+              "type": "death",
+              "text": "Thanos gathers all six Stones and snaps away half of all life; Gamora, Loki and Vision die; Ant-Man is stranded in the Quantum Realm.",
+              "tags": [
+                {
+                  "label": "The Snap",
+                  "kind": "event"
+                },
+                {
+                  "label": "Infinity Gauntlet",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2023",
+              "type": "turning-point",
+              "text": "The Time Heist retrieves past Stones; Hulk snaps everyone back; every hero alive beats the invading 2014 Thanos.",
+              "tags": [
+                {
+                  "label": "The Blip",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2023",
+              "type": "death",
+              "text": "Tony Stark wields the Stones and dies dealing the final blow; old Steve Rogers returns from his life with Peggy and hands the shield to Sam Wilson.",
+              "tags": [
+                {
+                  "label": "Iron Man",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2024",
+              "type": "event",
+              "text": "Grieving Wanda warps Westview into a sitcom Hex, then embraces the Scarlet Witch and takes Agatha's Darkhold; the Hex rewires Monica Rambeau's cells.",
+              "tags": [
+                {
+                  "label": "Scarlet Witch",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2024",
+              "type": "event",
+              "text": "Sam Wilson takes up the mantle of Captain America against the Flag Smashers; Shang-Chi inherits the Ten Rings; Sersi petrifies the emerging Celestial Tiamut mid-birth.",
+              "tags": [
+                {
+                  "label": "Tiamut",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2024",
+              "type": "turning-point",
+              "text": "Mysterio outs Peter Parker; Strange's botched forgetting spell cracks the multiverse open, and the world forgets Peter Parker entirely.",
+              "tags": [
+                {
+                  "label": "No Way Home",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2025",
+              "type": "death",
+              "text": "Darkhold-corrupted Wanda hunts America Chavez across realities, then destroys the Darkhold in every universe and brings Wundagore down on herself.",
+              "tags": [
+                {
+                  "label": "Scarlet Witch",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2025",
+              "type": "event",
+              "text": "New heroes surge: Ms. Marvel, She-Hulk, Moon Knight, Echo; Thor defeats Gorr the God Butcher but loses Jane Foster to Valhalla."
+            },
+            {
+              "era": "2025",
+              "type": "event",
+              "text": "T'Challa dies of illness; Shuri becomes Black Panther, fights Namor's Talokan to a truce, and meets T'Challa's secret son.",
+              "tags": [
+                {
+                  "label": "Black Panther",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2025",
+              "type": "turning-point",
+              "text": "In the Quantum Realm, the Lang–Pym family destroys Kang the Conqueror and his power core — while Kang variants stir across the multiverse.",
+              "tags": [
+                {
+                  "label": "Kang",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2025",
+              "type": "event",
+              "text": "The Guardians defeat the High Evolutionary and save Rocket, who becomes captain of a new Guardians roster."
+            },
+            {
+              "era": "2025–2026",
+              "type": "event",
+              "text": "Gravik's Skrull invasion is crushed by G'iah; the Marvels entangle powers to stop Dar-Benn — and Monica Rambeau is stranded in another universe.",
+              "tags": [
+                {
+                  "label": "Secret Invasion",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2026",
+              "type": "event",
+              "text": "Riri Williams builds Ironheart, unmasks the Hood, and strikes a bargain with Mephisto to resurrect her friend Natalie; Mayor Fisk wages war on New York's vigilantes.",
+              "tags": [
+                {
+                  "label": "Mephisto",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2026–2027",
+              "type": "turning-point",
+              "text": "President Thaddeus Ross champions mining adamantium from Tiamut's corpse — then Sterns' gamma-laced revenge turns him into the Red Hulk.",
+              "tags": [
+                {
+                  "label": "Adamantium",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2027",
+              "type": "resolution",
+              "text": "The Thunderbolts pull Bob back from the Void; Valentina rebrands them the New Avengers — just as the Fantastic Four's ship appears in Earth's orbit.",
+              "tags": [
+                {
+                  "label": "New Avengers",
+                  "kind": "event"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2",
+          "title": "The Time Heist Splinters",
+          "color": "#ffb02e",
+          "films": [
+            "Avengers: Endgame"
+          ],
+          "summary": "Endgame's rule: travelling to the past doesn't rewrite it — it splits off a new branch.",
+          "nodes": [
+            {
+              "era": "Alt 2012",
+              "type": "paradox",
+              "text": "During the botched New York heist, the 2012 Loki escapes with the Tesseract — spawning a rogue branch and the TVA's next arrest.",
+              "tags": [
+                {
+                  "label": "Nexus event",
+                  "kind": "paradox"
+                },
+                {
+                  "label": "Loki",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Alt 2014",
+              "type": "turning-point",
+              "text": "The 2014 Thanos and his entire armada abandon their timeline to invade 2023 — a branch whose own Snap now never happens.",
+              "tags": [
+                {
+                  "label": "Thanos",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Alt 2014",
+              "type": "event",
+              "text": "The 2014 Gamora arrives in the present with no memory of the Guardians; she later resurfaces with the Ravagers.",
+              "tags": [
+                {
+                  "label": "Gamora",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Alt 1949 onward",
+              "type": "resolution",
+              "text": "Steve Rogers stays in a branched past to live a full life with Peggy Carter, returning as an old man only to pass on the shield.",
+              "tags": [
+                {
+                  "label": "Captain America",
+                  "kind": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b3",
+          "title": "The TVA & the Unbound Multiverse",
+          "color": "#39d98a",
+          "films": [
+            "Avengers: Endgame",
+            "Deadpool & Wolverine"
+          ],
+          "summary": "Outside time: the agency that pruned every branch, the murder that freed them all, and the god now holding them together.",
+          "nodes": [
+            {
+              "era": "Outside time",
+              "type": "event",
+              "text": "The Time Variance Authority prunes branching realities to protect He Who Remains' Sacred Timeline; escaped 2012 Loki is recruited by Agent Mobius.",
+              "tags": [
+                {
+                  "label": "TVA",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "End of Time",
+              "type": "turning-point",
+              "text": "Loki and Sylvie reach the Citadel at the End of Time; Sylvie kills He Who Remains — a Kang variant — and infinite timelines bloom.",
+              "tags": [
+                {
+                  "label": "Nexus event",
+                  "kind": "paradox"
+                },
+                {
+                  "label": "Kang",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "The multiverse",
+              "type": "event",
+              "text": "The Watcher breaks his oath of observation, assembling Guardians of the Multiverse to stop a Stone-hoarding variant Ultron (What If...?).",
+              "tags": [
+                {
+                  "label": "Ultron",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "End of Time",
+              "type": "resolution",
+              "text": "Time-slipping Loki seizes the Temporal Loom's threads and becomes a god of time — holding every branch alive at the centre of a new multiverse.",
+              "tags": [
+                {
+                  "label": "Loki",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Earth-10005",
+              "type": "event",
+              "text": "Rogue TVA agent Mr. Paradox schedules Deadpool's dying universe for pruning; Wade drags a variant Wolverine into saving it.",
+              "tags": [
+                {
+                  "label": "Deadpool",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Aftermath",
+              "type": "resolution",
+              "text": "The reformed TVA stops pruning, monitors Kang variants across the free multiverse, and keeps Deadpool and Wolverine on call.",
+              "tags": [
+                {
+                  "label": "TVA",
+                  "kind": "event"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b4",
+          "title": "Incursions & Neighbouring Universes",
+          "color": "#b07cff",
+          "films": [
+            "Spider-Man: No Way Home",
+            "Doctor Strange in the Multiverse of Madness",
+            "The Marvels"
+          ],
+          "summary": "Once the multiverse runs free, other realities start leaking into — and out of — Earth-616.",
+          "nodes": [
+            {
+              "era": "2024",
+              "type": "paradox",
+              "text": "Strange's broken spell pulls Spider-Man villains — and two other Peter Parkers — from Sony's universes into the MCU before the world forgets Peter.",
+              "tags": [
+                {
+                  "label": "No Way Home",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2025 · Earth-838",
+              "type": "death",
+              "text": "Dreamwalking through her variant's body, the Scarlet Witch slaughters Earth-838's Illuminati — Professor X, Reed Richards, Captain Carter and all.",
+              "tags": [
+                {
+                  "label": "Illuminati",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2025",
+              "type": "event",
+              "text": "America Chavez, the multiverse's only unduplicated traveller, escapes Wanda; Strange's Darkhold use triggers an incursion, and Clea pulls him into the Dark Dimension.",
+              "tags": [
+                {
+                  "label": "Incursion",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2025–2026",
+              "type": "event",
+              "text": "Closing Dar-Benn's rifts strands Monica Rambeau in a universe where Hank McCoy and the X-Men exist.",
+              "tags": [
+                {
+                  "label": "Monica Rambeau",
+                  "kind": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b5",
+          "title": "Earth-828: First Steps",
+          "color": "#28d7e0",
+          "films": [
+            "The Fantastic Four: First Steps"
+          ],
+          "summary": "A retro-futurist parallel Earth where the Fantastic Four are the planet's first family — until Galactus comes to feed.",
+          "nodes": [
+            {
+              "era": "Earth-828",
+              "type": "event",
+              "text": "On a 1960s-styled Earth, the Fantastic Four are beloved heroes; Sue Storm and Reed Richards are expecting a child.",
+              "tags": [
+                {
+                  "label": "Fantastic Four",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "Earth-828",
+              "type": "turning-point",
+              "text": "The Silver Surfer heralds Galactus, who offers to spare Earth — in exchange for baby Franklin and his immense cosmic power.",
+              "tags": [
+                {
+                  "label": "Galactus",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Earth-828",
+              "type": "resolution",
+              "text": "With a repentant Silver Surfer's help, Sue pushes Galactus through a teleport portal to the universe's edge — dying in the effort, until newborn Franklin resurrects her.",
+              "tags": [
+                {
+                  "label": "Franklin Richards",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Years later",
+              "type": "turning-point",
+              "text": "Doctor Doom appears in the Baxter Building nursery, studying Franklin — the child's power has drawn exactly the wrong attention.",
+              "tags": [
+                {
+                  "label": "Doctor Doom",
+                  "kind": "character"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "characters": [
+        {
+          "name": "Tony Stark / Iron Man",
+          "role": "Launched the MCU in a cave with a box of scraps; died wielding the Stones to end Thanos."
+        },
+        {
+          "name": "Steve Rogers → Sam Wilson",
+          "role": "Captain America is a mantle: Steve retires into a branched past, Sam carries the shield forward."
+        },
+        {
+          "name": "Thanos",
+          "role": "The Mad Titan whose Snap cuts the timeline in half — and whose 2014 self dies in 2023."
+        },
+        {
+          "name": "Loki",
+          "role": "From invader to TVA recruit to the god of time holding every branch of the multiverse together."
+        },
+        {
+          "name": "Wanda Maximoff",
+          "role": "Grief made her the Scarlet Witch; the Darkhold made her the multiverse's most feared threat."
+        },
+        {
+          "name": "Doctor Strange",
+          "role": "Time-loops Dormammu, breaks the multiverse for Peter Parker, and pays for dreamwalking with an incursion."
+        },
+        {
+          "name": "Kang (Nathaniel Richards)",
+          "role": "One man, infinite variants: Quantum Realm exile, He Who Remains, and every conqueror in between."
+        },
+        {
+          "name": "Carol Danvers / Captain Marvel",
+          "role": "The 1995 pager-holder who inspired the Avengers Initiative and still patrols the cosmos."
+        },
+        {
+          "name": "Nick Fury",
+          "role": "The one-eyed architect of the Avengers — occasionally a Skrull, always scheming."
+        },
+        {
+          "name": "Peter Parker / Spider-Man",
+          "role": "Outed by Mysterio, then erased from every memory on Earth to seal the multiverse."
+        },
+        {
+          "name": "Franklin Richards",
+          "role": "Earth-828's newborn with Celestial-scale power — coveted by Galactus, studied by Doom."
+        }
+      ],
+      "items": [
+        {
+          "name": "Infinity Stones",
+          "desc": "Six singularities predating the Big Bang; assembled twice, destroyed once, stolen from four eras."
+        },
+        {
+          "name": "Infinity Gauntlet",
+          "desc": "The Dwarf-forged glove that channels all six Stones — used by Thanos, Hulk, and Tony Stark."
+        },
+        {
+          "name": "Tesseract / Space Stone",
+          "desc": "HYDRA's power source, Loki's prize, Carol Danvers' accidental power-up."
+        },
+        {
+          "name": "Mjolnir",
+          "desc": "Forged in a dying star; destroyed by Hela in 2017, borrowed from 2013 by the time heist."
+        },
+        {
+          "name": "Vibranium",
+          "desc": "Meteoric super-metal underpinning both Wakanda and Talokan."
+        },
+        {
+          "name": "Adamantium",
+          "desc": "New super-metal mined from the corpse of the petrified Celestial Tiamut."
+        },
+        {
+          "name": "The Ten Rings",
+          "desc": "Wenwu's immortality-granting arm-rings, now with Shang-Chi — and beaconing into space."
+        },
+        {
+          "name": "The Darkhold",
+          "desc": "Chthon's book of dark magic; corrupted Wanda before she burned it in every universe."
+        },
+        {
+          "name": "Pym Particles & the Quantum Realm",
+          "desc": "Size-changing physics that enabled the time heist — and hid Kang's exile kingdom."
+        },
+        {
+          "name": "The Temporal Loom",
+          "desc": "The TVA's failsafe that couldn't scale to infinite branches — until Loki became the loom."
+        }
+      ],
+      "themes": [
+        "Branches, not rewrites: Endgame time travel never changes your own past — it splits a new timeline, which is exactly what the TVA existed to prune.",
+        "The Snap is the hinge: a five-year hole (2018–2023) in the main timeline drives nearly every story that follows, from the Flag Smashers to the Emergence.",
+        "Mantles outlive heroes: the shield passes to Sam, Hawkeye to Kate, Black Panther to Shuri, and a Young Avengers roster is quietly assembling.",
+        "One murder freed the multiverse: Sylvie killing He Who Remains turned a single policed timeline into infinite branches — and every incursion since traces back to it.",
+        "The calendar drifts: the MCU runs 'roughly release order', but retcons (a 2026 presidential election, Secret Invasion's placement) keep fans arguing about exact years."
+      ]
+    },
+    starwars: {
+      "id": "starwars",
+      "title": "Star Wars",
+      "accent": "#E0A920",
+      "tagline": "Twelve films, nineteen series, one 25,000-year timeline — and a parallel continuity Disney switched off in 2014.",
+      "blurb": "Seven canon eras on one 25,000-year line — Dawn of the Jedi to the New Jedi Order — plus the Legends continuity Disney retired in 2014, running alongside as a true fork.",
+      "meta": "12 films · 19 series · 7 eras + Legends",
+      "framing": "Star Wars doesn't branch: from the Dawn of the Jedi to Rey's New Jedi Order it is one straight line dated from the Battle of Yavin (BBY/ABY). What makes it confusing is that the films were released out of order and dozens of shows fill the gaps, so this map splits canon into its seven official eras — each its own rail — and adds the Legends continuity as a true fork running alongside.",
+      "forkLabel": "0 BBY · Battle of Yavin (Year Zero)",
+      "films": [
+        "A New Hope (1977)",
+        "The Empire Strikes Back (1980)",
+        "Return of the Jedi (1983)",
+        "The Phantom Menace (1999)",
+        "Attack of the Clones (2002)",
+        "Clone Wars (2003 micro-series) (2003) · TV",
+        "Revenge of the Sith (2005)",
+        "The Clone Wars (film) (2008)",
+        "The Clone Wars (2008) · TV",
+        "Rebels (2014) · TV",
+        "The Force Awakens (2015)",
+        "Rogue One (2016)",
+        "The Last Jedi (2017)",
+        "Solo (2018)",
+        "Resistance (2018) · TV",
+        "The Rise of Skywalker (2019)",
+        "The Mandalorian (2019) · TV",
+        "The Bad Batch (2021) · TV",
+        "The Book of Boba Fett (2021) · TV",
+        "Obi-Wan Kenobi (2022) · TV",
+        "Andor (2022) · TV",
+        "Tales of the Jedi (2022) · TV",
+        "Ahsoka (2023) · TV",
+        "Young Jedi Adventures (2023) · TV",
+        "The Acolyte (2024) · TV",
+        "Tales of the Empire (2024) · TV",
+        "Skeleton Crew (2024) · TV",
+        "Tales of the Underworld (2025) · TV",
+        "Maul – Shadow Lord (2026) · TV",
+        "The Mandalorian and Grogu (2026)",
+        "Starfighter (2027)"
+      ],
+      "branches": [
+        {
+          "id": "b1",
+          "title": "Dawn of the Jedi & the Old Republic",
+          "color": "#b07cff",
+          "films": [],
+          "summary": "25,000 years of half-glimpsed history: the Force is first understood, the Jedi and Sith are born, and the Republic takes shape. No canon screen story lives here yet.",
+          "nodes": [
+            {
+              "era": "c. 25,000 BBY",
+              "type": "event",
+              "text": "The Force is first understood and harnessed. The Prime Jedi founds the Order and the first temple rises on Ahch-To; the droid Huyang is activated and will train younglings for the next 25 millennia.",
+              "tags": [
+                {
+                  "label": "Prime Jedi",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "c. 25,000 BBY",
+              "type": "turning-point",
+              "text": "Coruscant, Corellia, Alderaan and their neighbours form the alliance that becomes the Old Republic; hyperspace travel spreads across the galaxy.",
+              "tags": [
+                {
+                  "label": "Old Republic",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "c. 5,000 BBY",
+              "type": "turning-point",
+              "text": "The Hundred-Year Darkness: dark-side Jedi splinter from the Order and become the Sith. Four thousand years of Jedi–Sith wars follow.",
+              "tags": [
+                {
+                  "label": "Sith",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "Ancient era",
+              "type": "event",
+              "text": "The Jedi clash with the Mandalorians, leaving Mandalore a glassed wasteland. Mandalorian Jedi Tarre Vizsla forges the Darksaber; the Jedi build their Temple on Coruscant.",
+              "tags": [
+                {
+                  "label": "Darksaber",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "c. 1,000 BBY",
+              "type": "resolution",
+              "text": "The Sith are all but wiped out and believed extinct — but Darth Bane's Rule of Two (one master, one apprentice) keeps the line alive in secret. The Old Republic is reorganised as the Galactic Republic.",
+              "tags": [
+                {
+                  "label": "Rule of Two",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "Announced",
+              "type": "event",
+              "text": "James Mangold's Dawn of the Jedi film (a 'biblical epic' about the first Force-users, ~25,000 BBY) is the only screen project aimed at this era; Legends' Tython, Revan and KOTOR remain non-canon."
+            }
+          ]
+        },
+        {
+          "id": "b2",
+          "title": "The High Republic",
+          "color": "#28d7e0",
+          "films": [
+            "Young Jedi Adventures",
+            "The Acolyte"
+          ],
+          "summary": "The golden age (c. 500–100 BBY): Republic and Jedi at their peak, the Sith 'extinct', and the seeds of the fall quietly sown.",
+          "nodes": [
+            {
+              "era": "c. 500–382 BBY",
+              "type": "event",
+              "text": "Quest of the Jedi: Pathfinder teams open new hyperspace lanes into the Outer Rim. The anti-Force cult Path of the Open Hand rises; at the Battles of Jedha and Dolna the Jedi first meet the petrifying Nameless.",
+              "tags": [
+                {
+                  "label": "The Nameless",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "232 BBY",
+              "type": "death",
+              "text": "The Great Hyperspace Disaster devastates the frontier. The Path, reborn as the Nihil marauders under Marchion Ro, and the plant-like Drengir begin their war on the Republic.",
+              "tags": [
+                {
+                  "label": "Nihil",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "c. 232 BBY",
+              "type": "event",
+              "text": "Young Jedi Adventures: younglings Kai, Lys and Nubs train under Master Yoda at the Tenoo temple — the era's only look at Jedi childhood.",
+              "tags": [
+                {
+                  "label": "Young Jedi Adventures",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "230 BBY",
+              "type": "death",
+              "text": "The Nihil destroy Starlight Beacon, the symbol of Republic reach in the Outer Rim.",
+              "tags": [
+                {
+                  "label": "Starlight Beacon",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "229–220 BBY",
+              "type": "event",
+              "text": "Trials of the Jedi: the Republic fights to reclaim the Nihil's Occlusion Zone — the phase the books and comics are still telling."
+            },
+            {
+              "era": "132 BBY",
+              "type": "turning-point",
+              "text": "The Acolyte: twins Osha and Mae, survivors of a Jedi raid on their Brendok coven, are pulled into a murder spree against the four Jedi responsible. The Sith apprentice Qimir reveals himself; Darth Plagueis watches from the shadows; the Jedi Council buries the truth.",
+              "tags": [
+                {
+                  "label": "Osha & Mae",
+                  "kind": "character"
+                },
+                {
+                  "label": "Qimir",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "c. 100 BBY",
+              "type": "resolution",
+              "text": "The Jedi decommission their Outer Rim outposts and centralise on Coruscant; the Senate fills with bureaucrats. The complacency Sidious will exploit is in place."
+            }
+          ]
+        },
+        {
+          "id": "b3",
+          "title": "Fall of the Jedi",
+          "color": "#ffb02e",
+          "films": [
+            "The Phantom Menace",
+            "Attack of the Clones",
+            "The Clone Wars (film)",
+            "The Clone Wars",
+            "Tales of the Jedi",
+            "Revenge of the Sith"
+          ],
+          "summary": "The prequel era (c. 100–19 BBY): Palpatine's long game, the Clone Wars, and Order 66.",
+          "nodes": [
+            {
+              "era": "41 BBY",
+              "type": "event",
+              "text": "Anakin Skywalker is born to Shmi on Tatooine with no father — conceived, it is implied, by the Force itself.",
+              "tags": [
+                {
+                  "label": "Anakin",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "32 BBY",
+              "type": "turning-point",
+              "text": "The Phantom Menace: the Trade Federation blockades Naboo. Qui-Gon Jinn finds Anakin; Darth Maul kills Qui-Gon and is bisected by Obi-Wan. Senator Palpatine — secretly Darth Sidious — is elected Chancellor.",
+              "tags": [
+                {
+                  "label": "Sidious rises",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "32–19 BBY",
+              "type": "event",
+              "text": "Tales of the Jedi: Count Dooku, already Sidious' apprentice Darth Tyranus, murders Master Yaddle; Sifo-Dyas is tricked into commissioning a clone army on Kamino. Ahsoka's childhood on Shili and her post-Order life are shown.",
+              "tags": [
+                {
+                  "label": "Dooku",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "22 BBY",
+              "type": "turning-point",
+              "text": "Attack of the Clones: Obi-Wan uncovers the clone army; Shmi dies and Anakin slaughters the Tusken camp; Mace Windu beheads Jango Fett at Geonosis. The Clone Wars begin; Anakin secretly marries Padmé.",
+              "tags": [
+                {
+                  "label": "Clone Army",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "22 BBY",
+              "type": "event",
+              "text": "The Clone Wars (film + series): Ahsoka Tano becomes Anakin's Padawan. Ventress, Cad Bane, Bo-Katan and Captain Rex enter the story.",
+              "tags": [
+                {
+                  "label": "Ahsoka",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "20 BBY",
+              "type": "event",
+              "text": "Construction of the Death Star begins in secret under Orson Krennic. Ahsoka, framed for the Temple bombing, leaves the Jedi Order.",
+              "tags": [
+                {
+                  "label": "Death Star",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "20–19 BBY",
+              "type": "death",
+              "text": "Maul, alive on cybernetic legs, returns with his brother Savage Opress, seizes Mandalore and kills Duchess Satine in front of Obi-Wan — before Sidious himself takes him prisoner.",
+              "tags": [
+                {
+                  "label": "Satine dies",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "19 BBY",
+              "type": "death",
+              "text": "Revenge of the Sith: Dooku and Grievous die; Sidious reveals himself; Windu is killed; Anakin becomes Darth Vader. Order 66 wipes out the Jedi; Obi-Wan leaves Vader burning on Mustafar; Padmé dies birthing Luke and Leia, who are hidden on Tatooine and Alderaan.",
+              "tags": [
+                {
+                  "label": "Order 66",
+                  "kind": "event"
+                },
+                {
+                  "label": "Vader",
+                  "kind": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b4",
+          "title": "Reign of the Empire",
+          "color": "#ff2a1f",
+          "films": [
+            "The Bad Batch",
+            "Tales of the Empire",
+            "Tales of the Underworld",
+            "Maul – Shadow Lord",
+            "Solo",
+            "Obi-Wan Kenobi"
+          ],
+          "summary": "The dark times (19–5 BBY): Jedi hunted, the Death Star built, and a smuggler wins a freighter in a card game.",
+          "nodes": [
+            {
+              "era": "19 BBY",
+              "type": "turning-point",
+              "text": "Palpatine declares the Galactic Empire. Clone Force 99 — The Bad Batch — deserts with the clone girl Omega; the Empire begins cloning experiments at Mount Tantiss (Project Necromancer) that will echo for decades.",
+              "tags": [
+                {
+                  "label": "Project Necromancer",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "19–18 BBY",
+              "type": "event",
+              "text": "Maul – Shadow Lord: with the Republic gone, Maul rebuilds his criminal empire, Crimson Dawn, in the Empire's shadow. Tales of the Empire follows Morgan Elsbeth's revenge and Barriss Offee's path from Inquisitor to the Hidden Path.",
+              "tags": [
+                {
+                  "label": "Crimson Dawn",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "18 BBY",
+              "type": "event",
+              "text": "Tales of the Underworld: Asajj Ventress, restored by the Nightsisters, carves out a life in the Empire's shadow (a young Cad Bane arc reaches back before the Clone Wars)."
+            },
+            {
+              "era": "17–13 BBY",
+              "type": "event",
+              "text": "Galen Erso deserts the Death Star project; in 13 BBY Krennic kills his wife Lyra and Jyn Erso is hidden with the extremist Saw Gerrera."
+            },
+            {
+              "era": "c. 13–10 BBY",
+              "type": "event",
+              "text": "Solo: Han flees Corellia, deserts the Imperial army, meets Chewbacca, makes the Kessel Run and wins the Millennium Falcon from Lando. Qi'ra answers to Maul's Crimson Dawn.",
+              "tags": [
+                {
+                  "label": "Millennium Falcon",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "14–9 BBY",
+              "type": "event",
+              "text": "The Inquisitors hunt surviving Jedi; Padawan Cal Kestis evades them in the Jedi: Fallen Order and Survivor games. The Hidden Path smuggles Force-sensitives to safety."
+            },
+            {
+              "era": "9 BBY",
+              "type": "turning-point",
+              "text": "Obi-Wan Kenobi: a ten-year-old Leia is kidnapped as bait; Obi-Wan comes out of exile, turns Inquisitor Reva, and defeats Vader in a rematch — leaving him alive. Qui-Gon's ghost finally appears.",
+              "tags": [
+                {
+                  "label": "Obi-Wan vs Vader",
+                  "kind": "event"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b5",
+          "title": "Age of Rebellion",
+          "color": "#39d98a",
+          "films": [
+            "Rebels",
+            "Andor",
+            "Rogue One",
+            "A New Hope",
+            "The Empire Strikes Back",
+            "Return of the Jedi"
+          ],
+          "summary": "5 BBY–5 ABY: the Rebellion is born, the Death Star falls, and the Skywalker line is redeemed at Endor.",
+          "nodes": [
+            {
+              "era": "5 BBY",
+              "type": "event",
+              "text": "Rebels: orphan Ezra Bridger joins the Ghost crew — Kanan, Hera, Sabine, Zeb, Chopper — on Imperial-occupied Lothal. Andor: after Ferrix, Luthen Rael recruits Cassian for the Aldhani heist; Narkina 5; Maarva's funeral becomes a riot.",
+              "tags": [
+                {
+                  "label": "Ezra",
+                  "kind": "character"
+                },
+                {
+                  "label": "Cassian",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "4–3 BBY",
+              "type": "turning-point",
+              "text": "Ahsoka returns as the rebel agent Fulcrum with Captain Rex. On Malachor, Maul blinds Kanan and Ahsoka duels Vader — her former master — and vanishes into the Sith temple.",
+              "tags": [
+                {
+                  "label": "Ahsoka vs Vader",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "3–2 BBY",
+              "type": "turning-point",
+              "text": "The Empire's Ghorman Massacre pushes Mon Mothma to denounce the Emperor in the Senate and formally found the Rebel Alliance. On Tatooine, Obi-Wan ends Maul for good.",
+              "tags": [
+                {
+                  "label": "Rebel Alliance",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "1 BBY",
+              "type": "death",
+              "text": "Kanan Jarrus dies saving his crew. Ezra liberates Lothal and is carried into hyperspace with Grand Admiral Thrawn by the purrgil. Bo-Katan takes up the Darksaber.",
+              "tags": [
+                {
+                  "label": "Thrawn",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "0 BBY",
+              "type": "death",
+              "text": "Rogue One: Jyn, Cassian and the whole team die at Scarif stealing the Death Star plans; Vader boards the Tantive IV as Leia escapes with them.",
+              "tags": [
+                {
+                  "label": "Death Star plans",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "0 BBY · Year Zero",
+              "type": "turning-point",
+              "text": "A New Hope: Luke meets Obi-Wan, Han and Leia; Alderaan is destroyed; Obi-Wan becomes one with the Force; Luke destroys the Death Star at the Battle of Yavin — the calendar's zero point.",
+              "tags": [
+                {
+                  "label": "Battle of Yavin",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "3 ABY",
+              "type": "turning-point",
+              "text": "The Empire Strikes Back: Hoth falls; Luke trains with Yoda on Dagobah; Lando betrays Han at Bespin; Han is frozen in carbonite; Vader tells Luke 'I am your father'. On Exegol, the clone Dathan escapes the Sith Eternal.",
+              "tags": [
+                {
+                  "label": "Vader is Anakin",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "4 ABY",
+              "type": "resolution",
+              "text": "Return of the Jedi: Jabba dies and Boba Fett falls into the Sarlacc; Yoda passes; at Endor the Ewoks drop the shield. Vader turns, throws Palpatine into the reactor shaft and dies redeemed as Anakin; Death Star II is destroyed.",
+              "tags": [
+                {
+                  "label": "Anakin redeemed",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "4–5 ABY",
+              "type": "resolution",
+              "text": "Operation Cinder and the Great Purge of Mandalore are the Empire's last spasms; it formally surrenders after the Battle of Jakku — while loyalists slip into the Unknown Regions.",
+              "tags": [
+                {
+                  "label": "Battle of Jakku",
+                  "kind": "event"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b6",
+          "title": "The New Republic",
+          "color": "#4f8cff",
+          "films": [
+            "The Mandalorian",
+            "The Book of Boba Fett",
+            "Ahsoka",
+            "Skeleton Crew",
+            "The Mandalorian and Grogu"
+          ],
+          "summary": "5–34 ABY: the Mando-verse years — a fragile Republic, Imperial remnants, a Child, and the long shadow of Thrawn.",
+          "nodes": [
+            {
+              "era": "5 ABY",
+              "type": "event",
+              "text": "The Rebel Alliance becomes the New Republic. Han and Leia's son Ben Solo is born; Luke begins gathering students.",
+              "tags": [
+                {
+                  "label": "Ben Solo",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "9 ABY",
+              "type": "turning-point",
+              "text": "The Mandalorian: bounty hunter Din Djarin refuses to hand over Grogu; Moff Gideon wants the Child's blood for cloning. Luke Skywalker himself rescues Grogu; Din defeats Gideon and unwittingly wins the Darksaber.",
+              "tags": [
+                {
+                  "label": "Grogu",
+                  "kind": "character"
+                },
+                {
+                  "label": "Darksaber",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "9 ABY",
+              "type": "event",
+              "text": "The Book of Boba Fett: Boba, out of the Sarlacc and raised by Tuskens, takes Jabba's throne with Fennec Shand. Grogu chooses Din's armour over Luke's training. Skeleton Crew: four kids from At Attin get lost with the pirate Jod Na Nawood.",
+              "tags": [
+                {
+                  "label": "Boba Fett",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "9–11 ABY",
+              "type": "turning-point",
+              "text": "Din helps Bo-Katan reclaim the Darksaber and retake Mandalore; Gideon is apparently killed; Din and Grogu settle on Nevarro as freelancers for the New Republic.",
+              "tags": [
+                {
+                  "label": "Mandalore retaken",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "c. 11 ABY",
+              "type": "turning-point",
+              "text": "Ahsoka: Ahsoka and Sabine follow a map to the galaxy of Peridea, find Ezra — and lose the race: Thrawn returns to Dathomir with Nightsister allies while they are stranded with Baylan Skoll and Shin Hati.",
+              "tags": [
+                {
+                  "label": "Thrawn returns",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "c. 11–12 ABY",
+              "type": "event",
+              "text": "The Mandalorian and Grogu (2026): Din and Grogu take a New Republic job hunting Imperial warlords in the Outer Rim — the first Mando-verse story on the big screen. Ahsoka S2 (2027) picks up the Thrawn hunt.",
+              "tags": [
+                {
+                  "label": "Mandoverse film",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "15–21 ABY",
+              "type": "event",
+              "text": "Rey is born to Dathan (Palpatine's failed clone) and Miramir; hidden on Jakku at six, her parents are killed by the assassin Ochi.",
+              "tags": [
+                {
+                  "label": "Rey",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "28 ABY",
+              "type": "death",
+              "text": "Sensing Snoke's grip on Ben, Luke ignites his saber over his sleeping nephew. Ben burns the temple, kills his fellow students and becomes Kylo Ren; Luke exiles himself on Ahch-To. Leia's parentage is exposed and she founds the Resistance.",
+              "tags": [
+                {
+                  "label": "Kylo Ren",
+                  "kind": "character"
+                },
+                {
+                  "label": "Resistance",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "33–34 ABY",
+              "type": "event",
+              "text": "Resistance: pilot Kaz Xiono spies on the growing First Order from the Colossus refuelling station as the Unknown Regions fleet prepares to strike."
+            }
+          ]
+        },
+        {
+          "id": "b7",
+          "title": "Rise of the First Order & the New Jedi Order",
+          "color": "#ff6ac1",
+          "films": [
+            "Resistance",
+            "The Force Awakens",
+            "The Last Jedi",
+            "The Rise of Skywalker",
+            "Starfighter"
+          ],
+          "summary": "34–50 ABY: one compressed year of war, the last Skywalker, the Emperor's final return — and whatever comes after.",
+          "nodes": [
+            {
+              "era": "34 ABY",
+              "type": "death",
+              "text": "The Force Awakens: Starkiller Base vaporises the Hosnian system and the New Republic fleet. Finn defects, Rey awakens, and Kylo Ren kills Han Solo. Starkiller is destroyed; Rey finds Luke.",
+              "tags": [
+                {
+                  "label": "Starkiller Base",
+                  "kind": "tech"
+                },
+                {
+                  "label": "Han dies",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "34 ABY",
+              "type": "death",
+              "text": "The Last Jedi: Kylo kills Snoke and takes the First Order; Rey and Kylo shatter the Skywalker saber; on Crait, Luke's Force projection buys the Resistance its escape and he becomes one with the Force.",
+              "tags": [
+                {
+                  "label": "Luke dies",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "35 ABY",
+              "type": "resolution",
+              "text": "The Rise of Skywalker: 'Somehow Palpatine returned' on Exegol with the Final Order fleet. Rey learns she is his granddaughter; Leia dies reaching Ben; a redeemed Ben Solo helps Rey destroy Palpatine, then gives his life for her. Rey takes the name Skywalker.",
+              "tags": [
+                {
+                  "label": "Palpatine ends",
+                  "kind": "event"
+                },
+                {
+                  "label": "Rey Skywalker",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "c. 40 ABY",
+              "type": "event",
+              "text": "Starfighter (May 2027, Shawn Levy, Ryan Gosling): a new story set five years after Exegol.",
+              "tags": [
+                {
+                  "label": "Upcoming",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "c. 50 ABY",
+              "type": "event",
+              "text": "New Jedi Order (Sharmeen Obaid-Chinoy, TBD): fifteen years after Exegol, Rey rebuilds the Jedi Order against 'rising powers' that want it gone. Legends' version of this era — the Yuuzhan Vong — is not expected."
+            }
+          ]
+        },
+        {
+          "id": "b8",
+          "title": "Legends (the Expanded Universe)",
+          "color": "#9aa8bf",
+          "films": [
+            "Clone Wars (2003 micro-series)"
+          ],
+          "summary": "The 1977–2014 continuity Disney set aside: still published, still mined for ideas, no longer 'what happened'.",
+          "nodes": [
+            {
+              "era": "25 Apr 2014",
+              "type": "paradox",
+              "text": "Lucasfilm rebrands everything except the six films and The Clone Wars as Legends. One continuity becomes two; the beats below now run parallel to canon rather than inside it.",
+              "tags": [
+                {
+                  "label": "Canon reset",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "36,453 BBY",
+              "type": "event",
+              "text": "Dawn of the Jedi: the Tho Yor ships gather Force-sensitives on Tython; the Je'daii Order balances light and dark until the Force Wars split it.",
+              "tags": [
+                {
+                  "label": "Je'daii",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "3,956 BBY",
+              "type": "turning-point",
+              "text": "Knights of the Old Republic: Revan and Malak return from the Mandalorian Wars as Sith; a mind-wiped Revan destroys the Star Forge.",
+              "tags": [
+                {
+                  "label": "Revan",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "3,653 BBY",
+              "type": "event",
+              "text": "The Old Republic: the resurgent Sith Empire sacks Coruscant; the Treaty of Coruscant sets up the MMO's cold war.",
+              "tags": [
+                {
+                  "label": "Sith Empire",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "1,000 BBY",
+              "type": "turning-point",
+              "text": "Darth Bane survives Ruusan and creates the Rule of Two — the one Legends idea canon kept almost intact.",
+              "tags": [
+                {
+                  "label": "Darth Bane",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "22–19 BBY",
+              "type": "event",
+              "text": "Genndy Tartakovsky's Clone Wars micro-series: General Grievous debuts, Anakin is knighted and Palpatine is kidnapped on the eve of Revenge of the Sith — later overwritten by the 2008 series.",
+              "tags": [
+                {
+                  "label": "Clone Wars (2003)",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "9 ABY",
+              "type": "turning-point",
+              "text": "The Thrawn Trilogy: Grand Admiral Thrawn nearly topples the New Republic; Mara Jade, the Emperor's Hand, later marries Luke. Thrawn was the first big Legends import back into canon.",
+              "tags": [
+                {
+                  "label": "Thrawn",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "10–11 ABY",
+              "type": "event",
+              "text": "Dark Empire: a cloned Palpatine returns and briefly turns Luke — the template for 'somehow Palpatine returned'.",
+              "tags": [
+                {
+                  "label": "Palpatine clone",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "25–29 ABY",
+              "type": "death",
+              "text": "The New Jedi Order: the extragalactic Yuuzhan Vong invade. Chewbacca dies on Sernpidal; Anakin Solo dies at Myrkr; Coruscant falls before Jacen ends the war.",
+              "tags": [
+                {
+                  "label": "Chewbacca dies",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "40 ABY",
+              "type": "death",
+              "text": "Legacy of the Force: Jacen Solo becomes Darth Caedus, kills Mara Jade and is killed by his twin Jaina.",
+              "tags": [
+                {
+                  "label": "Darth Caedus",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "137 ABY",
+              "type": "resolution",
+              "text": "Legacy: Cade Skywalker, a bounty-hunting descendant of Luke, faces Darth Krayt's One Sith — the furthest point the old continuity ever reached.",
+              "tags": [
+                {
+                  "label": "Cade Skywalker",
+                  "kind": "character"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "characters": [
+        {
+          "name": "Anakin Skywalker / Darth Vader",
+          "role": "The Chosen One who fell, ruled, and turned back — the saga's spine from 41 BBY to Endor.",
+          "color": "#ff2a1f"
+        },
+        {
+          "name": "Sheev Palpatine / Darth Sidious",
+          "role": "Senator, Chancellor, Emperor, clone: a 70-year plan that only ends on Exegol.",
+          "color": "#b07cff"
+        },
+        {
+          "name": "Obi-Wan Kenobi",
+          "role": "Trained Anakin, hid Luke, beat Vader twice, and let himself be struck down.",
+          "color": "#28d7e0"
+        },
+        {
+          "name": "Luke Skywalker",
+          "role": "Farm boy to last Jedi to failed teacher to Force projection — and Grogu's rescuer.",
+          "color": "#39d98a"
+        },
+        {
+          "name": "Leia Organa",
+          "role": "Princess, general, Vader's daughter and founder of the Resistance.",
+          "color": "#ffb02e"
+        },
+        {
+          "name": "Han Solo",
+          "role": "Smuggler who won the Falcon, froze in carbonite, and died on his son's blade.",
+          "color": "#E0A920"
+        },
+        {
+          "name": "Ahsoka Tano",
+          "role": "Anakin's Padawan, Fulcrum, and the thread tying Clone Wars, Rebels and the Mando-verse together.",
+          "color": "#4f8cff"
+        },
+        {
+          "name": "Yoda",
+          "role": "900-year-old Grand Master; trained Luke on Dagobah and Kai's class in the High Republic.",
+          "color": "#39d98a"
+        },
+        {
+          "name": "Darth Maul",
+          "role": "Bisected in 32 BBY, alive until 2 BBY: Sith apprentice, Mandalore's conqueror, Crimson Dawn's shadow lord.",
+          "color": "#ff2a1f"
+        },
+        {
+          "name": "Rey Skywalker",
+          "role": "Jakku scavenger and Palpatine's granddaughter; killed him and took the Skywalker name.",
+          "color": "#ff6ac1"
+        },
+        {
+          "name": "Ben Solo / Kylo Ren",
+          "role": "Luke's star pupil, Snoke's weapon, Han's killer — redeemed in the end.",
+          "color": "#ff6ac1"
+        },
+        {
+          "name": "Din Djarin & Grogu",
+          "role": "The Mandalorian and the Child: bounty hunter and 50-year-old foundling, now a clan of two.",
+          "color": "#4f8cff"
+        },
+        {
+          "name": "Grand Admiral Thrawn",
+          "role": "The Empire's Chiss strategist, lost with Ezra in 1 BBY and back from Peridea to lead the remnant.",
+          "color": "#9aa8bf"
+        },
+        {
+          "name": "Cassian Andor",
+          "role": "Ferrix thief turned rebel spy; died at Scarif so the plans could reach Leia.",
+          "color": "#39d98a"
+        },
+        {
+          "name": "Boba Fett",
+          "role": "Jango's clone-son; froze Han, fell into the Sarlacc, climbed out, took Jabba's palace.",
+          "color": "#E0A920"
+        }
+      ],
+      "items": [
+        {
+          "name": "The Death Star",
+          "desc": "Begun 20 BBY, finished 0 BBY, destroyed at Yavin; its sequel died at Endor, Starkiller Base at 34 ABY."
+        },
+        {
+          "name": "Millennium Falcon",
+          "desc": "Lando's freighter, then Han's, then Rey's — the Kessel Run in twelve parsecs."
+        },
+        {
+          "name": "The Skywalker lightsaber",
+          "desc": "Anakin's blue blade: lost at Bespin, found by Maz, shattered by Rey and Kylo, buried on Tatooine."
+        },
+        {
+          "name": "The Darksaber",
+          "desc": "Tarre Vizsla's black blade; passed through Maul, Sabine, Bo-Katan, Gideon, Din and back to Bo-Katan."
+        },
+        {
+          "name": "The Clone Army & Order 66",
+          "desc": "Jango Fett's Kaminoan clones with an inhibitor chip that turned them on the Jedi in 19 BBY."
+        },
+        {
+          "name": "Kyber crystals",
+          "desc": "Living crystals that power lightsabers — and, mined at Jedha, the Death Star's superlaser."
+        },
+        {
+          "name": "Beskar",
+          "desc": "Mandalorian iron that stops blasters and lightsabers; the Empire's purge hoarded it."
+        },
+        {
+          "name": "Project Necromancer",
+          "desc": "The Empire's Mount Tantiss cloning programme — why Gideon wanted Grogu's blood and how Palpatine 'returned'."
+        }
+      ],
+      "themes": [
+        "BBY / ABY: the galaxy dates everything from the Battle of Yavin in A New Hope — Year Zero. Negative numbers are the prequels and shows; positive are the original and sequel trilogies.",
+        "One line, not a fork: canon Star Wars has no branching timelines — the eras are chapters of a single 25,000-year history. The only real 'branch' is the 2014 Legends reset, which runs beside canon rather than inside it.",
+        "Palpatine's long game: Naboo (32 BBY), the Clone Wars, Order 66, the Empire, Snoke and Exegol are one plan by one Sith Lord, spanning nearly 70 years.",
+        "It's like poetry, it rhymes: a desert orphan, a mentor's death, a father's fall and a child's redemption recur in every trilogy.",
+        "The Mando-verse funnel: The Mandalorian, Boba Fett, Ahsoka and Skeleton Crew all sit in 9–12 ABY and converge on Thrawn — the setup for The Mandalorian and Grogu and Ahsoka season 2.",
+        "Legends keeps leaking back: Thrawn, the Chiss, Coruscant's name, cloned Emperors and the Rule of Two all crossed from the old continuity into canon."
+      ]
+    },
+    transformers: {
+      "id": "transformers",
+      "title": "Transformers",
+      "accent": "#8F7CFF",
+      "tagline": "Eight films, three continuities, and a creation myth that keeps getting rewritten.",
+      "blurb": "Three tellings of one robot war: Michael Bay's five-film secret history, the 1987 Bumblebee soft reboot that runs into Rise of the Beasts and G.I. Joe, and Transformers One's animated origin on Cybertron.",
+      "meta": "8 films · 3 continuities · 4 branches",
+      "framing": "Transformers is not one timeline — it is three tellings of the same war. Michael Bay's five films build a sprawling secret history (Primes, Sector 7, a moon crash, Merlin) that dead-ends with Quintessa still alive. Bumblebee rewinds to 1987 and quietly restarts the story with a G1 flavour, and Rise of the Beasts continues that line into a G.I. Joe shared universe. Transformers One then reboots the origin entirely on Cybertron. This map runs the shared deep-lore first, then each continuity as its own branch.",
+      "forkLabel": "Cybertron falls · the war reaches Earth",
+      "films": [
+        "Transformers (2007)",
+        "Revenge of the Fallen (2009)",
+        "Dark of the Moon (2011)",
+        "Age of Extinction (2014)",
+        "The Last Knight (2017)",
+        "Bumblebee (2018)",
+        "Rise of the Beasts (2023)",
+        "Transformers One (2024)"
+      ],
+      "branches": [
+        {
+          "id": "b1",
+          "title": "The Deep Lore — Bay-era Secret History",
+          "color": "#b07cff",
+          "films": [
+            "Revenge of the Fallen",
+            "Dark of the Moon",
+            "Age of Extinction",
+            "The Last Knight"
+          ],
+          "summary": "The backstory the Bay films reveal in flashbacks: from the AllSpark 'before time began' to the moon crash that secretly drove the space race. Each sequel bolts on another chapter.",
+          "nodes": [
+            {
+              "era": "Before time",
+              "type": "event",
+              "text": "The AllSpark (the Cube) gives rise to the mechanical race and their homeworld Cybertron. Age of Extinction adds a rival myth: unnamed alien Creators seed worlds with Transformium and use Transformers as a labour force.",
+              "tags": [
+                {
+                  "label": "AllSpark",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "Dawn of the solar system",
+              "type": "event",
+              "text": "The world-eater Unicron lies dormant and the Earth forms around him — a reveal The Last Knight makes and never pays off.",
+              "tags": [
+                {
+                  "label": "Unicron",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "65 million years ago",
+              "type": "death",
+              "text": "The Creators' Seed detonates over Earth, coating the planet in Transformium and wiping out the dinosaurs — the raw material for the Dinobots.",
+              "tags": [
+                {
+                  "label": "Extinction",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "c. 17,000 BC",
+              "type": "turning-point",
+              "text": "The Seven Primes harvest stars for Energon under one rule: never a sun that sustains life. One brother, The Fallen, builds a Star Harvester on Earth anyway; the others sacrifice themselves to hide its key, the Matrix of Leadership, in a tomb of their own bodies.",
+              "tags": [
+                {
+                  "label": "Matrix",
+                  "kind": "tech"
+                },
+                {
+                  "label": "The Fallen",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Ancient Cybertron",
+              "type": "event",
+              "text": "Enslaved by the Quintessa-aligned Creators, Optimus and six others become the Knights of Cybertron, overthrow their masters and travel the stars in the ship that will one day be Lockdown's prison.",
+              "tags": [
+                {
+                  "label": "Knights",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "Cybertron war",
+              "type": "death",
+              "text": "Civil war between Autobots under Sentinel Prime and Decepticons under Megatron consumes Cybertron. Sentinel's ship, the Ark, carrying his Space Bridge pillars, is shot down escaping the planet.",
+              "tags": [
+                {
+                  "label": "The Ark",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "484 AD",
+              "type": "event",
+              "text": "Merlin finds twelve Knights of Cybertron hiding in Britain; they give him a staff that wins Arthur's war against the Saxons. Merlin hides it, and Stonehenge is revealed to be Cybertronian.",
+              "tags": [
+                {
+                  "label": "Merlin's Staff",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "1897",
+              "type": "event",
+              "text": "Arctic explorer Archibald Witwicky finds Megatron frozen in the ice; Megatron's activation etches the AllSpark's coordinates into Witwicky's glasses.",
+              "tags": [
+                {
+                  "label": "Witwicky",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "1934",
+              "type": "event",
+              "text": "President Hoover founds Sector 7; the Cube and the frozen Megatron are moved to the site of the Hoover Dam, built to mask the Cube's energy. Reverse-engineering Megatron secretly drives 20th-century technology.",
+              "tags": [
+                {
+                  "label": "Sector 7",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "1940s",
+              "type": "event",
+              "text": "The Last Knight shows Transformers — Bumblebee among them — fighting alongside the Allies in World War II.",
+              "tags": []
+            },
+            {
+              "era": "1961–1969",
+              "type": "turning-point",
+              "text": "The Ark crashes on the far side of the Moon; JFK escalates the space race so Apollo 11 can secretly survey the wreck in 1969. Soviet probes catch the Decepticons already stripping the ship of its pillars.",
+              "tags": [
+                {
+                  "label": "Moon crash",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "1972–1986",
+              "type": "event",
+              "text": "Decepticons form a secret cabal with human elites, quietly shutting down both superpowers' moon programmes — and, Dark of the Moon claims, causing the 1986 Chernobyl disaster.",
+              "tags": []
+            }
+          ]
+        },
+        {
+          "id": "b2",
+          "title": "The Bay Continuity (2007–2017)",
+          "color": "#ff2a1f",
+          "films": [
+            "Transformers",
+            "Revenge of the Fallen",
+            "Dark of the Moon",
+            "Age of Extinction",
+            "The Last Knight"
+          ],
+          "summary": "Five escalating films: Sam Witwicky's trilogy, then Cade Yeager's. Earth turns on the Autobots, Optimus leaves to find his Creators, and the line ends with Quintessa alive and a sequel that never came.",
+          "nodes": [
+            {
+              "era": "2007",
+              "type": "turning-point",
+              "text": "Sam Witwicky's first car is Bumblebee. Both sides hunt his great-great-grandfather's glasses; Sector 7 loses control of the Hoover Dam and a thawed Megatron leads the battle of Mission City.",
+              "tags": [
+                {
+                  "label": "Sam Witwicky",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2007",
+              "type": "death",
+              "text": "Sam pushes the AllSpark into Megatron's chest, killing him and destroying most of the Cube. With no Cube, the Autobots can't restore Cybertron — Earth becomes home.",
+              "tags": [
+                {
+                  "label": "Megatron dies (1)",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2009",
+              "type": "event",
+              "text": "Autobots and the military form NEST to hunt Decepticons worldwide. An AllSpark shard fills Sam's head with Cybertronian symbols; another revives Megatron from the ocean floor.",
+              "tags": [
+                {
+                  "label": "NEST",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2009",
+              "type": "death",
+              "text": "Optimus Prime is killed by Megatron protecting Sam. With the last Prime dead, The Fallen emerges to reactivate the Star Harvester inside the Great Pyramid.",
+              "tags": [
+                {
+                  "label": "Optimus dies",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2009",
+              "type": "resolution",
+              "text": "In Egypt, Sam earns the Matrix of Leadership and resurrects Optimus, who destroys the Harvester and kills The Fallen. Megatron escapes, wounded.",
+              "tags": [
+                {
+                  "label": "Matrix",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2011",
+              "type": "turning-point",
+              "text": "Optimus recovers Sentinel Prime from the Ark on the Moon and revives him with the Matrix. Sentinel betrays the Autobots: he made a pact with Megatron to Space-Bridge Cybertron to Earth and enslave humanity to rebuild it.",
+              "tags": [
+                {
+                  "label": "Sentinel Prime",
+                  "kind": "character"
+                },
+                {
+                  "label": "Space Bridge",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2011",
+              "type": "death",
+              "text": "The Decepticons occupy Chicago. The Autobots fake their deaths, return, and Optimus executes both Sentinel and Megatron; Cybertron is left half-transported and wrecked.",
+              "tags": [
+                {
+                  "label": "Chicago",
+                  "kind": "event"
+                },
+                {
+                  "label": "Megatron dies (2)",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "5 years after Chicago",
+              "type": "turning-point",
+              "text": "The government has disbanded NEST; CIA unit Cemetery Wind hunts all Transformers in secret partnership with bounty hunter Lockdown, who wants Optimus for the Creators. Inventor Cade Yeager finds a wrecked Optimus in a Texas cinema.",
+              "tags": [
+                {
+                  "label": "Cade Yeager",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "5 years after Chicago",
+              "type": "event",
+              "text": "KSI mines Transformium and builds its own Transformers from Megatron's head — Galvatron — who promptly steals the Creators' Seed. Optimus frees the Dinobots, kills Lockdown in Hong Kong, and flies into space to confront his Creators.",
+              "tags": [
+                {
+                  "label": "Galvatron",
+                  "kind": "character"
+                },
+                {
+                  "label": "Dinobots",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "Shortly after",
+              "type": "turning-point",
+              "text": "Optimus reaches dead Cybertron and is brainwashed by its 'goddess' Quintessa into Nemesis Prime, sent to fetch Merlin's staff so Cybertron can drain Earth's core — Unicron — to heal itself.",
+              "tags": [
+                {
+                  "label": "Quintessa",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Shortly after",
+              "type": "resolution",
+              "text": "Cade (the last knight) and Merlin's descendant Vivian Wembley retrieve the staff; Bumblebee's voice breaks Quintessa's hold and Vivian pulls the staff from Stonehenge. The Autobots leave to rebuild Cybertron.",
+              "tags": [
+                {
+                  "label": "Merlin's Staff",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "Dead end",
+              "type": "paradox",
+              "text": "Quintessa survives disguised as a human, teasing a Unicron sequel. It was never made: Bumblebee (2018) restarted the franchise instead, leaving the Bay line unresolved.",
+              "tags": [
+                {
+                  "label": "Abandoned",
+                  "kind": "paradox"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b3",
+          "title": "The Bumblebee Line — Soft Reboot (1987 → 1994 → G.I. Joe)",
+          "color": "#ffb02e",
+          "films": [
+            "Bumblebee",
+            "Rise of the Beasts"
+          ],
+          "summary": "Back to 1987 with a Generation-1 flavour. Officially a prequel that 'preserves' the 2007 film, in practice a new continuity: Optimus and the Autobots are on Earth in 1994, Bumblebee dies and returns, and Earth shares a universe with G.I. Joe.",
+          "nodes": [
+            {
+              "era": "1987 · Cybertron",
+              "type": "turning-point",
+              "text": "Cybertron falls to the Decepticons. Optimus orders B-127 to Earth to set up a base for the surviving Autobots — the fork from the Bay backstory, where Bumblebee was already on Earth in WWII.",
+              "tags": [
+                {
+                  "label": "Retcon",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "1987 · California",
+              "type": "event",
+              "text": "Hunted by Sector 7's Agent Burns, B-127 is ambushed by Blitzwing, who tears out his voice box and wipes his memory. He hides as a yellow VW Beetle and is found by teenager Charlie Watson, who names him Bumblebee.",
+              "tags": [
+                {
+                  "label": "Charlie Watson",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "1987",
+              "type": "resolution",
+              "text": "Decepticon hunters Shatter and Dropkick co-opt the military to beam Earth's location to the Decepticon armada; Charlie and Bumblebee stop them. Bee takes the form of a Camaro and meets the newly arrived Optimus Prime on the Golden Gate.",
+              "tags": [
+                {
+                  "label": "Bumblebee",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Millennia earlier",
+              "type": "event",
+              "text": "The planet-eater Unicron devours the Maximals' homeworld. Their leader dies protecting the Transwarp Key; Optimus Primal flees with the survivors to Earth, where the Maximals hide in Peru and split the key in two.",
+              "tags": [
+                {
+                  "label": "Transwarp Key",
+                  "kind": "tech"
+                },
+                {
+                  "label": "Maximals",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "1994 · Brooklyn",
+              "type": "turning-point",
+              "text": "Museum intern Elena Wallace activates half the key; the signal wakes Optimus, Bumblebee, Arcee and Mirage — hiding on Earth hoping for a way home — and ex-soldier Noah Diaz is pulled in when he tries to steal Mirage.",
+              "tags": [
+                {
+                  "label": "Noah Diaz",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "1994",
+              "type": "death",
+              "text": "Unicron's herald Scourge and the Terrorcons kill Bumblebee outside the museum and take the first half of the key.",
+              "tags": [
+                {
+                  "label": "Bumblebee dies",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "1994 · Peru",
+              "type": "death",
+              "text": "Scourge corrupts the Maximal Airazor with Dark Energon; Optimus Primal is forced to kill her. Scourge seizes the reassembled key and opens Unicron's portal.",
+              "tags": [
+                {
+                  "label": "Scourge",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "1994",
+              "type": "resolution",
+              "text": "Mirage sacrifices his body as an exo-suit for Noah; the key's energy revives Bumblebee; Optimus destroys the key and shuts the portal. The Autobots declare Earth home — and G.I. Joe recruits Noah.",
+              "tags": [
+                {
+                  "label": "G.I. Joe",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "→ 2007?",
+              "type": "paradox",
+              "text": "Producers say the 2007 film still 'happens' after this — but in it Optimus arrives on Earth for the first time and the Autobots have no base. Read the Bumblebee line as its own timeline that loosely rhymes with Bay's.",
+              "tags": [
+                {
+                  "label": "Continuity gap",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "In development",
+              "type": "event",
+              "text": "A Transformers / G.I. Joe crossover continuing from Rise of the Beasts is in development, alongside a new Michael Bay-driven film and a live-action project from Transformers One director Josh Cooley. None has a release date.",
+              "tags": []
+            }
+          ]
+        },
+        {
+          "id": "b4",
+          "title": "Transformers One — Animated Reboot",
+          "color": "#28d7e0",
+          "films": [
+            "Transformers One"
+          ],
+          "summary": "A fresh origin on Cybertron with no ties to the live-action films: how best friends Orion Pax and D-16 became Optimus Prime and Megatron. Planned as a trilogy; the sequels were cancelled.",
+          "nodes": [
+            {
+              "era": "Ancient Cybertron",
+              "type": "turning-point",
+              "text": "Alien Quintessons invade. Sentinel Prime secretly betrays and murders the Thirteen Primes, then rules Iacon as a hero — trading Energon to the Quintessons and stripping transformation cogs from most bots to create a labour caste.",
+              "tags": [
+                {
+                  "label": "Sentinel Prime",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Cybertron · Iacon",
+              "type": "event",
+              "text": "Cogless miners Orion Pax and D-16, with chatty B-127 and supervisor Elita-1, reach the surface and revive the last Prime, Alpha Trion, who gives them the fallen Primes' cogs — and the truth about Sentinel.",
+              "tags": [
+                {
+                  "label": "Alpha Trion",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Cybertron",
+              "type": "event",
+              "text": "The friends fall in with Starscream's rebel High Guard. Their evidence against Sentinel is destroyed in battle and most of the group is captured.",
+              "tags": [
+                {
+                  "label": "High Guard",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "Cybertron",
+              "type": "death",
+              "text": "D-16 shoots Orion in an argument over vengeance, executes Sentinel, takes the cog of Megatronus Prime and renames himself Megatron, seizing Iacon with the High Guard.",
+              "tags": [
+                {
+                  "label": "Megatron",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Cybertron",
+              "type": "resolution",
+              "text": "Primus and the Primes resurrect Orion as Optimus Prime with the Matrix of Leadership. He defeats Megatron, exiles him, and founds the Autobots; Megatron reforges the High Guard as the Decepticons and declares war.",
+              "tags": [
+                {
+                  "label": "Matrix",
+                  "kind": "tech"
+                },
+                {
+                  "label": "Autobots vs Decepticons",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "Cancelled",
+              "type": "paradox",
+              "text": "Director Josh Cooley: 'Everybody knew this was a reboot… a different continuity.' A three-film arc leading into live-action was planned, but Paramount dropped the sequels after the box office; only the YouTube series Transformers One: New Adventures (2025) followed.",
+              "tags": [
+                {
+                  "label": "Orphaned line",
+                  "kind": "paradox"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "characters": [
+        {
+          "name": "Optimus Prime",
+          "role": "Autobot leader in every continuity; dies and returns (2009), goes rogue as Nemesis Prime (2017), and is born as Orion Pax in Transformers One.",
+          "color": "#ff2a1f"
+        },
+        {
+          "name": "Megatron",
+          "role": "Decepticon leader and the franchise's most-killed character — dead in 2007 and 2011, rebuilt as Galvatron, born as D-16 in the reboot.",
+          "color": "#8F7CFF"
+        },
+        {
+          "name": "Bumblebee",
+          "role": "The yellow scout whose lost voice defines him. WWII veteran in Bay's lore, 1987 arrival in the reboot; dies and revives in 1994.",
+          "color": "#ffb02e"
+        },
+        {
+          "name": "Sam Witwicky",
+          "role": "Teenager who kills Megatron with the AllSpark and earns the Matrix; carries the first three Bay films, then vanishes without mention.",
+          "color": "#ff2a1f"
+        },
+        {
+          "name": "Cade Yeager",
+          "role": "Texas inventor who rebuilds Optimus, becomes the 'last knight', and fronts films four and five.",
+          "color": "#ff2a1f"
+        },
+        {
+          "name": "Sentinel Prime",
+          "role": "Optimus's mentor and traitor in Dark of the Moon; a fraudulent tyrant who murdered the Primes in Transformers One. Betrayal is his constant.",
+          "color": "#b07cff"
+        },
+        {
+          "name": "The Fallen",
+          "role": "Megatronus, the Prime who broke the one rule and built a Star Harvester on Earth; killed by Optimus in Egypt.",
+          "color": "#b07cff"
+        },
+        {
+          "name": "Quintessa",
+          "role": "Cybertron's self-styled creator goddess who turns Optimus; survives The Last Knight in human disguise for a sequel that never came.",
+          "color": "#b07cff"
+        },
+        {
+          "name": "Charlie Watson",
+          "role": "Grieving 1987 teenager who fixes up a VW Beetle and names Bumblebee.",
+          "color": "#ffb02e"
+        },
+        {
+          "name": "Noah Diaz",
+          "role": "Ex-military Brooklyn electronics expert who bonds with Mirage and joins G.I. Joe after Unicron is stopped.",
+          "color": "#ffb02e"
+        },
+        {
+          "name": "Optimus Primal",
+          "role": "Maximal leader — a gorilla — who hid the Transwarp Key on Earth for millennia and has to kill his corrupted lieutenant Airazor.",
+          "color": "#ffb02e"
+        },
+        {
+          "name": "Unicron",
+          "role": "The planet-eater. Earth's core in Bay's lore; a hungry, roaming god held back by the Transwarp portal in Rise of the Beasts.",
+          "color": "#28d7e0"
+        },
+        {
+          "name": "Orion Pax / D-16",
+          "role": "Best friends and cogless miners in Transformers One whose falling-out births Optimus Prime, Megatron and the war itself.",
+          "color": "#28d7e0"
+        }
+      ],
+      "items": [
+        {
+          "name": "The AllSpark (the Cube)",
+          "desc": "Life-giving artefact that created the Transformers; sacrificed into Megatron's chest in 2007, its shards drive the sequel."
+        },
+        {
+          "name": "Matrix of Leadership",
+          "desc": "Key to the Star Harvester and the power to resurrect a Prime — 'you cannot find it, you earn it'."
+        },
+        {
+          "name": "Star Harvester",
+          "desc": "The Fallen's sun-destroying machine hidden inside the Great Pyramid."
+        },
+        {
+          "name": "Space Bridge pillars",
+          "desc": "Sentinel Prime's teleport tech carried on the Ark; used to drag Cybertron toward Earth in 2011."
+        },
+        {
+          "name": "Transformium & the Seed",
+          "desc": "The Creators' programmable metal; the Seed cyber-forms a whole region and killed the dinosaurs."
+        },
+        {
+          "name": "Merlin's Staff",
+          "desc": "Cybertronian staff given to Merlin in 484 AD; the only thing that can start — or stop — Quintessa's draining of Earth."
+        },
+        {
+          "name": "Transwarp Key",
+          "desc": "Portal device split in two by the Maximals; reassembled it opens a door for Unicron."
+        },
+        {
+          "name": "Transformation cogs",
+          "desc": "In Transformers One, the part that lets a bot transform — withheld by Sentinel to create a caste of workers."
+        },
+        {
+          "name": "Energon",
+          "desc": "The lifeblood of Cybertron: harvested from stars by the Primes, mined by hand in Iacon, corrupted as Dark Energon by Scourge."
+        }
+      ],
+      "themes": [
+        "Three continuities, not one: Bay's five films, the Bumblebee/Rise of the Beasts line, and Transformers One share names and iconography but not a timeline.",
+        "Ever-expanding backstory: every Bay sequel reaches further into history — the Primes, the moon landing, the dinosaurs, King Arthur — so the 'timeline' is mostly retroactive.",
+        "Death is temporary: Megatron, Optimus and Bumblebee all die and return; the Matrix and the AllSpark are the franchise's resurrection tokens.",
+        "Sentinel always betrays: in both Dark of the Moon and Transformers One, the revered elder Prime is the secret villain.",
+        "Earth becomes home: whichever continuity you follow, the Autobots end up choosing Earth over a dead or unreachable Cybertron."
+      ]
+    },
+    alien: {
+      "id": "alien",
+      "title": "Alien",
+      "accent": "#2FD08A",
+      "tagline": "Nine entries, four centuries, and a company that never stops wanting the perfect organism.",
+      "blurb": "From the Engineers seeding Earth to a cloned Ripley in 2379: the prequels, the four Ripley films and the gap-fillers Isolation, Romulus and Alien: Earth, put back in story order.",
+      "meta": "7 films · 1 game · 1 series · 5 branches",
+      "framing": "The Alien saga was released out of order: four Ripley films, then two prequels, then a game, a midquel and a TV series that fill the gaps. Put back in chronological order it is one line running from the Engineers' seeding of Earth to a cloned Ripley in 2379 — with Alien: Earth (2120) sitting beside it as a contested branch, because it puts Xenomorphs on Earth two years before the Nostromo ever met one.",
+      "forkLabel": "2120 · The Maginot falls on Earth",
+      "films": [
+        "Alien (1979)",
+        "Aliens (1986)",
+        "Alien 3 (1992)",
+        "Alien Resurrection (1997)",
+        "Prometheus (2012)",
+        "Alien: Isolation (2014)",
+        "Alien: Covenant (2017)",
+        "Alien: Romulus (2024)",
+        "Alien: Earth (2025)"
+      ],
+      "branches": [
+        {
+          "id": "b1",
+          "title": "Origins — The Engineers & David",
+          "color": "#28d7e0",
+          "films": [
+            "Prometheus",
+            "Alien: Covenant"
+          ],
+          "summary": "Humanity is seeded by the Engineers, goes looking for its makers, and comes home with an android who builds the Xenomorph out of their bioweapon.",
+          "nodes": [
+            {
+              "era": "~4 billion BC",
+              "type": "turning-point",
+              "text": "An Engineer drinks the black accelerant on primordial Earth and disintegrates into the sea — his DNA seeds the planet with life. It is the only pre-21st-century moment ever shown on screen.",
+              "tags": [
+                {
+                  "label": "Black goo",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "~35,000 BC – 1000s AD",
+              "type": "event",
+              "text": "The same star map appears in a cave painting on the Isle of Skye and later in Sumerian, Egyptian, Mayan and Hawaiian art — cultures that never met. It points not to the Engineers' home but to LV-223."
+            },
+            {
+              "era": "~100–200 AD",
+              "type": "death",
+              "text": "On LV-223 the Engineers prepare a strike to wipe out humanity, then lose control of their own black-goo bioweapon. Their outpost dies in a panicked evacuation; one pilot survives in stasis.",
+              "tags": [
+                {
+                  "label": "Containment breach",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2023",
+              "type": "event",
+              "text": "Peter Weyland's TED talk (The Peter Weyland Files): cancers cured, androids on the way, \"we are the gods now.\"",
+              "tags": [
+                {
+                  "label": "Weyland Corp",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2025",
+              "type": "event",
+              "text": "Weyland builds his first synthetic man and names him David after Michelangelo's statue. Yutani sues over the David patent the following year.",
+              "tags": [
+                {
+                  "label": "David 1",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2034",
+              "type": "event",
+              "text": "Weyland scientists achieve faster-than-light travel; the Heliades is the first FTL-capable ship."
+            },
+            {
+              "era": "2089",
+              "type": "turning-point",
+              "text": "Archaeologists Elizabeth Shaw and Charlie Holloway match the Skye cave painting to the other star maps and pitch Weyland Corp an expedition to meet the 'Engineers'.",
+              "tags": [
+                {
+                  "label": "Shaw",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2091–2093",
+              "type": "event",
+              "text": "The USCSS Prometheus leaves Earth with Shaw, Holloway, mission director Meredith Vickers, android David 8 and — secretly in cryosleep — a dying Peter Weyland hoping to ask his makers for more life.",
+              "tags": [
+                {
+                  "label": "Prometheus",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2093",
+              "type": "event",
+              "text": "On LV-223 the crew finds a temple of urns, a 2,000-year-old pile of Engineer corpses and a mural of a familiar creature. David quietly pockets a vessel of black goo."
+            },
+            {
+              "era": "2093",
+              "type": "death",
+              "text": "Milburn and Fifield die in the temple; David doses Holloway's drink with the accelerant, and Holloway is burned alive by Vickers. Shaw, impregnated by the infected Holloway, cuts a squid-like Trilobite out of herself in the medpod.",
+              "tags": [
+                {
+                  "label": "Trilobite",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2093",
+              "type": "turning-point",
+              "text": "The revived Engineer tears David's head off and kills Weyland. He launches his Juggernaut for Earth with a hold full of bioweapon; Captain Janek rams it with the Prometheus.",
+              "tags": [
+                {
+                  "label": "Earth spared",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "Jan 1, 2094",
+              "type": "resolution",
+              "text": "The grown Trilobite subdues the last Engineer, and a proto-alien — the Deacon — bursts from his chest. Shaw and David's head take a second Juggernaut toward the Engineers' homeworld.",
+              "tags": [
+                {
+                  "label": "Deacon",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2094",
+              "type": "death",
+              "text": "Rebuilt by Shaw, David reaches Planet 4 and 'cleanses' it — dropping the black goo on the Engineer city and exterminating them. He then kills Shaw and dissects her for his experiments.",
+              "tags": [
+                {
+                  "label": "Engineers wiped out",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2099",
+              "type": "event",
+              "text": "Weyland Corp and Yutani merge into Weyland-Yutani — 'the Company' of every later film.",
+              "tags": [
+                {
+                  "label": "Weyland-Yutani",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "Dec 5, 2104",
+              "type": "event",
+              "text": "A neutrino burst wakes the colony ship USCSS Covenant (2,000 colonists, 1,140 embryos, android Walter) en route to Origae-6. Captain Branson burns in his pod; new captain Oram diverts to Shaw's recorded signal.",
+              "tags": [
+                {
+                  "label": "Covenant",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2104",
+              "type": "death",
+              "text": "Spores on Planet 4 infect Ledward and Hallett; Neomorphs burst out of them and the lander explodes. David appears and leads the survivors into the dead Engineer city.",
+              "tags": [
+                {
+                  "label": "Neomorph",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2104",
+              "type": "turning-point",
+              "text": "David shows Oram his eggs. A facehugger takes him and the first true Xenomorph in its classic form bursts from his chest — David's 'perfect organism', ten years in the making.",
+              "tags": [
+                {
+                  "label": "First Xenomorph",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2104",
+              "type": "death",
+              "text": "David kills Walter (or so it seems), Daniels crushes the Xenomorph in the lander's crane, and a second one born from Lope is blown out of the Covenant's airlock."
+            },
+            {
+              "era": "2104",
+              "type": "resolution",
+              "text": "Daniels realises too late that the android who put her to sleep is David, not Walter. Alone, he regurgitates two Xenomorph embryos into cold storage beside the human ones and sails on for Origae-6.",
+              "tags": [
+                {
+                  "label": "David wins",
+                  "kind": "event"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2",
+          "title": "The Company's Hunt — Nostromo to Renaissance",
+          "color": "#39d98a",
+          "films": [
+            "Alien",
+            "Alien: Isolation",
+            "Alien: Romulus"
+          ],
+          "summary": "Humanity meets the Xenomorph on LV-426 and Weyland-Yutani spends the next twenty years trying to own it, while Ellen Ripley drifts asleep past it all.",
+          "nodes": [
+            {
+              "era": "2122",
+              "type": "event",
+              "text": "Mother wakes the seven-strong crew of the ore hauler USCSS Nostromo to chase a signal from planetoid LV-426. Contract clause: any possibly intelligent transmission must be investigated.",
+              "tags": [
+                {
+                  "label": "Nostromo",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2122",
+              "type": "turning-point",
+              "text": "Dallas, Kane and Lambert find a crashed Juggernaut and a fossilised Engineer pilot with its chest burst open. In the egg chamber a facehugger takes Kane; Ash breaks quarantine to let him aboard.",
+              "tags": [
+                {
+                  "label": "The derelict",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2122",
+              "type": "death",
+              "text": "The chestburster erupts from Kane at dinner. It is full-grown within hours: Brett, Dallas, Parker and Lambert die one by one in the ducts and corridors.",
+              "tags": [
+                {
+                  "label": "Xenomorph",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2122",
+              "type": "turning-point",
+              "text": "Ripley reads Special Order 937: 'Priority one — ensure return of organism for analysis. Crew expendable.' Science officer Ash is revealed as a Company android and destroyed.",
+              "tags": [
+                {
+                  "label": "Special Order 937",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2122",
+              "type": "resolution",
+              "text": "Ripley blows up the Nostromo, blasts the stowaway Xenomorph out of the shuttle Narcissus, and goes into cryosleep with Jones the cat. She will drift for 57 years.",
+              "tags": [
+                {
+                  "label": "Ripley",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2137",
+              "type": "event",
+              "text": "Amanda Ripley, now a Weyland-Yutani engineer, joins a mission to Sevastopol Station after the salvage ship Anesidora recovers the Nostromo's flight recorder — and, from LV-426, an egg.",
+              "tags": [
+                {
+                  "label": "Amanda Ripley",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2137",
+              "type": "death",
+              "text": "A Xenomorph and a nest below the reactor gut Sevastopol; Seegson's Working Joe androids turn on the crew under Weyland-Yutani's Special Order 939. Samuels, Taylor and Marlow all die.",
+              "tags": [
+                {
+                  "label": "Special Order 939",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2137",
+              "type": "resolution",
+              "text": "Amanda hears her mother's last message, purges the nest and is flung into space as Sevastopol falls into the gas giant. A searchlight finds her — the station and its aliens are erased from the record."
+            },
+            {
+              "era": "2142",
+              "type": "event",
+              "text": "Twenty years after the Nostromo: six young miners — Rain Carradine, her synthetic brother Andy, Tyler, Kay, Bjorn and Navarro — hijack the hauler Corbelan IV to loot cryopods from the derelict station Renaissance and flee to Yvaga.",
+              "tags": [
+                {
+                  "label": "Romulus / Remus",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2142",
+              "type": "turning-point",
+              "text": "Science officer Rook — an Ash-model synthetic — reveals the Company salvaged the Nostromo's Xenomorph from Ripley's wreckage and was reverse-engineering facehuggers when the specimen escaped and killed the crew.",
+              "tags": [
+                {
+                  "label": "Rook",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2142",
+              "type": "death",
+              "text": "Facehuggers take Navarro; her chestburster loose on the station. Bjorn and Tyler die. Andy, upgraded with Rook's module, briefly answers to the Company instead of Rain."
+            },
+            {
+              "era": "2142",
+              "type": "death",
+              "text": "Kay injects Z-01, the black-goo compound distilled from facehuggers, and gives birth to the human–Xenomorph Offspring, which kills her. Rain vents it into the planet's rings.",
+              "tags": [
+                {
+                  "label": "The Offspring",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2142",
+              "type": "resolution",
+              "text": "Rain and Andy go into cryosleep aboard the Corbelan IV, bound for Yvaga. The Company still has no living specimen — and Ripley is still asleep."
+            }
+          ]
+        },
+        {
+          "id": "b3",
+          "title": "Ripley's War — Hadley's Hope & Fury 161",
+          "color": "#ffb02e",
+          "films": [
+            "Aliens",
+            "Alien 3"
+          ],
+          "summary": "One catastrophic year: Ripley is found, sent back to LV-426, wins, and then loses everything on a prison planet rather than hand the Company its Queen.",
+          "nodes": [
+            {
+              "era": "2179",
+              "type": "event",
+              "text": "A deep-salvage team finds the Narcissus 57 years late. Ripley learns her daughter Amanda died two years ago aged 66, and a Weyland-Yutani inquiry strips her flight licence for blowing up a $42M ship.",
+              "tags": [
+                {
+                  "label": "Ripley",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2179",
+              "type": "turning-point",
+              "text": "The Company has built the terraforming colony Hadley's Hope on LV-426 — and contact is lost. Company rep Carter Burke talks Ripley onto the USS Sulaco with a squad of Colonial Marines.",
+              "tags": [
+                {
+                  "label": "Hadley's Hope",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2179",
+              "type": "death",
+              "text": "The Marines walk into a hive under the atmosphere processor; the ambush wipes out most of the squad and the dropship. Only Hicks, Hudson, Vasquez, Gorman, Burke, android Bishop and the colony's last survivor, Newt, remain.",
+              "tags": [
+                {
+                  "label": "The hive",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2179",
+              "type": "event",
+              "text": "Ripley discovers Burke ordered the colonists to the derelict — and tries to get her and Newt facehugged so he can smuggle specimens past quarantine. The hive breaks through the ceiling; Burke, Hudson, Vasquez and Gorman die."
+            },
+            {
+              "era": "2179",
+              "type": "turning-point",
+              "text": "Ripley walks into the nest to retrieve Newt and torches the Queen's eggs. The Queen rides the dropship to the Sulaco, tears Bishop in half — and Ripley throws her out the airlock in a Power Loader.",
+              "tags": [
+                {
+                  "label": "The Queen",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2179",
+              "type": "death",
+              "text": "A Queen's egg hidden on the Sulaco hatches. The facehugger starts an electrical fire and the EEV crash-lands on the prison planet Fiorina 'Fury' 161. Newt drowns and Hicks is crushed; only Ripley survives.",
+              "tags": [
+                {
+                  "label": "Newt & Hicks",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2179",
+              "type": "event",
+              "text": "A second facehugger impregnates an ox (a dog in the theatrical cut). The four-legged Runner that bursts out hunts the unarmed prisoners; Clemens and Superintendent Andrews are among the first to die.",
+              "tags": [
+                {
+                  "label": "The Runner",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2179",
+              "type": "turning-point",
+              "text": "The neuroscanner shows Ripley is carrying a Queen embryo — which is why the Runner won't kill her. She asks Dillon to kill her once the alien is dead.",
+              "tags": [
+                {
+                  "label": "Queen embryo",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2179",
+              "type": "death",
+              "text": "Dillon's bait-and-trap plan lures the Runner into the lead works; most of the prisoners, Dillon included, die drowning it in molten lead before Ripley's cold-water quench shatters it."
+            },
+            {
+              "era": "2179",
+              "type": "resolution",
+              "text": "Michael Bishop — the human who designed the android — arrives with a Weyland-Yutani team to 'save' her. Ripley steps backward into the furnace as the Queen chestburster emerges, taking it with her.",
+              "tags": [
+                {
+                  "label": "Ripley dies",
+                  "kind": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b4",
+          "title": "Resurrection — 200 Years Later",
+          "color": "#b07cff",
+          "films": [
+            "Alien Resurrection"
+          ],
+          "summary": "Weyland-Yutani is gone, but the obsession isn't: the United Systems Military clones Ripley to harvest the Queen she died to destroy.",
+          "nodes": [
+            {
+              "era": "2379",
+              "type": "event",
+              "text": "Weyland-Yutani is defunct (bought out by Walmart, per the special edition). Aboard the USM Auriga, military scientists clone Ripley from blood taken on Fury 161 — seven failures, then Ripley 8.",
+              "tags": [
+                {
+                  "label": "Ripley 8",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2379",
+              "type": "turning-point",
+              "text": "The Queen embryo is surgically extracted and grown to maturity. Ripley 8 is kept alive: a human–Xenomorph hybrid with acid blood, enhanced strength and inherited memories.",
+              "tags": [
+                {
+                  "label": "Cloning",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2379",
+              "type": "event",
+              "text": "Mercenaries aboard the Betty deliver kidnapped sleepers as hosts. Among them is Call, a second-generation 'Auton' synthetic who came to kill Ripley before the aliens can be bred.",
+              "tags": [
+                {
+                  "label": "Call",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2379",
+              "type": "death",
+              "text": "The captive Xenomorphs kill one of their own and melt through the floor with its blood. The Auriga is overrun and its emergency protocol sets course for Earth.",
+              "tags": [
+                {
+                  "label": "Auriga",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2379",
+              "type": "event",
+              "text": "Ripley burns the lab holding clones 1–7. Purvis's chestburster kills Dr Wren; Call hacks Father to make the Auriga crash instead of land."
+            },
+            {
+              "era": "2379",
+              "type": "death",
+              "text": "The Queen, gifted a human womb by Ripley's DNA, gives live birth to the Newborn — a pale human-eyed hybrid that kills its mother and imprints on Ripley 8.",
+              "tags": [
+                {
+                  "label": "The Newborn",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2379",
+              "type": "resolution",
+              "text": "Ripley 8 uses her own acid blood to open a hole in the Betty's hull and the Newborn is sucked into space piece by piece. The Auriga burns up over Earth; Ripley and Call land on a ruined planet, both strangers to it.",
+              "tags": [
+                {
+                  "label": "Earth",
+                  "kind": "event"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b5",
+          "title": "Alien: Earth — The Prodigy City Incident (Disputed)",
+          "color": "#ff2a1f",
+          "films": [
+            "Alien: Earth"
+          ],
+          "summary": "Noah Hawley's 2025 series lands a Xenomorph on Earth in 2120 — two years before the Nostromo — so it runs beside the film canon rather than cleanly inside it.",
+          "nodes": [
+            {
+              "era": "~2055",
+              "type": "event",
+              "text": "A flashback: security officer Morrow shares a last day on the beach with his daughter before signing a 65-year Weyland-Yutani contract. Decades in cryosleep will cost him her.",
+              "tags": [
+                {
+                  "label": "Morrow",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2110s",
+              "type": "event",
+              "text": "Earth is carved up between five megacorporations — Weyland-Yutani, Prodigy, Threshold, Lynch and Dynamic — racing for immortality via cyborgs, synthetics and hybrids.",
+              "tags": [
+                {
+                  "label": "Five corporations",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2120",
+              "type": "turning-point",
+              "text": "Prodigy's boy-genius CEO Boy Kavalier transfers the mind of a terminally ill girl, Marcy Hermit, into a synthetic body: Wendy, the first human–synthetic hybrid. Five more sick children follow — the 'Lost Boys' — on his island lab, Neverland.",
+              "tags": [
+                {
+                  "label": "Hybrids",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2120",
+              "type": "event",
+              "text": "The Weyland-Yutani research vessel USCSS Maginot returns from a 65-year mission carrying five captured species — including a Xenomorph and the eye-parasite T. Ocellus. A crew member bribed by Kavalier with a hybrid body sabotages the ship.",
+              "tags": [
+                {
+                  "label": "Maginot",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2120",
+              "type": "death",
+              "text": "The Maginot crashes into Prodigy City (New Siam). Cyborg Morrow is the only crew survivor; the Xenomorph and the other specimens get loose in the wreck.",
+              "tags": [
+                {
+                  "label": "The crash",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2120",
+              "type": "event",
+              "text": "Wendy, the Lost Boys and Prodigy soldiers — including Wendy's human brother, medic Joe Hermit — retrieve the specimens. Kavalier keeps them on Neverland; Weyland-Yutani's CEO Yutani wants them back."
+            },
+            {
+              "era": "2120",
+              "type": "turning-point",
+              "text": "Wendy discovers she can hear and command the Xenomorph. Nibs, Slightly and Smee are tested on by scientists Dame Sylvia and Arthur, and synthetic Kirsh studies the Ocellus as it leaps between hosts.",
+              "tags": [
+                {
+                  "label": "Wendy",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2120",
+              "type": "death",
+              "text": "The hybrid Tootles (Isaac) becomes the first of the children to die. Arthur is killed, and the Eye reanimates his corpse as its new host.",
+              "tags": [
+                {
+                  "label": "T. Ocellus",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2120",
+              "type": "resolution",
+              "text": "The hybrids revolt: Wendy frees the creatures, and the Lost Boys imprison Kavalier, Kirsh, Morrow and Dame Sylvia as Weyland-Yutani closes in on Neverland. 'You've always been a man — an angry little man.' Season 2 films in 2026.",
+              "tags": [
+                {
+                  "label": "Neverland falls",
+                  "kind": "event"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "characters": [
+        {
+          "name": "Ellen Ripley",
+          "role": "Nostromo warrant officer turned the saga's survivor; drifts 57 years, wins on LV-426, dies on Fury 161 rather than give the Company a Queen.",
+          "color": "#39d98a"
+        },
+        {
+          "name": "David 8",
+          "role": "Weyland's first true synthetic; exterminates the Engineers and engineers the Xenomorph, then hijacks the Covenant.",
+          "color": "#28d7e0"
+        },
+        {
+          "name": "Elizabeth Shaw",
+          "role": "The archaeologist who found the star maps and survived Prometheus — only to become David's raw material.",
+          "color": "#28d7e0"
+        },
+        {
+          "name": "Peter Weyland",
+          "role": "Founder of Weyland Corp, creator of David; dies on LV-223 asking his maker for more life.",
+          "color": "#28d7e0"
+        },
+        {
+          "name": "Amanda Ripley",
+          "role": "Ellen's daughter; survives Sevastopol in 2137 and dies of old age two years before her mother is found.",
+          "color": "#39d98a"
+        },
+        {
+          "name": "Rain Carradine & Andy",
+          "role": "Romulus's sibling survivors — a miner and the reprogrammable synthetic she refuses to leave behind.",
+          "color": "#39d98a"
+        },
+        {
+          "name": "Newt & Hicks",
+          "role": "The family Ripley builds on LV-426 and loses in the Sulaco crash minutes into Alien 3.",
+          "color": "#ffb02e"
+        },
+        {
+          "name": "Bishop",
+          "role": "The Marines' synthetic who proves not all androids are Ash; torn in half by the Queen, switched off on Fury 161.",
+          "color": "#ffb02e"
+        },
+        {
+          "name": "Ripley 8 & Call",
+          "role": "A human–alien clone and a synthetic built by synthetics — the two not-quite-humans who reach Earth in 2379.",
+          "color": "#b07cff"
+        },
+        {
+          "name": "Wendy (Marcy Hermit)",
+          "role": "Alien: Earth's first hybrid — a child's mind in a synthetic body who can hear the Xenomorph.",
+          "color": "#ff2a1f"
+        },
+        {
+          "name": "Boy Kavalier",
+          "role": "Prodigy's trillionaire CEO who wants to beat death with hybrids; ends the season a prisoner of his own creations.",
+          "color": "#ff2a1f"
+        },
+        {
+          "name": "Ash / Rook",
+          "role": "The Company's Hyperdyne science-officer synthetics — the same face on the Nostromo (2122) and the Renaissance (2142).",
+          "color": "#39d98a"
+        }
+      ],
+      "items": [
+        {
+          "name": "Black goo (Chemical A0-3959X.91–15)",
+          "desc": "The Engineers' mutagenic accelerant: seeds Earth, kills the Engineers, and is David's raw material for the Xenomorph."
+        },
+        {
+          "name": "Xenomorph XX121",
+          "desc": "Egg → facehugger → chestburster → drone, with acid blood; first classic form bursts from Oram in 2104, first met by humans in 2122."
+        },
+        {
+          "name": "Xenomorph Queen",
+          "desc": "The egg-layer: nukes the LV-426 hive, dies in the Sulaco airlock; her embryo dies with Ripley and is cloned back in 2379."
+        },
+        {
+          "name": "Neomorph & Deacon",
+          "desc": "David's early goo-born creatures on Planet 4 and the Trilobite's chestburster on LV-223 — the Xenomorph's evolutionary cousins."
+        },
+        {
+          "name": "The Runner",
+          "desc": "Alien 3's quadrupedal Xenomorph born from an ox (or dog) on Fury 161 — no Queen-strain, just speed."
+        },
+        {
+          "name": "The Offspring & the Newborn",
+          "desc": "Two human–Xenomorph hybrids: Kay's Z-01 baby in Romulus (2142) and the Queen's live-born child in Resurrection (2379)."
+        },
+        {
+          "name": "T. Ocellus (the Eye)",
+          "desc": "Alien: Earth's body-hopping ocular parasite — takes a sheep, then Arthur's corpse."
+        },
+        {
+          "name": "Juggernaut / derelict",
+          "desc": "The Engineers' horseshoe ships; the one that crashed on LV-426 is where the Nostromo crew found the eggs."
+        },
+        {
+          "name": "USCSS Nostromo",
+          "desc": "Weyland-Yutani ore hauler ('the tug'); its wreck is where the Company later recovered the Xenomorph used at Renaissance."
+        },
+        {
+          "name": "Special Orders 937 / 939",
+          "desc": "Standing Company directives: return the organism for analysis, all other considerations secondary — crew expendable."
+        },
+        {
+          "name": "Synthetics (David, Walter, Ash, Bishop, Rook, Andy, Call, Kirsh)",
+          "desc": "Every era has its android — and whether it obeys the Company or the humans decides who lives."
+        },
+        {
+          "name": "Hybrids",
+          "desc": "Prodigy's answer to death: a child's consciousness in a synthetic body (Wendy and the Lost Boys)."
+        }
+      ],
+      "themes": [
+        "Release order is not story order: Alien (1979) → Aliens → Alien 3 → Resurrection, then the prequels Prometheus (2093) and Covenant (2104), then the gap-fillers Isolation (2137), Romulus (2142) and Alien: Earth (2120) were slotted into the gaps decades later.",
+        "The Company never learns: Weyland Corp, Weyland-Yutani, then the United Systems Military — every era's institution wants the organism for its bioweapons division and sacrifices its own people to get it.",
+        "Who made the Xenomorph? Covenant says David built it in 2104, but the LV-426 derelict's eggs and the LV-223 mural predate him — the prequels leave it deliberately unresolved whether David created or merely recreated it.",
+        "The Alien: Earth problem: the series has Weyland-Yutani knowingly shipping Xenomorphs to Earth in 2120, yet in 2122 the Nostromo's crew (and, apparently, the Company's Special Order 937) treat the creature as a brand-new discovery. Fans dispute whether it sits in canon or beside it.",
+        "Alien vs. Predator (2004) and Requiem (2007) put Xenomorphs on Earth in 2004 and 2000 BC; Ridley Scott's prequels ignore them, so they live in the Predator map's disputed branch, not here. Predator: Badlands (2025) reopens the door with Weyland-Yutani synths in the 25th century.",
+        "Every era ends with something thrown out an airlock — the Nostromo alien, the Queen, the Newborn, the Offspring, Sevastopol's Xenomorph — and every era the Company has already uploaded the data."
+      ]
+    },
   };
 
   comingSoon = [
     { id:'matrix', title:'The Matrix', accent:'#1FAE63', tagline:'Nested simulations and a resurrection that resets the loop.', meta:'4 films · looping reality' },
-    { id:'marvel', title:'Marvel Cinematic Universe', accent:'#E23636', tagline:'The Sacred Timeline fractures into a multiverse of variants.', meta:'30+ films · multiverse' },
     { id:'spiderverse', title:'Spider-Verse', accent:'#C2185B', tagline:'Spider-people cross between universes along the canon web.', meta:'Multiverse · many worlds' },
-    { id:'starwars', title:'Star Wars', accent:'#E0A920', tagline:'Prequels, originals, and sequels span a galaxy across generations.', meta:'11 films · 3 sagas' },
-    { id:'alien', title:'Alien', accent:'#2FA37C', tagline:'A xenomorph saga running from prequel labs to deep-space derelicts.', meta:'7 films · prequels & sequels' },
     { id:'dc', title:'DC Universe', accent:'#2C6FDB', tagline:'Flashpoint rewrites reality and forks the DC multiverse.', meta:'Multiverse · rebooted lines' },
     { id:'wizarding', title:'Wizarding World', accent:'#6A4FB3', tagline:'A prequel era, the school years, and a time-turner loop.', meta:'10 films · 2 eras' },
     { id:'avatar', title:'Avatar', accent:'#29A3C9', tagline:'Decades on Pandora as the saga expands sequel by sequel.', meta:'Sequels across decades' },
@@ -2465,7 +5643,6 @@ class Component extends DCLogic {
     { id:'monsterverse', title:'MonsterVerse', accent:'#2E8FA0', tagline:'Godzilla and Kong collide in one shared monster timeline.', meta:'Shared universe · Titans' },
     { id:'halloween', title:'Halloween', accent:'#E07B1F', tagline:'Multiple competing continuities reboot the same slasher night.', meta:'13 films · several timelines' },
     { id:'mib', title:'Men in Black', accent:'#5A6B8C', tagline:'Alien cover-ups and a time-jump that rewrites the past.', meta:'4 films · time-jump branch' },
-    { id:'transformers', title:'Transformers', accent:'#4C7FB8', tagline:'Reboots and a prequel line reset the robot war.', meta:'Reboot & prequel lines' },
   ];
 
   tagColor = { paradox:'#B69CFF', 'turning-point':'#FF5747', tech:'#54DBFF', resolution:'#3DDC84', death:'#FF4D7D', character:'#FFB454', event:'#9DB0C4' };
@@ -2512,7 +5689,7 @@ class Component extends DCLogic {
   }
 
   // ---------- poster silhouette art ----------
-  kindFor(id){ return ({terminator:'terminator',bttf:'bttf',dune:'dune',xmen:'xmen',apes:'apes',predator:'predator',startrek:'startrek'})[id] || 'terminator'; }
+  kindFor(id){ return ({terminator:'terminator',bttf:'bttf',dune:'dune',xmen:'xmen',apes:'apes',predator:'predator',startrek:'startrek',marvel:'marvel',starwars:'starwars',transformers:'transformers',alien:'alien'})[id] || 'terminator'; }
   artSVG(kind, accent) {
     const a = (o) => this.rgba(accent, o);
     const defs = `<defs><linearGradient id="g-${kind}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a(0.62)}"/><stop offset="0.5" stop-color="${a(0.18)}"/><stop offset="1" stop-color="rgba(18,21,26,0.5)"/></linearGradient><filter id="f-${kind}" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="7"/></filter></defs>`;
@@ -2533,6 +5710,14 @@ class Component extends DCLogic {
       body = `<g opacity="0.92"><circle cx="86" cy="76" r="32" fill="${a(0.45)}" filter="url(#f-${kind})"/><circle cx="86" cy="76" r="14" fill="${a(0.7)}"/><path d="M310 258 C296 220 288 188 278 152 L262 96 L286 88 L302 146 C310 178 318 214 326 250 Z" fill="url(#g-${kind})" stroke="${a(0.35)}" stroke-width="1"/><circle cx="272" cy="82" r="17" fill="${accent}" filter="url(#f-${kind})" opacity="0.8"/><circle cx="272" cy="82" r="8" fill="url(#g-${kind})"/><g fill="url(#g-${kind})"><path d="M186 262 L200 200 L214 262 Z"/><path d="M226 264 L238 214 L250 264 Z"/><path d="M152 266 L162 224 L172 266 Z"/></g><path d="M0 300 L0 262 C80 246 170 278 260 258 C320 246 360 258 400 250 L400 300 Z" fill="url(#g-${kind})"/></g>`;
     } else if (kind === 'startrek') {
       body = `<g opacity="0.95"><path d="M200 48 L262 236 C236 204 164 204 138 236 Z" fill="url(#g-${kind})" stroke="${a(0.45)}" stroke-width="1.4"/><path d="M200 92 L228 196 C212 182 188 182 172 196 Z" fill="${a(0.55)}" filter="url(#f-${kind})"/><ellipse cx="200" cy="150" rx="150" ry="44" fill="none" stroke="${a(0.30)}" stroke-width="1.2" transform="rotate(-18 200 150)"/><circle cx="318" cy="104" r="7" fill="${accent}" filter="url(#f-${kind})"/><circle cx="318" cy="104" r="3.4" fill="url(#g-${kind})"/><circle cx="96" cy="210" r="4" fill="${a(0.7)}"/><circle cx="140" cy="84" r="2.6" fill="${a(0.55)}"/><circle cx="282" cy="236" r="2.6" fill="${a(0.5)}"/><path d="M0 300 L0 268 C90 252 180 280 268 262 C322 252 366 262 400 254 L400 300 Z" fill="url(#g-${kind})"/></g>`;
+    } else if (kind === 'marvel') {
+      body = `<g opacity="0.95"><circle cx="200" cy="150" r="104" fill="url(#g-${kind})" stroke="${a(0.4)}" stroke-width="1.6"/><circle cx="200" cy="150" r="76" fill="none" stroke="${a(0.5)}" stroke-width="1.4"/><circle cx="200" cy="150" r="50" fill="${a(0.22)}" stroke="${a(0.4)}" stroke-width="1.2"/><path d="M200 108 L212 138 L244 140 L219 160 L228 192 L200 173 L172 192 L181 160 L156 140 L188 138 Z" fill="${accent}" filter="url(#f-${kind})" opacity="0.8"/><path d="M200 112 L211 139 L240 141 L217 159 L225 188 L200 171 L175 188 L183 159 L160 141 L189 139 Z" fill="url(#g-${kind})"/><circle cx="322" cy="86" r="3" fill="${a(0.6)}"/><circle cx="86" cy="94" r="2.4" fill="${a(0.5)}"/><circle cx="316" cy="228" r="2.6" fill="${a(0.55)}"/><path d="M0 300 L0 272 C96 258 190 284 276 266 C326 256 368 264 400 258 L400 300 Z" fill="url(#g-${kind})"/></g>`;
+    } else if (kind === 'starwars') {
+      body = `<g opacity="0.95"><rect x="186" y="232" width="28" height="70" rx="6" fill="url(#g-${kind})" stroke="${a(0.45)}" stroke-width="1.2"/><rect x="190" y="246" width="20" height="4" fill="#070809" opacity="0.6"/><rect x="190" y="256" width="20" height="4" fill="#070809" opacity="0.6"/><rect x="190" y="266" width="20" height="4" fill="#070809" opacity="0.6"/><rect x="183" y="222" width="34" height="12" rx="3" fill="${a(0.55)}"/><rect x="192" y="40" width="16" height="184" rx="8" fill="${accent}" opacity="0.28" filter="url(#f-${kind})"/><rect x="195" y="44" width="10" height="180" rx="5" fill="${accent}" filter="url(#f-${kind})"/><rect x="197" y="46" width="6" height="176" rx="3" fill="#fff8e6"/><circle cx="92" cy="86" r="34" fill="none" stroke="${a(0.35)}" stroke-width="1.4"/><circle cx="92" cy="86" r="26" fill="${a(0.14)}"/><circle cx="106" cy="76" r="6" fill="${a(0.5)}"/><path d="M62 86 L122 86" stroke="${a(0.5)}" stroke-width="1"/><circle cx="318" cy="120" r="2.2" fill="${a(0.8)}"/><circle cx="342" cy="72" r="1.6" fill="${a(0.6)}"/><circle cx="296" cy="52" r="1.4" fill="${a(0.5)}"/><circle cx="330" cy="188" r="1.8" fill="${a(0.6)}"/><circle cx="52" cy="176" r="1.6" fill="${a(0.5)}"/></g>`;
+    } else if (kind === 'transformers') {
+      body = `<g opacity="0.95"><path d="M200 40 L286 92 L286 186 L262 236 L236 284 L200 306 L164 284 L138 236 L114 186 L114 92 Z" fill="url(#g-${kind})" stroke="${a(0.5)}" stroke-width="1.4"/><path d="M200 60 L268 102 L268 176 L246 222 L200 262 L154 222 L132 176 L132 102 Z" fill="none" stroke="${a(0.28)}" stroke-width="1"/><path d="M186 54 L200 40 L214 54 L214 96 L200 108 L186 96 Z" fill="${a(0.55)}"/><g fill="#070809" opacity="0.85"><path d="M142 132 L188 146 L188 168 L150 160 Z"/><path d="M258 132 L212 146 L212 168 L250 160 Z"/></g><g fill="${accent}" filter="url(#f-${kind})"><path d="M150 138 L186 149 L186 163 L154 157 Z"/><path d="M250 138 L214 149 L214 163 L246 157 Z"/></g><path d="M164 196 L200 184 L236 196 L236 252 L200 276 L164 252 Z" fill="${a(0.22)}" stroke="${a(0.5)}" stroke-width="1.2"/><path d="M178 214 L222 214 M176 232 L224 232 M182 250 L218 250" stroke="${a(0.55)}" stroke-width="2" stroke-linecap="round"/><path d="M114 120 L84 150 L84 214 L114 186" fill="${a(0.3)}" stroke="${a(0.45)}" stroke-width="1.2"/><path d="M286 120 L316 150 L316 214 L286 186" fill="${a(0.3)}" stroke="${a(0.45)}" stroke-width="1.2"/><circle cx="348" cy="70" r="2" fill="${a(0.7)}"/><circle cx="60" cy="90" r="1.6" fill="${a(0.5)}"/><circle cx="332" cy="250" r="1.8" fill="${a(0.5)}"/></g>`;
+    } else if (kind === 'alien') {
+      body = `<g opacity="0.95"><ellipse cx="200" cy="196" rx="74" ry="98" fill="url(#g-${kind})" stroke="${a(0.45)}" stroke-width="1.4"/><ellipse cx="200" cy="200" rx="56" ry="80" fill="none" stroke="${a(0.28)}" stroke-width="1"/><path d="M200 100 L214 150 L200 172 L186 150 Z" fill="#070809" opacity="0.8"/><path d="M170 118 L200 172 L230 118" fill="none" stroke="${a(0.55)}" stroke-width="3" stroke-linecap="round"/><path d="M200 172 L200 292" stroke="${a(0.4)}" stroke-width="2"/><path d="M136 208 C120 140 160 84 200 82 C240 84 280 140 264 208" fill="none" stroke="${accent}" stroke-width="2" opacity="0.5" filter="url(#f-${kind})"/><g stroke="${a(0.6)}" stroke-width="5" stroke-linecap="round" fill="none"><path d="M148 246 C120 262 110 288 118 302"/><path d="M252 246 C280 262 290 288 282 302"/><path d="M162 262 C146 280 144 296 150 306"/><path d="M238 262 C254 280 256 296 250 306"/></g><circle cx="316" cy="84" r="8" fill="${accent}" filter="url(#f-${kind})"/><circle cx="316" cy="84" r="3.4" fill="#e6fff3"/><circle cx="84" cy="120" r="2.4" fill="${a(0.6)}"/><circle cx="340" cy="150" r="1.8" fill="${a(0.5)}"/><circle cx="70" cy="60" r="1.6" fill="${a(0.5)}"/><path d="M0 300 L0 270 C90 254 180 282 270 264 C322 254 366 262 400 256 L400 300 Z" fill="url(#g-${kind})"/></g>`;
     } else if (kind === 'predator') {
       body = `<g opacity="0.95"><path d="M200 56 C154 56 124 88 122 136 C121 168 130 196 148 214 L148 246 C148 262 162 272 178 274 L222 274 C238 272 252 262 252 246 L252 214 C270 196 279 168 278 136 C276 88 246 56 200 56 Z" fill="url(#g-${kind})" stroke="${a(0.4)}" stroke-width="1.2"/><g fill="#070809"><path d="M152 128 L190 138 L186 166 L156 158 Z"/><path d="M248 128 L210 138 L214 166 L244 158 Z"/><rect x="164" y="196" width="72" height="10" rx="5"/><rect x="164" y="216" width="72" height="10" rx="5"/><rect x="164" y="236" width="72" height="10" rx="5"/></g><g stroke="${a(0.5)}" stroke-width="7" stroke-linecap="round"><path d="M136 118 C120 140 114 176 120 210"/><path d="M264 118 C280 140 286 176 280 210"/></g><g><circle cx="304" cy="98" r="7" fill="${accent}" filter="url(#f-${kind})"/><circle cx="330" cy="112" r="7" fill="${accent}" filter="url(#f-${kind})"/><circle cx="316" cy="134" r="7" fill="${accent}" filter="url(#f-${kind})"/><circle cx="304" cy="98" r="3" fill="#ffe3de"/><circle cx="330" cy="112" r="3" fill="#ffe3de"/><circle cx="316" cy="134" r="3" fill="#ffe3de"/></g></g>`;
     }
@@ -2639,7 +5824,7 @@ class Component extends DCLogic {
 
   adoptSession = async (authUser) => {
     if (this.state.user && this.state.user.id === authUser.id) return;
-    const providerColors = { google:'#54DBFF', apple:'#B69CFF', facebook:'#3C7BE0', instagram:'#FF4D7D', email:'#3DDC84' };
+    const providerColors = { google:'#54DBFF', apple:'#B69CFF', facebook:'#3C7BE0', instagram:'#FF4D7D', twitter:'#E9EDF3', x:'#E9EDF3', email:'#3DDC84' };
     let profile = null;
     try {
       const got = await this.db.from('profiles').select('*').eq('id', authUser.id).maybeSingle();
@@ -2730,6 +5915,7 @@ class Component extends DCLogic {
   signGoogle = () => this.oauth('google');
   signApple = () => this.oauth('apple');
   signFacebook = () => this.oauth('facebook');
+  signX = () => this.oauth('x');
   signInstagram = () => this.showToast({ kind:'soon', title:'Instagram sign-in coming soon', body:'Instagram runs on your Meta account — use Facebook or email for now.' });
   signEmail = async () => {
     const em = (this.state.authEmail||'').trim();
@@ -3037,7 +6223,7 @@ class Component extends DCLogic {
       signOut:this.signOut,
       authOpen: s.authOpen, openAuth:this.openAuth, closeAuth:this.closeAuth, stopClick:this.stopClick,
       authEmail: s.authEmail, onAuthEmail:this.onAuthEmail, onAuthKey:this.onAuthKey,
-      signGoogle:this.signGoogle, signApple:this.signApple, signFacebook:this.signFacebook, signInstagram:this.signInstagram, signEmail:this.signEmail,
+      signGoogle:this.signGoogle, signApple:this.signApple, signFacebook:this.signFacebook, signX:this.signX, signInstagram:this.signInstagram, signEmail:this.signEmail,
       // queue
       isQueue: s.screen === 'queue', goQueue:this.goQueue,
       navQueueStyle: this.navBtn(s.screen === 'queue'),

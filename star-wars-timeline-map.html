@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline Map</title>
+<style>
+  :root{
+    --bg:#0a0c10; --panel:#11151c; --panel2:#161b24; --line:#222a36;
+    --accent:#ff2a1f; --cyan:#28d7e0; --amber:#ffb02e; --green:#39d98a; --purple:#b07cff;
+    --txt:#e7ecf3; --muted:#8b97a8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, #06121a 0%, transparent 55%),
+      var(--bg);
+    color:var(--txt);
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 22px 80px}
+  header.hero{
+    border:1px solid var(--line);border-radius:16px;padding:30px 30px 26px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%), var(--panel);
+  }
+  header.hero::after{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,.012) 38px 39px);pointer-events:none}
+  .eyebrow{letter-spacing:.34em;font-size:11px;color:var(--accent);text-transform:uppercase;font-weight:700}
+  h1{font-size:38px;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+  h1 .glow{color:var(--accent);text-shadow:0 0 22px color-mix(in srgb, var(--accent) 55%, transparent)}
+  .sub{color:var(--muted);max-width:780px;font-size:15px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+  .legend .chip{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 8px}
+  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--txt);padding:9px 15px;border-radius:999px;
+    cursor:pointer;font-size:13px;font-weight:600;transition:.15s;white-space:nowrap}
+  .btn:hover{border-color:var(--accent);color:#fff}
+  .btn.active{background:var(--accent);border-color:var(--accent);color:#fff;
+    box-shadow:0 0 18px color-mix(in srgb, var(--accent) 40%, transparent)}
+
+  .rail{display:flex;flex-direction:column;margin-top:20px}
+  .branch{border:1px solid var(--line);border-radius:14px;margin-bottom:22px;overflow:hidden;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));transition:.2s}
+  .branch.dim{opacity:.32;filter:saturate(.4)}
+  .branch-head{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;border-left:5px solid var(--bcol,var(--accent))}
+  .branch-head .bt{flex:1}
+  .branch-head h2{margin:0;font-size:19px;font-weight:700}
+  .branch-head .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .branch-films{font-size:11.5px;color:var(--muted);text-align:right;line-height:1.4;max-width:38%}
+  .branch-body{padding:0 20px 8px}
+  .caret{color:var(--muted);font-size:13px;transition:.2s}
+  .branch.collapsed .branch-body{display:none}
+  .branch.collapsed .caret{transform:rotate(-90deg)}
+
+  .track{position:relative;margin:8px 0 18px;padding-left:26px}
+  .track::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--bcol),transparent);opacity:.6}
+  .node{position:relative;margin:0 0 14px;padding:0 0 0 4px}
+  .node::before{content:"";position:absolute;left:-21px;top:5px;width:11px;height:11px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--bcol)}
+  .node.turning-point::before{background:var(--bcol)}
+  .node.paradox::before{border-color:var(--purple);box-shadow:0 0 10px color-mix(in srgb,var(--purple) 60%,transparent)}
+  .node.death::before{border-color:var(--accent);background:var(--accent)}
+  .node.resolution::before{border-color:var(--green);background:var(--green)}
+  .node .yr{font-size:12px;font-weight:800;color:var(--bcol);letter-spacing:.04em}
+  .node .ev{font-size:14px;color:var(--txt)}
+  .node .ev b{color:#fff}
+  .tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    padding:1px 7px;border-radius:5px;margin-left:6px;vertical-align:middle;border:1px solid transparent}
+  .tag.paradox{background:rgba(176,124,255,.16);color:var(--purple);border-color:rgba(176,124,255,.4)}
+  .tag.event{background:rgba(255,42,31,.16);color:#ff6a5f;border-color:rgba(255,42,31,.4)}
+  .tag.model{background:rgba(40,215,224,.14);color:var(--cyan);border-color:rgba(40,215,224,.35)}
+  .tag.faction{background:rgba(57,217,138,.14);color:var(--green);border-color:rgba(57,217,138,.35)}
+  .tag.character{background:rgba(255,176,46,.14);color:var(--amber);border-color:rgba(255,176,46,.35)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+  @media(max-width:880px){.grid2{grid-template-columns:1fr}.branch-films{display:none}}
+  .card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px 22px}
+  .card h3{margin:0 0 14px;font-size:16px;display:flex;align-items:center;gap:9px}
+  .card h3 .bar{width:4px;height:18px;border-radius:2px;background:var(--accent)}
+  .chars{display:flex;flex-direction:column;gap:9px}
+  .char{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:10px;background:var(--panel2);border:1px solid transparent;transition:.15s}
+  .char:hover{border-color:var(--line)}
+  .av{width:40px;height:40px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#0a0c10}
+  .char .nm{font-weight:700;font-size:14px}
+  .char .rl{font-size:12.5px;color:var(--muted)}
+  .models{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.models{grid-template-columns:1fr}}
+  .model{border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--panel2)}
+  .model .mn{font-weight:800;font-size:14px;color:var(--cyan)}
+  .model .md{font-size:12px;color:var(--muted);margin-top:3px}
+  .para-box{border:1px solid rgba(176,124,255,.35);border-radius:14px;background:rgba(176,124,255,.05);padding:20px 22px;margin-top:34px}
+  .para-box h3{color:var(--purple)}
+  .para-item{padding:10px 0;border-top:1px solid rgba(176,124,255,.15)}
+  .para-item:first-of-type{border-top:none}
+  .para-item b{color:#fff}
+  footer{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12.5px}
+  .hide{display:none !important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="title"></h1>
+    <p class="sub" id="intro"></p>
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background:var(--accent)"></span>Turning point / catastrophe</span>
+      <span class="chip"><span class="dot" style="background:var(--purple)"></span>Time-travel paradox</span>
+      <span class="chip"><span class="dot" style="background:var(--cyan)"></span>Machine / tech</span>
+      <span class="chip"><span class="dot" style="background:var(--green)"></span>Faction / resolution</span>
+    </div>
+  </header>
+
+  <div class="controls" id="controls"></div>
+  <div class="rail" id="rail"></div>
+
+  <div class="grid2">
+    <div class="card" id="charsCard"><h3><span class="bar"></span>Key Characters</h3><div class="chars" id="chars"></div></div>
+    <div class="card" id="itemsCard"><h3><span class="bar"></span>Key Items &amp; Tech</h3><div class="models" id="models"></div></div>
+  </div>
+
+  <div class="para-box" id="themesBox">
+    <h3><span class="bar" style="background:var(--purple)"></span>Recurring Themes &amp; Paradoxes</h3>
+    <div id="paras"></div>
+  </div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const DATA = {
+  "franchise": "Star Wars",
+  "tagline": "Twelve films, nineteen series, one 25,000-year timeline — and a parallel continuity Disney switched off in 2014.",
+  "intro": "Star Wars doesn't branch: from the Dawn of the Jedi to Rey's New Jedi Order it is one straight line dated from the Battle of Yavin (BBY/ABY). What makes it confusing is that the films were released out of order and dozens of shows fill the gaps, so this map splits canon into its seven official eras — each its own rail — and adds the Legends continuity as a true fork running alongside.",
+  "accent": "#E0A920",
+  "films": [
+    {
+      "title": "A New Hope",
+      "year": 1977
+    },
+    {
+      "title": "The Empire Strikes Back",
+      "year": 1980
+    },
+    {
+      "title": "Return of the Jedi",
+      "year": 1983
+    },
+    {
+      "title": "The Phantom Menace",
+      "year": 1999
+    },
+    {
+      "title": "Attack of the Clones",
+      "year": 2002
+    },
+    {
+      "title": "Clone Wars (2003 micro-series) (TV)",
+      "year": 2003
+    },
+    {
+      "title": "Revenge of the Sith",
+      "year": 2005
+    },
+    {
+      "title": "The Clone Wars (film)",
+      "year": 2008
+    },
+    {
+      "title": "The Clone Wars (TV)",
+      "year": 2008
+    },
+    {
+      "title": "Rebels (TV)",
+      "year": 2014
+    },
+    {
+      "title": "The Force Awakens",
+      "year": 2015
+    },
+    {
+      "title": "Rogue One",
+      "year": 2016
+    },
+    {
+      "title": "The Last Jedi",
+      "year": 2017
+    },
+    {
+      "title": "Solo",
+      "year": 2018
+    },
+    {
+      "title": "Resistance (TV)",
+      "year": 2018
+    },
+    {
+      "title": "The Rise of Skywalker",
+      "year": 2019
+    },
+    {
+      "title": "The Mandalorian (TV)",
+      "year": 2019
+    },
+    {
+      "title": "The Bad Batch (TV)",
+      "year": 2021
+    },
+    {
+      "title": "The Book of Boba Fett (TV)",
+      "year": 2021
+    },
+    {
+      "title": "Obi-Wan Kenobi (TV)",
+      "year": 2022
+    },
+    {
+      "title": "Andor (TV)",
+      "year": 2022
+    },
+    {
+      "title": "Tales of the Jedi (TV)",
+      "year": 2022
+    },
+    {
+      "title": "Ahsoka (TV)",
+      "year": 2023
+    },
+    {
+      "title": "Young Jedi Adventures (TV)",
+      "year": 2023
+    },
+    {
+      "title": "The Acolyte (TV)",
+      "year": 2024
+    },
+    {
+      "title": "Tales of the Empire (TV)",
+      "year": 2024
+    },
+    {
+      "title": "Skeleton Crew (TV)",
+      "year": 2024
+    },
+    {
+      "title": "Tales of the Underworld (TV)",
+      "year": 2025
+    },
+    {
+      "title": "Maul – Shadow Lord (TV)",
+      "year": 2026
+    },
+    {
+      "title": "The Mandalorian and Grogu",
+      "year": 2026
+    },
+    {
+      "title": "Starfighter",
+      "year": 2027
+    }
+  ],
+  "branches": [
+    {
+      "id": "b1",
+      "title": "Dawn of the Jedi & the Old Republic",
+      "color": "#b07cff",
+      "films": [],
+      "summary": "25,000 years of half-glimpsed history: the Force is first understood, the Jedi and Sith are born, and the Republic takes shape. No canon screen story lives here yet.",
+      "nodes": [
+        {
+          "era": "c. 25,000 BBY",
+          "type": "event",
+          "text": "The <b>Force<\/b> is first understood and harnessed. The <b>Prime Jedi<\/b> founds the Order and the first temple rises on <b>Ahch-To<\/b>; the droid <b>Huyang<\/b> is activated and will train younglings for the next 25 millennia.",
+          "tags": [
+            {
+              "label": "Prime Jedi",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "c. 25,000 BBY",
+          "type": "turning-point",
+          "text": "Coruscant, Corellia, Alderaan and their neighbours form the alliance that becomes the <b>Old Republic<\/b>; hyperspace travel spreads across the galaxy.",
+          "tags": [
+            {
+              "label": "Old Republic",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "c. 5,000 BBY",
+          "type": "turning-point",
+          "text": "The <b>Hundred-Year Darkness<\/b>: dark-side Jedi splinter from the Order and become the <b>Sith<\/b>. Four thousand years of Jedi–Sith wars follow.",
+          "tags": [
+            {
+              "label": "Sith",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "Ancient era",
+          "type": "event",
+          "text": "The Jedi clash with the <b>Mandalorians<\/b>, leaving Mandalore a glassed wasteland. Mandalorian Jedi <b>Tarre Vizsla<\/b> forges the <b>Darksaber<\/b>; the Jedi build their Temple on Coruscant.",
+          "tags": [
+            {
+              "label": "Darksaber",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "c. 1,000 BBY",
+          "type": "resolution",
+          "text": "The Sith are all but wiped out and believed extinct — but <b>Darth Bane<\/b>'s Rule of Two (one master, one apprentice) keeps the line alive in secret. The Old Republic is reorganised as the <b>Galactic Republic<\/b>.",
+          "tags": [
+            {
+              "label": "Rule of Two",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "Announced",
+          "type": "event",
+          "text": "James Mangold's <b>Dawn of the Jedi<\/b> film (a 'biblical epic' about the first Force-users, ~25,000 BBY) is the only screen project aimed at this era; Legends' Tython, Revan and KOTOR remain non-canon."
+        }
+      ]
+    },
+    {
+      "id": "b2",
+      "title": "The High Republic",
+      "color": "#28d7e0",
+      "films": [
+        "Young Jedi Adventures (TV)",
+        "The Acolyte (TV)"
+      ],
+      "summary": "The golden age (c. 500–100 BBY): Republic and Jedi at their peak, the Sith 'extinct', and the seeds of the fall quietly sown.",
+      "nodes": [
+        {
+          "era": "c. 500–382 BBY",
+          "type": "event",
+          "text": "<b>Quest of the Jedi<\/b>: Pathfinder teams open new hyperspace lanes into the Outer Rim. The anti-Force cult <b>Path of the Open Hand<\/b> rises; at the Battles of Jedha and Dolna the Jedi first meet the petrifying <b>Nameless<\/b>.",
+          "tags": [
+            {
+              "label": "The Nameless",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "232 BBY",
+          "type": "death",
+          "text": "The <b>Great Hyperspace Disaster<\/b> devastates the frontier. The Path, reborn as the <b>Nihil<\/b> marauders under <b>Marchion Ro<\/b>, and the plant-like <b>Drengir<\/b> begin their war on the Republic.",
+          "tags": [
+            {
+              "label": "Nihil",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "c. 232 BBY",
+          "type": "event",
+          "text": "<b>Young Jedi Adventures<\/b>: younglings Kai, Lys and Nubs train under Master Yoda at the Tenoo temple — the era's only look at Jedi childhood.",
+          "tags": [
+            {
+              "label": "Young Jedi Adventures",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "230 BBY",
+          "type": "death",
+          "text": "The Nihil destroy <b>Starlight Beacon<\/b>, the symbol of Republic reach in the Outer Rim.",
+          "tags": [
+            {
+              "label": "Starlight Beacon",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "229–220 BBY",
+          "type": "event",
+          "text": "<b>Trials of the Jedi<\/b>: the Republic fights to reclaim the Nihil's Occlusion Zone — the phase the books and comics are still telling."
+        },
+        {
+          "era": "132 BBY",
+          "type": "turning-point",
+          "text": "<b>The Acolyte<\/b>: twins <b>Osha<\/b> and <b>Mae<\/b>, survivors of a Jedi raid on their Brendok coven, are pulled into a murder spree against the four Jedi responsible. The Sith apprentice <b>Qimir<\/b> reveals himself; <b>Darth Plagueis<\/b> watches from the shadows; the Jedi Council buries the truth.",
+          "tags": [
+            {
+              "label": "Osha & Mae",
+              "kind": "character"
+            },
+            {
+              "label": "Qimir",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "c. 100 BBY",
+          "type": "resolution",
+          "text": "The Jedi decommission their Outer Rim outposts and centralise on Coruscant; the Senate fills with bureaucrats. The complacency Sidious will exploit is in place."
+        }
+      ]
+    },
+    {
+      "id": "b3",
+      "title": "Fall of the Jedi",
+      "color": "#ffb02e",
+      "films": [
+        "The Phantom Menace",
+        "Attack of the Clones",
+        "The Clone Wars (film)",
+        "The Clone Wars (TV)",
+        "Tales of the Jedi (TV)",
+        "Revenge of the Sith"
+      ],
+      "summary": "The prequel era (c. 100–19 BBY): Palpatine's long game, the Clone Wars, and Order 66.",
+      "nodes": [
+        {
+          "era": "41 BBY",
+          "type": "event",
+          "text": "<b>Anakin Skywalker<\/b> is born to Shmi on Tatooine with no father — conceived, it is implied, by the Force itself.",
+          "tags": [
+            {
+              "label": "Anakin",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "32 BBY",
+          "type": "turning-point",
+          "text": "<b>The Phantom Menace<\/b>: the Trade Federation blockades Naboo. Qui-Gon Jinn finds Anakin; <b>Darth Maul<\/b> kills Qui-Gon and is bisected by Obi-Wan. Senator <b>Palpatine<\/b> — secretly Darth Sidious — is elected Chancellor.",
+          "tags": [
+            {
+              "label": "Sidious rises",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "32–19 BBY",
+          "type": "event",
+          "text": "<b>Tales of the Jedi<\/b>: Count <b>Dooku<\/b>, already Sidious' apprentice Darth Tyranus, murders Master Yaddle; Sifo-Dyas is tricked into commissioning a clone army on Kamino. Ahsoka's childhood on Shili and her post-Order life are shown.",
+          "tags": [
+            {
+              "label": "Dooku",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "22 BBY",
+          "type": "turning-point",
+          "text": "<b>Attack of the Clones<\/b>: Obi-Wan uncovers the clone army; Shmi dies and Anakin slaughters the Tusken camp; <b>Mace Windu<\/b> beheads Jango Fett at Geonosis. The <b>Clone Wars<\/b> begin; Anakin secretly marries Padmé.",
+          "tags": [
+            {
+              "label": "Clone Army",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "22 BBY",
+          "type": "event",
+          "text": "<b>The Clone Wars<\/b> (film + series): <b>Ahsoka Tano<\/b> becomes Anakin's Padawan. Ventress, Cad Bane, Bo-Katan and Captain Rex enter the story.",
+          "tags": [
+            {
+              "label": "Ahsoka",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "20 BBY",
+          "type": "event",
+          "text": "Construction of the <b>Death Star<\/b> begins in secret under Orson Krennic. Ahsoka, framed for the Temple bombing, leaves the Jedi Order.",
+          "tags": [
+            {
+              "label": "Death Star",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "20–19 BBY",
+          "type": "death",
+          "text": "<b>Maul<\/b>, alive on cybernetic legs, returns with his brother Savage Opress, seizes Mandalore and kills Duchess <b>Satine<\/b> in front of Obi-Wan — before Sidious himself takes him prisoner.",
+          "tags": [
+            {
+              "label": "Satine dies",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "19 BBY",
+          "type": "death",
+          "text": "<b>Revenge of the Sith<\/b>: Dooku and Grievous die; Sidious reveals himself; Windu is killed; Anakin becomes <b>Darth Vader<\/b>. <b>Order 66<\/b> wipes out the Jedi; Obi-Wan leaves Vader burning on Mustafar; Padmé dies birthing <b>Luke<\/b> and <b>Leia<\/b>, who are hidden on Tatooine and Alderaan.",
+          "tags": [
+            {
+              "label": "Order 66",
+              "kind": "event"
+            },
+            {
+              "label": "Vader",
+              "kind": "character"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b4",
+      "title": "Reign of the Empire",
+      "color": "#ff2a1f",
+      "films": [
+        "The Bad Batch (TV)",
+        "Tales of the Empire (TV)",
+        "Tales of the Underworld (TV)",
+        "Maul – Shadow Lord (TV)",
+        "Solo",
+        "Obi-Wan Kenobi (TV)"
+      ],
+      "summary": "The dark times (19–5 BBY): Jedi hunted, the Death Star built, and a smuggler wins a freighter in a card game.",
+      "nodes": [
+        {
+          "era": "19 BBY",
+          "type": "turning-point",
+          "text": "Palpatine declares the <b>Galactic Empire<\/b>. Clone Force 99 — <b>The Bad Batch<\/b> — deserts with the clone girl <b>Omega<\/b>; the Empire begins cloning experiments at Mount Tantiss (<b>Project Necromancer<\/b>) that will echo for decades.",
+          "tags": [
+            {
+              "label": "Project Necromancer",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "19–18 BBY",
+          "type": "event",
+          "text": "<b>Maul – Shadow Lord<\/b>: with the Republic gone, Maul rebuilds his criminal empire, <b>Crimson Dawn<\/b>, in the Empire's shadow. <b>Tales of the Empire<\/b> follows Morgan Elsbeth's revenge and Barriss Offee's path from Inquisitor to the Hidden Path.",
+          "tags": [
+            {
+              "label": "Crimson Dawn",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "18 BBY",
+          "type": "event",
+          "text": "<b>Tales of the Underworld<\/b>: <b>Asajj Ventress<\/b>, restored by the Nightsisters, carves out a life in the Empire's shadow (a young <b>Cad Bane<\/b> arc reaches back before the Clone Wars)."
+        },
+        {
+          "era": "17–13 BBY",
+          "type": "event",
+          "text": "Galen Erso deserts the Death Star project; in 13 BBY Krennic kills his wife <b>Lyra<\/b> and <b>Jyn Erso<\/b> is hidden with the extremist Saw Gerrera."
+        },
+        {
+          "era": "c. 13–10 BBY",
+          "type": "event",
+          "text": "<b>Solo<\/b>: Han flees Corellia, deserts the Imperial army, meets <b>Chewbacca<\/b>, makes the Kessel Run and wins the <b>Millennium Falcon<\/b> from Lando. Qi'ra answers to Maul's Crimson Dawn.",
+          "tags": [
+            {
+              "label": "Millennium Falcon",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "14–9 BBY",
+          "type": "event",
+          "text": "The <b>Inquisitors<\/b> hunt surviving Jedi; Padawan <b>Cal Kestis<\/b> evades them in the Jedi: Fallen Order and Survivor games. The <b>Hidden Path<\/b> smuggles Force-sensitives to safety."
+        },
+        {
+          "era": "9 BBY",
+          "type": "turning-point",
+          "text": "<b>Obi-Wan Kenobi<\/b>: a ten-year-old <b>Leia<\/b> is kidnapped as bait; Obi-Wan comes out of exile, turns Inquisitor <b>Reva<\/b>, and defeats Vader in a rematch — leaving him alive. Qui-Gon's ghost finally appears.",
+          "tags": [
+            {
+              "label": "Obi-Wan vs Vader",
+              "kind": "event"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b5",
+      "title": "Age of Rebellion",
+      "color": "#39d98a",
+      "films": [
+        "Rebels (TV)",
+        "Andor (TV)",
+        "Rogue One",
+        "A New Hope",
+        "The Empire Strikes Back",
+        "Return of the Jedi"
+      ],
+      "summary": "5 BBY–5 ABY: the Rebellion is born, the Death Star falls, and the Skywalker line is redeemed at Endor.",
+      "nodes": [
+        {
+          "era": "5 BBY",
+          "type": "event",
+          "text": "<b>Rebels<\/b>: orphan <b>Ezra Bridger<\/b> joins the Ghost crew — Kanan, Hera, Sabine, Zeb, Chopper — on Imperial-occupied Lothal. <b>Andor<\/b>: after Ferrix, <b>Luthen Rael<\/b> recruits Cassian for the Aldhani heist; Narkina 5; Maarva's funeral becomes a riot.",
+          "tags": [
+            {
+              "label": "Ezra",
+              "kind": "character"
+            },
+            {
+              "label": "Cassian",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "4–3 BBY",
+          "type": "turning-point",
+          "text": "<b>Ahsoka<\/b> returns as the rebel agent Fulcrum with Captain Rex. On Malachor, Maul blinds Kanan and Ahsoka duels <b>Vader<\/b> — her former master — and vanishes into the Sith temple.",
+          "tags": [
+            {
+              "label": "Ahsoka vs Vader",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "3–2 BBY",
+          "type": "turning-point",
+          "text": "The Empire's <b>Ghorman Massacre<\/b> pushes <b>Mon Mothma<\/b> to denounce the Emperor in the Senate and formally found the <b>Rebel Alliance<\/b>. On Tatooine, Obi-Wan ends Maul for good.",
+          "tags": [
+            {
+              "label": "Rebel Alliance",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "1 BBY",
+          "type": "death",
+          "text": "<b>Kanan Jarrus<\/b> dies saving his crew. Ezra liberates Lothal and is carried into hyperspace with Grand Admiral <b>Thrawn<\/b> by the purrgil. Bo-Katan takes up the Darksaber.",
+          "tags": [
+            {
+              "label": "Thrawn",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "0 BBY",
+          "type": "death",
+          "text": "<b>Rogue One<\/b>: Jyn, Cassian and the whole team die at <b>Scarif<\/b> stealing the Death Star plans; Vader boards the Tantive IV as Leia escapes with them.",
+          "tags": [
+            {
+              "label": "Death Star plans",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "0 BBY · Year Zero",
+          "type": "turning-point",
+          "text": "<b>A New Hope<\/b>: Luke meets Obi-Wan, Han and Leia; <b>Alderaan<\/b> is destroyed; Obi-Wan becomes one with the Force; Luke destroys the Death Star at the <b>Battle of Yavin<\/b> — the calendar's zero point.",
+          "tags": [
+            {
+              "label": "Battle of Yavin",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "3 ABY",
+          "type": "turning-point",
+          "text": "<b>The Empire Strikes Back<\/b>: Hoth falls; Luke trains with <b>Yoda<\/b> on Dagobah; Lando betrays Han at Bespin; Han is frozen in carbonite; Vader tells Luke 'I am your father'. On Exegol, the clone <b>Dathan<\/b> escapes the Sith Eternal.",
+          "tags": [
+            {
+              "label": "Vader is Anakin",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "4 ABY",
+          "type": "resolution",
+          "text": "<b>Return of the Jedi<\/b>: Jabba dies and Boba Fett falls into the Sarlacc; Yoda passes; at <b>Endor<\/b> the Ewoks drop the shield. Vader turns, throws <b>Palpatine<\/b> into the reactor shaft and dies redeemed as Anakin; Death Star II is destroyed.",
+          "tags": [
+            {
+              "label": "Anakin redeemed",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "4–5 ABY",
+          "type": "resolution",
+          "text": "<b>Operation Cinder<\/b> and the <b>Great Purge of Mandalore<\/b> are the Empire's last spasms; it formally surrenders after the <b>Battle of Jakku<\/b> — while loyalists slip into the Unknown Regions.",
+          "tags": [
+            {
+              "label": "Battle of Jakku",
+              "kind": "event"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b6",
+      "title": "The New Republic",
+      "color": "#4f8cff",
+      "films": [
+        "The Mandalorian (TV)",
+        "The Book of Boba Fett (TV)",
+        "Ahsoka (TV)",
+        "Skeleton Crew (TV)",
+        "The Mandalorian and Grogu"
+      ],
+      "summary": "5–34 ABY: the Mando-verse years — a fragile Republic, Imperial remnants, a Child, and the long shadow of Thrawn.",
+      "nodes": [
+        {
+          "era": "5 ABY",
+          "type": "event",
+          "text": "The Rebel Alliance becomes the <b>New Republic<\/b>. Han and Leia's son <b>Ben Solo<\/b> is born; Luke begins gathering students.",
+          "tags": [
+            {
+              "label": "Ben Solo",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "9 ABY",
+          "type": "turning-point",
+          "text": "<b>The Mandalorian<\/b>: bounty hunter <b>Din Djarin<\/b> refuses to hand over <b>Grogu<\/b>; <b>Moff Gideon<\/b> wants the Child's blood for cloning. Luke Skywalker himself rescues Grogu; Din defeats Gideon and unwittingly wins the <b>Darksaber<\/b>.",
+          "tags": [
+            {
+              "label": "Grogu",
+              "kind": "character"
+            },
+            {
+              "label": "Darksaber",
+              "kind": "model"
+            }
+          ]
+        },
+        {
+          "era": "9 ABY",
+          "type": "event",
+          "text": "<b>The Book of Boba Fett<\/b>: Boba, out of the Sarlacc and raised by Tuskens, takes Jabba's throne with <b>Fennec Shand<\/b>. Grogu chooses Din's armour over Luke's training. <b>Skeleton Crew<\/b>: four kids from At Attin get lost with the pirate <b>Jod Na Nawood<\/b>.",
+          "tags": [
+            {
+              "label": "Boba Fett",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "9–11 ABY",
+          "type": "turning-point",
+          "text": "Din helps <b>Bo-Katan<\/b> reclaim the Darksaber and retake <b>Mandalore<\/b>; Gideon is apparently killed; Din and Grogu settle on Nevarro as freelancers for the New Republic.",
+          "tags": [
+            {
+              "label": "Mandalore retaken",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "c. 11 ABY",
+          "type": "turning-point",
+          "text": "<b>Ahsoka<\/b>: Ahsoka and <b>Sabine<\/b> follow a map to the galaxy of Peridea, find <b>Ezra<\/b> — and lose the race: <b>Thrawn<\/b> returns to Dathomir with Nightsister allies while they are stranded with Baylan Skoll and Shin Hati.",
+          "tags": [
+            {
+              "label": "Thrawn returns",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "c. 11–12 ABY",
+          "type": "event",
+          "text": "<b>The Mandalorian and Grogu<\/b> (2026): Din and Grogu take a New Republic job hunting Imperial warlords in the Outer Rim — the first Mando-verse story on the big screen. Ahsoka S2 (2027) picks up the Thrawn hunt.",
+          "tags": [
+            {
+              "label": "Mandoverse film",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "15–21 ABY",
+          "type": "event",
+          "text": "<b>Rey<\/b> is born to Dathan (Palpatine's failed clone) and Miramir; hidden on Jakku at six, her parents are killed by the assassin Ochi.",
+          "tags": [
+            {
+              "label": "Rey",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "28 ABY",
+          "type": "death",
+          "text": "Sensing Snoke's grip on Ben, Luke ignites his saber over his sleeping nephew. Ben burns the temple, kills his fellow students and becomes <b>Kylo Ren<\/b>; Luke exiles himself on Ahch-To. Leia's parentage is exposed and she founds the <b>Resistance<\/b>.",
+          "tags": [
+            {
+              "label": "Kylo Ren",
+              "kind": "character"
+            },
+            {
+              "label": "Resistance",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "33–34 ABY",
+          "type": "event",
+          "text": "<b>Resistance<\/b>: pilot Kaz Xiono spies on the growing <b>First Order<\/b> from the Colossus refuelling station as the Unknown Regions fleet prepares to strike."
+        }
+      ]
+    },
+    {
+      "id": "b7",
+      "title": "Rise of the First Order & the New Jedi Order",
+      "color": "#ff6ac1",
+      "films": [
+        "Resistance (TV)",
+        "The Force Awakens",
+        "The Last Jedi",
+        "The Rise of Skywalker",
+        "Starfighter"
+      ],
+      "summary": "34–50 ABY: one compressed year of war, the last Skywalker, the Emperor's final return — and whatever comes after.",
+      "nodes": [
+        {
+          "era": "34 ABY",
+          "type": "death",
+          "text": "<b>The Force Awakens<\/b>: <b>Starkiller Base<\/b> vaporises the Hosnian system and the New Republic fleet. Finn defects, Rey awakens, and <b>Kylo Ren kills Han Solo<\/b>. Starkiller is destroyed; Rey finds Luke.",
+          "tags": [
+            {
+              "label": "Starkiller Base",
+              "kind": "model"
+            },
+            {
+              "label": "Han dies",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "34 ABY",
+          "type": "death",
+          "text": "<b>The Last Jedi<\/b>: Kylo kills <b>Snoke<\/b> and takes the First Order; Rey and Kylo shatter the Skywalker saber; on Crait, Luke's Force projection buys the Resistance its escape and he becomes one with the Force.",
+          "tags": [
+            {
+              "label": "Luke dies",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "35 ABY",
+          "type": "resolution",
+          "text": "<b>The Rise of Skywalker<\/b>: 'Somehow Palpatine returned' on Exegol with the Final Order fleet. Rey learns she is his granddaughter; Leia dies reaching Ben; a redeemed <b>Ben Solo<\/b> helps Rey destroy Palpatine, then gives his life for her. Rey takes the name <b>Skywalker<\/b>.",
+          "tags": [
+            {
+              "label": "Palpatine ends",
+              "kind": "event"
+            },
+            {
+              "label": "Rey Skywalker",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "c. 40 ABY",
+          "type": "event",
+          "text": "<b>Starfighter<\/b> (May 2027, Shawn Levy, Ryan Gosling): a new story set five years after Exegol.",
+          "tags": [
+            {
+              "label": "Upcoming",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "c. 50 ABY",
+          "type": "event",
+          "text": "<b>New Jedi Order<\/b> (Sharmeen Obaid-Chinoy, TBD): fifteen years after Exegol, Rey rebuilds the Jedi Order against 'rising powers' that want it gone. Legends' version of this era — the Yuuzhan Vong — is not expected."
+        }
+      ]
+    },
+    {
+      "id": "b8",
+      "title": "Legends (the Expanded Universe)",
+      "color": "#9aa8bf",
+      "films": [
+        "Clone Wars (2003 micro-series) (TV)"
+      ],
+      "summary": "The 1977–2014 continuity Disney set aside: still published, still mined for ideas, no longer 'what happened'.",
+      "nodes": [
+        {
+          "era": "25 Apr 2014",
+          "type": "paradox",
+          "text": "Lucasfilm rebrands everything except the six films and The Clone Wars as <b>Legends<\/b>. One continuity becomes two; the beats below now run parallel to canon rather than inside it.",
+          "tags": [
+            {
+              "label": "Canon reset",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "36,453 BBY",
+          "type": "event",
+          "text": "<b>Dawn of the Jedi<\/b>: the Tho Yor ships gather Force-sensitives on <b>Tython<\/b>; the Je'daii Order balances light and dark until the Force Wars split it.",
+          "tags": [
+            {
+              "label": "Je'daii",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "3,956 BBY",
+          "type": "turning-point",
+          "text": "<b>Knights of the Old Republic<\/b>: <b>Revan<\/b> and Malak return from the Mandalorian Wars as Sith; a mind-wiped Revan destroys the Star Forge.",
+          "tags": [
+            {
+              "label": "Revan",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "3,653 BBY",
+          "type": "event",
+          "text": "<b>The Old Republic<\/b>: the resurgent Sith Empire sacks Coruscant; the Treaty of Coruscant sets up the MMO's cold war.",
+          "tags": [
+            {
+              "label": "Sith Empire",
+              "kind": "faction"
+            }
+          ]
+        },
+        {
+          "era": "1,000 BBY",
+          "type": "turning-point",
+          "text": "<b>Darth Bane<\/b> survives Ruusan and creates the Rule of Two — the one Legends idea canon kept almost intact.",
+          "tags": [
+            {
+              "label": "Darth Bane",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "22–19 BBY",
+          "type": "event",
+          "text": "Genndy Tartakovsky's <b>Clone Wars<\/b> micro-series: General Grievous debuts, Anakin is knighted and Palpatine is kidnapped on the eve of Revenge of the Sith — later overwritten by the 2008 series.",
+          "tags": [
+            {
+              "label": "Clone Wars (2003)",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "9 ABY",
+          "type": "turning-point",
+          "text": "<b>The Thrawn Trilogy<\/b>: Grand Admiral <b>Thrawn<\/b> nearly topples the New Republic; <b>Mara Jade<\/b>, the Emperor's Hand, later marries Luke. Thrawn was the first big Legends import back into canon.",
+          "tags": [
+            {
+              "label": "Thrawn",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "10–11 ABY",
+          "type": "event",
+          "text": "<b>Dark Empire<\/b>: a cloned <b>Palpatine<\/b> returns and briefly turns Luke — the template for 'somehow Palpatine returned'.",
+          "tags": [
+            {
+              "label": "Palpatine clone",
+              "kind": "paradox"
+            }
+          ]
+        },
+        {
+          "era": "25–29 ABY",
+          "type": "death",
+          "text": "<b>The New Jedi Order<\/b>: the extragalactic <b>Yuuzhan Vong<\/b> invade. <b>Chewbacca<\/b> dies on Sernpidal; Anakin Solo dies at Myrkr; Coruscant falls before Jacen ends the war.",
+          "tags": [
+            {
+              "label": "Chewbacca dies",
+              "kind": "event"
+            }
+          ]
+        },
+        {
+          "era": "40 ABY",
+          "type": "death",
+          "text": "<b>Legacy of the Force<\/b>: Jacen Solo becomes <b>Darth Caedus<\/b>, kills Mara Jade and is killed by his twin Jaina.",
+          "tags": [
+            {
+              "label": "Darth Caedus",
+              "kind": "character"
+            }
+          ]
+        },
+        {
+          "era": "137 ABY",
+          "type": "resolution",
+          "text": "<b>Legacy<\/b>: <b>Cade Skywalker<\/b>, a bounty-hunting descendant of Luke, faces Darth Krayt's One Sith — the furthest point the old continuity ever reached.",
+          "tags": [
+            {
+              "label": "Cade Skywalker",
+              "kind": "character"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "name": "Anakin Skywalker / Darth Vader",
+      "role": "The Chosen One who fell, ruled, and turned back — the saga's spine from 41 BBY to Endor.",
+      "color": "#ff2a1f"
+    },
+    {
+      "name": "Sheev Palpatine / Darth Sidious",
+      "role": "Senator, Chancellor, Emperor, clone: a 70-year plan that only ends on Exegol.",
+      "color": "#b07cff"
+    },
+    {
+      "name": "Obi-Wan Kenobi",
+      "role": "Trained Anakin, hid Luke, beat Vader twice, and let himself be struck down.",
+      "color": "#28d7e0"
+    },
+    {
+      "name": "Luke Skywalker",
+      "role": "Farm boy to last Jedi to failed teacher to Force projection — and Grogu's rescuer.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Leia Organa",
+      "role": "Princess, general, Vader's daughter and founder of the Resistance.",
+      "color": "#ffb02e"
+    },
+    {
+      "name": "Han Solo",
+      "role": "Smuggler who won the Falcon, froze in carbonite, and died on his son's blade.",
+      "color": "#E0A920"
+    },
+    {
+      "name": "Ahsoka Tano",
+      "role": "Anakin's Padawan, Fulcrum, and the thread tying Clone Wars, Rebels and the Mando-verse together.",
+      "color": "#4f8cff"
+    },
+    {
+      "name": "Yoda",
+      "role": "900-year-old Grand Master; trained Luke on Dagobah and Kai's class in the High Republic.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Darth Maul",
+      "role": "Bisected in 32 BBY, alive until 2 BBY: Sith apprentice, Mandalore's conqueror, Crimson Dawn's shadow lord.",
+      "color": "#ff2a1f"
+    },
+    {
+      "name": "Rey Skywalker",
+      "role": "Jakku scavenger and Palpatine's granddaughter; killed him and took the Skywalker name.",
+      "color": "#ff6ac1"
+    },
+    {
+      "name": "Ben Solo / Kylo Ren",
+      "role": "Luke's star pupil, Snoke's weapon, Han's killer — redeemed in the end.",
+      "color": "#ff6ac1"
+    },
+    {
+      "name": "Din Djarin & Grogu",
+      "role": "The Mandalorian and the Child: bounty hunter and 50-year-old foundling, now a clan of two.",
+      "color": "#4f8cff"
+    },
+    {
+      "name": "Grand Admiral Thrawn",
+      "role": "The Empire's Chiss strategist, lost with Ezra in 1 BBY and back from Peridea to lead the remnant.",
+      "color": "#9aa8bf"
+    },
+    {
+      "name": "Cassian Andor",
+      "role": "Ferrix thief turned rebel spy; died at Scarif so the plans could reach Leia.",
+      "color": "#39d98a"
+    },
+    {
+      "name": "Boba Fett",
+      "role": "Jango's clone-son; froze Han, fell into the Sarlacc, climbed out, took Jabba's palace.",
+      "color": "#E0A920"
+    }
+  ],
+  "items": [
+    {
+      "name": "The Death Star",
+      "desc": "Begun 20 BBY, finished 0 BBY, destroyed at Yavin; its sequel died at Endor, Starkiller Base at 34 ABY."
+    },
+    {
+      "name": "Millennium Falcon",
+      "desc": "Lando's freighter, then Han's, then Rey's — the Kessel Run in twelve parsecs."
+    },
+    {
+      "name": "The Skywalker lightsaber",
+      "desc": "Anakin's blue blade: lost at Bespin, found by Maz, shattered by Rey and Kylo, buried on Tatooine."
+    },
+    {
+      "name": "The Darksaber",
+      "desc": "Tarre Vizsla's black blade; passed through Maul, Sabine, Bo-Katan, Gideon, Din and back to Bo-Katan."
+    },
+    {
+      "name": "The Clone Army & Order 66",
+      "desc": "Jango Fett's Kaminoan clones with an inhibitor chip that turned them on the Jedi in 19 BBY."
+    },
+    {
+      "name": "Kyber crystals",
+      "desc": "Living crystals that power lightsabers — and, mined at Jedha, the Death Star's superlaser."
+    },
+    {
+      "name": "Beskar",
+      "desc": "Mandalorian iron that stops blasters and lightsabers; the Empire's purge hoarded it."
+    },
+    {
+      "name": "Project Necromancer",
+      "desc": "The Empire's Mount Tantiss cloning programme — why Gideon wanted Grogu's blood and how Palpatine 'returned'."
+    }
+  ],
+  "themes": [
+    "<b>BBY / ABY:<\/b> the galaxy dates everything from the Battle of Yavin in A New Hope — Year Zero. Negative numbers are the prequels and shows; positive are the original and sequel trilogies.",
+    "<b>One line, not a fork:<\/b> canon Star Wars has no branching timelines — the eras are chapters of a single 25,000-year history. The only real 'branch' is the 2014 Legends reset, which runs beside canon rather than inside it.",
+    "<b>Palpatine's long game:<\/b> Naboo (32 BBY), the Clone Wars, Order 66, the Empire, Snoke and Exegol are one plan by one Sith Lord, spanning nearly 70 years.",
+    "<b>It's like poetry, it rhymes:<\/b> a desert orphan, a mentor's death, a father's fall and a child's redemption recur in every trilogy.",
+    "<b>The Mando-verse funnel:<\/b> The Mandalorian, Boba Fett, Ahsoka and Skeleton Crew all sit in 9–12 ABY and converge on Thrawn — the setup for The Mandalorian and Grogu and Ahsoka season 2.",
+    "<b>Legends keeps leaking back:<\/b> Thrawn, the Chiss, Coruscant's name, cloned Emperors and the Rule of Two all crossed from the old continuity into canon."
+  ]
+};
+
+const esc = s => String(s==null?'':s);
+document.documentElement.style.setProperty('--accent', DATA.accent || '#ff2a1f');
+document.title = (DATA.franchise || 'Timeline') + ' — Timeline Map';
+document.getElementById('eyebrow').textContent = (DATA.films && DATA.films.length)
+  ? `${DATA.films.length} films · ${(DATA.branches||[]).length} branches`
+  : 'Interactive timeline';
+document.getElementById('title').innerHTML = `<span class="glow">${esc(DATA.franchise)}</span> — Timeline`;
+document.getElementById('intro').textContent = esc(DATA.tagline ? DATA.tagline + ' ' : '') + esc(DATA.intro||'');
+
+// controls
+const controls = document.getElementById('controls');
+controls.innerHTML = `<button class="btn active" data-f="all">All branches</button>` +
+  (DATA.branches||[]).map(b=>`<button class="btn" data-f="${b.id}">${esc(b.title)}</button>`).join('');
+
+// branches
+const rail = document.getElementById('rail');
+(DATA.branches||[]).forEach(b=>{
+  const el = document.createElement('div');
+  el.className='branch'; el.dataset.id=b.id; el.style.setProperty('--bcol', b.color||DATA.accent||'#ff2a1f');
+  el.innerHTML = `
+    <div class="branch-head" style="--bcol:${b.color||'#ff2a1f'}">
+      <span class="caret">▼</span>
+      <div class="bt"><h2>${esc(b.title)}</h2><div class="meta">${esc(b.summary||'')}</div></div>
+      <div class="branch-films">${(b.films||[]).map(esc).join(' · ')}</div>
+    </div>
+    <div class="branch-body"><div class="track">
+      ${(b.nodes||[]).map(n=>`
+        <div class="node ${esc(n.type||'event')}">
+          <div class="yr">${esc(n.era)}</div>
+          <div class="ev">${n.text||''}${(n.tags||[]).map(t=>`<span class="tag ${esc(t.kind||'event')}">${esc(t.label)}</span>`).join('')}</div>
+        </div>`).join('')}
+    </div></div>`;
+  el.querySelector('.branch-head').addEventListener('click',()=>el.classList.toggle('collapsed'));
+  rail.appendChild(el);
+});
+
+// characters
+const chars = document.getElementById('chars');
+if(DATA.characters && DATA.characters.length){
+  DATA.characters.forEach(c=>{
+    const initials = String(c.name||'?').split(/[\s\/]+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    chars.insertAdjacentHTML('beforeend',
+      `<div class="char"><div class="av" style="background:${c.color||DATA.accent||'#ff2a1f'}">${initials}</div>
+       <div><div class="nm">${esc(c.name)}</div><div class="rl">${esc(c.role)}</div></div></div>`);
+  });
+} else { document.getElementById('charsCard').classList.add('hide'); }
+
+// items
+const models = document.getElementById('models');
+if(DATA.items && DATA.items.length){
+  DATA.items.forEach(m=>models.insertAdjacentHTML('beforeend',
+    `<div class="model"><div class="mn">${esc(m.name)}</div><div class="md">${esc(m.desc)}</div></div>`));
+} else { document.getElementById('itemsCard').classList.add('hide'); }
+
+// themes
+const paras = document.getElementById('paras');
+if(DATA.themes && DATA.themes.length){
+  DATA.themes.forEach(t=>paras.insertAdjacentHTML('beforeend',`<div class="para-item">${t}</div>`));
+} else { document.getElementById('themesBox').classList.add('hide'); }
+
+// footer
+const order = (DATA.films||[]).map(f=>`${esc(f.title)} (${esc(f.year)})`).join(' · ');
+document.getElementById('footer').innerHTML =
+  (order?`<strong>Films in release order:</strong> ${order}.<br><br>`:'') +
+  `Built with the Movie Timeline Mapper skill. Because the series branches, there is no single chronological line — each divergent future is its own branch above.`;
+
+// filter
+controls.addEventListener('click',e=>{
+  const btn=e.target.closest('.btn'); if(!btn) return;
+  document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f=btn.dataset.f;
+  document.querySelectorAll('.branch').forEach(br=>br.classList.toggle('dim', f!=='all' && br.dataset.id!==f));
+});
+</script>
+</body>
+</html>
