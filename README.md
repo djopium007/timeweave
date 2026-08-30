@@ -69,3 +69,36 @@ Post-deploy configuration (Supabase dashboard → Authentication):
 ## Deploy
 
 Pure static HTML — no build step. Hosted on Vercel (`output directory: .`).
+
+## Routing
+
+The hub is a single-page app, but the address bar stays in step with it:
+
+| URL | Screen |
+| --- | --- |
+| `/` | Hub |
+| `/queue` | The Queue |
+| `/contribute` | Contribute |
+| `/map/<id>` | A franchise map (`/map/alien`, `/map/starwars`, …) |
+| `/timeline` | Timeline view, no franchise selected |
+
+`history.pushState` drives it, `popstate` handles back/forward, and `document.title`
+follows the screen. `vercel.json` rewrites those paths to `/index.html` so deep links
+survive a refresh — every other path still resolves to a real file first (the standalone
+`*-timeline-map.html` exports, `privacy.html`, `terms.html`, `assets/*`).
+
+Two things to keep in mind when editing `index.html`:
+
+- **Asset URLs must be root-relative** (`/assets/…`). A relative `assets/…` breaks at
+  `/map/alien`, where the browser resolves it to `/map/assets/…`.
+- **OAuth returns to `/`.** `signInWithOAuth` stashes the current path in
+  `sessionStorage.reelorder_route` and redirects to the origin, so only the bare site URL
+  needs to be in Supabase's redirect allow-list; `initRouting()` restores the path on load.
+
+## The Queue
+
+Rows come from the `pending_projects` table. A row whose `id` matches a key in `data`
+(i.e. the map is live) renders as **Mapped** with an "Open the map →" button and sorts
+below the pending ones — voters can see their picks actually shipped. `status` accepts
+`Mapped | Mapping now | In review | Queued | Suggested`. When a franchise goes live,
+set its row to `Mapped` rather than deleting it, so its vote count survives.
