@@ -66,6 +66,7 @@ export async function recordOrder(session) {
     stripe_payment_intent: typeof session.payment_intent === 'string' ? session.payment_intent : (session.payment_intent && session.payment_intent.id) || null,
     email: (session.customer_details && session.customer_details.email) || session.customer_email || null,
     poster_id: posterId || null,
+    style_key: (session.metadata && session.metadata.style_key) || null,
     amount_cents: session.amount_total,
     currency: session.currency,
     status: session.payment_status === 'paid' ? 'paid' : session.payment_status,

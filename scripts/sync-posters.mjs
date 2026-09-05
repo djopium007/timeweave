@@ -17,6 +17,11 @@
 //   2. makes a 1200px preview + 1600px mockups -> poster-previews/<slug>/...   (public)
 //   3. upserts a row in public.posters (keeps existing price/tagline/description/sort_order if already set)
 //   --no-zip  uploads just the 24x36 master instead of the pack (fast path)
+//
+// PREBUILT MODE (preferred — packs built on the Mac by scripts/build-packs.py):
+//   SUPABASE_SERVICE_ROLE_KEY=... node scripts/sync-posters.mjs --prebuilt ../posters-upload [--only a,b] [--dry] [--activate]
+//   Reads catalog.json, uploads every style's preview/mockups (public) and pack zip (private), and upserts
+//   `posters` rows with a `styles` array. Rows are created with active=false unless --activate is passed.
 import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -29,8 +34,10 @@ const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 if (!KEY) { console.error('Set SUPABASE_SERVICE_ROLE_KEY (Supabase dashboard → Project Settings → API).'); process.exit(1); }
 
 const args = process.argv.slice(2);
-const root = args.find(a => !a.startsWith('--'));
-if (!root || !fs.existsSync(root)) { console.error('Usage: node scripts/sync-posters.mjs "/path/to/Movie Mock ups" [--only a,b] [--dry] [--no-zip] [--out ./packs]'); process.exit(1); }
+const PREBUILT = args.includes('--prebuilt') ? args[args.indexOf('--prebuilt') + 1] : null;
+const ACTIVATE = args.includes('--activate');
+const root = PREBUILT || args.filter((a, i) => !a.startsWith('--') && !(i > 0 && args[i - 1].startsWith('--') && ['--only','--out','--prebuilt'].includes(args[i - 1])))[0];
+if (!root || !fs.existsSync(root)) { console.error('Usage: node scripts/sync-posters.mjs --prebuilt ../posters-upload [--only a,b] [--dry] [--activate]\n   or: node scripts/sync-posters.mjs "/path/to/Movie Mock ups" [--only a,b] [--dry] [--no-zip] [--out ./packs]'); process.exit(1); }
 const DRY = args.includes('--dry');
 const NO_ZIP = args.includes('--no-zip');
 const OUT_DIR = args.includes('--out') ? args[args.indexOf('--out') + 1] : null; // also save each pack zip locally
@@ -130,6 +137,54 @@ async function buildPack(slug, title, masterBuf, masterMeta) {
   await done;
   return Buffer.concat(chunks);
 }
+
+async function runPrebuilt(dir) {
+  const catPath = path.join(dir, 'catalog.json');
+  if (!fs.existsSync(catPath)) { console.error(`No catalog.json in ${dir} — run scripts/build-packs.py first.`); process.exit(1); }
+  const catalog = JSON.parse(fs.readFileSync(catPath, 'utf8'));
+  const report = [];
+  for (const slug of Object.keys(catalog)) {
+    if (ONLY && !ONLY.includes(slug)) continue;
+    const e = catalog[slug];
+    console.log(`\n▸ ${e.title}  (${slug})  ${e.styles.length} style(s)`);
+    const styles = [];
+    for (const st of e.styles) {
+      const sdir = path.join(dir, slug, st.key);
+      const previewPath = `${slug}/${st.key}/preview.jpg`;
+      await upload('poster-previews', previewPath, fs.readFileSync(path.join(sdir, st.preview)), 'image/jpeg');
+      const mockupPaths = [];
+      for (const m of st.mockups) {
+        const p = `${slug}/${st.key}/${m}`;
+        await upload('poster-previews', p, fs.readFileSync(path.join(sdir, m)), 'image/jpeg');
+        mockupPaths.push(p);
+      }
+      const masterPath = `${slug}/${st.key}/${st.pack}`;
+      const zipBuf = fs.readFileSync(path.join(sdir, st.pack));
+      console.log(`   ${st.key}: ${st.mockups.length} mockups, pack ${(zipBuf.length / 1048576).toFixed(0)} MB`);
+      await upload('poster-masters', masterPath, zipBuf, 'application/zip');
+      styles.push({ key: st.key, label: st.label, preview_path: previewPath, mockup_paths: mockupPaths, master_path: masterPath });
+    }
+    const first = styles[0];
+    const row = {
+      id: slug, title: e.title, accent: e.accent || '#FF2A1F', franchise_id: e.franchise_id || null,
+      preview_path: first.preview_path, mockup_paths: first.mockup_paths, master_path: first.master_path, styles,
+      file_label: 'ZIP pack · 24×36 master + A-series, 4:3 & 5:7 crops · 300 dpi · bonus phone wallpaper',
+      sort_order: e.sort_order || 100, updated_at: new Date().toISOString(),
+    };
+    if (!DRY) {
+      const { data: existing } = await db.from('posters').select('id,sort_order,active').eq('id', slug).maybeSingle();
+      if (existing) row.sort_order = existing.sort_order;
+      row.active = existing ? (ACTIVATE ? true : existing.active) : ACTIVATE;   // never silently activate
+      const { error } = await db.from('posters').upsert(row, { onConflict: 'id' });
+      if (error) throw new Error(`posters upsert ${slug}: ${error.message}`);
+    }
+    report.push({ slug, title: e.title, styles: styles.length, active: DRY ? '(dry)' : row.active });
+  }
+  console.log('\nDone.'); console.table(report);
+  if (!ACTIVATE) console.log('\nRows are inactive (not visible in the store). Activate per poster in Supabase → posters → active, or re-run with --activate.');
+}
+
+if (PREBUILT) { await runPrebuilt(PREBUILT); process.exit(0); }
 
 const folders = fs.readdirSync(root, { withFileTypes: true }).filter(d => d.isDirectory() && !d.name.startsWith('.')).map(d => d.name);
 let order = 10;

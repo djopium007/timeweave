@@ -22,18 +22,24 @@ export default async function handler(req, res) {
     if (!posterId) return json(res, 409, { error: 'Session has no poster attached' });
 
     const { data: poster, error } = await db()
-      .from('posters').select('id,title,master_path,size_label,file_label').eq('id', posterId).single();
-    if (error || !poster || !poster.master_path) return json(res, 404, { error: 'Poster file not found' });
+      .from('posters').select('id,title,master_path,size_label,file_label,styles').eq('id', posterId).single();
+    if (error || !poster) return json(res, 404, { error: 'Poster not found' });
+    const styleKey = (session.metadata && session.metadata.style_key) || '';
+    const styles = Array.isArray(poster.styles) ? poster.styles : [];
+    const style = styleKey ? styles.find(x => x.key === styleKey) : (styles[0] || null);
+    const masterPath = style ? style.master_path : poster.master_path;
+    if (!masterPath) return json(res, 404, { error: 'Poster file not found' });
+    const styleLabel = style && styles.length > 1 ? ` (${style.label})` : '';
 
     // Make sure an order row exists even if the webhook was late/missed, then count the download.
     await recordOrder(session);
     await db().rpc('bump_poster_download', { p_session_id: session.id }).then(() => {}, () => {});
 
-    const ext = (poster.master_path.split('.').pop() || 'jpg').toLowerCase();
-    const filename = `ReelOrder - ${poster.title} - Timeline Poster Pack.${ext}`.replace(/[\\/:*?"<>|]+/g, '');
+    const ext = (masterPath.split('.').pop() || 'zip').toLowerCase();
+    const filename = `ReelOrder - ${poster.title}${styleLabel} - Timeline Poster Pack.${ext}`.replace(/[\\/:*?"<>|]+/g, '');
     const { data: signed, error: sErr } = await db().storage
       .from(MASTER_BUCKET)
-      .createSignedUrl(poster.master_path, SIGNED_TTL_SECONDS, { download: filename });
+      .createSignedUrl(masterPath, SIGNED_TTL_SECONDS, { download: filename });
     if (sErr || !signed) throw sErr || new Error('Could not sign URL');
 
     if (q.redirect) {
@@ -45,7 +51,8 @@ export default async function handler(req, res) {
     return json(res, 200, {
       ok: true,
       posterId: poster.id,
-      title: poster.title,
+      title: poster.title + styleLabel,
+      styleKey: style ? style.key : null,
       sizeLabel: poster.size_label,
       fileLabel: poster.file_label,
       email: (session.customer_details && session.customer_details.email) || null,

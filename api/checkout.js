@@ -4,12 +4,13 @@ import { stripe, db, previewUrl, siteOrigin, json, readJsonBody } from './_lib.j
 
 export default async function handler(req, res) {
   try {
-    let posterId;
+    let posterId, styleKey;
     if (req.method === 'POST') {
       const body = await readJsonBody(req);
-      posterId = body.posterId || body.poster;
+      posterId = body.posterId || body.poster; styleKey = body.style;
     } else if (req.method === 'GET') {
-      posterId = (req.query && (req.query.poster || req.query.posterId)) || new URL(req.url, 'http://x').searchParams.get('poster');
+      const q = req.query || Object.fromEntries(new URL(req.url, 'http://x').searchParams);
+      posterId = q.poster || q.posterId; styleKey = q.style;
     } else {
       res.setHeader('Allow', 'GET, POST');
       return json(res, 405, { error: 'Method not allowed' });
@@ -19,14 +20,23 @@ export default async function handler(req, res) {
 
     const { data: poster, error } = await db()
       .from('posters')
-      .select('id,title,tagline,size_label,file_label,price_cents,currency,preview_path,active,master_path')
+      .select('id,title,tagline,size_label,file_label,price_cents,currency,preview_path,active,master_path,styles')
       .eq('id', posterId)
       .single();
     if (error || !poster || !poster.active) return json(res, 404, { error: 'Poster not found' });
-    if (!poster.master_path) return json(res, 409, { error: 'This poster is not available for download yet' });
+    // Resolve the style: explicit key, else the first style, else the row's own default paths.
+    const styles = Array.isArray(poster.styles) ? poster.styles : [];
+    let style = null;
+    if (styleKey) {
+      style = styles.find(x => x.key === String(styleKey).toLowerCase()) || null;
+      if (!style) return json(res, 400, { error: 'Unknown style for this poster' });
+    } else if (styles.length) style = styles[0];
+    const masterPath = style ? style.master_path : poster.master_path;
+    if (!masterPath) return json(res, 409, { error: 'This poster is not available for download yet' });
+    const styleLabel = style && styles.length > 1 ? ` · ${style.label}` : '';
 
     const origin = siteOrigin(req);
-    const img = previewUrl(poster.preview_path);
+    const img = previewUrl(style ? style.preview_path : poster.preview_path);
     const session = await stripe().checkout.sessions.create({
       mode: 'payment',
       line_items: [{
@@ -35,21 +45,21 @@ export default async function handler(req, res) {
           currency: poster.currency || 'aud',
           unit_amount: poster.price_cents,
           product_data: {
-            name: `${poster.title} — Timeline Poster (digital)`,
+            name: `${poster.title} — Timeline Poster (digital)${styleLabel}`,
             description: `${poster.size_label} · ${poster.file_label}`,
             images: img ? [img] : [],
-            metadata: { poster_id: poster.id },
+            metadata: { poster_id: poster.id, style_key: style ? style.key : '' },
           },
         },
       }],
-      metadata: { poster_id: poster.id },
-      payment_intent_data: { metadata: { poster_id: poster.id } },
+      metadata: { poster_id: poster.id, style_key: style ? style.key : '' },
+      payment_intent_data: { metadata: { poster_id: poster.id, style_key: style ? style.key : '' } },
       allow_promotion_codes: true,
       billing_address_collection: 'auto',
       customer_creation: 'if_required',
       invoice_creation: { enabled: true },
       success_url: `${origin}/posters/thanks?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/posters/${poster.id}`,
+      cancel_url: `${origin}/posters/${poster.id}${style ? '?style=' + style.key : ''}`,
       custom_text: {
         submit: { message: 'Digital download — your print-ready file is unlocked instantly after payment.' },
       },

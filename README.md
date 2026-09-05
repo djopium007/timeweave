@@ -77,7 +77,14 @@ URL to the print-ready master; the Stripe session id is the receipt and can re-i
   (rendered from `print-guide.html`, which is also live at `/print-guide.html`). `--no-zip` uploads just the master.
 - **Pricing**: default `price_cents` 1795 (AUD 17.95, incl. GST). Research 2026-09: Etsy single original digital
   posters USD 8–15, bundles USD 3–10, POD physical USD 25–35, Dorothy Film Map £30.
-- **Loading posters**: `SUPABASE_SERVICE_ROLE_KEY=… npm run posters:sync -- "/path/to/Movie Mock ups"`
+- **Styles**: `posters.styles` (jsonb array `{key,label,preview_path,mockup_paths[],master_path}`) — one product per
+  franchise with a style picker (`/posters/<id>?style=v2`). Checkout/download carry `style_key` in Stripe metadata.
+- **Source files** live in pCloud: `www.opij.io/Customer Files/Movie Canvas/<Franchise> x/` (7200×10800 masters,
+  v1–v5) and `www.opij.io/Mock Ups - Movie /<Franchise> x/[vN/]MOCKUPS/`. `scripts/build-packs.py` (Python 3 + Pillow,
+  runs on the Mac) turns them into `../posters-upload/` (packs, previews, mockups, `catalog.json`); idempotent, `--budget`.
+  Then `SUPABASE_SERVICE_ROLE_KEY=… node scripts/sync-posters.mjs --prebuilt ../posters-upload` uploads + upserts rows
+  **inactive**; flip `active` per poster (or `--activate`) once the IP position is settled.
+- **Loading posters (legacy, flat folder)**: `SUPABASE_SERVICE_ROLE_KEY=… npm run posters:sync -- "/path/to/Movie Mock ups"`
   (needs `npm install` once; add `--dry` to preview, `--only aliens,rambo` to limit). It uploads the
   `*_24x36.jpg` master, makes a 1200px preview + 1600px mockups, and upserts the `posters` rows.
   Then set tagline / description / price per poster in the Supabase table editor.
