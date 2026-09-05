@@ -5,6 +5,8 @@
     { "source": "/queue", "destination": "/index.html" },
     { "source": "/contribute", "destination": "/index.html" },
     { "source": "/timeline", "destination": "/index.html" },
-    { "source": "/map/:id", "destination": "/index.html" }
+    { "source": "/map/:id", "destination": "/index.html" },
+    { "source": "/posters", "destination": "/index.html" },
+    { "source": "/posters/:id", "destination": "/index.html" }
   ]
 }

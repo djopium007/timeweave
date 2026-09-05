@@ -1,0 +1,17 @@
+{
+  "name": "reelorder-site",
+  "private": true,
+  "type": "module",
+  "description": "ReelOrder — movie timeline hub + poster store (static SPA + Vercel API routes)",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "stripe": "^16.12.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5"
+  },
+  "scripts": {
+    "posters:sync": "node scripts/sync-posters.mjs"
+  }
+}

@@ -565,6 +565,7 @@
       <button onclick="{{ goHub }}" style="{{ navHubStyle }}">Hub</button>
       <button onclick="{{ goExplore }}" style="{{ navExploreStyle }}">Timeline</button>
       <button onclick="{{ goQueue }}" style="{{ navQueueStyle }}">Queue</button>
+      <button onclick="{{ goPosters }}" style="{{ navPostersStyle }}">Posters</button>
       <button onclick="{{ goContribute }}" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:9px;border:1px solid rgba(255,42,31,0.45);background:rgba(255,42,31,0.12);color:#FF7A6E;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;" style-hover="background:rgba(255,42,31,0.2);border-color:rgba(255,42,31,0.7);color:#fff;">Contribute</button>
       <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}">
         <button onclick="{{ openAuth }}" style="margin-left:6px;padding:9px 18px;border-radius:9px;border:none;background:#fff;color:#0a0c10;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:transform .16s ease;" style-hover="transform:translateY(-1px);">Sign in</button>
@@ -1065,6 +1066,148 @@
     </div>
     </sc-if>
 
+    <!-- ============ POSTERS (store) ============ -->
+    <sc-if value="{{ isPosters }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(20px,5vw,56px) 96px;">
+      <button onclick="{{ goHub }}" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;margin-bottom:26px;" style-hover="border-color:rgba(255,255,255,0.25);color:#fff;">← Back to hub</button>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;">
+        <div style="max-width:60ch;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#FF7A6E;">Print shop</div>
+          <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(32px,5vw,48px);line-height:1.02;margin:8px 0 12px;letter-spacing:0.01em;">Timeline Posters</h1>
+          <p style="margin:0;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">Every film in a franchise, in the order it actually happens — designed as a 24 × 36 in wall poster. Buy the print-ready file, download it instantly, and print it anywhere: your local print shop, an online lab, or at home.</p>
+        </div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b7686;white-space:nowrap;">{{ posterCount }}</span>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);font-family:'JetBrains Mono',monospace;font-size:12px;color:#8b97a6;">
+        <span>◆ Digital download</span><span>◆ 24 × 36 in · 300 dpi</span><span>◆ Instant after payment</span><span>◆ Secure checkout by Stripe</span>
+      </div>
+
+      <sc-if value="{{ postersLoading }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:40px;color:#6b7686;font-family:'JetBrains Mono',monospace;font-size:13px;">Loading posters…</div>
+      </sc-if>
+      <sc-if value="{{ postersEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:40px;padding:36px;border-radius:16px;border:1px dashed rgba(255,255,255,0.16);text-align:center;color:#8b97a6;font-size:15px;">The first posters are being loaded into the shop. Check back soon.</div>
+      </sc-if>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px;margin-top:34px;">
+        <sc-for list="{{ posterCards }}" as="p" hint-placeholder-count="6">
+          <div onclick="{{ p.onOpen }}" style="{{ p.cardStyle }}" style-hover="transform:translateY(-4px);border-color:rgba(255,255,255,0.22);">
+            <div style="position:relative;aspect-ratio:2/3;background:#0b0d11;overflow:hidden;">
+              <img src="{{ p.img }}" alt="{{ p.title }} timeline poster" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease;">
+              <div style="{{ p.accentBar }}"></div>
+            </div>
+            <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;">
+              <div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:19px;letter-spacing:0.01em;text-transform:uppercase;line-height:1.1;">{{ p.title }}</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#7a8696;">{{ p.sizeLabel }}</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+                <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:18px;color:#fff;">{{ p.price }}</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;color:#FF7A6E;">View →</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ POSTER DETAIL ============ -->
+    <sc-if value="{{ isPosterDetail }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(20px,5vw,56px) 96px;">
+      <button onclick="{{ goPosters }}" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;margin-bottom:26px;" style-hover="border-color:rgba(255,255,255,0.25);color:#fff;">← All posters</button>
+
+      <sc-if value="{{ posterMissing }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:36px;border-radius:16px;border:1px dashed rgba(255,255,255,0.16);text-align:center;color:#8b97a6;font-size:15px;">That poster isn't in the shop (yet).</div>
+      </sc-if>
+
+      <sc-if value="{{ posterReady }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,0.9fr);gap:clamp(24px,4vw,48px);align-items:start;">
+        <!-- gallery -->
+        <div style="display:flex;flex-direction:column;gap:12px;min-width:0;">
+          <div style="position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,0.09);background:#0b0d11;">
+            <img src="{{ poster.heroImg }}" alt="{{ poster.title }} timeline poster" style="width:100%;height:auto;display:block;max-height:78vh;object-fit:contain;background:#0b0d11;">
+          </div>
+          <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;">
+            <sc-for list="{{ poster.thumbs }}" as="t" hint-placeholder-count="5">
+              <button onclick="{{ t.onPick }}" style="{{ t.style }}" style-hover="opacity:1;border-color:rgba(255,255,255,0.5);"><img src="{{ t.img }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></button>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- buy panel -->
+        <div style="position:sticky;top:92px;display:flex;flex-direction:column;gap:18px;padding:26px;border-radius:18px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(180deg,rgba(18,21,27,0.85),rgba(11,13,17,0.85));">
+          <div>
+            <div style="{{ poster.eyebrowStyle }}">Timeline poster · Digital</div>
+            <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(28px,4vw,40px);line-height:1.02;margin:8px 0 8px;letter-spacing:0.01em;text-transform:uppercase;">{{ poster.title }}</h1>
+            <p style="margin:0;color:#A9B4C2;font-size:15px;line-height:1.6;text-wrap:pretty;">{{ poster.tagline }}</p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:9px;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0;font-size:13.5px;">
+            <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#7a8696;">Size</span><span style="color:#E9EDF3;text-align:right;">{{ poster.sizeLabel }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#7a8696;">File</span><span style="color:#E9EDF3;text-align:right;">{{ poster.fileLabel }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#7a8696;">Delivery</span><span style="color:#E9EDF3;text-align:right;">Instant download link after payment</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#7a8696;">Licence</span><span style="color:#E9EDF3;text-align:right;">Personal use · print as many copies as you like</span></div>
+          </div>
+
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:36px;color:#fff;line-height:1;">{{ poster.price }}</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7a8696;">{{ poster.currencyLabel }}</span>
+          </div>
+
+          <button onclick="{{ buyPoster }}" style="{{ buyBtnStyle }}" style-hover="transform:translateY(-2px);filter:brightness(1.06);">{{ buyLabel }}</button>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#6b7686;line-height:1.6;">Secure checkout by Stripe · Cards, Apple Pay &amp; Google Pay · Your download link also lands in your receipt email.</div>
+
+          <sc-if value="{{ poster.hasMap }}" hint-placeholder-val="{{ false }}">
+            <button onclick="{{ poster.onOpenMap }}" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;" style-hover="border-color:rgba(255,255,255,0.35);">Explore the interactive {{ poster.title }} timeline →</button>
+          </sc-if>
+
+          <sc-if value="{{ poster.hasDescription }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:0;color:#9aa6b4;font-size:14px;line-height:1.6;text-wrap:pretty;border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">{{ poster.description }}</p>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="margin-top:56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
+        <div style="padding:20px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);"><div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:6px;">Print it anywhere</div><p style="margin:0;color:#8b97a6;font-size:13.5px;line-height:1.6;">The file is a true 24 × 36 in at 300 dpi. Officeworks, Vistaprint, a local print shop or your own printer — all work. Ask for matte or satin stock for the best look.</p></div>
+        <div style="padding:20px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);"><div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:6px;">Frames</div><p style="margin:0;color:#8b97a6;font-size:13.5px;line-height:1.6;">24 × 36 in (61 × 91 cm) is the standard movie-poster frame size, so off-the-shelf frames fit without trimming.</p></div>
+        <div style="padding:20px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);"><div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:6px;">Lost your link?</div><p style="margin:0;color:#8b97a6;font-size:13.5px;line-height:1.6;">Your Stripe receipt email contains the download page. Open it any time to fetch a fresh link.</p></div>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <!-- ============ POSTER THANKS / DOWNLOAD ============ -->
+    <sc-if value="{{ isPosterThanks }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:720px;margin:0 auto;padding:clamp(32px,6vw,72px) clamp(20px,5vw,40px) 120px;text-align:center;">
+      <sc-if value="{{ thanksLoading }}" hint-placeholder-val="{{ false }}">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7a8696;">Confirming your payment</div>
+        <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(30px,5vw,44px);line-height:1.02;margin:12px 0;">One moment…</h1>
+        <p style="margin:0;color:#A9B4C2;font-size:15px;">Talking to Stripe and unlocking your file.</p>
+      </sc-if>
+      <sc-if value="{{ thanksReady }}" hint-placeholder-val="{{ true }}">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#3DDC84;">Payment received</div>
+        <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(30px,5vw,44px);line-height:1.02;margin:12px 0 10px;">Your {{ thanks.title }} poster is ready</h1>
+        <p style="margin:0 0 28px;color:#A9B4C2;font-size:15px;line-height:1.6;">{{ thanks.sizeLabel }} · {{ thanks.fileLabel }}<br>{{ thanks.emailLine }}</p>
+        <a href="{{ thanks.url }}" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 30px;border-radius:12px;background:#fff;color:#0a0c10;font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;transition:transform .16s ease;" style-hover="transform:translateY(-2px);">↓ Download poster file</a>
+        <p style="margin:18px 0 0;font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b7686;line-height:1.7;">This link is valid for 15 minutes. Bookmark this page or use your Stripe receipt email to come back for a fresh one.<br><span onclick="{{ refreshThanks }}" style="color:#9DB0C4;cursor:pointer;text-decoration:underline;">Get a new link</span></p>
+        <div style="margin-top:44px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
+          <button onclick="{{ goPosters }}" style="padding:11px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;">More posters</button>
+          <button onclick="{{ goHub }}" style="padding:11px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;">Back to the hub</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ thanksError }}" hint-placeholder-val="{{ false }}">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#F5A623;">Hmm</div>
+        <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(30px,5vw,44px);line-height:1.02;margin:12px 0 10px;">We couldn't unlock that download</h1>
+        <p style="margin:0 0 24px;color:#A9B4C2;font-size:15px;line-height:1.6;">{{ thanks.error }}</p>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
+          <button onclick="{{ refreshThanks }}" style="padding:11px 18px;border-radius:10px;border:none;background:#fff;color:#0a0c10;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;">Try again</button>
+          <button onclick="{{ goPosters }}" style="padding:11px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;">Back to posters</button>
+        </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
   </main>
 
   <!-- ============ FOOTER ============ -->
@@ -1084,6 +1227,7 @@
         <button onclick="{{ goHub }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Hub</button>
         <button onclick="{{ goExplore }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Terminator map</button>
         <button onclick="{{ goContribute }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Contribute</button>
+        <button onclick="{{ goPosters }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Posters</button>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:12px;">
@@ -1166,6 +1310,8 @@ class Component extends DCLogic {
   state = {
     screen: 'hub',
     activeId: 'terminator',
+    // posters store
+    posters: [], postersLoaded: false, posterId: null, galleryIdx: 0, checkoutBusy: false, thanks: null,
     search: '',
     filter: 'all',
     collapsed: {},
@@ -5736,12 +5882,21 @@ class Component extends DCLogic {
   routeFor = (screen, activeId) => {
     if (screen === 'queue') return '/queue';
     if (screen === 'contribute') return '/contribute';
+    if (screen === 'posters') return '/posters';
+    if (screen === 'poster') return activeId ? '/posters/' + activeId : '/posters';
+    if (screen === 'posterThanks') return '/posters/thanks';
     if (screen === 'timeline') return activeId && this.data[activeId] ? '/map/' + activeId : '/timeline';
     return '/';
   };
   titleFor = (path) => {
     if (path === '/queue') return 'The Queue \u00b7 ReelOrder';
     if (path === '/contribute') return 'Contribute \u00b7 ReelOrder';
+    if (path === '/posters') return 'Timeline Posters \u00b7 ReelOrder';
+    if (path === '/posters/thanks') return 'Your download \u00b7 ReelOrder';
+    if (path.indexOf('/posters/') === 0) {
+      const pp = (this.state.posters||[]).find(x => x.id === path.slice(9));
+      return (pp ? pp.title + ' Poster' : 'Poster') + ' \u00b7 ReelOrder';
+    }
     if (path.indexOf('/map/') === 0) {
       const f = this.data[path.slice(5)];
       return (f ? f.title + ' Timeline' : 'Timeline') + ' \u00b7 ReelOrder';
@@ -5762,6 +5917,11 @@ class Component extends DCLogic {
     if (!a) return { screen:'hub' };
     if (a === 'queue') return { screen:'queue' };
     if (a === 'contribute') return { screen:'contribute' };
+    if (a === 'posters') {
+      if (!b) return { screen:'posters' };
+      if (b === 'thanks') return { screen:'posterThanks' };
+      return { screen:'poster', posterId:b, galleryIdx:0 };
+    }
     if (a === 'timeline' || a === 'map') {
       return this.data[b] ? { screen:'timeline', activeId:b } : { screen:'timeline' };
     }
@@ -5772,7 +5932,8 @@ class Component extends DCLogic {
     const r = this.readRoute();
     if (!r) return;
     this.setState({ filter:'all', collapsed:{}, view:'rail', seriesTab:'map', ...r });
-    this.setTitle(this.routeFor(r.screen, r.activeId || this.state.activeId));
+    this.setTitle(this.routeFor(r.screen, r.posterId || r.activeId || this.state.activeId));
+    if (r.screen === 'posterThanks') this.loadThanks(); else if (r.screen === 'posters' || r.screen === 'poster') this.loadPosters();
     this.toTop();
   };
   initRouting = () => {
@@ -5787,7 +5948,7 @@ class Component extends DCLogic {
       const r = this.readRoute(path);
       if (r) {
         this.setState({ ...r });
-        this.setTitle(this.routeFor(r.screen, r.activeId || this.state.activeId));
+        this.setTitle(this.routeFor(r.screen, r.posterId || r.activeId || this.state.activeId));
       }
       window.addEventListener('popstate', this.onPopState);
     } catch(e){}
@@ -5858,6 +6019,8 @@ class Component extends DCLogic {
       }
     } catch(e) { console.error('ReelOrder: backend init failed', e); }
     if (!this.db) return;
+    if (this.state.screen === 'posterThanks') this.loadThanks();
+    if (this.state.screen === 'posters' || this.state.screen === 'poster' || this.state.screen === 'posterThanks') this.loadPosters();
     this.db.auth.onAuthStateChange((event, session) => {
       if (session && session.user) this.adoptSession(session.user);
       else if (event === 'SIGNED_OUT') this.setState({ user:null });
@@ -6059,6 +6222,59 @@ class Component extends DCLogic {
   setCommunityTab = () => this.setState({ seriesTab:'community' });
 
   toastTimer = null;
+
+  // ---------- posters (store) ----------
+  POSTER_PREVIEW_BASE = 'https://fqcdslarscuplbdimgzs.supabase.co/storage/v1/object/public/poster-previews/';
+  posterImg = (p) => p ? this.POSTER_PREVIEW_BASE + p : '';
+  posterPrice = (cents, cur) => {
+    try { return new Intl.NumberFormat('en-AU', { style:'currency', currency:(cur||'aud').toUpperCase(), minimumFractionDigits: cents % 100 === 0 ? 0 : 2 }).format(cents/100); }
+    catch(e) { return '$' + (cents/100).toFixed(2); }
+  };
+  goPosters = () => { this.setState({ screen:'posters' }); this.pushRoute('/posters'); this.toTop(); this.loadPosters(); };
+  openPoster = (id) => { this.setState({ screen:'poster', posterId:id, galleryIdx:0 }); this.pushRoute('/posters/' + id); this.toTop(); this.loadPosters(); };
+  pickGallery = (i) => this.setState({ galleryIdx:i });
+  loadPosters = async () => {
+    if (!this.db || this.state.postersLoaded || this._postersLoading) return;
+    this._postersLoading = true;
+    try {
+      const { data, error } = await this.db.from('posters').select('*').eq('active', true).order('sort_order', { ascending:true });
+      if (error) throw error;
+      this.setState({ posters: data || [], postersLoaded: true });
+    } catch(e) {
+      console.error('ReelOrder: posters load failed', e);
+      this.setState({ posters: [], postersLoaded: true });
+    } finally { this._postersLoading = false; }
+  };
+  buyPoster = async () => {
+    const id = this.state.posterId;
+    if (!id || this.state.checkoutBusy) return;
+    this.setState({ checkoutBusy: true });
+    try {
+      const r = await fetch('/api/checkout', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ posterId:id }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.url) throw new Error(j.error || ('Checkout unavailable (' + r.status + ')'));
+      location.href = j.url;
+    } catch(e) {
+      this.setState({ checkoutBusy: false });
+      this.showToast({ kind:'unknown', title:'Checkout didn’t open', body: String(e.message || e) });
+    }
+  };
+  loadThanks = async () => {
+    let sid = '';
+    try { sid = new URLSearchParams(location.search).get('session_id') || ''; } catch(e){}
+    if (!sid) { this.setState({ thanks:{ status:'error', error:'This page needs the session_id from your Stripe receipt link.' } }); return; }
+    this.setState({ thanks:{ status:'loading' } });
+    try {
+      const r = await fetch('/api/download?session_id=' + encodeURIComponent(sid), { cache:'no-store' });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.url) throw new Error(j.error || ('Download service returned ' + r.status));
+      this.setState({ thanks:{ status:'ready', ...j } });
+    } catch(e) {
+      this.setState({ thanks:{ status:'error', error: String(e.message || e) } });
+    }
+  };
+  refreshThanks = () => this.loadThanks();
+
   showToast = (t) => {
     this.setState({ toast:t });
     if (this.toastTimer) clearTimeout(this.toastTimer);
@@ -6240,8 +6456,60 @@ class Component extends DCLogic {
       };
     }
 
+    // ---------- posters (store) ----------
+    const postersList = s.posters || [];
+    const posterCards = postersList.map(p => ({
+      id: p.id, title: p.title, sizeLabel: p.size_label, price: this.posterPrice(p.price_cents, p.currency),
+      img: this.posterImg(p.preview_path),
+      onOpen: () => this.openPoster(p.id),
+      cardStyle: { cursor:'pointer', borderRadius:'16px', overflow:'hidden', border:'1px solid rgba(255,255,255,0.09)', background:'linear-gradient(180deg,rgba(18,21,27,0.85),rgba(11,13,17,0.85))', transition:'all .2s ease' },
+      accentBar: { position:'absolute', left:0, right:0, bottom:0, height:'3px', background: p.accent || accent },
+    }));
+    const cur = postersList.find(p => p.id === s.posterId) || null;
+    let poster = null;
+    if (cur) {
+      const gallery = [cur.preview_path].concat(cur.mockup_paths || []).filter(Boolean);
+      const gi = Math.min(s.galleryIdx || 0, Math.max(0, gallery.length - 1));
+      poster = {
+        id: cur.id, title: cur.title, tagline: cur.tagline || ('Every ' + cur.title + ' film, in the order it actually happens.'),
+        description: cur.description || '', hasDescription: !!cur.description,
+        sizeLabel: cur.size_label, fileLabel: cur.file_label,
+        price: this.posterPrice(cur.price_cents, cur.currency), currencyLabel: (cur.currency || 'aud').toUpperCase() + ' · incl. GST',
+        heroImg: this.posterImg(gallery[gi]),
+        thumbs: gallery.map((g, i) => ({
+          img: this.posterImg(g), onPick: () => this.pickGallery(i),
+          style: { flex:'none', width:'84px', height:'84px', padding:0, borderRadius:'10px', overflow:'hidden', border: '2px solid ' + (i === gi ? (cur.accent || accent) : 'rgba(255,255,255,0.12)'), opacity: i === gi ? 1 : 0.7, background:'#0b0d11', cursor:'pointer', transition:'all .15s ease' },
+        })),
+        eyebrowStyle: { fontFamily:"'JetBrains Mono', monospace", fontSize:'11.5px', fontWeight:'600', letterSpacing:'0.2em', textTransform:'uppercase', color: cur.accent || accent },
+        hasMap: !!(cur.franchise_id && this.data[cur.franchise_id]),
+        onOpenMap: () => this.openFranchise(cur.franchise_id),
+      };
+    }
+    const th = s.thanks || { status:'loading' };
+    const thanks = {
+      title: th.title || '', sizeLabel: th.sizeLabel || '', fileLabel: th.fileLabel || '', url: th.url || '#',
+      emailLine: th.email ? ('A receipt with this download page has been sent to ' + th.email + '.') : '',
+      error: th.error || '',
+    };
+    const buyBtnStyle = { padding:'16px 24px', borderRadius:'12px', border:'none', background: s.checkoutBusy ? '#9aa6b4' : (cur && cur.accent ? cur.accent : accent), color:'#0a0c10', fontFamily:"'Oswald', sans-serif", fontWeight:'600', fontSize:'16px', letterSpacing:'0.05em', textTransform:'uppercase', cursor: s.checkoutBusy ? 'wait' : 'pointer', transition:'all .16s ease', width:'100%' };
+
     return {
       ambientMotion, stillAmbient: !ambientMotion,
+
+      // posters (store)
+      isPosters: s.screen === 'posters', isPosterDetail: s.screen === 'poster', isPosterThanks: s.screen === 'posterThanks',
+      navPostersStyle: this.navBtn(s.screen === 'posters' || s.screen === 'poster' || s.screen === 'posterThanks'),
+      goPosters: this.goPosters,
+      posterCards,
+      posterCount: postersList.length ? (postersList.length + ' poster' + (postersList.length === 1 ? '' : 's')) : '',
+      postersLoading: !s.postersLoaded && !!this.db,
+      postersEmpty: s.postersLoaded && postersList.length === 0,
+      poster: poster || { title:'', tagline:'', description:'', hasDescription:false, sizeLabel:'', fileLabel:'', price:'', currencyLabel:'', heroImg:'', thumbs:[], eyebrowStyle:{}, hasMap:false, onOpenMap:()=>{} },
+      posterReady: !!poster, posterMissing: s.postersLoaded && !poster,
+      buyPoster: this.buyPoster, buyBtnStyle,
+      buyLabel: s.checkoutBusy ? 'Opening secure checkout…' : 'Buy & download',
+      thanks, thanksLoading: th.status === 'loading', thanksReady: th.status === 'ready', thanksError: th.status === 'error',
+      refreshThanks: this.refreshThanks,
       isHub: s.screen==='hub', isTimeline: s.screen==='timeline', isContribute: s.screen==='contribute',
       navHubStyle: this.navBtn(s.screen==='hub'),
       navExploreStyle: this.navBtn(s.screen==='timeline'),

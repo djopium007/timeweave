@@ -53,6 +53,30 @@ Implements the "Community Features" requirements:
   Supabase dashboard (Instagram shows a "coming soon" toast — Supabase has no Instagram
   provider). Commenting/suggesting are gated; browsing and voting are not.
 
+## Poster store (Stripe + Supabase Storage)
+
+Route `/posters` (grid) → `/posters/<id>` (mockup gallery + buy panel) → Stripe Checkout →
+`/posters/thanks?session_id=…` (download page). Digital-only: the buyer gets a 15-minute signed
+URL to the print-ready master; the Stripe session id is the receipt and can re-issue a link any time.
+
+- **Catalog**: `public.posters` (public read, RLS). One row per poster: title, tagline, description,
+  `price_cents` (default 1900 = AUD 19), `preview_path`, `mockup_paths[]`, `master_path`,
+  `franchise_id` (links to the hub map), `accent`, `sort_order`, `active`.
+- **Storage**: bucket `poster-previews` (public: `<slug>/preview.jpg`, `<slug>/mockup-N.jpg`) and
+  bucket `poster-masters` (private: `<slug>/<slug>-24x36.jpg`, only ever served via signed URL).
+- **Orders**: `public.poster_orders` (service-role only) written by the webhook and the download API.
+- **API** (Vercel Node functions in `api/`, deps in `package.json`):
+  - `POST /api/checkout {posterId}` → `{url}` (also `GET /api/checkout?poster=<id>` → 303 to Stripe)
+  - `GET /api/download?session_id=cs_…` → verifies `payment_status=paid` with Stripe, records the
+    order, returns a signed URL (`&redirect=1` to 302 straight to the file)
+  - `POST /api/stripe-webhook` → `checkout.session.completed` / async payment / `charge.refunded`
+- **Env vars (Vercel → Project → Settings → Environment Variables)**: `STRIPE_SECRET_KEY`,
+  `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY` (optional: `SUPABASE_URL`, `SITE_URL`).
+- **Loading posters**: `SUPABASE_SERVICE_ROLE_KEY=… npm run posters:sync -- "/path/to/Movie Mock ups"`
+  (needs `npm install` once; add `--dry` to preview, `--only aliens,rambo` to limit). It uploads the
+  `*_24x36.jpg` master, makes a 1200px preview + 1600px mockups, and upserts the `posters` rows.
+  Then set tagline / description / price per poster in the Supabase table editor.
+
 Backend: Supabase project `reelorder` (`fqcdslarscuplbdimgzs`, ap-southeast-2). Tables:
 `profiles`, `pending_projects`, `votes`, `comments`, `comment_likes`, all with RLS (public
 read; comments and suggestions require an authenticated user writing as themselves; votes
