@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     await db().rpc('bump_poster_download', { p_session_id: session.id }).then(() => {}, () => {});
 
     const ext = (poster.master_path.split('.').pop() || 'jpg').toLowerCase();
-    const filename = `ReelOrder - ${poster.title} - Timeline Poster 24x36.${ext}`.replace(/[\\/:*?"<>|]+/g, '');
+    const filename = `ReelOrder - ${poster.title} - Timeline Poster Pack.${ext}`.replace(/[\\/:*?"<>|]+/g, '');
     const { data: signed, error: sErr } = await db().storage
       .from(MASTER_BUCKET)
       .createSignedUrl(poster.master_path, SIGNED_TTL_SECONDS, { download: filename });

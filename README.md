@@ -60,7 +60,7 @@ Route `/posters` (grid) → `/posters/<id>` (mockup gallery + buy panel) → Str
 URL to the print-ready master; the Stripe session id is the receipt and can re-issue a link any time.
 
 - **Catalog**: `public.posters` (public read, RLS). One row per poster: title, tagline, description,
-  `price_cents` (default 1900 = AUD 19), `preview_path`, `mockup_paths[]`, `master_path`,
+  `price_cents` (default 1795 = AUD 17.95), `preview_path`, `mockup_paths[]`, `master_path`,
   `franchise_id` (links to the hub map), `accent`, `sort_order`, `active`.
 - **Storage**: bucket `poster-previews` (public: `<slug>/preview.jpg`, `<slug>/mockup-N.jpg`) and
   bucket `poster-masters` (private: `<slug>/<slug>-24x36.jpg`, only ever served via signed URL).
@@ -72,6 +72,11 @@ URL to the print-ready master; the Stripe session id is the receipt and can re-i
   - `POST /api/stripe-webhook` → `checkout.session.completed` / async payment / `charge.refunded`
 - **Env vars (Vercel → Project → Settings → Environment Variables)**: `STRIPE_SECRET_KEY`,
   `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY` (optional: `SUPABASE_URL`, `SITE_URL`).
+- **Buyer pack**: the sold file is a ZIP (built by the sync script): 2:3 master + A-series, 4:3 and 5:7
+  centre-crops at 300 dpi, a bonus 1290×2796 phone wallpaper, `README.txt` and `assets/ReelOrder-Printing-Guide.pdf`
+  (rendered from `print-guide.html`, which is also live at `/print-guide.html`). `--no-zip` uploads just the master.
+- **Pricing**: default `price_cents` 1795 (AUD 17.95, incl. GST). Research 2026-09: Etsy single original digital
+  posters USD 8–15, bundles USD 3–10, POD physical USD 25–35, Dorothy Film Map £30.
 - **Loading posters**: `SUPABASE_SERVICE_ROLE_KEY=… npm run posters:sync -- "/path/to/Movie Mock ups"`
   (needs `npm install` once; add `--dry` to preview, `--only aliens,rambo` to limit). It uploads the
   `*_24x36.jpg` master, makes a 1200px preview + 1600px mockups, and upserts the `posters` rows.
