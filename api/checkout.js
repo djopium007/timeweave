@@ -45,8 +45,8 @@ export default async function handler(req, res) {
           currency: poster.currency || 'aud',
           unit_amount: poster.price_cents,
           product_data: {
-            name: `${poster.title} — Timeline Poster (digital)${styleLabel}`,
-            description: `${poster.size_label} · ${poster.file_label}`,
+            name: `${poster.title} — Timeline Poster · DIGITAL FILE, nothing shipped${styleLabel}`,
+            description: `Digital download only — no physical poster is posted. ${poster.size_label} · ${poster.file_label}`,
             images: img ? [img] : [],
             metadata: { poster_id: poster.id, style_key: style ? style.key : '' },
           },

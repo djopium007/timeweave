@@ -1073,15 +1073,15 @@
 
       <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;">
         <div style="max-width:60ch;">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#FF7A6E;">Print shop</div>
-          <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(32px,5vw,48px);line-height:1.02;margin:8px 0 12px;letter-spacing:0.01em;">Timeline Posters</h1>
-          <p style="margin:0;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">Every film in a franchise, in the order it actually happens — designed as a 24 × 36 in wall poster. Buy the print-ready file, download it instantly, and print it anywhere: your local print shop, an online lab, or at home.</p>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#FF7A6E;">Digital downloads</div>
+          <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(32px,5vw,48px);line-height:1.02;margin:8px 0 12px;letter-spacing:0.01em;">Timeline Posters <span style="display:inline-flex;align-items:center;vertical-align:middle;margin-left:10px;padding:5px 11px;border-radius:999px;border:1px solid rgba(84,219,255,0.45);background:rgba(84,219,255,0.1);color:#9FE8FF;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">Digital file · nothing is shipped</span></h1>
+          <p style="margin:0;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">Every film in a franchise, in the order it actually happens — designed as a 24 × 36 in wall poster. You're buying the <b style="color:#E9EDF3;">print-ready digital file</b>, not a printed poster: download it the moment payment clears, then print it at home, at Officeworks, or through any online print lab.</p>
         </div>
         <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b7686;white-space:nowrap;">{{ posterCount }}</span>
       </div>
 
       <div style="display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);font-family:'JetBrains Mono',monospace;font-size:12px;color:#8b97a6;">
-        <span>◆ Digital download</span><span>◆ 24 × 36 in + A-series, 4:3, 5:7 · 300 dpi</span><span>◆ Bonus phone wallpaper</span><span>◆ Instant after payment</span><span>◆ Secure checkout by Stripe</span>
+        <span style="color:#9FE8FF;">◆ Digital file only — no physical product, nothing is posted</span><span>◆ 24 × 36 in + A-series, 4:3, 5:7 · 300 dpi</span><span>◆ Bonus phone wallpaper</span><span>◆ Instant after payment</span><span>◆ Secure checkout by Stripe</span>
       </div>
 
       <sc-if value="{{ postersLoading }}" hint-placeholder-val="{{ false }}">
@@ -1097,13 +1097,14 @@
             <div style="position:relative;aspect-ratio:2/3;background:#0b0d11;overflow:hidden;">
               <img src="{{ p.img }}" alt="{{ p.title }} timeline poster" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease;">
               <div style="{{ p.accentBar }}"></div>
+              <span style="position:absolute;top:10px;left:10px;padding:4px 9px;border-radius:999px;background:rgba(84,219,255,0.16);border:1px solid rgba(84,219,255,0.5);color:#BFF0FF;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;backdrop-filter:blur(6px);">Digital download</span>
               <sc-if value="{{ p.hasStyles }}" hint-placeholder-val="{{ false }}">
                 <span style="position:absolute;top:10px;right:10px;padding:4px 9px;border-radius:999px;background:rgba(6,7,10,0.75);border:1px solid rgba(255,255,255,0.14);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#E9EDF3;backdrop-filter:blur(6px);">{{ p.styleCount }}</span>
               </sc-if>
             </div>
             <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;">
               <div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:19px;letter-spacing:0.01em;text-transform:uppercase;line-height:1.1;">{{ p.title }}</div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#7a8696;">{{ p.sizeLabel }}</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#7a8696;">Digital file · {{ p.sizeLabel }}</div>
               <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
                 <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:18px;color:#fff;">{{ p.price }}</span>
                 <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;color:#FF7A6E;">View →</span>
@@ -1141,7 +1142,7 @@
         <!-- buy panel -->
         <div style="position:sticky;top:92px;display:flex;flex-direction:column;gap:18px;padding:26px;border-radius:18px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(180deg,rgba(18,21,27,0.85),rgba(11,13,17,0.85));">
           <div>
-            <div style="{{ poster.eyebrowStyle }}">Timeline poster · Digital pack</div>
+            <div style="{{ poster.eyebrowStyle }}">Digital download · no physical product</div>
             <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(28px,4vw,40px);line-height:1.02;margin:8px 0 8px;letter-spacing:0.01em;text-transform:uppercase;">{{ poster.title }}</h1>
             <p style="margin:0;color:#A9B4C2;font-size:15px;line-height:1.6;text-wrap:pretty;">{{ poster.tagline }}</p>
           </div>
@@ -1160,7 +1161,7 @@
           <div style="display:flex;flex-direction:column;gap:9px;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0;font-size:13.5px;">
             <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#7a8696;">Size</span><span style="color:#E9EDF3;text-align:right;">{{ poster.sizeLabel }}</span></div>
             <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#7a8696;">File</span><span style="color:#E9EDF3;text-align:right;">{{ poster.fileLabel }}</span></div>
-            <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#7a8696;">Delivery</span><span style="color:#E9EDF3;text-align:right;">Instant ZIP download after payment</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#7a8696;">Delivery</span><span style="color:#E9EDF3;text-align:right;">Instant ZIP download after payment — <b>nothing is shipped</b></span></div>
             <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#7a8696;">Licence</span><span style="color:#E9EDF3;text-align:right;">Personal use · print as many copies as you like</span></div>
           </div>
 
@@ -1170,6 +1171,7 @@
           </div>
 
           <button onclick="{{ buyPoster }}" style="{{ buyBtnStyle }}" style-hover="transform:translateY(-2px);filter:brightness(1.06);">{{ buyLabel }}</button>
+          <div style="display:flex;gap:12px;padding:13px 15px;border-radius:12px;border:1px solid rgba(84,219,255,0.35);background:rgba(84,219,255,0.07);font-size:13.5px;color:#CFEFFA;line-height:1.55;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9FE8FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg><div><b style="color:#9FE8FF;">This is a digital file, not a printed poster.</b> No physical item will be posted to you. You download a ZIP and print it yourself — at home, a print shop or an online lab.</div></div>
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#6b7686;line-height:1.6;">Secure checkout by Stripe · Cards, Apple Pay &amp; Google Pay · Your download link also lands in your receipt email.</div>
 
           <sc-if value="{{ poster.hasMap }}" hint-placeholder-val="{{ false }}">
@@ -6538,7 +6540,7 @@ class Component extends DCLogic {
       poster: poster || { title:'', tagline:'', description:'', hasDescription:false, sizeLabel:'', fileLabel:'', price:'', currencyLabel:'', heroImg:'', thumbs:[], styles:[], hasStyles:false, styleLabel:'', eyebrowStyle:{}, hasMap:false, onOpenMap:()=>{} },
       posterReady: !!poster, posterMissing: s.postersLoaded && !poster,
       buyPoster: this.buyPoster, buyBtnStyle,
-      buyLabel: s.checkoutBusy ? 'Opening secure checkout…' : 'Buy & download',
+      buyLabel: s.checkoutBusy ? 'Opening secure checkout…' : 'Buy & download the file',
       thanks, thanksLoading: th.status === 'loading', thanksReady: th.status === 'ready', thanksError: th.status === 'error',
       refreshThanks: this.refreshThanks,
       isHub: s.screen==='hub', isTimeline: s.screen==='timeline', isContribute: s.screen==='contribute',
