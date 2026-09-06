@@ -71,7 +71,10 @@ URL to the print-ready master; the Stripe session id is the receipt and can re-i
     order, returns a signed URL (`&redirect=1` to 302 straight to the file)
   - `POST /api/stripe-webhook` → `checkout.session.completed` / async payment / `charge.refunded`
 - **Env vars (Vercel → Project → Settings → Environment Variables)**: `STRIPE_SECRET_KEY`,
-  `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY` (optional: `SUPABASE_URL`, `SITE_URL`).
+  `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY` (optional: `SUPABASE_URL`, `SITE_URL`,
+  `ORDER_EMAIL_FROM` default `ReelOrder <orders@reelorder.com>`, `SUPPORT_EMAIL` reply-to).
+- **Confirmation email**: sent via Resend once per paid session (`poster_orders.email_sent_at`), from the webhook,
+  with `api/download.js` as fallback sender. Contains the permanent download-page link + print guide.
 - **Buyer pack**: the sold file is a ZIP (built by the sync script): 2:3 master + A-series, 4:3 and 5:7
   centre-crops at 300 dpi, a bonus 1290×2796 phone wallpaper, `README.txt` and `assets/ReelOrder-Printing-Guide.pdf`
   (rendered from `print-guide.html`, which is also live at `/print-guide.html`). `--no-zip` uploads just the master.

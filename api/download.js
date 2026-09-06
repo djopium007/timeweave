@@ -3,7 +3,7 @@
 //
 // The only thing that unlocks a master file is a Stripe Checkout Session whose payment_status is 'paid'.
 // The session id is the buyer's receipt: it lives in the success URL and in their Stripe email.
-import { stripe, db, json, recordOrder, MASTER_BUCKET } from './_lib.js';
+import { stripe, db, json, recordOrder, maybeSendOrderEmail, MASTER_BUCKET } from './_lib.js';
 
 const SIGNED_TTL_SECONDS = 15 * 60;
 
@@ -33,6 +33,7 @@ export default async function handler(req, res) {
 
     // Make sure an order row exists even if the webhook was late/missed, then count the download.
     await recordOrder(session);
+    await maybeSendOrderEmail(session, req);   // no-op if the webhook already sent it
     await db().rpc('bump_poster_download', { p_session_id: session.id }).then(() => {}, () => {});
 
     const ext = (masterPath.split('.').pop() || 'zip').toLowerCase();

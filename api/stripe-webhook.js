@@ -1,7 +1,8 @@
 // POST /api/stripe-webhook — Stripe -> order records in Supabase.
 // Configure in Stripe Dashboard: endpoint https://reelorder.com/api/stripe-webhook,
 // events: checkout.session.completed, checkout.session.async_payment_succeeded, charge.refunded
-import { stripe, db, json, readRawBody, recordOrder } from './_lib.js';
+// Sends the ReelOrder confirmation email (Resend) once per paid session; api/download.js is the fallback sender.
+import { stripe, db, json, readRawBody, recordOrder, maybeSendOrderEmail } from './_lib.js';
 
 export const config = { api: { bodyParser: false } };
 
@@ -24,7 +25,7 @@ export default async function handler(req, res) {
       case 'checkout.session.completed':
       case 'checkout.session.async_payment_succeeded': {
         const session = event.data.object;
-        if (session.payment_status === 'paid') await recordOrder(session);
+        if (session.payment_status === 'paid') { await recordOrder(session); await maybeSendOrderEmail(session, req); }
         break;
       }
       case 'checkout.session.async_payment_failed': {

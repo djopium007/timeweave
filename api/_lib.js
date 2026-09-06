@@ -30,9 +30,9 @@ export function previewUrl(path) {
 
 export function siteOrigin(req) {
   if (process.env.SITE_URL) return process.env.SITE_URL.replace(/\/$/, '');
-  const proto = (req.headers['x-forwarded-proto'] || 'https').split(',')[0];
-  const host = req.headers['x-forwarded-host'] || req.headers.host;
-  return `${proto}://${host}`;
+  const proto = ((req && req.headers && req.headers['x-forwarded-proto']) || 'https').split(',')[0];
+  const host = req && req.headers && (req.headers['x-forwarded-host'] || req.headers.host);
+  return host ? `${proto}://${host}` : 'https://reelorder.com';
 }
 
 export function json(res, status, body) {
@@ -74,4 +74,74 @@ export async function recordOrder(session) {
   const { error } = await db().from('poster_orders').upsert(row, { onConflict: 'stripe_session_id', ignoreDuplicates: false });
   if (error) throw error;
   return row;
+}
+
+// ---------------------------------------------------------------------------------------------
+// Order confirmation email (Resend). Sent once per session, from the webhook (or from the
+// download API as a fallback if the webhook was late). Requires RESEND_API_KEY.
+export const FROM_EMAIL = process.env.ORDER_EMAIL_FROM || 'ReelOrder <orders@reelorder.com>';
+export const SUPPORT_EMAIL = process.env.SUPPORT_EMAIL || 'orders@reelorder.com';
+
+function esc(s) { return String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+export function orderEmailHtml({ title, styleLabel, downloadUrl, guideUrl, amountLabel }) {
+  const t = esc(title), st = styleLabel ? ` <span style="color:#9DB0C4">· ${esc(styleLabel)}</span>` : '';
+  return `<!doctype html><html><body style="margin:0;background:#0a0c10;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#E9EDF3">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0a0c10"><tr><td align="center" style="padding:32px 16px">
+<table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%">
+<tr><td style="padding:0 0 22px;font-size:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase">Reel<span style="color:#FF5747">Order</span></td></tr>
+<tr><td style="background:#12151b;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px">
+  <div style="font-family:Menlo,Consolas,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#3DDC84;margin-bottom:8px">Payment received</div>
+  <h1 style="margin:0 0 10px;font-size:26px;line-height:1.15;color:#fff">Your ${t} poster is ready${st}</h1>
+  <p style="margin:0 0 22px;color:#A9B4C2;font-size:15px;line-height:1.6">Thanks for your order${amountLabel ? ` (${esc(amountLabel)})` : ''}. This is a <b style="color:#E9EDF3">digital file</b> — nothing is posted to you. Your pack has the poster in four print ratios at 300&nbsp;dpi plus a bonus phone wallpaper.</p>
+  <a href="${downloadUrl}" style="display:inline-block;background:#ffffff;color:#0a0c10;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:.04em;text-transform:uppercase;padding:14px 24px;border-radius:10px">&#8595;&nbsp; Download your poster pack</a>
+  <p style="margin:18px 0 0;color:#8b97a6;font-size:13px;line-height:1.7">This page issues a fresh download link every time you open it, so keep this email — it's your permanent way back to the file.<br>Not sure which file to print? <a href="${guideUrl}" style="color:#9FE8FF">Read the printing guide</a> (it's also inside the ZIP).</p>
+</td></tr>
+<tr><td style="padding:22px 4px 0;color:#6b7686;font-size:12px;line-height:1.7;font-family:Menlo,Consolas,monospace">Personal-use licence: print as many copies as you like; please don't resell or share the file.<br>Questions? Reply to this email.<br><a href="https://reelorder.com/posters" style="color:#9DB0C4">reelorder.com/posters</a></td></tr>
+</table></td></tr></table></body></html>`;
+}
+
+/** Send the confirmation email for a paid Checkout Session, once. Never throws. */
+export async function maybeSendOrderEmail(session, req) {
+  try {
+    if (!process.env.RESEND_API_KEY) { console.warn('RESEND_API_KEY not set — order email skipped'); return { skipped: 'no_api_key' }; }
+    const to = (session.customer_details && session.customer_details.email) || session.customer_email;
+    if (!to) return { skipped: 'no_email' };
+    const { data: order } = await db().from('poster_orders').select('id,email_sent_at,poster_id,style_key').eq('stripe_session_id', session.id).maybeSingle();
+    if (!order) return { skipped: 'no_order_row' };
+    if (order.email_sent_at) return { skipped: 'already_sent' };
+    const { data: poster } = await db().from('posters').select('title,styles').eq('id', order.poster_id).maybeSingle();
+    const styles = poster && Array.isArray(poster.styles) ? poster.styles : [];
+    const style = order.style_key ? styles.find(x => x.key === order.style_key) : null;
+    const origin = siteOrigin(req);
+    const title = (poster && poster.title) || 'Timeline';
+    const amountLabel = session.amount_total != null && session.currency ? `${(session.currency || '').toUpperCase()} ${(session.amount_total / 100).toFixed(2)}` : '';
+    const html = orderEmailHtml({
+      title, styleLabel: style && styles.length > 1 ? style.label : '',
+      downloadUrl: `${origin}/posters/thanks?session_id=${encodeURIComponent(session.id)}`,
+      guideUrl: `${origin}/print-guide.html`, amountLabel,
+    });
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: FROM_EMAIL, to: [to], reply_to: SUPPORT_EMAIL,
+        subject: `Your ${title} poster is ready — download inside`,
+        html,
+        text: `Thanks for your ReelOrder order. Your ${title} poster pack (digital file, nothing is posted) is ready.\n\nDownload: ${origin}/posters/thanks?session_id=${session.id}\nPrinting guide: ${origin}/print-guide.html\n\nKeep this email — the link above always issues a fresh download.`,
+        headers: { 'X-Entity-Ref-ID': session.id },
+      }),
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      await db().from('poster_orders').update({ email_error: `${r.status} ${JSON.stringify(j).slice(0, 300)}` }).eq('id', order.id);
+      console.error('resend error', r.status, j);
+      return { error: r.status };
+    }
+    await db().from('poster_orders').update({ email_sent_at: new Date().toISOString(), email_error: null }).eq('id', order.id);
+    return { sent: j.id };
+  } catch (e) {
+    console.error('order email failed', e);
+    return { error: e.message };
+  }
 }
