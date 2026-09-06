@@ -88,7 +88,7 @@ h1{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(32px,5vw,48px
 .callout svg{flex:none;margin-top:2px}
 footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,48px);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
 </style>
-<div class="bar"><b>PREVIEW BUILD</b><span>Not live · catalog not yet published · checkout disabled · rows will be uploaded inactive</span><span>13 franchises · 31 styles · AUD 17.95</span></div>
+<div class="bar"><b>PREVIEW BUILD</b><span>Not live · catalog not yet published · checkout disabled · rows will be uploaded inactive</span><span>13 franchises · 31 styles · USD 12.95</span></div>
 <header><div class="brand" onclick="go('grid')"><svg width="28" height="28" viewBox="0 0 48 48" fill="none" aria-hidden="true"><g transform="translate(0 3.5)"><circle cx="12" cy="11" r="7" stroke="#E9EDF3" stroke-width="2.8"/><circle cx="12" cy="11" r="2" fill="#E9EDF3"/><circle cx="27" cy="11" r="5" stroke="#E9EDF3" stroke-width="2.8"/><circle cx="27" cy="11" r="1.8" fill="#E9EDF3"/><rect x="5" y="21" width="27" height="15" rx="4" stroke="#E9EDF3" stroke-width="2.8"/><path d="M34 26 L 46 21.5 M34 31 L 46 35.5" stroke="#FF2A1F" stroke-width="2.8" stroke-linecap="round"/><circle cx="12" cy="28.5" r="3" fill="#FF2A1F"/></g></svg><span>Reel<b>Order</b></span></div>
 <nav><span>Hub</span><span>Timeline</span><span>Queue</span><span class="on">Posters</span></nav></header>
 <main>
@@ -106,7 +106,7 @@ footer{border-top:1px solid var(--line);padding:22px clamp(16px,4vw,48px);font-f
       <div><div class="eyebrow" id="eb">Digital download · no physical product</div><h2 id="dt"></h2><p id="tag"></p></div>
       <div id="stylesWrap"><div class="lbl"><span>Choose a style</span><span id="stl"></span></div><div class="styles" id="styles" style="margin-top:8px"></div></div>
       <div class="spec"><div><span>Size</span><span>24 × 36 in (61 × 91 cm)</span></div><div><span>File</span><span id="fl">ZIP pack · 300 dpi · 4 ratios · wallpaper</span></div><div><span>Delivery</span><span>Instant ZIP download after payment — <b>nothing is shipped</b></span></div><div><span>Licence</span><span>Personal use · print as many copies as you like</span></div></div>
-      <div class="big"><b>$17.95</b><span class="mono">AUD · incl. GST</span></div>
+      <div class="big"><b>$12.95</b><span class="mono">USD</span></div>
       <button class="buy" id="buy" disabled>Buy &amp; download the file — preview only</button>
       <div class="callout"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9FE8FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg><div><b>This is a digital file, not a printed poster.</b> No physical item will be posted to you. You download a ZIP and print it yourself — at home, a print shop or an online lab.</div></div>
       <div class="note">Secure checkout by Stripe · Cards, Apple Pay &amp; Google Pay · Your download link also lands in your receipt email.</div>
@@ -121,7 +121,7 @@ const DATA = __DATA__;
 const cards = document.getElementById('cards');
 DATA.forEach((p,i)=>{
   const b=document.createElement('button'); b.className='card'; b.onclick=()=>open(i);
-  b.innerHTML=`<div class="img"><img src="${p.styles[0].preview}" alt="${p.title} poster" loading="lazy"><div class="acc" style="background:${p.accent}"></div><span class="digital">Digital download</span>${p.styles.length>1?`<span class="badge">${p.styles.length} styles</span>`:''}</div><div class="body"><div class="t">${p.title}</div><div class="mono">Digital file · 24 × 36 in · 300 dpi</div><div class="row"><span class="price">$17.95</span><span class="view">View →</span></div></div>`;
+  b.innerHTML=`<div class="img"><img src="${p.styles[0].preview}" alt="${p.title} poster" loading="lazy"><div class="acc" style="background:${p.accent}"></div><span class="digital">Digital download</span>${p.styles.length>1?`<span class="badge">${p.styles.length} styles</span>`:''}</div><div class="body"><div class="t">${p.title}</div><div class="mono">Digital file · 24 × 36 in · 300 dpi</div><div class="row"><span class="price">$12.95</span><span class="view">View →</span></div></div>`;
   cards.appendChild(b);
 });
 let cur=0, sk=0, gi=0;

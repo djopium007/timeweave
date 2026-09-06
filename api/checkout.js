@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       line_items: [{
         quantity: 1,
         price_data: {
-          currency: poster.currency || 'aud',
+          currency: poster.currency || 'usd',
           unit_amount: poster.price_cents,
           product_data: {
             name: `${poster.title} — Timeline Poster · DIGITAL FILE, nothing shipped${styleLabel}`,

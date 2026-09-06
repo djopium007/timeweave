@@ -75,7 +75,7 @@ URL to the print-ready master; the Stripe session id is the receipt and can re-i
 - **Buyer pack**: the sold file is a ZIP (built by the sync script): 2:3 master + A-series, 4:3 and 5:7
   centre-crops at 300 dpi, a bonus 1290×2796 phone wallpaper, `README.txt` and `assets/ReelOrder-Printing-Guide.pdf`
   (rendered from `print-guide.html`, which is also live at `/print-guide.html`). `--no-zip` uploads just the master.
-- **Pricing**: default `price_cents` 1795 (AUD 17.95, incl. GST). Research 2026-09: Etsy single original digital
+- **Pricing**: default `price_cents` 1295 (USD 12.95 — switched from AUD 17.95 on 2026-09-06 for the international market). Research 2026-09: Etsy single original digital
   posters USD 8–15, bundles USD 3–10, POD physical USD 25–35, Dorothy Film Map £30.
 - **Styles**: `posters.styles` (jsonb array `{key,label,preview_path,mockup_paths[],master_path}`) — one product per
   franchise with a style picker (`/posters/<id>?style=v2`). Checkout/download carry `style_key` in Stripe metadata.

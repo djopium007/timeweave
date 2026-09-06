@@ -6244,7 +6244,7 @@ class Component extends DCLogic {
   POSTER_PREVIEW_BASE = 'https://fqcdslarscuplbdimgzs.supabase.co/storage/v1/object/public/poster-previews/';
   posterImg = (p) => p ? this.POSTER_PREVIEW_BASE + p : '';
   posterPrice = (cents, cur) => {
-    try { return new Intl.NumberFormat('en-AU', { style:'currency', currency:(cur||'aud').toUpperCase(), minimumFractionDigits: cents % 100 === 0 ? 0 : 2 }).format(cents/100); }
+    try { return new Intl.NumberFormat('en-US', { style:'currency', currency:(cur||'usd').toUpperCase(), minimumFractionDigits: cents % 100 === 0 ? 0 : 2 }).format(cents/100); }
     catch(e) { return '$' + (cents/100).toFixed(2); }
   };
   goPosters = () => { this.setState({ screen:'posters' }); this.pushRoute('/posters'); this.toTop(); this.loadPosters(); };
@@ -6502,7 +6502,7 @@ class Component extends DCLogic {
         id: cur.id, title: cur.title, tagline: cur.tagline || ('Every ' + cur.title + ' film, in the order it actually happens.'),
         description: cur.description || '', hasDescription: !!cur.description,
         sizeLabel: cur.size_label, fileLabel: cur.file_label,
-        price: this.posterPrice(cur.price_cents, cur.currency), currencyLabel: (cur.currency || 'aud').toUpperCase() + ' · incl. GST',
+        price: this.posterPrice(cur.price_cents, cur.currency), currencyLabel: (cur.currency || 'usd').toUpperCase(),
         heroImg: this.posterImg(gallery[gi]),
         thumbs: gallery.map((g, i) => ({
           img: this.posterImg(g), onPick: () => this.pickGallery(i),

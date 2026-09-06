@@ -58,6 +58,7 @@ RATIOS = [
   ('4 - 5x7 ratio',      5, 7,      (5906, 8268),  '50x70cm'),
 ]
 WALL = (1290, 2796)
+MAX_MASTER_BYTES = 24 * 1048576   # keep every pack comfortably under Supabase's 50 MB per-object limit
 
 def ver_of(path):
     m = re.search(r'_v(\d)', os.path.basename(path)) or re.search(r'/v(\d)/', path)
@@ -124,7 +125,12 @@ def build_style(slug, title, ver, master_path, mockups, out_dir):
             tmp = zip_path + '.part'
             with zipfile.ZipFile(tmp, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as z:
                 for folder, rw, rh, maxpx, note in RATIOS:
-                    data = open(master_path, 'rb').read() if (rw, rh) == (2, 3) else jpeg_bytes(crop_ratio(im, rw, rh, maxpx))
+                    if (rw, rh) == (2, 3):
+                        data = open(master_path, 'rb').read()
+                        # Supabase free tier caps a single upload at 50 MB; a q100 master alone can be 30-37 MB.
+                        if len(data) > MAX_MASTER_BYTES: data = jpeg_bytes(im, 93, 0); print(f'   master re-encoded to {len(data)/1048576:.1f} MB (was over {MAX_MASTER_BYTES//1048576} MB)')
+                    else:
+                        data = jpeg_bytes(crop_ratio(im, rw, rh, maxpx))
                     z.writestr(f'{root}/{folder}/{safe} - {note} - 300dpi.jpg', data)
                     print(f'   pack {folder}: {len(data)/1048576:.1f} MB', flush=True)
                 W, H = im.size; cw = round(H * WALL[0] / WALL[1]); l = (W - cw) // 2
