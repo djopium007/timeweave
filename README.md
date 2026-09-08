@@ -152,3 +152,13 @@ set its row to `Mapped` rather than deleting it, so its vote count survives.
 Resend to `CONTRIBUTE_NOTIFY_EMAIL` (default `opi@jayasinghe.me`; reply-to = the contributor when they left an email).
 Contributors who leave an email get an acknowledgement. Honeypot field + 5/hour/IP rate limit. Queue position = count of
 `status='pending'` rows. Review rows with `select * from contributions where status='pending' order by created_at;`.
+
+## Admin portal (`/admin`)
+
+Sign in to reelorder.com with an account listed in the `admins` table (currently Opi's Facebook login) and an **Admin**
+item appears in the nav. Tabs: **Inbox** (contributions + contact messages: reply-by-email, reviewing/accept/reject/delete),
+**Comments** (search; hide/unhide, delete, ban/unban — comments still publish instantly; hidden ones are filtered by RLS
+`comments_select using (hidden = false)`; banned users fail the `comments_insert` policy), **Orders** (poster orders with
+Stripe + download-page links, revenue summary). Everything goes through `api/admin.js`, which verifies the caller's Supabase
+JWT and requires a row in `admins`. Grant another admin: `insert into admins (user_id, note) values ('<auth.users id>', '…');`.
+

@@ -567,6 +567,7 @@
       <button onclick="{{ goQueue }}" style="{{ navQueueStyle }}">Queue</button>
       <button onclick="{{ goPosters }}" style="{{ navPostersStyle }}">Posters</button>
       <button onclick="{{ goContact }}" style="{{ navContactStyle }}">Contact</button>
+      <sc-if value="{{ isAdminUser }}" hint-placeholder-val="{{ false }}"><button onclick="{{ goAdmin }}" style="{{ navAdminStyle }}">Admin</button></sc-if>
       <button onclick="{{ goContribute }}" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:9px;border:1px solid rgba(255,42,31,0.45);background:rgba(255,42,31,0.12);color:#FF7A6E;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;" style-hover="background:rgba(255,42,31,0.2);border-color:rgba(255,42,31,0.7);color:#fff;">Contribute</button>
       <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}">
         <button onclick="{{ openAuth }}" style="margin-left:6px;padding:9px 18px;border-radius:9px;border:none;background:#fff;color:#0a0c10;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:transform .16s ease;" style-hover="transform:translateY(-1px);">Sign in</button>
@@ -1263,6 +1264,138 @@
     </div>
     </sc-if>
 
+    <!-- ============ ADMIN ============ -->
+    <sc-if value="{{ isAdminScreen }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1100px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(20px,5vw,56px) 96px;">
+      <sc-if value="{{ adminDenied }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:520px;margin:40px auto;text-align:center;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#F5A623;">Admin</div>
+          <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(28px,4vw,40px);line-height:1.05;margin:10px 0 12px;">{{ adminDeniedTitle }}</h1>
+          <p style="margin:0 0 22px;color:#A9B4C2;font-size:15px;line-height:1.6;">{{ adminDeniedBody }}</p>
+          <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}"><button onclick="{{ openAuth }}" style="padding:12px 24px;border-radius:10px;border:none;background:#fff;color:#0a0c10;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;">Sign in</button></sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ adminReady }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;">
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#9FE8FF;">Admin</div>
+            <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(28px,4vw,40px);line-height:1.02;margin:8px 0 0;letter-spacing:0.01em;">Manage ReelOrder</h1>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button onclick="{{ adminTabInbox }}" style="{{ adminTabInboxStyle }}">Inbox {{ adminInboxCount }}</button>
+            <button onclick="{{ adminTabComments }}" style="{{ adminTabCommentsStyle }}">Comments</button>
+            <button onclick="{{ adminTabOrders }}" style="{{ adminTabOrdersStyle }}">Orders</button>
+            <button onclick="{{ adminReload }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;" title="Reload">↻</button>
+          </div>
+        </div>
+
+        <sc-if value="{{ adminLoading }}" hint-placeholder-val="{{ false }}"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7a8696;padding:8px 0 16px;">Loading…</div></sc-if>
+        <sc-if value="{{ adminError }}" hint-placeholder-val="{{ false }}"><div style="padding:12px 16px;border-radius:10px;border:1px solid rgba(245,166,35,0.4);background:rgba(245,166,35,0.08);color:#F5D9A6;font-size:13.5px;margin-bottom:16px;">{{ adminErrorText }}</div></sc-if>
+
+        <!-- INBOX -->
+        <sc-if value="{{ adminIsInbox }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;">
+            <button onclick="{{ inboxFilterPending }}" style="{{ inboxFilterPendingStyle }}">Pending</button>
+            <button onclick="{{ inboxFilterReviewing }}" style="{{ inboxFilterReviewingStyle }}">Reviewing</button>
+            <button onclick="{{ inboxFilterAll }}" style="{{ inboxFilterAllStyle }}">All</button>
+          </div>
+          <sc-if value="{{ inboxEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:36px;border-radius:14px;border:1px dashed rgba(255,255,255,0.14);text-align:center;color:#7a8696;font-size:14px;">Nothing here.</div></sc-if>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <sc-for list="{{ inboxRows }}" as="r" hint-placeholder-count="2">
+              <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.025);padding:16px 18px;display:flex;flex-direction:column;gap:10px;">
+                <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;align-items:baseline;">
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;min-width:0;">
+                    <span style="{{ r.kindStyle }}">{{ r.kind }}</span>
+                    <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.01em;">{{ r.title }}</span>
+                    <span style="{{ r.statusStyle }}">{{ r.status }}</span>
+                  </div>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#6b7686;">{{ r.when }}</span>
+                </div>
+                <div style="font-size:13.5px;color:#9DB0C4;">{{ r.from }}</div>
+                <div style="white-space:pre-wrap;font-size:14px;line-height:1.55;color:#E9EDF3;background:rgba(6,7,10,0.5);border-radius:10px;padding:12px 14px;">{{ r.note }}</div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                  <sc-if value="{{ r.hasEmail }}" hint-placeholder-val="{{ true }}"><a href="{{ r.mailto }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;text-decoration:none;display:inline-block;">✉ Reply</a></sc-if>
+                  <button onclick="{{ r.onReviewing }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;">Reviewing</button>
+                  <button onclick="{{ r.onAccepted }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;color:#3DDC84;">✓ Accept / done</button>
+                  <button onclick="{{ r.onRejected }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;color:#F5A623;">Reject</button>
+                  <button onclick="{{ r.onDelete }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;color:#FF7A6E;margin-left:auto;">Delete</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- COMMENTS -->
+        <sc-if value="{{ adminIsComments }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;">
+            <input value="{{ adminQ }}" onchange="{{ onAdminQ }}" placeholder="Search comments, names, handles…" style="flex:1;min-width:220px;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:10px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 13px;">
+            <button onclick="{{ adminSearch }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;">Search</button>
+            <button onclick="{{ commentsFilterVisible }}" style="{{ commentsFilterVisibleStyle }}">Visible</button>
+            <button onclick="{{ commentsFilterHidden }}" style="{{ commentsFilterHiddenStyle }}">Hidden</button>
+            <button onclick="{{ commentsFilterAll }}" style="{{ commentsFilterAllStyle }}">All</button>
+          </div>
+          <p style="margin:0 0 14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#6b7686;line-height:1.6;">Comments publish instantly. Hide removes one silently (reversible); Delete is permanent; Ban stops the author posting again and hides everything they've written.</p>
+          <sc-if value="{{ commentsEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:36px;border-radius:14px;border:1px dashed rgba(255,255,255,0.14);text-align:center;color:#7a8696;font-size:14px;">No comments match.</div></sc-if>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <sc-for list="{{ commentRows }}" as="c" hint-placeholder-count="2">
+              <div style="{{ c.cardStyle }}">
+                <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;align-items:baseline;">
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;">
+                    <span style="font-weight:600;font-size:14px;">{{ c.name }}</span>
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#7a8696;">{{ c.handle }}</span>
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#9FE8FF;cursor:pointer;" onclick="{{ c.onOpenContext }}">{{ c.context }}</span>
+                    <sc-if value="{{ c.isHidden }}" hint-placeholder-val="{{ false }}"><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;padding:2px 7px;border-radius:6px;background:rgba(245,166,35,0.18);color:#F5A623;">hidden</span></sc-if>
+                    <sc-if value="{{ c.isBanned }}" hint-placeholder-val="{{ false }}"><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;padding:2px 7px;border-radius:6px;background:rgba(255,42,31,0.18);color:#FF7A6E;">banned</span></sc-if>
+                  </div>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#6b7686;">{{ c.when }}</span>
+                </div>
+                <div style="white-space:pre-wrap;font-size:14px;line-height:1.55;color:#E9EDF3;">{{ c.body }}</div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                  <button onclick="{{ c.onToggleHide }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;">{{ c.hideLabel }}</button>
+                  <button onclick="{{ c.onDelete }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;color:#FF7A6E;">Delete</button>
+                  <button onclick="{{ c.onToggleBan }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;margin-left:auto;color:#F5A623;">{{ c.banLabel }}</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- ORDERS -->
+        <sc-if value="{{ adminIsOrders }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
+            <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.025);padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:150px;"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">Paid orders</div><div style="font-family:'Oswald',sans-serif;font-weight:700;font-size:28px;">{{ ordersPaidCount }}</div></div>
+            <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.025);padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:150px;"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">Revenue (paid)</div><div style="font-family:'Oswald',sans-serif;font-weight:700;font-size:28px;">{{ ordersRevenue }}</div></div>
+            <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.025);padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:150px;"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">Refunded</div><div style="font-family:'Oswald',sans-serif;font-weight:700;font-size:28px;">{{ ordersRefundedCount }}</div></div>
+          </div>
+          <sc-if value="{{ ordersEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:36px;border-radius:14px;border:1px dashed rgba(255,255,255,0.14);text-align:center;color:#7a8696;font-size:14px;">No orders yet.</div></sc-if>
+          <div style="overflow-x:auto;border-radius:14px;border:1px solid rgba(255,255,255,0.09);">
+            <table style="width:100%;border-collapse:collapse;font-size:13.5px;min-width:820px;">
+              <thead><tr style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;text-align:left;">
+                <th style="padding:12px 14px;">When</th><th style="padding:12px 14px;">Poster</th><th style="padding:12px 14px;">Style</th><th style="padding:12px 14px;">Buyer</th><th style="padding:12px 14px;">Amount</th><th style="padding:12px 14px;">Status</th><th style="padding:12px 14px;">Email</th><th style="padding:12px 14px;">Downloads</th><th style="padding:12px 14px;"></th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ orderRows }}" as="o" hint-placeholder-count="2">
+                  <tr style="border-top:1px solid rgba(255,255,255,0.07);">
+                    <td style="padding:11px 14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;white-space:nowrap;">{{ o.when }}</td>
+                    <td style="padding:11px 14px;font-weight:600;">{{ o.poster }}</td>
+                    <td style="padding:11px 14px;color:#9DB0C4;">{{ o.style }}</td>
+                    <td style="padding:11px 14px;"><a href="{{ o.mailto }}" style="color:#9FE8FF;text-decoration:none;">{{ o.email }}</a></td>
+                    <td style="padding:11px 14px;white-space:nowrap;">{{ o.amount }}</td>
+                    <td style="padding:11px 14px;"><span style="{{ o.statusStyle }}">{{ o.status }}</span></td>
+                    <td style="padding:11px 14px;color:#9DB0C4;">{{ o.emailState }}</td>
+                    <td style="padding:11px 14px;color:#9DB0C4;">{{ o.downloads }}</td>
+                    <td style="padding:11px 14px;white-space:nowrap;"><a href="{{ o.stripeUrl }}" target="_blank" rel="noopener" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;text-decoration:none;display:inline-block;">Stripe ↗</a> <a href="{{ o.downloadUrl }}" target="_blank" rel="noopener" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;text-decoration:none;display:inline-block;">Download page ↗</a></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </sc-if>
+      </sc-if>
+    </div>
+    </sc-if>
+
     <!-- ============ POSTER THANKS / DOWNLOAD ============ -->
     <sc-if value="{{ isPosterThanks }}" hint-placeholder-val="{{ false }}">
     <div style="max-width:720px;margin:0 auto;padding:clamp(32px,6vw,72px) clamp(20px,5vw,40px) 120px;text-align:center;">
@@ -1415,6 +1548,7 @@ class Component extends DCLogic {
     toast: null,
     form: { type: 'new', name: '', handle: '', email: '', note: '', website: '' }, contributeBusy: false,
     contact: { topic: 'order', name: '', email: '', note: '', website: '' }, contactBusy: false, contactSent: false,
+    admin: { isAdmin:false, checked:false, tab:'inbox', inboxFilter:'pending', commentsFilter:'visible', q:'', inbox:[], comments:[], orders:[], loading:false, error:'' },
     submitted: false,
     queuePos: 47,
     // community
@@ -5980,6 +6114,7 @@ class Component extends DCLogic {
     if (screen === 'queue') return '/queue';
     if (screen === 'contribute') return '/contribute';
     if (screen === 'contact') return '/contact';
+    if (screen === 'admin') return '/admin';
     if (screen === 'posters') return '/posters';
     if (screen === 'poster') return activeId ? '/posters/' + activeId : '/posters';
     if (screen === 'posterThanks') return '/posters/thanks';
@@ -5990,6 +6125,7 @@ class Component extends DCLogic {
     if (path === '/queue') return 'The Queue \u00b7 ReelOrder';
     if (path === '/contribute') return 'Contribute \u00b7 ReelOrder';
     if (path === '/contact') return 'Contact \u00b7 ReelOrder';
+    if (path === '/admin') return 'Admin \u00b7 ReelOrder';
     if (path === '/posters') return 'Timeline Posters \u00b7 ReelOrder';
     if (path === '/posters/thanks') return 'Your download \u00b7 ReelOrder';
     if (path.indexOf('/posters/') === 0) {
@@ -6017,6 +6153,7 @@ class Component extends DCLogic {
     if (a === 'queue') return { screen:'queue' };
     if (a === 'contribute') return { screen:'contribute' };
     if (a === 'contact') return { screen:'contact' };
+    if (a === 'admin') return { screen:'admin' };
     if (a === 'posters') {
       if (!b) return { screen:'posters' };
       if (b === 'thanks') return { screen:'posterThanks' };
@@ -6034,7 +6171,7 @@ class Component extends DCLogic {
     if (!r) return;
     this.setState({ filter:'all', collapsed:{}, view:'rail', seriesTab:'map', ...r });
     this.setTitle(this.routeFor(r.screen, r.posterId || r.activeId || this.state.activeId));
-    if (r.screen === 'posterThanks') this.loadThanks(); else if (r.screen === 'posters' || r.screen === 'poster') this.loadPosters();
+    if (r.screen === 'posterThanks') this.loadThanks(); else if (r.screen === 'posters' || r.screen === 'poster') this.loadPosters(); else if (r.screen === 'admin') this.loadAdmin();
     this.toTop();
   };
   initRouting = () => {
@@ -6128,6 +6265,54 @@ class Component extends DCLogic {
   };
   resetContact = () => this.setState({ contactSent:false, contact:{ topic:'order', name:'', email:'', note:'', website:'' } });
 
+
+  // ---------- admin portal ----------
+  adminWhen = (iso) => { try { const d = new Date(iso); const diff = (Date.now() - d.getTime()) / 60000; if (diff < 60) return Math.max(1, Math.round(diff)) + 'm ago'; if (diff < 60*24) return Math.round(diff/60) + 'h ago'; return d.toLocaleDateString(undefined, { day:'numeric', month:'short' }) + ' ' + d.toLocaleTimeString(undefined, { hour:'2-digit', minute:'2-digit' }); } catch(e) { return ''; } };
+  adminContextLabel = (key) => { const k = String(key || ''); const id = k.split(':')[0]; const f = this.data && this.data[id]; return (f && f.title ? f.title : id) + (k.indexOf(':') > 0 ? ' · ' + k.slice(k.indexOf(':') + 1) : ''); };
+  adminOpenContext = (key) => { const id = String(key || '').split(':')[0]; if (this.data && this.data[id]) this.openFranchise(id); };
+
+  adminToken = async () => { try { const { data } = await this.db.auth.getSession(); return data && data.session ? data.session.access_token : ''; } catch(e) { return ''; } };
+  adminCall = async (action, params) => {
+    const token = await this.adminToken();
+    const r = await fetch('/api/admin', { method:'POST', headers:{ 'Content-Type':'application/json', Authorization: 'Bearer ' + token }, body: JSON.stringify({ action, ...(params || {}) }) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) { const e = new Error(j.error || ('Admin request failed (' + r.status + ')')); e.status = r.status; throw e; }
+    return j;
+  };
+  checkAdmin = async () => {
+    if (!this.db) return;
+    try { const j = await this.adminCall('me'); this.setState(s=>({ admin:{ ...s.admin, isAdmin: !!j.admin, checked:true } })); if (j.admin && this.state.screen === 'admin') this.loadAdmin(); }
+    catch(e) { this.setState(s=>({ admin:{ ...s.admin, isAdmin:false, checked:true } })); }
+  };
+  goAdmin = () => { this.setState({ screen:'admin' }); this.pushRoute('/admin'); this.toTop(); this.loadAdmin(); };
+  setAdmin = (patch) => this.setState(s=>({ admin:{ ...s.admin, ...patch } }));
+  setAdminTab = (tab) => { this.setAdmin({ tab }); this.loadAdmin(tab); };
+  loadAdmin = async (tab) => {
+    const a = this.state.admin; tab = tab || a.tab;
+    if (!a.isAdmin) { if (!a.checked) this.checkAdmin(); return; }
+    this.setAdmin({ loading:true, error:'' });
+    try {
+      if (tab === 'inbox') { const j = await this.adminCall('inbox.list', a.inboxFilter === 'all' ? {} : { status: a.inboxFilter }); this.setAdmin({ inbox: j.items || [], loading:false }); }
+      else if (tab === 'comments') { const j = await this.adminCall('comments.list', { q: a.q, hidden: a.commentsFilter === 'all' ? undefined : a.commentsFilter === 'hidden' }); this.setAdmin({ comments: j.items || [], loading:false }); }
+      else if (tab === 'orders') { const j = await this.adminCall('orders.list', {}); this.setAdmin({ orders: j.items || [], loading:false }); }
+      else this.setAdmin({ loading:false });
+    } catch(e) { this.setAdmin({ loading:false, error: String(e.message || e) }); }
+  };
+  adminAct = async (action, params, then) => {
+    try { await this.adminCall(action, params); if (then) then(); else this.loadAdmin(); }
+    catch(e) { this.showToast({ kind:'unknown', title:'Admin action failed', body: String(e.message || e) }); }
+  };
+  inboxSetStatus = (id, status) => this.adminAct('inbox.status', { id, status });
+  inboxDelete = (id) => { if (confirm('Delete this submission permanently?')) this.adminAct('inbox.delete', { id }); };
+  commentToggleHide = (c) => this.adminAct(c.hidden ? 'comments.unhide' : 'comments.hide', { id: c.id });
+  commentDelete = (c) => { if (confirm('Delete this comment permanently?')) this.adminAct('comments.delete', { id: c.id }); };
+  userToggleBan = (c) => {
+    if (!c.user_id) { this.showToast({ kind:'unknown', title:'No account', body:'This comment has no linked user to ban.' }); return; }
+    if (c.banned) this.adminAct('users.unban', { userId: c.user_id });
+    else if (confirm('Ban ' + (c.handle || c.name || 'this user') + '? They can no longer comment and all their comments will be hidden.')) this.adminAct('users.ban', { userId: c.user_id, hideAll: true });
+  };
+  onAdminQ = (e) => { const v = e.target.value; this.setAdmin({ q: v }); };
+
   // ---------- supabase backend ----------
   SUPABASE_URL = 'https://fqcdslarscuplbdimgzs.supabase.co';
   SUPABASE_KEY = 'sb_publishable_aKIXFW-6F5oVLEjFbJAcCA_8ZLvxasy';
@@ -6162,8 +6347,8 @@ class Component extends DCLogic {
     if (this.state.screen === 'posterThanks') this.loadThanks();
     if (this.state.screen === 'posters' || this.state.screen === 'poster' || this.state.screen === 'posterThanks') this.loadPosters();
     this.db.auth.onAuthStateChange((event, session) => {
-      if (session && session.user) this.adoptSession(session.user);
-      else if (event === 'SIGNED_OUT') this.setState({ user:null });
+      if (session && session.user) { this.adoptSession(session.user); this.checkAdmin(); }
+      else if (event === 'SIGNED_OUT') this.setState(s=>({ user:null, admin:{ ...s.admin, isAdmin:false, checked:true, inbox:[], comments:[], orders:[] } }));
     });
     // surface provider errors bounced back in the URL
     try {
@@ -6698,6 +6883,65 @@ class Component extends DCLogic {
       thanks, thanksLoading: th.status === 'loading', thanksReady: th.status === 'ready', thanksError: th.status === 'error',
       refreshThanks: this.refreshThanks,
       isHub: s.screen==='hub', isTimeline: s.screen==='timeline', isContribute: s.screen==='contribute',
+
+      // admin portal
+      isAdminScreen: s.screen==='admin', isAdminUser: s.admin.isAdmin, navAdminStyle: this.navBtn(s.screen==='admin'), goAdmin: this.goAdmin,
+      adminReady: s.admin.isAdmin, adminDenied: !s.admin.isAdmin,
+      adminDeniedTitle: !user ? 'Sign in to continue' : (s.admin.checked ? 'This account isn’t an admin' : 'Checking access…'),
+      adminDeniedBody: !user ? 'The admin portal is for ReelOrder editors. Sign in with your editor account.' : (s.admin.checked ? 'Signed in as ' + (user.name || user.handle || 'a member') + '. Ask the site owner to grant admin access to this account.' : ''),
+      adminLoading: s.admin.loading, adminError: !!s.admin.error, adminErrorText: s.admin.error,
+      adminIsInbox: s.admin.tab==='inbox', adminIsComments: s.admin.tab==='comments', adminIsOrders: s.admin.tab==='orders',
+      adminTabInbox: () => this.setAdminTab('inbox'), adminTabComments: () => this.setAdminTab('comments'), adminTabOrders: () => this.setAdminTab('orders'),
+      adminTabInboxStyle: this.typeBtn(s.admin.tab==='inbox'), adminTabCommentsStyle: this.typeBtn(s.admin.tab==='comments'), adminTabOrdersStyle: this.typeBtn(s.admin.tab==='orders'),
+      adminInboxCount: s.admin.tab==='inbox' && s.admin.inboxFilter==='pending' && s.admin.inbox.length ? '(' + s.admin.inbox.length + ')' : '',
+      adminReload: () => this.loadAdmin(),
+      inboxFilterPending: () => { this.setAdmin({ inboxFilter:'pending' }); setTimeout(() => this.loadAdmin('inbox'), 0); },
+      inboxFilterReviewing: () => { this.setAdmin({ inboxFilter:'reviewing' }); setTimeout(() => this.loadAdmin('inbox'), 0); },
+      inboxFilterAll: () => { this.setAdmin({ inboxFilter:'all' }); setTimeout(() => this.loadAdmin('inbox'), 0); },
+      inboxFilterPendingStyle: this.tabBtn(s.admin.inboxFilter==='pending'), inboxFilterReviewingStyle: this.tabBtn(s.admin.inboxFilter==='reviewing'), inboxFilterAllStyle: this.tabBtn(s.admin.inboxFilter==='all'),
+      inboxEmpty: !s.admin.loading && s.admin.inbox.length === 0,
+      inboxRows: s.admin.inbox.map(r => {
+        const kind = r.type === 'contact' ? ('Contact · ' + ({ order:'Order help', licensing:'Licensing & press', other:'Other' }[r.topic] || 'Other')) : r.type === 'edit' ? 'Suggested edit' : 'New franchise';
+        const kc = r.type === 'contact' ? '#9FE8FF' : r.type === 'edit' ? '#F5A623' : '#B69CFF';
+        const sc = { pending:'#F5A623', reviewing:'#9FE8FF', accepted:'#3DDC84', rejected:'#7a8696' }[r.status] || '#7a8696';
+        return {
+          id: r.id, kind, title: r.type === 'contact' ? (r.title || 'Message') : r.title, status: r.status,
+          from: (r.type === 'contact' ? '' : (r.handle || 'no handle') + ' · ') + (r.email || 'no email') + (r.notified_at ? '' : (r.notify_error ? ' · ⚠ email failed: ' + r.notify_error : ' · email not sent')),
+          note: r.note || '(no notes)', when: this.adminWhen(r.created_at), hasEmail: !!r.email,
+          mailto: r.email ? 'mailto:' + r.email + '?subject=' + encodeURIComponent('Re: ' + (r.type === 'contact' ? 'your message to ReelOrder' : 'your ReelOrder contribution — ' + r.title)) : '#',
+          kindStyle: { fontFamily:"'JetBrains Mono', monospace", fontSize:'10.5px', letterSpacing:'0.1em', textTransform:'uppercase', padding:'3px 7px', borderRadius:'6px', background:'rgba(255,255,255,0.06)', color: kc },
+          statusStyle: { fontFamily:"'JetBrains Mono', monospace", fontSize:'10.5px', letterSpacing:'0.1em', textTransform:'uppercase', padding:'3px 7px', borderRadius:'6px', border:'1px solid ' + sc, color: sc },
+          onReviewing: () => this.inboxSetStatus(r.id, 'reviewing'), onAccepted: () => this.inboxSetStatus(r.id, 'accepted'), onRejected: () => this.inboxSetStatus(r.id, 'rejected'), onDelete: () => this.inboxDelete(r.id),
+        };
+      }),
+      adminQ: s.admin.q, onAdminQ: this.onAdminQ, adminSearch: () => this.loadAdmin('comments'),
+      commentsFilterVisible: () => { this.setAdmin({ commentsFilter:'visible' }); setTimeout(() => this.loadAdmin('comments'), 0); },
+      commentsFilterHidden: () => { this.setAdmin({ commentsFilter:'hidden' }); setTimeout(() => this.loadAdmin('comments'), 0); },
+      commentsFilterAll: () => { this.setAdmin({ commentsFilter:'all' }); setTimeout(() => this.loadAdmin('comments'), 0); },
+      commentsFilterVisibleStyle: this.tabBtn(s.admin.commentsFilter==='visible'), commentsFilterHiddenStyle: this.tabBtn(s.admin.commentsFilter==='hidden'), commentsFilterAllStyle: this.tabBtn(s.admin.commentsFilter==='all'),
+      commentsEmpty: !s.admin.loading && s.admin.comments.length === 0,
+      commentRows: s.admin.comments.map(c => ({
+        id: c.id, name: c.name || 'Anonymous', handle: c.handle || '', body: c.body || '', when: this.adminWhen(c.created_at),
+        context: this.adminContextLabel(c.context_key), onOpenContext: () => this.adminOpenContext(c.context_key),
+        isHidden: !!c.hidden, isBanned: !!c.banned, hideLabel: c.hidden ? 'Unhide' : 'Hide', banLabel: c.banned ? 'Unban user' : 'Ban user',
+        cardStyle: { borderRadius:'14px', border:'1px solid ' + (c.hidden ? 'rgba(245,166,35,0.35)' : 'rgba(255,255,255,0.09)'), background: c.hidden ? 'rgba(245,166,35,0.05)' : 'rgba(255,255,255,0.025)', padding:'14px 18px', display:'flex', flexDirection:'column', gap:'8px', opacity: c.hidden ? 0.85 : 1 },
+        onToggleHide: () => this.commentToggleHide(c), onDelete: () => this.commentDelete(c), onToggleBan: () => this.userToggleBan(c),
+      })),
+      ordersEmpty: !s.admin.loading && s.admin.orders.length === 0,
+      ordersPaidCount: s.admin.orders.filter(o => o.status === 'paid').length,
+      ordersRefundedCount: s.admin.orders.filter(o => o.status === 'refunded').length,
+      ordersRevenue: this.posterPrice(s.admin.orders.filter(o => o.status === 'paid').reduce((n, o) => n + (o.amount_cents || 0), 0), (s.admin.orders[0] || {}).currency || 'usd'),
+      orderRows: s.admin.orders.map(o => ({
+        when: this.adminWhen(o.created_at), poster: o.poster_title || o.poster_id || '—',
+        style: o.style_key === 'bundle' ? 'All styles bundle' : (o.style_key ? o.style_key.toUpperCase() : '—'),
+        email: o.email || '—', mailto: o.email ? 'mailto:' + o.email : '#',
+        amount: this.posterPrice(o.amount_cents || 0, o.currency || 'usd'), status: o.status || '—',
+        statusStyle: { fontFamily:"'JetBrains Mono', monospace", fontSize:'10.5px', letterSpacing:'0.1em', textTransform:'uppercase', padding:'3px 7px', borderRadius:'6px', border:'1px solid ' + ({ paid:'#3DDC84', refunded:'#F5A623', failed:'#FF7A6E' }[o.status] || '#7a8696'), color: ({ paid:'#3DDC84', refunded:'#F5A623', failed:'#FF7A6E' }[o.status] || '#7a8696') },
+        emailState: o.email_sent_at ? 'Sent' : (o.email_error ? '⚠ ' + o.email_error.slice(0, 40) : 'Not sent'),
+        downloads: String(o.download_count || 0) + (o.last_download_at ? ' · last ' + this.adminWhen(o.last_download_at) : ''),
+        stripeUrl: o.stripe_payment_intent ? 'https://dashboard.stripe.com/payments/' + o.stripe_payment_intent : 'https://dashboard.stripe.com/payments',
+        downloadUrl: '/posters/thanks?session_id=' + encodeURIComponent(o.stripe_session_id || ''),
+      })),
       // contact
       isContact: s.screen==='contact', navContactStyle: this.navBtn(s.screen==='contact'), goContact: this.goContact,
       contact: s.contact, contactNotSent: !s.contactSent, contactSent: s.contactSent,
