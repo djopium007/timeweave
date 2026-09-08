@@ -566,6 +566,7 @@
       <button onclick="{{ goExplore }}" style="{{ navExploreStyle }}">Timeline</button>
       <button onclick="{{ goQueue }}" style="{{ navQueueStyle }}">Queue</button>
       <button onclick="{{ goPosters }}" style="{{ navPostersStyle }}">Posters</button>
+      <button onclick="{{ goContact }}" style="{{ navContactStyle }}">Contact</button>
       <button onclick="{{ goContribute }}" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:9px;border:1px solid rgba(255,42,31,0.45);background:rgba(255,42,31,0.12);color:#FF7A6E;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;" style-hover="background:rgba(255,42,31,0.2);border-color:rgba(255,42,31,0.7);color:#fff;">Contribute</button>
       <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}">
         <button onclick="{{ openAuth }}" style="margin-left:6px;padding:9px 18px;border-radius:9px;border:none;background:#fff;color:#0a0c10;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:transform .16s ease;" style-hover="transform:translateY(-1px);">Sign in</button>
@@ -1207,6 +1208,61 @@
     </div>
     </sc-if>
 
+    <!-- ============ CONTACT ============ -->
+    <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:680px;margin:0 auto;padding:clamp(28px,5vw,60px) clamp(20px,5vw,40px) 96px;">
+      <button onclick="{{ goHub }}" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;margin-bottom:26px;" style-hover="border-color:rgba(255,255,255,0.25);color:#fff;">← Back to hub</button>
+
+      <sc-if value="{{ contactNotSent }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#9FE8FF;">Get in touch</div>
+        <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(32px,5vw,48px);line-height:1.02;margin:8px 0 12px;letter-spacing:0.01em;">Contact us</h1>
+        <p style="margin:0 0 30px;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">Trouble with a poster download, a licensing or press question, or anything else — we usually reply within two business days. Want to add or fix a timeline instead? <span onclick="{{ goContribute }}" style="color:#FF7A6E;cursor:pointer;text-decoration:underline;">Contribute a map</span>.</p>
+
+        <div style="position:relative;border-radius:18px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(180deg,rgba(18,21,27,0.8),rgba(11,13,17,0.8));padding:clamp(22px,4vw,32px);display:flex;flex-direction:column;gap:22px;">
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8b97a6;margin-bottom:8px;margin-bottom:10px;">What's it about?</label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button onclick="{{ setTopicOrder }}" style="{{ topicOrderStyle }}">Order &amp; download help</button>
+              <button onclick="{{ setTopicLicensing }}" style="{{ topicLicensingStyle }}">Licensing &amp; press</button>
+              <button onclick="{{ setTopicOther }}" style="{{ topicOtherStyle }}">Something else</button>
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8b97a6;margin-bottom:8px;">Your name</label>
+            <input value="{{ contact.name }}" onchange="{{ onContactName }}" placeholder="Jane Smith" style="width:100%;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:15px;padding:13px 15px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);">
+          </div>
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8b97a6;margin-bottom:8px;">Email <span style="color:#5a6573;text-transform:none;letter-spacing:0;">(so we can reply)</span></label>
+            <input value="{{ contact.email }}" onchange="{{ onContactEmail }}" type="email" placeholder="you@example.com" style="width:100%;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:15px;padding:13px 15px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);">
+          </div>
+          <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8b97a6;margin-bottom:8px;">Message</label>
+            <textarea value="{{ contact.note }}" onchange="{{ onContactNote }}" rows="5" placeholder="{{ contactPlaceholder }}" style="width:100%;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:15px;padding:13px 15px;transition:border-color .16s ease;resize:vertical;line-height:1.5;" style-focus="border-color:rgba(255,42,31,0.55);"></textarea>
+          </div>
+          <input value="{{ contact.website }}" onchange="{{ onContactWebsite }}" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+          <button onclick="{{ submitContact }}" style="{{ contactBtnStyle }}" style-hover="background:#ff3a30;box-shadow:0 0 24px -2px rgba(255,42,31,0.7);">{{ contactBtnLabel }}</button>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#6b7686;line-height:1.6;">Prefer email? Write to <a href="mailto:orders@reelorder.com" style="color:#9DB0C4;">orders@reelorder.com</a>. Order emails and download links come from that address too.</div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ contactSent }}" hint-placeholder-val="{{ false }}">
+      <div style="border-radius:18px;border:1px solid rgba(61,220,132,0.35);background:linear-gradient(180deg,rgba(61,220,132,0.1),rgba(11,13,17,0.6));padding:clamp(28px,5vw,44px);text-align:center;">
+        <div style="width:62px;height:62px;margin:0 auto;border-radius:50%;display:grid;place-items:center;background:rgba(61,220,132,0.16);border:1px solid rgba(61,220,132,0.5);box-shadow:0 0 30px -6px rgba(61,220,132,0.6);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#3DDC84" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+        <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:30px;margin:20px 0 8px;letter-spacing:0.01em;">Message sent</h2>
+        <p style="margin:0 auto 26px;max-width:44ch;color:#A9B4C2;font-size:15.5px;line-height:1.6;text-wrap:pretty;">Thanks{{ contactThanksName }} — we've emailed a copy to {{ contact.email }} and will reply there, usually within two business days.</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button onclick="{{ resetContact }}" style="padding:12px 22px;border-radius:10px;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;" style-hover="border-color:rgba(255,255,255,0.3);">Send another</button>
+          <button onclick="{{ goHub }}" style="padding:12px 22px;border-radius:10px;border:none;background:#fff;color:#0a0c10;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;">Back to hub</button>
+        </div>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
     <!-- ============ POSTER THANKS / DOWNLOAD ============ -->
     <sc-if value="{{ isPosterThanks }}" hint-placeholder-val="{{ false }}">
     <div style="max-width:720px;margin:0 auto;padding:clamp(32px,6vw,72px) clamp(20px,5vw,40px) 120px;text-align:center;">
@@ -1267,6 +1323,7 @@
         <button onclick="{{ goExplore }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Terminator map</button>
         <button onclick="{{ goContribute }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Contribute</button>
         <button onclick="{{ goPosters }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Posters</button>
+        <button onclick="{{ goContact }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Contact</button>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:12px;">
@@ -1357,6 +1414,7 @@ class Component extends DCLogic {
     view: 'rail',
     toast: null,
     form: { type: 'new', name: '', handle: '', email: '', note: '', website: '' }, contributeBusy: false,
+    contact: { topic: 'order', name: '', email: '', note: '', website: '' }, contactBusy: false, contactSent: false,
     submitted: false,
     queuePos: 47,
     // community
@@ -5921,6 +5979,7 @@ class Component extends DCLogic {
   routeFor = (screen, activeId) => {
     if (screen === 'queue') return '/queue';
     if (screen === 'contribute') return '/contribute';
+    if (screen === 'contact') return '/contact';
     if (screen === 'posters') return '/posters';
     if (screen === 'poster') return activeId ? '/posters/' + activeId : '/posters';
     if (screen === 'posterThanks') return '/posters/thanks';
@@ -5930,6 +5989,7 @@ class Component extends DCLogic {
   titleFor = (path) => {
     if (path === '/queue') return 'The Queue \u00b7 ReelOrder';
     if (path === '/contribute') return 'Contribute \u00b7 ReelOrder';
+    if (path === '/contact') return 'Contact \u00b7 ReelOrder';
     if (path === '/posters') return 'Timeline Posters \u00b7 ReelOrder';
     if (path === '/posters/thanks') return 'Your download \u00b7 ReelOrder';
     if (path.indexOf('/posters/') === 0) {
@@ -5956,6 +6016,7 @@ class Component extends DCLogic {
     if (!a) return { screen:'hub' };
     if (a === 'queue') return { screen:'queue' };
     if (a === 'contribute') return { screen:'contribute' };
+    if (a === 'contact') return { screen:'contact' };
     if (a === 'posters') {
       if (!b) return { screen:'posters' };
       if (b === 'thanks') return { screen:'posterThanks' };
@@ -6041,6 +6102,31 @@ class Component extends DCLogic {
     }
   };
   resetContribute = () => this.setState({ submitted:false, form:{ type:'new', name:'', handle:'', email:'', note:'', website:'' } });
+
+  // ---------- contact ----------
+  goContact = () => { this.setState({ screen:'contact', contactSent:false }); this.pushRoute('/contact'); this.toTop(); };
+  setContactTopic = (t) => this.setState(s=>({ contact:{...s.contact, topic:t} }));
+  onContactField = (k) => (e) => { const v=e.target.value; this.setState(s=>({ contact:{...s.contact, [k]:v} })); };
+  submitContact = async () => {
+    const c = this.state.contact;
+    if (this.state.contactBusy) return;
+    if (!(c.name || '').trim()) { this.showToast({ kind:'unknown', title:'Add your name', body:'So we know who we’re replying to.' }); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((c.email || '').trim())) { this.showToast({ kind:'unknown', title:'Check your email address', body:'We need a valid address to reply to.' }); return; }
+    if (!(c.note || '').trim()) { this.showToast({ kind:'unknown', title:'Write a message', body:'Tell us what’s going on.' }); return; }
+    this.setState({ contactBusy:true });
+    try {
+      const r = await fetch('/api/contribute', { method:'POST', headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify({ type:'contact', topic:c.topic, name:c.name, email:c.email, note:c.note, website:c.website || '' }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) throw new Error(j.error || ('Send failed (' + r.status + ')'));
+      this.setState({ contactSent:true, contactBusy:false });
+      this.toTop();
+    } catch(e) {
+      this.setState({ contactBusy:false });
+      this.showToast({ kind:'unknown', title:'Couldn’t send', body: String(e.message || e) });
+    }
+  };
+  resetContact = () => this.setState({ contactSent:false, contact:{ topic:'order', name:'', email:'', note:'', website:'' } });
 
   // ---------- supabase backend ----------
   SUPABASE_URL = 'https://fqcdslarscuplbdimgzs.supabase.co';
@@ -6612,6 +6698,17 @@ class Component extends DCLogic {
       thanks, thanksLoading: th.status === 'loading', thanksReady: th.status === 'ready', thanksError: th.status === 'error',
       refreshThanks: this.refreshThanks,
       isHub: s.screen==='hub', isTimeline: s.screen==='timeline', isContribute: s.screen==='contribute',
+      // contact
+      isContact: s.screen==='contact', navContactStyle: this.navBtn(s.screen==='contact'), goContact: this.goContact,
+      contact: s.contact, contactNotSent: !s.contactSent, contactSent: s.contactSent,
+      contactThanksName: (s.contact.name||'').trim() ? ' ' + s.contact.name.trim() : '',
+      setTopicOrder: () => this.setContactTopic('order'), setTopicLicensing: () => this.setContactTopic('licensing'), setTopicOther: () => this.setContactTopic('other'),
+      topicOrderStyle: this.typeBtn(s.contact.topic==='order'), topicLicensingStyle: this.typeBtn(s.contact.topic==='licensing'), topicOtherStyle: this.typeBtn(s.contact.topic==='other'),
+      onContactName: this.onContactField('name'), onContactEmail: this.onContactField('email'), onContactNote: this.onContactField('note'), onContactWebsite: this.onContactField('website'),
+      contactPlaceholder: s.contact.topic==='order' ? 'Which poster, roughly when you bought it, and what went wrong. Include the email you paid with if it’s different.' : s.contact.topic==='licensing' ? 'Tell us about the use — publication, event, product — and the timeline(s) involved.' : 'What’s on your mind?',
+      submitContact: this.submitContact, resetContact: this.resetContact,
+      contactBtnLabel: s.contactBusy ? 'Sending…' : 'Send message',
+      contactBtnStyle: { alignSelf:'flex-start', padding:'14px 28px', borderRadius:'11px', border:'none', background: s.contactBusy ? '#9aa6b4' : '#FF2A1F', color:'#fff', fontFamily:"'Oswald', sans-serif", fontWeight:'600', fontSize:'15px', letterSpacing:'0.05em', textTransform:'uppercase', cursor: s.contactBusy ? 'wait' : 'pointer', transition:'all .16s ease' },
       navHubStyle: this.navBtn(s.screen==='hub'),
       navExploreStyle: this.navBtn(s.screen==='timeline'),
       goHub:this.goHub, goExplore:this.goExplore, goContribute:()=>this.goContribute(),

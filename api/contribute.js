@@ -1,5 +1,6 @@
-// POST /api/contribute  { type:'new'|'edit', name, handle?, email?, note?, website? (honeypot) }
+// POST /api/contribute  { type:'new'|'edit'|'contact', name, handle?, email?, note?, topic?, website? (honeypot) }
 //   -> { ok:true, id, queuePosition }
+// type 'contact' = the /contact page: `name` is the sender's name, `topic` one of order|licensing|other, email required.
 // Stores the submission in Supabase `contributions` (service-role only) and emails the editor via Resend.
 // Env: SUPABASE_SERVICE_ROLE_KEY, RESEND_API_KEY, CONTRIBUTE_NOTIFY_EMAIL (default opi@jayasinghe.me).
 import { createHash } from 'node:crypto';
@@ -29,12 +30,17 @@ export default async function handler(req, res) {
     const body = await readJsonBody(req);
     if (clean(body.website, 50)) return json(res, 200, { ok: true, id: null, queuePosition: 0 }); // honeypot: pretend success
 
-    const type = body.type === 'edit' ? 'edit' : 'new';
+    const type = body.type === 'edit' ? 'edit' : body.type === 'contact' ? 'contact' : 'new';
+    const isContact = type === 'contact';
     const title = clean(body.name || body.title, 160);
     const handle = clean(body.handle, 80);
     const email = clean(body.email, 200).toLowerCase();
     const note = cleanMulti(body.note, 5000);
-    if (!title) return json(res, 400, { error: 'Tell us which franchise this is about.' });
+    const TOPICS = { order: 'Order & download help', licensing: 'Licensing & press', other: 'Something else' };
+    const topic = isContact ? (TOPICS[String(body.topic || '').toLowerCase()] ? String(body.topic).toLowerCase() : 'other') : null;
+    if (!title) return json(res, 400, { error: isContact ? 'Please tell us your name.' : 'Tell us which franchise this is about.' });
+    if (isContact && !email) return json(res, 400, { error: 'We need an email address to reply to.' });
+    if (isContact && !note) return json(res, 400, { error: 'Please write a message.' });
     if (email && !EMAIL_RE.test(email)) return json(res, 400, { error: 'That email address doesn’t look right.' });
 
     const ip = ((req.headers['x-forwarded-for'] || '') + '').split(',')[0].trim();
@@ -48,33 +54,35 @@ export default async function handler(req, res) {
     }
 
     const { data: row, error } = await db().from('contributions')
-      .insert({ type, title, handle: handle || null, email: email || null, note: note || null, ip_hash: ipHash })
+      .insert({ type, title, handle: handle || null, email: email || null, note: note || null, topic, ip_hash: ipHash })
       .select('id,created_at').single();
     if (error) throw error;
 
-    const { count: pending } = await db().from('contributions').select('id', { count: 'exact', head: true }).eq('status', 'pending');
+    const { count: pending } = await db().from('contributions').select('id', { count: 'exact', head: true }).eq('status', 'pending').in('type', ['new', 'edit']);
     const queuePosition = Math.max(1, pending || 1);
 
     const origin = siteOrigin(req);
-    const label = type === 'edit' ? 'Suggested edit' : 'New franchise';
+    const label = isContact ? `Contact · ${TOPICS[topic]}` : type === 'edit' ? 'Suggested edit' : 'New franchise';
+    const page = isContact ? '/contact' : '/contribute';
+    const fromLine = isContact ? `${title} <${email}>` : `${handle || '(no handle)'}${email ? ` <${email}>` : ' (no email)'}`;
     const text = [
-      `${label}: ${title}`, '',
-      `From: ${handle || '(no handle)'}${email ? ` <${email}>` : ' (no email)'}`,
-      `Queue position: #${queuePosition} · id ${row.id}`, '',
-      note || '(no notes)', '', `— ${origin}/contribute`,
+      `${label}${isContact ? '' : ': ' + title}`, '',
+      `From: ${fromLine}`,
+      isContact ? `id ${row.id}` : `Queue position: #${queuePosition} · id ${row.id}`, '',
+      note || '(no notes)', '', `— ${origin}${page}`,
     ].join('\n');
     const html = `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#111">
-<p style="margin:0 0 4px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#888">ReelOrder contribution · ${esc(label)}</p>
-<h2 style="margin:0 0 14px;font-size:22px">${esc(title)}</h2>
-<p style="margin:0 0 14px"><b>From:</b> ${esc(handle || '(no handle)')}${email ? ` &lt;<a href="mailto:${esc(email)}">${esc(email)}</a>&gt;` : ' (no email)'}<br><b>Queue:</b> #${queuePosition} &middot; <span style="color:#888">${esc(row.id)}</span></p>
+<p style="margin:0 0 4px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#888">${isContact ? 'ReelOrder contact' : 'ReelOrder contribution'} · ${esc(label)}</p>
+<h2 style="margin:0 0 14px;font-size:22px">${esc(isContact ? `Message from ${title}` : title)}</h2>
+<p style="margin:0 0 14px"><b>From:</b> ${esc(isContact ? title : (handle || '(no handle)'))}${email ? ` &lt;<a href="mailto:${esc(email)}">${esc(email)}</a>&gt;` : ' (no email)'}<br>${isContact ? '' : `<b>Queue:</b> #${queuePosition} &middot; `}<span style="color:#888">${esc(row.id)}</span></p>
 <pre style="white-space:pre-wrap;font-family:inherit;background:#f4f5f7;border-radius:8px;padding:14px;margin:0 0 14px">${esc(note || '(no notes)')}</pre>
-<p style="margin:0;color:#888;font-size:13px">Sent from ${esc(origin)}/contribute${email ? ' — reply to this email to answer the contributor.' : ''}</p></div>`;
+<p style="margin:0;color:#888;font-size:13px">Sent from ${esc(origin)}${esc(page)}${email ? ' — reply to this email to answer them.' : ''}</p></div>`;
 
     let notify;
     try {
       notify = await sendEmail({
         to: [NOTIFY_TO], reply_to: email || SUPPORT_EMAIL,
-        subject: `[ReelOrder] ${label}: ${title}${handle ? ` — from ${handle}` : ''}`,
+        subject: isContact ? `[ReelOrder] ${label} — from ${title}` : `[ReelOrder] ${label}: ${title}${handle ? ` — from ${handle}` : ''}`,
         text, html, headers: { 'X-Entity-Ref-ID': row.id },
       });
       await db().from('contributions').update({ notified_at: new Date().toISOString() }).eq('id', row.id);
@@ -83,8 +91,15 @@ export default async function handler(req, res) {
       await db().from('contributions').update({ notify_error: String(e.message || e).slice(0, 300) }).eq('id', row.id);
     }
 
-    // Acknowledge the contributor (best effort, only when they left an email).
-    if (email) {
+    // Acknowledge the sender (best effort, only when they left an email).
+    if (email && isContact) {
+      sendEmail({
+        to: [email], reply_to: SUPPORT_EMAIL,
+        subject: `We got your message — ReelOrder`,
+        text: `Hi ${title},\n\nThanks for getting in touch about "${TOPICS[topic]}". We usually reply within two business days — just reply to this email if you want to add anything.\n\nYour message:\n${note}\n\n${origin}`,
+        html: `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#111"><p>Hi ${esc(title)},</p><p>Thanks for getting in touch about <b>${esc(TOPICS[topic])}</b>. We usually reply within two business days — just reply to this email if you want to add anything.</p><pre style="white-space:pre-wrap;font-family:inherit;background:#f4f5f7;border-radius:8px;padding:14px">${esc(note)}</pre><p style="color:#888;font-size:13px"><a href="${esc(origin)}" style="color:#888">reelorder.com</a></p></div>`,
+      }).catch(e => console.error('contact ack failed', e));
+    } else if (email) {
       sendEmail({
         to: [email], reply_to: SUPPORT_EMAIL,
         subject: `Got it — your ${title} ${type === 'edit' ? 'edit' : 'map'} is in the ReelOrder review queue`,
