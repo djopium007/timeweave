@@ -1031,10 +1031,15 @@
             <input value="{{ form.handle }}" onchange="{{ onFormHandle }}" placeholder="@username" style="width:100%;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:15px;padding:13px 15px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);">
           </div>
           <div>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8b97a6;margin-bottom:8px;">Email <span style="color:#5a6573;text-transform:none;letter-spacing:0;">(optional — so we can reply)</span></label>
+            <input value="{{ form.email }}" onchange="{{ onFormEmail }}" type="email" placeholder="you@example.com" style="width:100%;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:15px;padding:13px 15px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);">
+          </div>
+          <input value="{{ form.website }}" onchange="{{ onFormWebsite }}" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+          <div>
             <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8b97a6;margin-bottom:8px;">{{ noteFieldLabel }}</label>
             <textarea value="{{ form.note }}" onchange="{{ onFormNote }}" rows="4" placeholder="Outline the branches, key forks, and any paradoxes…" style="width:100%;resize:vertical;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.5;padding:13px 15px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);"></textarea>
           </div>
-          <button onclick="{{ submitContribute }}" style="align-self:flex-start;padding:14px 28px;border-radius:11px;border:none;background:#FF2A1F;color:#fff;font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all .16s ease;" style-hover="background:#ff3a30;box-shadow:0 0 24px -2px rgba(255,42,31,0.7);">Submit to review queue</button>
+          <button onclick="{{ submitContribute }}" style="{{ submitBtnStyle }}" style-hover="background:#ff3a30;box-shadow:0 0 24px -2px rgba(255,42,31,0.7);">{{ submitLabel }}</button>
         </div>
       </div>
       </sc-if>
@@ -1351,7 +1356,7 @@ class Component extends DCLogic {
     collapsed: {},
     view: 'rail',
     toast: null,
-    form: { type: 'new', name: '', handle: '', note: '' },
+    form: { type: 'new', name: '', handle: '', email: '', note: '', website: '' }, contributeBusy: false,
     submitted: false,
     queuePos: 47,
     // community
@@ -6015,13 +6020,27 @@ class Component extends DCLogic {
   onFormName = (e) => { const v=e.target.value; this.setState(s=>({ form:{...s.form, name:v} })); };
   onFormHandle = (e) => { const v=e.target.value; this.setState(s=>({ form:{...s.form, handle:v} })); };
   onFormNote = (e) => { const v=e.target.value; this.setState(s=>({ form:{...s.form, note:v} })); };
-  submitContribute = () => {
+  onFormEmail = (e) => { const v=e.target.value; this.setState(s=>({ form:{...s.form, email:v} })); };
+  onFormWebsite = (e) => { const v=e.target.value; this.setState(s=>({ form:{...s.form, website:v} })); }; // honeypot
+  submitContribute = async () => {
     const f = this.state.form;
-    if (!f.name.trim()) { this.showToast({ kind:'unknown', title:'Add a title first', body:'Tell us which franchise this is about.' }); return; }
-    this.setState(s=>({ submitted:true, queuePos: 30 + Math.floor(Math.random()*40) }));
-    this.toTop();
+    if (this.state.contributeBusy) return;
+    if (!(f.name || '').trim()) { this.showToast({ kind:'unknown', title:'Add a title first', body:'Tell us which franchise this is about.' }); return; }
+    if ((f.email || '').trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim())) { this.showToast({ kind:'unknown', title:'Check your email address', body:'It doesn’t look right — or leave it blank.' }); return; }
+    this.setState({ contributeBusy:true });
+    try {
+      const r = await fetch('/api/contribute', { method:'POST', headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify({ type:f.type, name:f.name, handle:f.handle, email:f.email, note:f.note, website:f.website || '' }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) throw new Error(j.error || ('Submission failed (' + r.status + ')'));
+      this.setState({ submitted:true, queuePos: j.queuePosition || 1, contributeBusy:false });
+      this.toTop();
+    } catch(e) {
+      this.setState({ contributeBusy:false });
+      this.showToast({ kind:'unknown', title:'Couldn’t submit', body: String(e.message || e) });
+    }
   };
-  resetContribute = () => this.setState({ submitted:false, form:{ type:'new', name:'', handle:'', note:'' } });
+  resetContribute = () => this.setState({ submitted:false, form:{ type:'new', name:'', handle:'', email:'', note:'', website:'' } });
 
   // ---------- supabase backend ----------
   SUPABASE_URL = 'https://fqcdslarscuplbdimgzs.supabase.co';
@@ -6447,8 +6466,8 @@ class Component extends DCLogic {
     // contribute labels
     const isNew = s.form.type === 'new';
     const submitMessage = isNew
-      ? `Thanks — “${s.form.name||'your franchise'}” has joined the queue. An editor will weave it into a branch map and let you know.`
-      : `Thanks — your edit to “${s.form.name||'that map'}” is queued for review. We’ll merge it once a maintainer confirms.`;
+      ? `Thanks — “${s.form.name||'your franchise'}” has joined the queue. An editor will weave it into a branch map${(s.form.email||'').trim() ? ' and reply to ' + s.form.email.trim() : ''}.`
+      : `Thanks — your edit to “${s.form.name||'that map'}” is queued for review. We’ll merge it once a maintainer confirms${(s.form.email||'').trim() ? ' and let you know at ' + s.form.email.trim() : ''}.`;
 
     // crest for timeline header
     const crestStyle = { flex:'none', width:'60px', height:'60px', borderRadius:'15px', display:'grid', placeItems:'center', background:`radial-gradient(120% 120% at 30% 0%, ${this.rgba(a.accent,0.6)}, ${this.rgba(a.accent,0.08)})`, border:`1px solid ${this.rgba(a.accent,0.45)}`, boxShadow:`0 0 24px -6px ${this.rgba(a.accent,0.7)}` };
@@ -6611,8 +6630,10 @@ class Component extends DCLogic {
       form:s.form,
       typeNewStyle:this.typeBtn(isNew), typeEditStyle:this.typeBtn(!isNew),
       setTypeNew:this.setTypeNew, setTypeEdit:this.setTypeEdit,
-      onFormName:this.onFormName, onFormHandle:this.onFormHandle, onFormNote:this.onFormNote,
+      onFormName:this.onFormName, onFormHandle:this.onFormHandle, onFormNote:this.onFormNote, onFormEmail:this.onFormEmail, onFormWebsite:this.onFormWebsite,
       submitContribute:this.submitContribute, resetContribute:this.resetContribute,
+      submitLabel: s.contributeBusy ? 'Sending…' : 'Submit to review queue',
+      submitBtnStyle: { alignSelf:'flex-start', padding:'14px 28px', borderRadius:'11px', border:'none', background: s.contributeBusy ? '#9aa6b4' : '#FF2A1F', color:'#fff', fontFamily:"'Oswald', sans-serif", fontWeight:'600', fontSize:'15px', letterSpacing:'0.05em', textTransform:'uppercase', cursor: s.contributeBusy ? 'wait' : 'pointer', transition:'all .16s ease' },
       nameFieldLabel: isNew ? 'Franchise title' : 'Which map are you editing?',
       noteFieldLabel: isNew ? 'Outline the branches' : 'What needs fixing?',
       submitMessage, queuePosition:s.queuePos,

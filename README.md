@@ -145,3 +145,10 @@ Rows come from the `pending_projects` table. A row whose `id` matches a key in `
 below the pending ones — voters can see their picks actually shipped. `status` accepts
 `Mapped | Mapping now | In review | Queued | Suggested`. When a franchise goes live,
 set its row to `Mapped` rather than deleting it, so its vote count survives.
+
+## Contribute form (`/contribute`)
+
+`api/contribute.js` stores each submission in the `contributions` table (service-role only, RLS on) and emails it via
+Resend to `CONTRIBUTE_NOTIFY_EMAIL` (default `opi@jayasinghe.me`; reply-to = the contributor when they left an email).
+Contributors who leave an email get an acknowledgement. Honeypot field + 5/hour/IP rate limit. Queue position = count of
+`status='pending'` rows. Review rows with `select * from contributions where status='pending' order by created_at;`.
