@@ -1,6 +1,8 @@
-// POST /api/checkout  { posterId }   -> { url }
-// GET  /api/checkout?poster=<id>     -> 303 redirect straight to Stripe Checkout
-import { stripe, db, previewUrl, siteOrigin, json, readJsonBody } from './_lib.js';
+// POST /api/checkout  { posterId, style? }        -> { url }
+// GET  /api/checkout?poster=<id>&style=<vN|bundle> -> 303 redirect straight to Stripe Checkout
+// style = 'bundle' buys every style of the poster: price_cents + bundle_step_cents × (styles − 1).
+// Prices are passed inline (price_data), so nothing needs to be pre-created in the Stripe dashboard.
+import { stripe, db, previewUrl, siteOrigin, json, readJsonBody, resolveStyle } from './_lib.js';
 
 export default async function handler(req, res) {
   try {
@@ -20,48 +22,47 @@ export default async function handler(req, res) {
 
     const { data: poster, error } = await db()
       .from('posters')
-      .select('id,title,tagline,size_label,file_label,price_cents,currency,preview_path,active,master_path,styles')
+      .select('id,title,tagline,size_label,file_label,price_cents,currency,preview_path,active,master_path,styles,bundle_step_cents,bundle_enabled')
       .eq('id', posterId)
       .single();
     if (error || !poster || !poster.active) return json(res, 404, { error: 'Poster not found' });
-    // Resolve the style: explicit key, else the first style, else the row's own default paths.
-    const styles = Array.isArray(poster.styles) ? poster.styles : [];
-    let style = null;
-    if (styleKey) {
-      style = styles.find(x => x.key === String(styleKey).toLowerCase()) || null;
-      if (!style) return json(res, 400, { error: 'Unknown style for this poster' });
-    } else if (styles.length) style = styles[0];
-    const masterPath = style ? style.master_path : poster.master_path;
-    if (!masterPath) return json(res, 409, { error: 'This poster is not available for download yet' });
-    const styleLabel = style && styles.length > 1 ? ` · ${style.label}` : '';
+    // Resolve the style: explicit key, 'bundle' for all styles, else the first style, else the row's own default paths.
+    const r = resolveStyle(poster, styleKey);
+    if (!r.ok) return json(res, r.status, { error: r.error });
+    const { style, isBundle, styles } = r;
+    const styleLabel = r.label ? ` · ${r.label}` : '';
+    const meta = { poster_id: poster.id, style_key: r.key };
 
     const origin = siteOrigin(req);
-    const img = previewUrl(style ? style.preview_path : poster.preview_path);
+    const img = previewUrl(style ? style.preview_path : (styles[0] && styles[0].preview_path) || poster.preview_path);
+    const description = isBundle
+      ? `Digital download only — no physical poster is posted. ${styles.length} poster packs (${styles.map(s => s.label).join(', ')}) · ${poster.size_label} · ${poster.file_label}`
+      : `Digital download only — no physical poster is posted. ${poster.size_label} · ${poster.file_label}`;
     const session = await stripe().checkout.sessions.create({
       mode: 'payment',
       line_items: [{
         quantity: 1,
         price_data: {
           currency: poster.currency || 'usd',
-          unit_amount: poster.price_cents,
+          unit_amount: r.priceCents,
           product_data: {
             name: `${poster.title} — Timeline Poster · DIGITAL FILE, nothing shipped${styleLabel}`,
-            description: `Digital download only — no physical poster is posted. ${poster.size_label} · ${poster.file_label}`,
+            description,
             images: img ? [img] : [],
-            metadata: { poster_id: poster.id, style_key: style ? style.key : '' },
+            metadata: meta,
           },
         },
       }],
-      metadata: { poster_id: poster.id, style_key: style ? style.key : '' },
-      payment_intent_data: { metadata: { poster_id: poster.id, style_key: style ? style.key : '' } },
+      metadata: meta,
+      payment_intent_data: { metadata: meta },
       allow_promotion_codes: true,
       billing_address_collection: 'auto',
       customer_creation: 'if_required',
       invoice_creation: { enabled: true },
       success_url: `${origin}/posters/thanks?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/posters/${poster.id}${style ? '?style=' + style.key : ''}`,
+      cancel_url: `${origin}/posters/${poster.id}${r.key ? '?style=' + r.key : ''}`,
       custom_text: {
-        submit: { message: 'Digital download — your print-ready file is unlocked instantly after payment.' },
+        submit: { message: isBundle ? `Digital download — all ${styles.length} print-ready files are unlocked instantly after payment.` : 'Digital download — your print-ready file is unlocked instantly after payment.' },
       },
     });
 

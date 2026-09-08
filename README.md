@@ -82,6 +82,10 @@ URL to the print-ready master; the Stripe session id is the receipt and can re-i
   posters USD 8–15, bundles USD 3–10, POD physical USD 25–35, Dorothy Film Map £30.
 - **Styles**: `posters.styles` (jsonb array `{key,label,preview_path,mockup_paths[],master_path}`) — one product per
   franchise with a style picker (`/posters/<id>?style=v2`). Checkout/download carry `style_key` in Stripe metadata.
+- **Bundles**: posters with 2+ styles offer `?style=bundle` (all styles). Price = `price_cents + bundle_step_cents × (styles − 1)`
+  (`bundle_step_cents` defaults to 300 = USD 3 per extra style; `bundle_enabled=false` hides it). Stripe gets the price inline
+  (`price_data`), so no dashboard products are needed. `/api/download` returns `files[]` — one signed URL per style — and the
+  thanks page lists them; the confirmation email points at the thanks page as usual.
 - **Source files** live in pCloud: `www.opij.io/Customer Files/Movie Canvas/<Franchise> x/` (7200×10800 masters,
   v1–v5) and `www.opij.io/Mock Ups - Movie /<Franchise> x/[vN/]MOCKUPS/`. `scripts/build-packs.py` (Python 3 + Pillow,
   runs on the Mac) turns them into `../posters-upload/` (packs, previews, mockups, `catalog.json`); idempotent, `--budget`.
