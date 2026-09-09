@@ -1173,7 +1173,7 @@
         <div style="display:flex;flex-direction:column;gap:12px;min-width:0;">
           <div style="position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,0.09);background:#0b0d11;">
             <sc-if value="{{ poster.hasHero }}" hint-placeholder-val="{{ true }}">
-              <img src="{{ poster.heroImg }}" alt="{{ poster.title }} poster preview" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;max-height:78vh;object-fit:contain;background:#0b0d11;">
+              <img src="{{ poster.heroImg }}" alt="{{ poster.title }} poster preview" fetchpriority="high" decoding="async" style="width:100%;height:auto;display:block;max-height:78vh;object-fit:contain;background:#0b0d11;">
             </sc-if>
           </div>
           <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;">
@@ -1960,7 +1960,7 @@ class Component extends DCLogic {
       accent: '#FF6B1F',
       tagline: 'One film, one predestined loop, and four world-lines doubling back through it.',
       blurb: 'One predestined loop, read four ways — the objective chronology first, then how each character threads back through it.',
-      meta: '1 films · 4 branches',
+      meta: '1 film · 4 branches',
       framing: 'Tenet isn’t a branching franchise — it’s a single ’this always happened’ loop. The confusion comes from inversion: people keep living forward while the world reverses around them, so the same events are crossed multiple times by inverted copies of the same person. The cleanest way to read it is by world-line — the objective chronology first, then how the Protagonist, Neil, and Kat & Sator each thread through it.',
       forkLabel: 'The Turnstile · Inversion',
       films: ['Tenet (2020)'],
@@ -6448,7 +6448,10 @@ class Component extends DCLogic {
     if (path === '/posters/thanks') return 'Your download \u00b7 ReelOrder';
     if (path.indexOf('/posters/') === 0) {
       const pp = (this.state.posters||[]).find(x => x.id === path.slice(9));
-      return (pp ? pp.title + ' Poster' : 'Poster') + ' \u00b7 ReelOrder';
+      // titleFor returns null when it cannot beat what the prerendered page already
+      // says - otherwise every /posters/<id> reads "Poster · ReelOrder" until the
+      // DB call lands, and that is what a JS-rendering crawler indexes.
+      return pp ? pp.title + ' Poster \u00b7 ReelOrder' : null;
     }
     if (path.indexOf('/watch-order/') === 0) {
       const wf = this.data[path.slice(13)];
@@ -6478,8 +6481,7 @@ class Component extends DCLogic {
     if (path === '/posters') return 'Print-ready movie collection posters as instant digital downloads \u2014 24x36 plus A-series, 4:3, 5:7 crops and a phone wallpaper.';
     if (path.indexOf('/posters/') === 0) {
       const pp = (this.state.posters||[]).find(x => x.id === path.slice(9));
-      if (pp && pp.tagline) return pp.tagline;
-      return 'A print-ready movie poster as an instant digital download from ReelOrder.';
+      return pp ? (pp.tagline || pp.description || null) : null;
     }
     if (path.indexOf('/watch-order/') === 0) {
       const wf = this.data[path.slice(13)];
@@ -6498,18 +6500,22 @@ class Component extends DCLogic {
       const put = (sel, attr, val) => { const el = h.querySelector(sel); if (el) el.setAttribute(attr, val); };
       const title = this.titleFor(path), desc = this.descFor(path);
       const img = this.ogImageFor(path), url = this.SITE + (path || '/');
-      put('meta[name="description"]', 'content', desc);
       put('link[rel="canonical"]', 'href', url);
-      put('meta[property="og:title"]', 'content', title);
-      put('meta[property="og:description"]', 'content', desc);
       put('meta[property="og:url"]', 'content', url);
       put('meta[property="og:image"]', 'content', img);
-      put('meta[name="twitter:title"]', 'content', title);
-      put('meta[name="twitter:description"]', 'content', desc);
       put('meta[name="twitter:image"]', 'content', img);
+      if (title) {
+        put('meta[property="og:title"]', 'content', title);
+        put('meta[name="twitter:title"]', 'content', title);
+      }
+      if (desc) {
+        put('meta[name="description"]', 'content', desc);
+        put('meta[property="og:description"]', 'content', desc);
+        put('meta[name="twitter:description"]', 'content', desc);
+      }
     } catch(e){}
   };
-  setTitle = (path) => { try { document.title = this.titleFor(path); this.setMeta(path); } catch(e){} };
+  setTitle = (path) => { try { const t = this.titleFor(path); if (t) document.title = t; this.setMeta(path); } catch(e){} };
   pushRoute = (path) => {
     this.closeNav();
     try {
@@ -6969,7 +6975,9 @@ class Component extends DCLogic {
         .select('id,title,franchise_id,tagline,description,accent,size_label,file_label,price_cents,currency,preview_path,mockup_paths,sort_order,styles,bundle_step_cents,bundle_enabled')
         .eq('active', true).order('sort_order', { ascending:true });
       if (error) throw error;
-      this.setState({ posters: data || [], postersLoaded: true });
+      this.setState({ posters: data || [], postersLoaded: true }, () => {
+        try { this.setTitle(this.routeFor(this.state.screen, this.state.posterId || this.state.activeId)); } catch(e){}
+      });
     } catch(e) {
       console.error('ReelOrder: posters load failed', e);
       this.setState({ posters: [], postersLoaded: true });
