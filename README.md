@@ -162,3 +162,67 @@ item appears in the nav. Tabs: **Inbox** (contributions + contact messages: repl
 Stripe + download-page links, revenue summary). Everything goes through `api/admin.js`, which verifies the caller's Supabase
 JWT and requires a row in `admins`. Grant another admin: `insert into admins (user_id, note) values ('<auth.users id>', '…');`.
 
+## SEO & sharing
+
+`index.html` is one SPA behind rewrites, so every route used to ship the same `<title>`,
+description and share image — and the Facebook / X / Discord / Slack unfurlers only ever read
+the *static* head, so a shared map rendered as a bare link.
+
+`scripts/build-seo.mjs` fixes that by stamping a per-route copy of `index.html` whose head
+block (between the `<!--RO:META-->` markers) carries that route's title, description,
+canonical, Open Graph / Twitter tags and JSON-LD. Everything below the head is byte-identical
+to `index.html`, so there is nothing to maintain twice.
+
+- **Generated files** (never edit by hand): `map/<id>.html` (one per franchise), `queue.html`,
+  `contribute.html`, `contact.html`, `posters.html`, `timeline.html`, `realorder.html`,
+  `sitemap.xml`, `robots.txt`, plus the head block inside `index.html` itself.
+- **`ship.sh` runs it before every commit**, so the copies can never drift. Run
+  `node scripts/build-seo.mjs --check` to fail loudly if they are stale (exit 1).
+- `vercel.json` rewrites each clean URL to its generated file (`/map/:id` → `/map/:id.html`).
+  Unknown paths fall through to `404.html`.
+- Franchise copy comes straight out of the `data` map in `index.html` — add a franchise and
+  its page, sitemap entry and structured data appear on the next build. **Add its OG image
+  too** (below), or it falls back to `og-default.png`.
+- Poster URLs are pulled from Supabase at build time. No network (or the fetch fails) → they
+  are skipped with a warning and the rest of the sitemap still builds.
+- The client keeps the head in step when navigating: `setTitle` → `setMeta` rewrites
+  description / canonical / og / twitter tags per route (`descFor`, `ogImageFor`).
+- `/?q=terminator` runs a search on load, which is what makes the schema.org `SearchAction` real.
+
+### Share images
+
+`assets/og/og-<id>.png` — 1200×630, one per franchise plus `og-default`, `og-queue`,
+`og-posters`, `og-contribute`. Built by `scripts/build-og.mjs` (Playwright; run it wherever
+Playwright is installed, then drop the PNGs into `assets/og/`). Art is a generic fork/rail
+diagram in the franchise accent colour — deliberately no studio logos or characters.
+
+### Analytics
+
+`/_vercel/insights/script.js` and `/_vercel/speed-insights/script.js` are in the head
+(same-origin, so the CSP allows them). They only report once **Web Analytics** and
+**Speed Insights** are enabled for the project in the Vercel dashboard.
+
+## Watch orders
+
+`/watch-order/<id>` answers the highest-volume query in this niche — "what order do I watch X in".
+Eleven franchises have one (everything except Tenet, which is a single film).
+
+- **Content lives in `assets/watch-orders.json`**, not in `index.html` — it is ~110 KB and would otherwise
+  be duplicated into every prerendered page. The app fetches it lazily the first time a watch-order screen
+  opens; `scripts/build-seo.mjs` reads the same file at build time for the head and the `<noscript>` body.
+- Three orders per franchise: `release`, `chrono`, `first`. `first` uses `groups` (labelled sections such as
+  "Start here" / "Completionists only") and gives every entry a `why`; `release` and `chrono` use a flat
+  `items` list and carry a `why` only on structurally notable entries — they are reference lists, not essays.
+- `id` on an item is the watched-state key, so **the same film must use the same `id` in all three orders**
+  or ticking it in one tab will not tick it in the others.
+- `branch` must match a branch title in that franchise's `data` entry in `index.html` exactly (curly
+  apostrophes included) — the chip is what ties the page back to the map.
+- `kind` marks non-films: `tv`, `game`, `book`. Dune sets `noun: "read and watch"` because it is mostly novels.
+- **The template renders `{{ }}` as plain text**, so `<b>` inside `why` would show literally. `woParts()`
+  splits each `why` into `{text, style}` segments that the template loops over — that is why emphasis works.
+- Watched state is per-franchise `localStorage` (`reelorder_watched_<id>`), not tied to an account.
+- Runtimes are deliberately absent: the data model has the field, but filling it means wiring TMDB rather
+  than hand-typing ~200 numbers. Progress shows a count until then.
+
+Adding a franchise's watch order: add its key to `assets/watch-orders.json`, add the id to `WO_IDS` in
+`index.html`, generate `assets/og/og-wo-<id>.png` (`scripts/build-og.mjs`), then `node scripts/build-seo.mjs`.

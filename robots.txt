@@ -1,0 +1,8 @@
+# ReelOrder
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /posters/thanks
+
+Sitemap: https://reelorder.com/sitemap.xml

@@ -1,5 +1,26 @@
 <!DOCTYPE html>
-<html><head><script>window.__resources = {};</script><title>ReelOrder</title>
+<html><head><script>window.__resources = {};</script><!--RO:META-->
+<title>ReelOrder — Movie Timeline Maps</title>
+<meta name="description" content="Sequels, reboots, time-loops and multiverse forks — every movie timeline mapped as clean, interactive branch diagrams. Search a film and follow the threads.">
+<link rel="canonical" href="https://reelorder.com/">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="theme-color" content="#070809">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ReelOrder">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="ReelOrder — Movie Timeline Maps">
+<meta property="og:description" content="Sequels, reboots, time-loops and multiverse forks — every movie timeline mapped as clean, interactive branch diagrams. Search a film and follow the threads.">
+<meta property="og:url" content="https://reelorder.com/">
+<meta property="og:image" content="https://reelorder.com/assets/og/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ReelOrder — untangle every timeline">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ReelOrder — Movie Timeline Maps">
+<meta name="twitter:description" content="Sequels, reboots, time-loops and multiverse forks — every movie timeline mapped as clean, interactive branch diagrams. Search a film and follow the threads.">
+<meta name="twitter:image" content="https://reelorder.com/assets/og/og-default.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://reelorder.com/#webpage","url":"https://reelorder.com/","name":"ReelOrder — Movie Timeline Maps","description":"Sequels, reboots, time-loops and multiverse forks — every movie timeline mapped as clean, interactive branch diagrams. Search a film and follow the threads.","isPartOf":{"@id":"https://reelorder.com/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://reelorder.com/assets/og/og-default.png"},"inLanguage":"en"},{"@type":"WebSite","@id":"https://reelorder.com/#website","url":"https://reelorder.com/","name":"ReelOrder","description":"Sequels, reboots, time-loops and multiverse forks — every movie timeline mapped as clean, interactive branch diagrams. Search a film and follow the threads.","inLanguage":"en","publisher":{"@id":"https://reelorder.com/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://reelorder.com/?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://reelorder.com/#org","name":"ReelOrder","url":"https://reelorder.com/","logo":{"@type":"ImageObject","url":"https://reelorder.com/assets/brand/icon-512.png","width":512,"height":512}}]}</script>
+<!--/RO:META-->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="/assets/brand/favicon.svg">
@@ -8,6 +29,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/apple-touch-icon-180.png">
 <script src="/assets/asset-00.js"></script>
 <script src="/assets/supabase-js-2.115.0.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
 <x-dc>
@@ -20,7 +43,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-01.woff2") format('woff2');
+  src: url("/assets/asset-01.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -29,7 +52,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-02.woff2") format('woff2');
+  src: url("/assets/asset-02.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* latin-ext */
@@ -38,7 +61,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-01.woff2") format('woff2');
+  src: url("/assets/asset-01.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -47,7 +70,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-02.woff2") format('woff2');
+  src: url("/assets/asset-02.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* latin-ext */
@@ -56,7 +79,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-01.woff2") format('woff2');
+  src: url("/assets/asset-01.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -65,7 +88,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-02.woff2") format('woff2');
+  src: url("/assets/asset-02.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* latin-ext */
@@ -74,7 +97,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-01.woff2") format('woff2');
+  src: url("/assets/asset-01.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -83,7 +106,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-02.woff2") format('woff2');
+  src: url("/assets/asset-02.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* cyrillic-ext */
@@ -92,7 +115,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-03.woff2") format('woff2');
+  src: url("/assets/asset-03.woff2") format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -101,7 +124,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-04.woff2") format('woff2');
+  src: url("/assets/asset-04.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* greek */
@@ -110,7 +133,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-05.woff2") format('woff2');
+  src: url("/assets/asset-05.woff2") format('woff2');
   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
 }
 /* vietnamese */
@@ -119,7 +142,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-06.woff2") format('woff2');
+  src: url("/assets/asset-06.woff2") format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -128,7 +151,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-07.woff2") format('woff2');
+  src: url("/assets/asset-07.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -137,7 +160,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-08.woff2") format('woff2');
+  src: url("/assets/asset-08.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* cyrillic-ext */
@@ -146,7 +169,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-03.woff2") format('woff2');
+  src: url("/assets/asset-03.woff2") format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -155,7 +178,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-04.woff2") format('woff2');
+  src: url("/assets/asset-04.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* greek */
@@ -164,7 +187,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-05.woff2") format('woff2');
+  src: url("/assets/asset-05.woff2") format('woff2');
   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
 }
 /* vietnamese */
@@ -173,7 +196,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-06.woff2") format('woff2');
+  src: url("/assets/asset-06.woff2") format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -182,7 +205,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-07.woff2") format('woff2');
+  src: url("/assets/asset-07.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -191,7 +214,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-08.woff2") format('woff2');
+  src: url("/assets/asset-08.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* cyrillic-ext */
@@ -200,7 +223,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-03.woff2") format('woff2');
+  src: url("/assets/asset-03.woff2") format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -209,7 +232,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-04.woff2") format('woff2');
+  src: url("/assets/asset-04.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* greek */
@@ -218,7 +241,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-05.woff2") format('woff2');
+  src: url("/assets/asset-05.woff2") format('woff2');
   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
 }
 /* vietnamese */
@@ -227,7 +250,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-06.woff2") format('woff2');
+  src: url("/assets/asset-06.woff2") format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -236,7 +259,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-07.woff2") format('woff2');
+  src: url("/assets/asset-07.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -245,7 +268,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-08.woff2") format('woff2');
+  src: url("/assets/asset-08.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* cyrillic-ext */
@@ -254,7 +277,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-03.woff2") format('woff2');
+  src: url("/assets/asset-03.woff2") format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -263,7 +286,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-04.woff2") format('woff2');
+  src: url("/assets/asset-04.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* greek */
@@ -272,7 +295,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-05.woff2") format('woff2');
+  src: url("/assets/asset-05.woff2") format('woff2');
   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
 }
 /* vietnamese */
@@ -281,7 +304,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-06.woff2") format('woff2');
+  src: url("/assets/asset-06.woff2") format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -290,7 +313,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-07.woff2") format('woff2');
+  src: url("/assets/asset-07.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -299,7 +322,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-08.woff2") format('woff2');
+  src: url("/assets/asset-08.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* cyrillic-ext */
@@ -308,7 +331,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("assets/asset-09.woff2") format('woff2');
+  src: url("/assets/asset-09.woff2") format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -317,7 +340,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("assets/asset-10.woff2") format('woff2');
+  src: url("/assets/asset-10.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* vietnamese */
@@ -326,7 +349,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("assets/asset-11.woff2") format('woff2');
+  src: url("/assets/asset-11.woff2") format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -335,7 +358,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("assets/asset-12.woff2") format('woff2');
+  src: url("/assets/asset-12.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -344,7 +367,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("assets/asset-13.woff2") format('woff2');
+  src: url("/assets/asset-13.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* cyrillic-ext */
@@ -353,7 +376,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-09.woff2") format('woff2');
+  src: url("/assets/asset-09.woff2") format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -362,7 +385,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-10.woff2") format('woff2');
+  src: url("/assets/asset-10.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* vietnamese */
@@ -371,7 +394,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-11.woff2") format('woff2');
+  src: url("/assets/asset-11.woff2") format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -380,7 +403,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-12.woff2") format('woff2');
+  src: url("/assets/asset-12.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -389,7 +412,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("assets/asset-13.woff2") format('woff2');
+  src: url("/assets/asset-13.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* cyrillic-ext */
@@ -398,7 +421,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-09.woff2") format('woff2');
+  src: url("/assets/asset-09.woff2") format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -407,7 +430,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-10.woff2") format('woff2');
+  src: url("/assets/asset-10.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* vietnamese */
@@ -416,7 +439,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-11.woff2") format('woff2');
+  src: url("/assets/asset-11.woff2") format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -425,7 +448,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-12.woff2") format('woff2');
+  src: url("/assets/asset-12.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -434,7 +457,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("assets/asset-13.woff2") format('woff2');
+  src: url("/assets/asset-13.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* cyrillic-ext */
@@ -443,7 +466,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-09.woff2") format('woff2');
+  src: url("/assets/asset-09.woff2") format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -452,7 +475,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-10.woff2") format('woff2');
+  src: url("/assets/asset-10.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* vietnamese */
@@ -461,7 +484,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-11.woff2") format('woff2');
+  src: url("/assets/asset-11.woff2") format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -470,7 +493,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-12.woff2") format('woff2');
+  src: url("/assets/asset-12.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -479,7 +502,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("assets/asset-13.woff2") format('woff2');
+  src: url("/assets/asset-13.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* cyrillic-ext */
@@ -488,7 +511,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-09.woff2") format('woff2');
+  src: url("/assets/asset-09.woff2") format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -497,7 +520,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-10.woff2") format('woff2');
+  src: url("/assets/asset-10.woff2") format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* vietnamese */
@@ -506,7 +529,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-11.woff2") format('woff2');
+  src: url("/assets/asset-11.woff2") format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -515,7 +538,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-12.woff2") format('woff2');
+  src: url("/assets/asset-12.woff2") format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -524,7 +547,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("assets/asset-13.woff2") format('woff2');
+  src: url("/assets/asset-13.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 </style>
@@ -704,6 +727,9 @@
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#6b7686;">{{ active.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1;margin:6px 0 0;text-transform:uppercase;letter-spacing:0.01em;">{{ active.title }}</h1>
           <p style="margin:14px 0 0;max-width:72ch;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">{{ active.framing }}</p>
+          <sc-if value="{{ hasWatchOrder }}" hint-placeholder-val="{{ true }}">
+            <button onclick="{{ goWatchOrder }}" style="{{ watchOrderBtnStyle }}" style-hover="border-color:rgba(255,255,255,0.4);color:#fff;">▶ {{ watchOrderBtnLabel }}</button>
+          </sc-if>
         </div>
       </div>
 
@@ -1438,6 +1464,73 @@
     </div>
     </sc-if>
 
+    <!-- ============ WATCH ORDER ============ -->
+    <sc-if value="{{ isWatchOrder }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:900px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(20px,5vw,40px) 96px;">
+
+      <button onclick="{{ wo.onBack }}" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;margin-bottom:26px;" style-hover="border-color:rgba(255,255,255,0.25);color:#fff;">← All franchises</button>
+
+      <div style="display:flex;gap:18px;align-items:flex-start;">
+        <div style="{{ wo.sigilStyle }}">{{ wo.sigil }}</div>
+        <div style="min-width:0;flex:1;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#9DB0C4;">{{ wo.meta }}</div>
+          <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.03;margin:8px 0 0;letter-spacing:0.01em;text-transform:uppercase;text-wrap:balance;">{{ wo.heading }}</h1>
+        </div>
+      </div>
+
+      <p style="margin:16px 0 0;color:#A9B4C2;font-size:16px;line-height:1.62;max-width:64ch;text-wrap:pretty;">{{ wo.intro }}</p>
+
+      <div><button onclick="{{ wo.onOpenMap }}" style="{{ wo.mapLinkStyle }}" style-hover="border-color:rgba(255,255,255,0.34);color:#fff;">{{ wo.mapLinkLabel }}</button></div>
+
+      <div style="display:inline-flex;flex-wrap:wrap;gap:4px;margin-top:30px;padding:5px;border:1px solid rgba(255,255,255,0.1);border-radius:999px;background:rgba(255,255,255,0.03);">
+        <sc-for list="{{ wo.tabs }}" as="t" hint-placeholder-count="3">
+          <button onclick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:22px;padding:14px 18px;border:1px solid rgba(255,255,255,0.09);border-radius:14px;background:rgba(13,15,20,0.6);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#9DB0C4;letter-spacing:0.03em;">{{ wo.progressText }}</span>
+        <span style="flex:1 1 140px;min-width:100px;height:5px;border-radius:999px;background:rgba(255,255,255,0.09);overflow:hidden;"><span style="{{ wo.barStyle }}"></span></span>
+        <button onclick="{{ wo.onReset }}" style="background:none;border:none;cursor:pointer;color:#6b7686;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.13em;text-transform:uppercase;padding:4px 2px;" style-hover="color:#FF2A1F;">Clear</button>
+      </div>
+
+      <p style="{{ wo.noteStyle }}">{{ wo.note }}</p>
+
+      <sc-for list="{{ wo.groups }}" as="g" hint-placeholder-count="2">
+        <div>
+          <sc-if value="{{ g.showLabel }}" hint-placeholder-val="{{ true }}">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#6b7686;margin:34px 0 0;">{{ g.label }}</div>
+          </sc-if>
+          <div style="position:relative;padding-left:32px;margin-top:16px;">
+            <div style="{{ wo.railStyle }}"></div>
+            <sc-for list="{{ g.items }}" as="f" hint-placeholder-count="3">
+              <div style="{{ f.rowStyle }}">
+                <div style="{{ f.nodeStyle }}"></div>
+                <button onclick="{{ f.onToggle }}" style="{{ f.tickStyle }}">{{ f.tickMark }}</button>
+                <div style="flex:1;min-width:0;">
+                  <div style="display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;">
+                    <span style="{{ f.titleStyle }}">{{ f.title }}</span>
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b7686;letter-spacing:0.04em;white-space:nowrap;">{{ f.meta }}</span>
+                  </div>
+                  <sc-if value="{{ f.hasWhy }}" hint-placeholder-val="{{ true }}">
+                    <p style="margin:7px 0 0;color:#9aa6b4;font-size:14.5px;line-height:1.55;max-width:62ch;text-wrap:pretty;"><sc-for list="{{ f.whyParts }}" as="w" hint-placeholder-count="1"><span style="{{ w.style }}">{{ w.text }}</span></sc-for></p>
+                  </sc-if>
+                  <span style="{{ f.branchStyle }}">{{ f.branch }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+
+      <div style="margin-top:42px;padding:24px;border:1px dashed rgba(255,255,255,0.15);border-radius:16px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;">
+        <p style="margin:0;color:#9aa6b4;font-size:15px;max-width:52ch;line-height:1.55;">{{ wo.footNote }}</p>
+        <button onclick="{{ wo.onOpenMap }}" style="{{ wo.footBtnStyle }}" style-hover="filter:brightness(1.14);">{{ wo.footBtnLabel }}</button>
+      </div>
+
+    </div>
+    </sc-if>
+
   </main>
 
   <!-- ============ FOOTER ============ -->
@@ -1515,6 +1608,7 @@
     </div>
   </sc-if>
 
+
   <!-- TOAST -->
   <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:100;display:flex;align-items:center;gap:14px;max-width:90vw;padding:14px 16px 14px 18px;border-radius:13px;border:1px solid rgba(255,255,255,0.14);background:rgba(16,18,24,0.96);backdrop-filter:blur(12px);box-shadow:0 24px 60px -20px rgba(0,0,0,0.9);">
@@ -1542,6 +1636,7 @@ class Component extends DCLogic {
     screen: 'hub',
     navOpen: false,
     isNarrow: (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth <= 1000 : false,
+    woOrder: 'first', woData: null, woLoading: false, woWatched: {},
     activeId: 'terminator',
     // posters store
     posters: [], postersLoaded: false, posterId: null, styleKey: null, galleryIdx: 0, checkoutBusy: false, thanks: null,
@@ -6197,6 +6292,130 @@ class Component extends DCLogic {
     if (this.data[id]) { this.setState({ screen:'timeline', activeId:id, filter:'all', collapsed:{}, view:'rail', seriesTab:'map' }); this.pushRoute(this.routeFor('timeline', id)); this.toTop(); }
   };
 
+  // ---------- watch order ----------
+  WO_IDS = ['terminator','xmen','bttf','apes','predator','alien','transformers','dune','marvel','starwars','startrek'];
+  WO_NOUN = { dune: 'read and watch' };
+  WO_NOUN_TITLE = { dune: 'Read and Watch' };
+  WO_KEY = 'reelorder_watched_';
+  hasWatchOrder = (id) => this.WO_IDS.indexOf(id) >= 0;
+  loadWatchOrders = async () => {
+    if (this.state.woData || this.state.woLoading) return;
+    this.setState({ woLoading: true });
+    try {
+      const res = await fetch('/assets/watch-orders.json');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      this.setState({ woData: json, woLoading: false });
+    } catch (e) { this.setState({ woLoading: false }); }
+  };
+  readWatched = (fid) => { try { return JSON.parse(localStorage.getItem(this.WO_KEY + fid) || '{}') || {}; } catch(e) { return {}; } };
+  toggleWatched = (fid, key) => {
+    const w = Object.assign({}, this.state.woWatched);
+    if (w[key]) delete w[key]; else w[key] = 1;
+    this.setState({ woWatched: w });
+    try { localStorage.setItem(this.WO_KEY + fid, JSON.stringify(w)); } catch(e){}
+  };
+  clearWatched = (fid) => {
+    this.setState({ woWatched: {} });
+    try { localStorage.removeItem(this.WO_KEY + fid); } catch(e){}
+  };
+  setWoOrder = (k) => this.setState({ woOrder: k });
+  goWatchOrder = (id) => {
+    if (!this.data[id] || !this.hasWatchOrder(id)) return;
+    this.setState({ screen:'watchOrder', activeId:id, woOrder:'first', woWatched:this.readWatched(id) });
+    this.pushRoute('/watch-order/' + id);
+    this.loadWatchOrders();
+    this.toTop();
+  };
+  woParts = (why) => {
+    if (!why) return [];
+    const out = [];
+    const re = /<b>([\s\S]*?)<\/b>/g;
+    let last = 0, m;
+    while ((m = re.exec(why)) !== null) {
+      if (m.index > last) out.push({ text: why.slice(last, m.index), bold: false });
+      out.push({ text: m[1], bold: true });
+      last = m.index + m[0].length;
+    }
+    if (last < why.length) out.push({ text: why.slice(last), bold: false });
+    return out.map((p, i) => ({ key: i, text: p.text, style: p.bold ? 'color:#C9D3DE;font-weight:600;' : 'color:inherit;' }));
+  };
+  buildWO = (s) => {
+    const f = this.data[s.activeId] || null;
+    const accent = (f && f.accent) || '#FF2A1F';
+    const wod = (s.woData || {})[s.activeId] || null;
+    const noun = this.WO_NOUN[s.activeId] || 'watch';
+    const title = f ? f.title : '';
+    const wo = {
+      sigil: title ? title.slice(0,1).toUpperCase() : '?',
+      sigilStyle: "flex:none;width:58px;height:58px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:700;font-size:26px;color:#fff;background:linear-gradient(150deg," + accent + ",rgba(0,0,0,0.6));box-shadow:0 0 0 1px rgba(255,255,255,0.1);",
+      meta: f ? f.meta : '',
+      heading: 'What order to ' + noun + ' ' + title,
+      intro: wod ? wod.intro : (s.woLoading ? 'Loading the orders…' : ''),
+      onBack: this.goHub,
+      onOpenMap: () => this.openFranchise(s.activeId),
+      onReset: () => this.clearWatched(s.activeId),
+      mapLinkLabel: 'See the branch map →',
+      mapLinkStyle: "display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:9px 15px;border-radius:9px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;",
+      railStyle: 'position:absolute;left:9px;top:16px;bottom:16px;width:2px;background:linear-gradient(' + accent + '66,' + accent + '14);',
+      noteStyle: 'margin:24px 0 0;padding:17px 19px 17px 21px;border-radius:12px;background:' + accent + '1A;border-left:3px solid ' + accent + ';color:#D2D9E2;font-size:15.5px;line-height:1.6;max-width:70ch;text-wrap:pretty;',
+      footNote: 'Not sure which branch is which? The map lays them out side by side, from the split back to where each one starts.',
+      footBtnLabel: 'Open the ' + title + ' map',
+      footBtnStyle: "flex:none;padding:12px 21px;border-radius:999px;border:1px solid " + accent + ";background:" + accent + ";color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;white-space:nowrap;transition:filter .15s ease;",
+      progressText: '', barStyle: 'display:block;height:100%;width:0%;background:' + accent + ';border-radius:999px;transition:width .35s ease;',
+      note: '', tabs: [], groups: []
+    };
+    if (!wod) return wo;
+
+    const TABS = [['release','Release'], ['chrono','Chronological'], ['first','First-time']];
+    const active = wod.orders[s.woOrder] ? s.woOrder : 'first';
+    wo.tabs = TABS.map(t => ({
+      key: t[0], label: t[1], onClick: () => this.setWoOrder(t[0]),
+      style: "appearance:none;border:none;cursor:pointer;border-radius:999px;padding:9px 17px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;transition:all .15s ease;"
+        + (t[0] === active ? 'background:rgba(255,255,255,0.11);color:#E9EDF3;' : 'background:transparent;color:#9DB0C4;')
+    }));
+
+    const order = wod.orders[active];
+    wo.note = order.note || '';
+    const raw = order.groups || [{ label: '', items: order.items }];
+
+    const seen = {};
+    raw.forEach(g => (g.items || []).forEach(it => { seen[it.id] = 1; }));
+    const total = Object.keys(seen).length;
+    const done = Object.keys(seen).filter(k => s.woWatched[k]).length;
+    wo.progressText = done + ' of ' + total + ' watched';
+    wo.barStyle = 'display:block;height:100%;width:' + (total ? Math.round(done / total * 100) : 0) + '%;background:' + accent + ';border-radius:999px;transition:width .35s ease;';
+
+    wo.groups = raw.map((g, gi) => ({
+      key: gi,
+      label: g.label || '',
+      showLabel: !!g.label,
+      items: (g.items || []).map((it, ii) => {
+        const on = !!s.woWatched[it.id];
+        const kind = it.kind || 'film';
+        const bits = [];
+        if (it.setLabel) bits.push(it.setLabel); else if (it.year) bits.push(String(it.year));
+        if (kind !== 'film') bits.push(kind === 'tv' ? 'TV series' : kind === 'game' ? 'Game' : kind === 'book' ? 'Novel' : kind);
+        return {
+          key: gi + '-' + ii + '-' + it.id,
+          title: it.title,
+          meta: bits.join(' · '),
+          branch: it.branch,
+          hasWhy: !!it.why,
+          whyParts: this.woParts(it.why),
+          tickMark: on ? '✓' : '',
+          onToggle: () => this.toggleWatched(s.activeId, it.id),
+          rowStyle: 'position:relative;display:flex;gap:15px;align-items:flex-start;padding:15px 17px;border-radius:14px;border:1px solid ' + (on ? 'rgba(61,220,132,0.22)' : 'rgba(255,255,255,0.09)') + ';background:' + (on ? 'rgba(10,14,11,0.75)' : 'rgba(13,15,20,0.6)') + ';margin-top:' + (ii ? '11px' : '0') + ';transition:all .18s ease;',
+          nodeStyle: 'position:absolute;left:-27px;top:24px;width:11px;height:11px;border-radius:50%;background:' + (on ? '#3DDC84' : '#070809') + ';border:2.5px solid ' + (on ? '#3DDC84' : accent) + ';',
+          tickStyle: "flex:none;margin-top:2px;width:22px;height:22px;border-radius:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;line-height:1;transition:all .15s ease;" + (on ? 'border:1.5px solid #3DDC84;background:#3DDC84;color:#07130c;' : 'border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.03);color:transparent;'),
+          titleStyle: "font-family:'Oswald',sans-serif;font-weight:600;font-size:21px;letter-spacing:0.015em;text-transform:uppercase;line-height:1.15;" + (on ? 'color:#6b7686;text-decoration:line-through;' : 'color:#E9EDF3;'),
+          branchStyle: "display:inline-flex;align-items:center;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:" + accent + ";border:1px solid " + accent + "40;background:" + accent + "12;border-radius:999px;padding:5px 11px;"
+        };
+      })
+    }));
+    return wo;
+  };
+
   // ---------- routing: keep the address bar in step with the screen ----------
   routeFor = (screen, activeId) => {
     if (screen === 'queue') return '/queue';
@@ -6206,6 +6425,7 @@ class Component extends DCLogic {
     if (screen === 'posters') return '/posters';
     if (screen === 'poster') return activeId ? '/posters/' + activeId : '/posters';
     if (screen === 'posterThanks') return '/posters/thanks';
+    if (screen === 'watchOrder') return activeId ? '/watch-order/' + activeId : '/';
     if (screen === 'timeline') return activeId && this.data[activeId] ? '/map/' + activeId : '/timeline';
     return '/';
   };
@@ -6220,13 +6440,66 @@ class Component extends DCLogic {
       const pp = (this.state.posters||[]).find(x => x.id === path.slice(9));
       return (pp ? pp.title + ' Poster' : 'Poster') + ' \u00b7 ReelOrder';
     }
+    if (path.indexOf('/watch-order/') === 0) {
+      const wf = this.data[path.slice(13)];
+      const wn = this.WO_NOUN_TITLE[path.slice(13)] || 'Watch';
+      return (wf ? 'What Order to ' + wn + ' ' + wf.title : 'Watch Order') + ' \u00b7 ReelOrder';
+    }
     if (path.indexOf('/map/') === 0) {
       const f = this.data[path.slice(5)];
-      return (f ? f.title + ' Timeline' : 'Timeline') + ' \u00b7 ReelOrder';
+      return (f ? f.title + ' Timeline Explained' : 'Timeline') + ' \u00b7 ReelOrder';
     }
     return 'ReelOrder \u2014 Movie Timeline Maps';
   };
-  setTitle = (path) => { try { document.title = this.titleFor(path); } catch(e){} };
+  SITE = 'https://reelorder.com';
+  ogImageFor = (path) => {
+    let n = 'og-default';
+    if (path === '/queue') n = 'og-queue';
+    else if (path === '/contribute') n = 'og-contribute';
+    else if (path.indexOf('/posters') === 0) n = 'og-posters';
+    else if (path.indexOf('/map/') === 0 && this.data[path.slice(5)]) n = 'og-' + path.slice(5);
+    else if (path.indexOf('/watch-order/') === 0 && this.data[path.slice(13)]) n = 'og-wo-' + path.slice(13);
+    return this.SITE + '/assets/og/' + n + '.png';
+  };
+  descFor = (path) => {
+    if (path === '/queue') return 'Vote on which movie franchise gets its timeline mapped next \u2014 or suggest one. Live community rankings on ReelOrder.';
+    if (path === '/contribute') return 'Know a franchise inside out? Send us its branches, forks and turning points and we will build the timeline map.';
+    if (path === '/contact') return 'Get in touch with ReelOrder \u2014 questions, corrections, and poster download support.';
+    if (path === '/posters') return 'Print-ready movie collection posters as instant digital downloads \u2014 24x36 plus A-series, 4:3, 5:7 crops and a phone wallpaper.';
+    if (path.indexOf('/posters/') === 0) {
+      const pp = (this.state.posters||[]).find(x => x.id === path.slice(9));
+      if (pp && pp.tagline) return pp.tagline;
+      return 'A print-ready movie poster as an instant digital download from ReelOrder.';
+    }
+    if (path.indexOf('/watch-order/') === 0) {
+      const wf = this.data[path.slice(13)];
+      const wn = this.WO_NOUN[path.slice(13)] || 'watch';
+      if (wf) return 'What order to ' + wn + ' ' + wf.title + ' \u2014 release order, chronological order, and the order we would give a first-timer, with a reason for every entry.';
+    }
+    if (path.indexOf('/map/') === 0) {
+      const f = this.data[path.slice(5)];
+      if (f) return f.title + ' timeline explained \u2014 ' + f.meta + '. ' + f.tagline;
+    }
+    return 'Sequels, reboots, time-loops and multiverse forks \u2014 every movie timeline mapped as clean, interactive branch diagrams. Search a film and follow the threads.';
+  };
+  setMeta = (path) => {
+    try {
+      const h = document.head;
+      const put = (sel, attr, val) => { const el = h.querySelector(sel); if (el) el.setAttribute(attr, val); };
+      const title = this.titleFor(path), desc = this.descFor(path);
+      const img = this.ogImageFor(path), url = this.SITE + (path || '/');
+      put('meta[name="description"]', 'content', desc);
+      put('link[rel="canonical"]', 'href', url);
+      put('meta[property="og:title"]', 'content', title);
+      put('meta[property="og:description"]', 'content', desc);
+      put('meta[property="og:url"]', 'content', url);
+      put('meta[property="og:image"]', 'content', img);
+      put('meta[name="twitter:title"]', 'content', title);
+      put('meta[name="twitter:description"]', 'content', desc);
+      put('meta[name="twitter:image"]', 'content', img);
+    } catch(e){}
+  };
+  setTitle = (path) => { try { document.title = this.titleFor(path); this.setMeta(path); } catch(e){} };
   pushRoute = (path) => {
     this.closeNav();
     try {
@@ -6249,6 +6522,9 @@ class Component extends DCLogic {
       let sk = null; try { sk = new URLSearchParams(location.search).get('style'); } catch(e){}
       return { screen:'poster', posterId:b, styleKey: sk, galleryIdx:0 };
     }
+    if (a === 'watch-order') {
+      return (this.data[b] && this.hasWatchOrder(b)) ? { screen:'watchOrder', activeId:b } : { screen:'hub' };
+    }
     if (a === 'timeline' || a === 'map') {
       return this.data[b] ? { screen:'timeline', activeId:b } : { screen:'timeline' };
     }
@@ -6261,6 +6537,7 @@ class Component extends DCLogic {
     this.setState({ filter:'all', collapsed:{}, view:'rail', seriesTab:'map', ...r });
     this.setTitle(this.routeFor(r.screen, r.posterId || r.activeId || this.state.activeId));
     if (r.screen === 'posterThanks') this.loadThanks(); else if (r.screen === 'posters' || r.screen === 'poster') this.loadPosters(); else if (r.screen === 'admin') this.loadAdmin();
+    if (r.screen === 'watchOrder') { this.setState({ woWatched: this.readWatched(r.activeId), woOrder:'first' }); this.loadWatchOrders(); }
     this.toTop();
   };
   initRouting = () => {
@@ -6278,6 +6555,11 @@ class Component extends DCLogic {
         this.setTitle(this.routeFor(r.screen, r.posterId || r.activeId || this.state.activeId));
       }
       window.addEventListener('popstate', this.onPopState);
+      // /?q=terminator - powers the schema.org SearchAction
+      try {
+        const q = new URLSearchParams(location.search).get('q');
+        if (q && (!r || r.screen === 'hub')) this.setState({ search: q }, () => this.submitSearch());
+      } catch(e){}
     } catch(e){}
   };
   comingSoonClick = (title) => {
@@ -6442,6 +6724,7 @@ class Component extends DCLogic {
       }
     } catch(e) { console.error('ReelOrder: backend init failed', e); }
     if (!this.db) return;
+    if (this.state.screen === 'watchOrder') { this.setState({ woWatched: this.readWatched(this.state.activeId) }); this.loadWatchOrders(); }
     if (this.state.screen === 'posterThanks') this.loadThanks();
     if (this.state.screen === 'posters' || this.state.screen === 'poster' || this.state.screen === 'posterThanks') this.loadPosters();
     this.db.auth.onAuthStateChange((event, session) => {
@@ -7104,6 +7387,10 @@ class Component extends DCLogic {
       authEmail: s.authEmail, onAuthEmail:this.onAuthEmail, onAuthKey:this.onAuthKey,
       signGoogle:this.signGoogle, signApple:this.signApple, signFacebook:this.signFacebook, signX:this.signX, signInstagram:this.signInstagram, signEmail:this.signEmail,
       // queue
+      isWatchOrder: s.screen === 'watchOrder', wo: this.buildWO(s),
+      watchOrderBtnLabel: 'What order to ' + (this.WO_NOUN[s.activeId] || 'watch') + ' these',
+      watchOrderBtnStyle: "display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:10px 17px;border-radius:999px;border:1px solid " + ((this.data[s.activeId]||{}).accent || '#FF2A1F') + "66;background:" + ((this.data[s.activeId]||{}).accent || '#FF2A1F') + "14;color:#D2D9E2;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;",
+      hasWatchOrder: this.hasWatchOrder(s.activeId), goWatchOrder: () => this.goWatchOrder(s.activeId),
       isQueue: s.screen === 'queue', goQueue:this.goQueue,
       navQueueStyle: this.navBtn(s.screen === 'queue'),
       queueItems,

@@ -1,0 +1,3430 @@
+{
+ "terminator": {
+  "id": "terminator",
+  "intro": "Only the first two films sit on one continuous line. Everything after T2 is a separate attempt to rewrite the same war, which is why no single correct order exists — it depends what you want out of it.",
+  "orders": {
+   "first": {
+    "note": "The short answer: watch two films. The original and T2 tell one complete, self-contained story — a loop that closes. Everything below that is optional, and each option restarts the war on its own terms.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "t1",
+        "title": "The Terminator",
+        "year": 1984,
+        "branch": "Original Causal Loop",
+        "why": "The cleanest time-travel story in the series: every attempt to change the future turns out to have <b>caused</b> it. Nothing later is needed to understand it."
+       },
+       {
+        "id": "t2",
+        "title": "T2: Judgment Day",
+        "year": 1991,
+        "branch": "Original Causal Loop",
+        "why": "Breaks the loop the first film sealed, and ends on a deliberate full stop. <b>A legitimate place to finish the franchise</b> — plenty of people do."
+       }
+      ]
+     },
+     {
+      "label": "If you want a third",
+      "items": [
+       {
+        "id": "tdf",
+        "title": "Dark Fate",
+        "year": 2019,
+        "branch": "Dark Fate / Legion",
+        "why": "The only sequel that picks up <b>T2's line directly</b> — it treats Rise of the Machines, Salvation and Genisys as though they never happened. Skip to it and you lose nothing."
+       }
+      ]
+     },
+     {
+      "label": "Completionists only",
+      "items": [
+       {
+        "id": "t3",
+        "title": "T3: Rise of the Machines",
+        "year": 2003,
+        "branch": "Judgment Day Delayed",
+        "why": "Starts its own branch, where Judgment Day was only ever <b>delayed</b>, not prevented. Contradicts Dark Fate — you can hold one or the other, not both."
+       },
+       {
+        "id": "ts",
+        "title": "Salvation",
+        "year": 2009,
+        "branch": "Judgment Day Delayed",
+        "why": "The war that Rise of the Machines leads to, shown directly. <b>No time travel at all</b>, which makes it the odd one out."
+       },
+       {
+        "id": "tg",
+        "title": "Genisys",
+        "year": 2015,
+        "branch": "Genisys Reboot",
+        "why": "Rewrites the 1984 of the first film from inside itself, creating a fourth branch. <b>Watch it last or not at all</b> — earlier, it spoils the original's best turn."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "How audiences actually met them. Each sequel was written to surprise people who had seen the ones before it, so the twists land in this order and nowhere else. The trade-off: the story appears to contradict itself three times, because you are watching four branches interleaved.",
+    "items": [
+     {
+      "id": "t1",
+      "title": "The Terminator",
+      "year": 1984,
+      "branch": "Original Causal Loop",
+      "why": "Sets the rule the rest of the series keeps breaking: the past cannot be changed."
+     },
+     {
+      "id": "t2",
+      "title": "T2: Judgment Day",
+      "year": 1991,
+      "branch": "Original Causal Loop",
+      "why": "Breaks that rule on purpose, and the reversal only works if you saw the first one first."
+     },
+     {
+      "id": "t3",
+      "title": "T3: Rise of the Machines",
+      "year": 2003,
+      "branch": "Judgment Day Delayed",
+      "why": "Undoes T2's ending — the <b>first fork</b> in the series."
+     },
+     {
+      "id": "ts",
+      "title": "Salvation",
+      "year": 2009,
+      "branch": "Judgment Day Delayed"
+     },
+     {
+      "id": "tg",
+      "title": "Genisys",
+      "year": 2015,
+      "branch": "Genisys Reboot",
+      "why": "Restarts from 1984 with the timeline already altered — a third branch."
+     },
+     {
+      "id": "tdf",
+      "title": "Dark Fate",
+      "year": 2019,
+      "branch": "Dark Fate / Legion",
+      "why": "Discards the previous three and continues from T2 instead — a fourth."
+     }
+    ]
+   },
+   "chrono": {
+    "note": "A reading, not a fact. After T2 these films occupy four incompatible timelines, so laying them on one line means picking which branch counts at each step. This orders them by the year each film mainly takes place — useful for seeing the shape, misleading if you take it as one story.",
+    "items": [
+     {
+      "id": "t1",
+      "title": "The Terminator",
+      "year": 1984,
+      "setLabel": "Set 1984",
+      "branch": "Original Causal Loop",
+      "why": "Framed by the 2029 war that sends both travellers back."
+     },
+     {
+      "id": "t2",
+      "title": "T2: Judgment Day",
+      "year": 1991,
+      "setLabel": "Set 1995",
+      "branch": "Original Causal Loop",
+      "why": "The last point every branch still agrees on. <b>Everything below forks from here.</b>"
+     },
+     {
+      "id": "t3",
+      "title": "T3: Rise of the Machines",
+      "year": 2003,
+      "setLabel": "Set 2004",
+      "branch": "Judgment Day Delayed",
+      "why": "Judgment Day arrives ten years late instead of never."
+     },
+     {
+      "id": "tg",
+      "title": "Genisys",
+      "year": 2015,
+      "setLabel": "Set 2017",
+      "branch": "Genisys Reboot",
+      "why": "Also rewrites 1984, so it sits in <b>two places at once</b>."
+     },
+     {
+      "id": "ts",
+      "title": "Salvation",
+      "year": 2009,
+      "setLabel": "Set 2018",
+      "branch": "Judgment Day Delayed"
+     },
+     {
+      "id": "tdf",
+      "title": "Dark Fate",
+      "year": 2019,
+      "setLabel": "Set 2020",
+      "branch": "Dark Fate / Legion",
+      "why": "Runs from T2 as if the two branches above never existed."
+     }
+    ]
+   }
+  }
+ },
+ "xmen": {
+  "id": "xmen",
+  "intro": "Twenty years of films that changed their own past twice, kept recasting the same characters at different ages, and absorbed two Deadpool films that openly mock the continuity. There is no order in which all thirteen agree with each other.",
+  "orders": {
+   "first": {
+    "note": "Five films. The series has two genuinely good stretches — the first two films, and the First Class run — plus one great ending, and everything else either contradicts them or gets quietly erased. This path skips The Last Stand, Origins, Apocalypse, Dark Phoenix and The New Mutants, none of which you will miss.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "xmen1",
+        "title": "X-Men",
+        "year": 2000,
+        "branch": "Original Timeline → Dark Future",
+        "why": "The film that started the modern superhero era, and it still explains its own premise better than most of its sequels."
+       },
+       {
+        "id": "x2",
+        "title": "X2: X-Men United",
+        "year": 2003,
+        "branch": "Original Timeline → Dark Future",
+        "why": "The high point of the original run. <b>Stop here and skip The Last Stand</b> — Days of Future Past erases it anyway."
+       }
+      ]
+     },
+     {
+      "label": "The reset",
+      "items": [
+       {
+        "id": "firstclass",
+        "title": "X-Men: First Class",
+        "year": 2011,
+        "branch": "Shared Origins (3600 BC – 1973)",
+        "why": "A 1962 prequel with a new cast that works as a standalone film — you could start here instead and lose very little."
+       },
+       {
+        "id": "dofp",
+        "title": "X-Men: Days of Future Past",
+        "year": 2014,
+        "branch": "Original Timeline → Dark Future",
+        "why": "Joins both casts, then <b>deletes the original timeline</b> outright — the single most important film in the series for understanding the map."
+       }
+      ]
+     },
+     {
+      "label": "The ending",
+      "items": [
+       {
+        "id": "logan",
+        "title": "Logan",
+        "year": 2017,
+        "branch": "Original Timeline → Dark Future",
+        "why": "Set in 2029 and unconcerned with which timeline it belongs to. <b>The best film in the franchise</b>, and it works with only the two you started with."
+       }
+      ]
+     },
+     {
+      "label": "Deadpool, separately",
+      "items": [
+       {
+        "id": "deadpool",
+        "title": "Deadpool",
+        "year": 2016,
+        "branch": "Revised Timeline (post-1973)",
+        "why": "Barely connected to any of the above and does not want to be — watch it whenever."
+       },
+       {
+        "id": "deadpool2",
+        "title": "Deadpool 2",
+        "year": 2018,
+        "branch": "Revised Timeline (post-1973)",
+        "why": "Ends by <b>using time travel as a joke</b> to undo things it did not like, including in other films."
+       }
+      ]
+     },
+     {
+      "label": "Completionists only",
+      "items": [
+       {
+        "id": "laststand",
+        "title": "X-Men: The Last Stand",
+        "year": 2006,
+        "branch": "Original Timeline → Dark Future",
+        "why": "Days of Future Past exists largely to undo this."
+       },
+       {
+        "id": "origins",
+        "title": "X-Men Origins: Wolverine",
+        "year": 2009,
+        "branch": "Original Timeline → Dark Future",
+        "why": "Contradicted by nearly every film after it, including its own sequel."
+       },
+       {
+        "id": "thewolverine",
+        "title": "The Wolverine",
+        "year": 2013,
+        "branch": "Original Timeline → Dark Future",
+        "why": "A self-contained detour set after The Last Stand; its ending leads into Days of Future Past."
+       },
+       {
+        "id": "apocalypse",
+        "title": "X-Men: Apocalypse",
+        "year": 2016,
+        "branch": "Revised Timeline (post-1973)"
+       },
+       {
+        "id": "darkphoenix",
+        "title": "Dark Phoenix",
+        "year": 2019,
+        "branch": "Revised Timeline (post-1973)",
+        "why": "The second attempt at the story The Last Stand already failed at."
+       },
+       {
+        "id": "newmutants",
+        "title": "The New Mutants",
+        "year": 2020,
+        "branch": "Revised Timeline (post-1973)",
+        "why": "Connected to nothing, released after the series had already ended."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order they came out, which is the only order in which the timeline reset lands as a surprise rather than as a footnote.",
+    "items": [
+     {
+      "id": "xmen1",
+      "title": "X-Men",
+      "year": 2000,
+      "branch": "Original Timeline → Dark Future"
+     },
+     {
+      "id": "x2",
+      "title": "X2: X-Men United",
+      "year": 2003,
+      "branch": "Original Timeline → Dark Future"
+     },
+     {
+      "id": "laststand",
+      "title": "X-Men: The Last Stand",
+      "year": 2006,
+      "branch": "Original Timeline → Dark Future",
+      "why": "Ends the original trilogy in a way the series spends the next decade <b>walking back</b>."
+     },
+     {
+      "id": "origins",
+      "title": "X-Men Origins: Wolverine",
+      "year": 2009,
+      "branch": "Original Timeline → Dark Future"
+     },
+     {
+      "id": "firstclass",
+      "title": "X-Men: First Class",
+      "year": 2011,
+      "branch": "Shared Origins (3600 BC – 1973)",
+      "why": "Restarts the series as a 1960s prequel with a second cast playing the same people."
+     },
+     {
+      "id": "thewolverine",
+      "title": "The Wolverine",
+      "year": 2013,
+      "branch": "Original Timeline → Dark Future"
+     },
+     {
+      "id": "dofp",
+      "title": "X-Men: Days of Future Past",
+      "year": 2014,
+      "branch": "Original Timeline → Dark Future",
+      "why": "Merges both casts and then <b>erases everything</b> after 1973 — the fork that splits the whole map."
+     },
+     {
+      "id": "deadpool",
+      "title": "Deadpool",
+      "year": 2016,
+      "branch": "Revised Timeline (post-1973)"
+     },
+     {
+      "id": "apocalypse",
+      "title": "X-Men: Apocalypse",
+      "year": 2016,
+      "branch": "Revised Timeline (post-1973)"
+     },
+     {
+      "id": "logan",
+      "title": "Logan",
+      "year": 2017,
+      "branch": "Original Timeline → Dark Future",
+      "why": "Deliberately refuses to say which timeline it is in."
+     },
+     {
+      "id": "deadpool2",
+      "title": "Deadpool 2",
+      "year": 2018,
+      "branch": "Revised Timeline (post-1973)"
+     },
+     {
+      "id": "darkphoenix",
+      "title": "Dark Phoenix",
+      "year": 2019,
+      "branch": "Revised Timeline (post-1973)"
+     },
+     {
+      "id": "newmutants",
+      "title": "The New Mutants",
+      "year": 2020,
+      "branch": "Revised Timeline (post-1973)"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order, 1845 to 2029. It reads cleanly until 1973, where Days of Future Past cuts the line and everything after it exists twice — once in the timeline that was erased, once in the one that replaced it.",
+    "items": [
+     {
+      "id": "origins",
+      "title": "X-Men Origins: Wolverine",
+      "year": 2009,
+      "setLabel": "Set 1845 – 1979",
+      "branch": "Original Timeline → Dark Future",
+      "why": "Reaches furthest back, and is contradicted by most of what follows."
+     },
+     {
+      "id": "firstclass",
+      "title": "X-Men: First Class",
+      "year": 2011,
+      "setLabel": "Set 1962",
+      "branch": "Shared Origins (3600 BC – 1973)"
+     },
+     {
+      "id": "dofp",
+      "title": "X-Men: Days of Future Past",
+      "year": 2014,
+      "setLabel": "Set 1973 / 2023",
+      "branch": "Original Timeline → Dark Future",
+      "why": "The hinge. Its 1973 half <b>overwrites</b> everything the films below it established."
+     },
+     {
+      "id": "apocalypse",
+      "title": "X-Men: Apocalypse",
+      "year": 2016,
+      "setLabel": "Set 1983",
+      "branch": "Revised Timeline (post-1973)"
+     },
+     {
+      "id": "darkphoenix",
+      "title": "Dark Phoenix",
+      "year": 2019,
+      "setLabel": "Set 1992",
+      "branch": "Revised Timeline (post-1973)"
+     },
+     {
+      "id": "xmen1",
+      "title": "X-Men",
+      "year": 2000,
+      "setLabel": "Set 2000",
+      "branch": "Original Timeline → Dark Future",
+      "why": "From here down, these events belong to the timeline Days of Future Past deleted."
+     },
+     {
+      "id": "x2",
+      "title": "X2: X-Men United",
+      "year": 2003,
+      "setLabel": "Set 2003",
+      "branch": "Original Timeline → Dark Future"
+     },
+     {
+      "id": "laststand",
+      "title": "X-Men: The Last Stand",
+      "year": 2006,
+      "setLabel": "Set 2006",
+      "branch": "Original Timeline → Dark Future"
+     },
+     {
+      "id": "thewolverine",
+      "title": "The Wolverine",
+      "year": 2013,
+      "setLabel": "Set 2013",
+      "branch": "Original Timeline → Dark Future"
+     },
+     {
+      "id": "deadpool",
+      "title": "Deadpool",
+      "year": 2016,
+      "setLabel": "Set 2016",
+      "branch": "Revised Timeline (post-1973)"
+     },
+     {
+      "id": "newmutants",
+      "title": "The New Mutants",
+      "year": 2020,
+      "setLabel": "Set c. 2018",
+      "branch": "Revised Timeline (post-1973)"
+     },
+     {
+      "id": "deadpool2",
+      "title": "Deadpool 2",
+      "year": 2018,
+      "setLabel": "Set 2018",
+      "branch": "Revised Timeline (post-1973)"
+     },
+     {
+      "id": "logan",
+      "title": "Logan",
+      "year": 2017,
+      "setLabel": "Set 2029",
+      "branch": "Original Timeline → Dark Future",
+      "why": "The far end of the line, in a future where the reset apparently did not take."
+     }
+    ]
+   }
+  }
+ },
+ "bttf": {
+  "id": "bttf",
+  "intro": "Three films, one continuous story, and almost no argument about the order — but four different versions of 1985 that people routinely mix up. The useful question here is not what order, it is which 1985 you are looking at.",
+  "orders": {
+   "first": {
+    "note": "Watch them 1, 2, 3. There is no clever alternative and anyone selling you one is wrong. What is worth knowing before you start: Parts II and III were shot together as a single story and end on a cliffhanger between them, so plan to watch those two close together.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "bttf1",
+        "title": "Back to the Future",
+        "year": 1985,
+        "branch": "The Original Timeline",
+        "why": "Completely self-contained — it was written without a sequel in mind, and the famous ending was added as a joke."
+       }
+      ]
+     },
+     {
+      "label": "One story in two halves",
+      "items": [
+       {
+        "id": "bttf2",
+        "title": "Back to the Future Part II",
+        "year": 1989,
+        "branch": "Biff’s Dystopia — Hell Valley (1985-A)",
+        "why": "Where the timeline actually breaks: an altered almanac creates a <b>second 1985</b> running alongside the first, and the film ends mid-sentence."
+       },
+       {
+        "id": "bttf3",
+        "title": "Back to the Future Part III",
+        "year": 1990,
+        "branch": "The Restored Timeline (Eastwood Ravine)",
+        "why": "Picks up the same second, resolves the break, and closes the loop for good — <b>the only real ending</b> the series has."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "Release order and story order are the same here, which is rarer in this genre than it sounds.",
+    "items": [
+     {
+      "id": "bttf1",
+      "title": "Back to the Future",
+      "year": 1985,
+      "branch": "The Original Timeline",
+      "why": "Ends by replacing the 1985 it started in — the <b>Lone Pine</b> timeline the sequels then treat as home."
+     },
+     {
+      "id": "bttf2",
+      "title": "Back to the Future Part II",
+      "year": 1989,
+      "branch": "Biff’s Dystopia — Hell Valley (1985-A)"
+     },
+     {
+      "id": "bttf3",
+      "title": "Back to the Future Part III",
+      "year": 1990,
+      "branch": "The Restored Timeline (Eastwood Ravine)"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "Ordering these by setting is a category error: the trilogy is not a line through time, it is one week in 1985 branching four ways. This lists each film by where it spends most of its running time, but the branch map is the honest picture.",
+    "items": [
+     {
+      "id": "bttf1",
+      "title": "Back to the Future",
+      "year": 1985,
+      "setLabel": "Set 1955 / 1985",
+      "branch": "The Original Timeline",
+      "why": "Starts in the original 1985 and returns to a <b>different one</b>."
+     },
+     {
+      "id": "bttf2",
+      "title": "Back to the Future Part II",
+      "year": 1989,
+      "setLabel": "Set 2015 / 1985-A / 1955",
+      "branch": "Biff’s Dystopia — Hell Valley (1985-A)",
+      "why": "Visits three years and creates a fourth, then doubles back into the first film's own scenes."
+     },
+     {
+      "id": "bttf3",
+      "title": "Back to the Future Part III",
+      "year": 1990,
+      "setLabel": "Set 1885 / 1985",
+      "branch": "The Restored Timeline (Eastwood Ravine)",
+      "why": "Goes furthest back and lands in the only 1985 that stays put."
+     }
+    ]
+   }
+  }
+ },
+ "apes": {
+  "id": "apes",
+  "intro": "Two separate runs of films fifty years apart, and the original five are a closed time loop — the last one leads back into the first. The modern films are a clean restart that does not connect to any of it.",
+  "orders": {
+   "first": {
+    "note": "Start with the modern trilogy. It is better film-making, it requires nothing, and it makes the 1968 original land as the strange, bleak thing it is rather than as the film everyone has already been spoiled on. The original five are a loop and only reward you once you care.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "rise",
+        "title": "Rise of the Planet of the Apes",
+        "year": 2011,
+        "branch": "The Simian Flu Reboot (2008 – ~2330s)",
+        "why": "A complete restart with no connection to the 1968 films — it explains the fall of humanity as an <b>accident</b> rather than a war."
+       },
+       {
+        "id": "dawn",
+        "title": "Dawn of the Planet of the Apes",
+        "year": 2014,
+        "branch": "The Simian Flu Reboot (2008 – ~2330s)",
+        "why": "Ten years later, and the point where the trilogy becomes about politics instead of escape."
+       },
+       {
+        "id": "war",
+        "title": "War for the Planet of the Apes",
+        "year": 2017,
+        "branch": "The Simian Flu Reboot (2008 – ~2330s)",
+        "why": "Closes Caesar's story properly. <b>A real ending</b>, and a good place to stop."
+       }
+      ]
+     },
+     {
+      "label": "The original, once you're invested",
+      "items": [
+       {
+        "id": "pota",
+        "title": "Planet of the Apes",
+        "year": 1968,
+        "branch": "The Doomed Future — the original loop",
+        "why": "Almost everyone knows the ending, which is a shame — but the 90 minutes before it are stranger and better than its reputation suggests."
+       }
+      ]
+     },
+     {
+      "label": "If you want the loop",
+      "items": [
+       {
+        "id": "beneath",
+        "title": "Beneath the Planet of the Apes",
+        "year": 1970,
+        "branch": "The Doomed Future — the original loop",
+        "why": "Ends the future so completely that the series had to travel backwards to continue."
+       },
+       {
+        "id": "escape",
+        "title": "Escape from the Planet of the Apes",
+        "year": 1971,
+        "branch": "Caesar's New Lane (1973 – 2670)",
+        "why": "Sends two apes back to 1973, which is where the loop <b>starts closing on itself</b>."
+       },
+       {
+        "id": "conquest",
+        "title": "Conquest of the Planet of the Apes",
+        "year": 1972,
+        "branch": "Caesar's New Lane (1973 – 2670)"
+       },
+       {
+        "id": "battle",
+        "title": "Battle for the Planet of the Apes",
+        "year": 1973,
+        "branch": "Caesar's New Lane (1973 – 2670)",
+        "why": "Tries to leave the loop open, and lands somewhere between the two readings."
+       }
+      ]
+     },
+     {
+      "label": "The continuation",
+      "items": [
+       {
+        "id": "kingdom",
+        "title": "Kingdom of the Planet of the Apes",
+        "year": 2024,
+        "branch": "The Simian Flu Reboot (2008 – ~2330s)",
+        "why": "Jumps <b>300 years</b> past War and starts a new story in the world Caesar left behind."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order they were made in. The original five run 1968 to 1973 and fold back on themselves; the modern four start over from scratch in 2011.",
+    "items": [
+     {
+      "id": "pota",
+      "title": "Planet of the Apes",
+      "year": 1968,
+      "branch": "The Doomed Future — the original loop",
+      "why": "Sets a far-future world that the next four films then work backwards to explain."
+     },
+     {
+      "id": "beneath",
+      "title": "Beneath the Planet of the Apes",
+      "year": 1970,
+      "branch": "The Doomed Future — the original loop"
+     },
+     {
+      "id": "escape",
+      "title": "Escape from the Planet of the Apes",
+      "year": 1971,
+      "branch": "Caesar's New Lane (1973 – 2670)",
+      "why": "Reverses direction entirely and lands the series in the <b>present day</b>."
+     },
+     {
+      "id": "conquest",
+      "title": "Conquest of the Planet of the Apes",
+      "year": 1972,
+      "branch": "Caesar's New Lane (1973 – 2670)"
+     },
+     {
+      "id": "battle",
+      "title": "Battle for the Planet of the Apes",
+      "year": 1973,
+      "branch": "Caesar's New Lane (1973 – 2670)",
+      "why": "Closes the loop back towards the 1968 film — or nearly does, depending which reading you take."
+     },
+     {
+      "id": "rise",
+      "title": "Rise of the Planet of the Apes",
+      "year": 2011,
+      "branch": "The Simian Flu Reboot (2008 – ~2330s)",
+      "why": "A <b>full restart</b>. Nothing above it applies from here on."
+     },
+     {
+      "id": "dawn",
+      "title": "Dawn of the Planet of the Apes",
+      "year": 2014,
+      "branch": "The Simian Flu Reboot (2008 – ~2330s)"
+     },
+     {
+      "id": "war",
+      "title": "War for the Planet of the Apes",
+      "year": 2017,
+      "branch": "The Simian Flu Reboot (2008 – ~2330s)"
+     },
+     {
+      "id": "kingdom",
+      "title": "Kingdom of the Planet of the Apes",
+      "year": 2024,
+      "branch": "The Simian Flu Reboot (2008 – ~2330s)"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "Two chronologies, not one — the original loop and the modern reboot never touch. This lists the reboot first because it starts in our present, then the original series in its own internal order.",
+    "items": [
+     {
+      "id": "rise",
+      "title": "Rise of the Planet of the Apes",
+      "year": 2011,
+      "setLabel": "Set 2011",
+      "branch": "The Simian Flu Reboot (2008 – ~2330s)",
+      "why": "The modern line begins in the present day and runs forward without interruption."
+     },
+     {
+      "id": "dawn",
+      "title": "Dawn of the Planet of the Apes",
+      "year": 2014,
+      "setLabel": "Set 2026",
+      "branch": "The Simian Flu Reboot (2008 – ~2330s)"
+     },
+     {
+      "id": "war",
+      "title": "War for the Planet of the Apes",
+      "year": 2017,
+      "setLabel": "Set 2028",
+      "branch": "The Simian Flu Reboot (2008 – ~2330s)"
+     },
+     {
+      "id": "kingdom",
+      "title": "Kingdom of the Planet of the Apes",
+      "year": 2024,
+      "setLabel": "Set c. 2328",
+      "branch": "The Simian Flu Reboot (2008 – ~2330s)",
+      "why": "Three centuries later, and the end of the modern line so far."
+     },
+     {
+      "id": "escape",
+      "title": "Escape from the Planet of the Apes",
+      "year": 1971,
+      "setLabel": "Set 1973",
+      "branch": "Caesar's New Lane (1973 – 2670)",
+      "why": "The original series' earliest point in ordinary time — <b>because two apes travelled back to it</b>."
+     },
+     {
+      "id": "conquest",
+      "title": "Conquest of the Planet of the Apes",
+      "year": 1972,
+      "setLabel": "Set 1991",
+      "branch": "Caesar's New Lane (1973 – 2670)"
+     },
+     {
+      "id": "battle",
+      "title": "Battle for the Planet of the Apes",
+      "year": 1973,
+      "setLabel": "Set 2003",
+      "branch": "Caesar's New Lane (1973 – 2670)"
+     },
+     {
+      "id": "pota",
+      "title": "Planet of the Apes",
+      "year": 1968,
+      "setLabel": "Set 3978",
+      "branch": "The Doomed Future — the original loop",
+      "why": "The far end of the loop, and the film the three above were written to lead into."
+     },
+     {
+      "id": "beneath",
+      "title": "Beneath the Planet of the Apes",
+      "year": 1970,
+      "setLabel": "Set 3978",
+      "branch": "The Doomed Future — the original loop"
+     }
+    ]
+   }
+  }
+ },
+ "predator": {
+  "id": "predator",
+  "intro": "A creature that shows up in whatever period the film-makers fancy, so the entries barely connect — except for the two Alien crossovers, which a lot of people would rather did not count.",
+  "orders": {
+   "first": {
+    "note": "The through-line here is thin, so this is a quality order more than a story order. Two of these are excellent, several are fine, and the crossovers are their own argument. Nothing below requires anything above it.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "pred1",
+        "title": "Predator",
+        "year": 1987,
+        "branch": "The Classic Hunts",
+        "why": "Spends half its length as a different kind of film entirely, and the switch only surprises you <b>once</b>."
+       },
+       {
+        "id": "prey",
+        "title": "Prey",
+        "year": 2022,
+        "branch": "First Hunts on Earth",
+        "why": "Set 250 years earlier but built as a companion to the 1987 film — the <b>rules land harder</b> when you already know them."
+       }
+      ]
+     },
+     {
+      "label": "The rest of the good ones",
+      "items": [
+       {
+        "id": "pred2",
+        "title": "Predator 2",
+        "year": 1990,
+        "branch": "The Classic Hunts",
+        "why": "Moves the hunt into a city and quietly establishes most of the mythology the later films use."
+       },
+       {
+        "id": "predators",
+        "title": "Predators",
+        "year": 2010,
+        "branch": "The Hybrid War Era",
+        "why": "The first entry to show the hunt from the creatures' side, on their ground rather than ours."
+       }
+      ]
+     },
+     {
+      "label": "Only if you're staying",
+      "items": [
+       {
+        "id": "thepredator",
+        "title": "The Predator",
+        "year": 2018,
+        "branch": "The Hybrid War Era"
+       },
+       {
+        "id": "kok",
+        "title": "Predator: Killer of Killers",
+        "year": 2025,
+        "branch": "Killer of Killers → Badlands: The Far Future",
+        "why": "Animated, anthology, and the first entry to treat the hunt as something that has been happening <b>throughout human history</b>."
+       },
+       {
+        "id": "badlands",
+        "title": "Predator: Badlands",
+        "year": 2025,
+        "branch": "Killer of Killers → Badlands: The Far Future",
+        "why": "Jumps far into the future and off Earth entirely."
+       }
+      ]
+     },
+     {
+      "label": "The disputed crossovers",
+      "items": [
+       {
+        "id": "avp",
+        "title": "Alien vs. Predator",
+        "year": 2004,
+        "branch": "The AVP Crossover — Disputed Canon",
+        "why": "Ties the two franchises together in a way <b>neither has acknowledged since</b> — most people treat these two as their own dead-end branch."
+       },
+       {
+        "id": "avpr",
+        "title": "Aliens vs. Predator: Requiem",
+        "year": 2007,
+        "branch": "The AVP Crossover — Disputed Canon"
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order they arrived in, which is also the order the mythology accumulated — each film adds a rule the next one uses.",
+    "items": [
+     {
+      "id": "pred1",
+      "title": "Predator",
+      "year": 1987,
+      "branch": "The Classic Hunts",
+      "why": "Establishes almost nothing about the creature on purpose."
+     },
+     {
+      "id": "pred2",
+      "title": "Predator 2",
+      "year": 1990,
+      "branch": "The Classic Hunts",
+      "why": "The trophy-room scene that ends it is what made the Alien crossover possible."
+     },
+     {
+      "id": "avp",
+      "title": "Alien vs. Predator",
+      "year": 2004,
+      "branch": "The AVP Crossover — Disputed Canon",
+      "why": "Takes that one shot literally and builds a <b>shared universe</b> out of it."
+     },
+     {
+      "id": "avpr",
+      "title": "Aliens vs. Predator: Requiem",
+      "year": 2007,
+      "branch": "The AVP Crossover — Disputed Canon"
+     },
+     {
+      "id": "predators",
+      "title": "Predators",
+      "year": 2010,
+      "branch": "The Hybrid War Era",
+      "why": "Steps around the crossovers and continues from the first two films instead."
+     },
+     {
+      "id": "thepredator",
+      "title": "The Predator",
+      "year": 2018,
+      "branch": "The Hybrid War Era"
+     },
+     {
+      "id": "prey",
+      "title": "Prey",
+      "year": 2022,
+      "branch": "First Hunts on Earth",
+      "why": "Goes back to 1719 and resets the series by <b>subtracting</b> rather than adding."
+     },
+     {
+      "id": "kok",
+      "title": "Predator: Killer of Killers",
+      "year": 2025,
+      "branch": "Killer of Killers → Badlands: The Far Future"
+     },
+     {
+      "id": "badlands",
+      "title": "Predator: Badlands",
+      "year": 2025,
+      "branch": "Killer of Killers → Badlands: The Far Future"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order, spanning roughly 1719 to the far future. Nothing is lost watching it this way except the 1987 film's central surprise, which is a real cost.",
+    "items": [
+     {
+      "id": "prey",
+      "title": "Prey",
+      "year": 2022,
+      "setLabel": "Set 1719",
+      "branch": "First Hunts on Earth",
+      "why": "The earliest confirmed hunt on Earth, and the film that shows the creature at its <b>least equipped</b>."
+     },
+     {
+      "id": "kok",
+      "title": "Predator: Killer of Killers",
+      "year": 2025,
+      "setLabel": "Set 841 / 1609 / 1942",
+      "branch": "Killer of Killers → Badlands: The Far Future",
+      "why": "An anthology across three separate centuries, so it sits at no single point."
+     },
+     {
+      "id": "pred1",
+      "title": "Predator",
+      "year": 1987,
+      "setLabel": "Set 1987",
+      "branch": "The Classic Hunts"
+     },
+     {
+      "id": "pred2",
+      "title": "Predator 2",
+      "year": 1990,
+      "setLabel": "Set 1997",
+      "branch": "The Classic Hunts"
+     },
+     {
+      "id": "avp",
+      "title": "Alien vs. Predator",
+      "year": 2004,
+      "setLabel": "Set 2004",
+      "branch": "The AVP Crossover — Disputed Canon",
+      "why": "From here the branch runs into the Alien franchise and <b>stops connecting</b> to the films below."
+     },
+     {
+      "id": "avpr",
+      "title": "Aliens vs. Predator: Requiem",
+      "year": 2007,
+      "setLabel": "Set 2004",
+      "branch": "The AVP Crossover — Disputed Canon"
+     },
+     {
+      "id": "predators",
+      "title": "Predators",
+      "year": 2010,
+      "setLabel": "Set c. 2010",
+      "branch": "The Hybrid War Era"
+     },
+     {
+      "id": "thepredator",
+      "title": "The Predator",
+      "year": 2018,
+      "setLabel": "Set 2018",
+      "branch": "The Hybrid War Era"
+     },
+     {
+      "id": "badlands",
+      "title": "Predator: Badlands",
+      "year": 2025,
+      "setLabel": "Set the far future",
+      "branch": "Killer of Killers → Badlands: The Far Future",
+      "why": "Leaves Earth and the present day behind completely."
+     }
+    ]
+   }
+  }
+ },
+ "alien": {
+  "id": "alien",
+  "intro": "Two films made in the seventies and eighties, then forty years of prequels, sequels and side-stories filling gaps around them. Release order and story order pull in opposite directions, and one of them ruins the first film.",
+  "orders": {
+   "first": {
+    "note": "Start where the audience did. Alien works because you know nothing, and every prequel exists to explain something that is better left unexplained the first time. This path is the two undisputed classics, then the one modern entry that earns its place, then the prequels for anyone who wants the mythology.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "alien1",
+        "title": "Alien",
+        "year": 1979,
+        "branch": "The Company's Hunt — Nostromo to Renaissance",
+        "why": "A haunted-house film in space that explains nothing about where the creature came from — which is <b>the entire reason it works</b>."
+       },
+       {
+        "id": "aliens",
+        "title": "Aliens",
+        "year": 1986,
+        "branch": "Ripley's War — Hadley's Hope & Fury 161",
+        "why": "Changes genre completely, from horror to war film, and is the rare sequel that neither repeats nor undermines the original."
+       }
+      ]
+     },
+     {
+      "label": "The modern one",
+      "items": [
+       {
+        "id": "romulus",
+        "title": "Alien: Romulus",
+        "year": 2024,
+        "branch": "The Company's Hunt — Nostromo to Renaissance",
+        "why": "Sits <b>between</b> the two films above in story time and is built to be watched after both — it assumes you know the first, and rewards it."
+       }
+      ]
+     },
+     {
+      "label": "If you want the mythology",
+      "items": [
+       {
+        "id": "prometheus",
+        "title": "Prometheus",
+        "year": 2012,
+        "branch": "Origins — The Engineers & David",
+        "why": "Answers the question the first film left open, which is either the point or the problem depending on who you ask."
+       },
+       {
+        "id": "covenant",
+        "title": "Alien: Covenant",
+        "year": 2017,
+        "branch": "Origins — The Engineers & David",
+        "why": "Finishes that answer and connects it to the creature you already met — <b>watch it last, not first</b>."
+       }
+      ]
+     },
+     {
+      "label": "Completionists only",
+      "items": [
+       {
+        "id": "alien3",
+        "title": "Alien 3",
+        "year": 1992,
+        "branch": "Ripley's War — Hadley's Hope & Fury 161",
+        "why": "Opens by undoing Aliens' ending in the first five minutes. Divisive for exactly that reason."
+       },
+       {
+        "id": "resurrection",
+        "title": "Alien Resurrection",
+        "year": 1997,
+        "branch": "Resurrection — 200 Years Later",
+        "why": "Jumps <b>200 years</b> past everything else and is barely connected to it."
+       },
+       {
+        "id": "isolation",
+        "title": "Alien: Isolation",
+        "year": 2014,
+        "kind": "game",
+        "branch": "The Company's Hunt — Nostromo to Renaissance",
+        "why": "A game, not a film, and the closest anything has come to the original's tone."
+       },
+       {
+        "id": "earth",
+        "title": "Alien: Earth",
+        "year": 2025,
+        "kind": "tv",
+        "branch": "Alien: Earth — The Prodigy City Incident (Disputed)",
+        "why": "Puts Xenomorphs on Earth <b>two years before</b> the Nostromo ever finds one, which is why its place in the canon is argued over."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order everything was made in. It preserves the first film's mystery, at the cost of jumping around the timeline for the last twenty years of it.",
+    "items": [
+     {
+      "id": "alien1",
+      "title": "Alien",
+      "year": 1979,
+      "branch": "The Company's Hunt — Nostromo to Renaissance",
+      "why": "No backstory, no explanation, no franchise — just one ship."
+     },
+     {
+      "id": "aliens",
+      "title": "Aliens",
+      "year": 1986,
+      "branch": "Ripley's War — Hadley's Hope & Fury 161"
+     },
+     {
+      "id": "alien3",
+      "title": "Alien 3",
+      "year": 1992,
+      "branch": "Ripley's War — Hadley's Hope & Fury 161",
+      "why": "Reverses the previous film's ending before the opening titles finish."
+     },
+     {
+      "id": "resurrection",
+      "title": "Alien Resurrection",
+      "year": 1997,
+      "branch": "Resurrection — 200 Years Later",
+      "why": "Ends the original run by leaping two centuries ahead."
+     },
+     {
+      "id": "prometheus",
+      "title": "Prometheus",
+      "year": 2012,
+      "branch": "Origins — The Engineers & David",
+      "why": "Restarts the franchise <b>backwards</b>, as a prequel about where humans came from."
+     },
+     {
+      "id": "isolation",
+      "title": "Alien: Isolation",
+      "year": 2014,
+      "kind": "game",
+      "branch": "The Company's Hunt — Nostromo to Renaissance"
+     },
+     {
+      "id": "covenant",
+      "title": "Alien: Covenant",
+      "year": 2017,
+      "branch": "Origins — The Engineers & David"
+     },
+     {
+      "id": "romulus",
+      "title": "Alien: Romulus",
+      "year": 2024,
+      "branch": "The Company's Hunt — Nostromo to Renaissance",
+      "why": "Slots into the gap between the first two films rather than continuing from the last one."
+     },
+     {
+      "id": "earth",
+      "title": "Alien: Earth",
+      "year": 2025,
+      "kind": "tv",
+      "branch": "Alien: Earth — The Prodigy City Incident (Disputed)"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order, from the Engineers to a cloned Ripley in 2379. Coherent as a line, and a bad first watch: it opens with the answer and works towards the question.",
+    "items": [
+     {
+      "id": "prometheus",
+      "title": "Prometheus",
+      "year": 2012,
+      "setLabel": "Set 2093",
+      "branch": "Origins — The Engineers & David",
+      "why": "The earliest point on the map, and it starts with the creature's origin rather than its arrival."
+     },
+     {
+      "id": "covenant",
+      "title": "Alien: Covenant",
+      "year": 2017,
+      "setLabel": "Set 2104",
+      "branch": "Origins — The Engineers & David"
+     },
+     {
+      "id": "earth",
+      "title": "Alien: Earth",
+      "year": 2025,
+      "kind": "tv",
+      "setLabel": "Set 2120",
+      "branch": "Alien: Earth — The Prodigy City Incident (Disputed)",
+      "why": "Places the creature on Earth <b>before the Nostromo finds it</b>, which is the reason this branch is disputed."
+     },
+     {
+      "id": "alien1",
+      "title": "Alien",
+      "year": 1979,
+      "setLabel": "Set 2122",
+      "branch": "The Company's Hunt — Nostromo to Renaissance"
+     },
+     {
+      "id": "isolation",
+      "title": "Alien: Isolation",
+      "year": 2014,
+      "kind": "game",
+      "setLabel": "Set 2137",
+      "branch": "The Company's Hunt — Nostromo to Renaissance"
+     },
+     {
+      "id": "romulus",
+      "title": "Alien: Romulus",
+      "year": 2024,
+      "setLabel": "Set 2142",
+      "branch": "The Company's Hunt — Nostromo to Renaissance",
+      "why": "Sits squarely in the <b>37-year gap</b> the first two films leave open."
+     },
+     {
+      "id": "aliens",
+      "title": "Aliens",
+      "year": 1986,
+      "setLabel": "Set 2179",
+      "branch": "Ripley's War — Hadley's Hope & Fury 161"
+     },
+     {
+      "id": "alien3",
+      "title": "Alien 3",
+      "year": 1992,
+      "setLabel": "Set 2179",
+      "branch": "Ripley's War — Hadley's Hope & Fury 161"
+     },
+     {
+      "id": "resurrection",
+      "title": "Alien Resurrection",
+      "year": 1997,
+      "setLabel": "Set 2379",
+      "branch": "Resurrection — 200 Years Later",
+      "why": "Two centuries after everything above it, with no bridge in between."
+     }
+    ]
+   }
+  }
+ },
+ "transformers": {
+  "id": "transformers",
+  "intro": "Three separate continuities wearing the same name: five Bay films, a soft reboot that quietly contradicts them, and an animated origin story set on another planet entirely.",
+  "orders": {
+   "first": {
+    "note": "Start with the reboot, not the 2007 film. Bumblebee and Rise of the Beasts are a self-contained pair that tell you everything you need, and the five Bay films are a separate continuity you can take or leave. Transformers One is its own thing again.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "bumblebee",
+        "title": "Bumblebee",
+        "year": 2018,
+        "branch": "The Bumblebee Line — Soft Reboot (1987 → 1994 → G.I. Joe)",
+        "why": "A 1987 reset that <b>quietly contradicts</b> the Bay films' own history, and is the best-liked entry in the series."
+       },
+       {
+        "id": "rotb",
+        "title": "Rise of the Beasts",
+        "year": 2023,
+        "branch": "The Bumblebee Line — Soft Reboot (1987 → 1994 → G.I. Joe)",
+        "why": "Set in 1994 and continues directly from it — the two make a complete story on their own."
+       }
+      ]
+     },
+     {
+      "label": "The animated origin",
+      "items": [
+       {
+        "id": "one",
+        "title": "Transformers One",
+        "year": 2024,
+        "branch": "Transformers One — Animated Reboot",
+        "why": "Set on Cybertron before any human is involved, in a <b>continuity of its own</b> that connects to nothing else."
+       }
+      ]
+     },
+     {
+      "label": "The Bay films, if you want them",
+      "items": [
+       {
+        "id": "tf1",
+        "title": "Transformers",
+        "year": 2007,
+        "branch": "The Bay Continuity (2007–2017)",
+        "why": "The start of the original run, and easily the most watchable of the five."
+       },
+       {
+        "id": "rotf",
+        "title": "Revenge of the Fallen",
+        "year": 2009,
+        "branch": "The Bay Continuity (2007–2017)"
+       },
+       {
+        "id": "dotm",
+        "title": "Dark of the Moon",
+        "year": 2011,
+        "branch": "The Bay Continuity (2007–2017)"
+       },
+       {
+        "id": "aoe",
+        "title": "Age of Extinction",
+        "year": 2014,
+        "branch": "The Bay Continuity (2007–2017)",
+        "why": "Changes the entire human cast and jumps four years forward."
+       },
+       {
+        "id": "tlk",
+        "title": "The Last Knight",
+        "year": 2017,
+        "branch": "The Bay Continuity (2007–2017)",
+        "why": "Retrofits a <b>secret history</b> stretching back to Arthurian Britain onto everything before it."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order they arrived. The 2018 reboot lands sixth, which is why the timeline appears to contradict itself halfway through.",
+    "items": [
+     {
+      "id": "tf1",
+      "title": "Transformers",
+      "year": 2007,
+      "branch": "The Bay Continuity (2007–2017)"
+     },
+     {
+      "id": "rotf",
+      "title": "Revenge of the Fallen",
+      "year": 2009,
+      "branch": "The Bay Continuity (2007–2017)"
+     },
+     {
+      "id": "dotm",
+      "title": "Dark of the Moon",
+      "year": 2011,
+      "branch": "The Bay Continuity (2007–2017)"
+     },
+     {
+      "id": "aoe",
+      "title": "Age of Extinction",
+      "year": 2014,
+      "branch": "The Bay Continuity (2007–2017)"
+     },
+     {
+      "id": "tlk",
+      "title": "The Last Knight",
+      "year": 2017,
+      "branch": "The Bay Continuity (2007–2017)",
+      "why": "Adds a deep history that the reboot arriving next year then <b>ignores completely</b>."
+     },
+     {
+      "id": "bumblebee",
+      "title": "Bumblebee",
+      "year": 2018,
+      "branch": "The Bumblebee Line — Soft Reboot (1987 → 1994 → G.I. Joe)",
+      "why": "A prequel on paper, a restart in practice — its 1987 does not match the one the Bay films describe."
+     },
+     {
+      "id": "rotb",
+      "title": "Rise of the Beasts",
+      "year": 2023,
+      "branch": "The Bumblebee Line — Soft Reboot (1987 → 1994 → G.I. Joe)"
+     },
+     {
+      "id": "one",
+      "title": "Transformers One",
+      "year": 2024,
+      "branch": "Transformers One — Animated Reboot",
+      "why": "A third continuity, animated, with no connection to either of the others."
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order, with the caveat that these three continuities do not share a timeline — placing them on one line is a convenience, not a claim.",
+    "items": [
+     {
+      "id": "one",
+      "title": "Transformers One",
+      "year": 2024,
+      "setLabel": "Set on Cybertron, pre-Earth",
+      "branch": "Transformers One — Animated Reboot",
+      "why": "Earliest by a wide margin, and in <b>its own continuity</b> — nothing below follows from it."
+     },
+     {
+      "id": "bumblebee",
+      "title": "Bumblebee",
+      "year": 2018,
+      "setLabel": "Set 1987",
+      "branch": "The Bumblebee Line — Soft Reboot (1987 → 1994 → G.I. Joe)"
+     },
+     {
+      "id": "rotb",
+      "title": "Rise of the Beasts",
+      "year": 2023,
+      "setLabel": "Set 1994",
+      "branch": "The Bumblebee Line — Soft Reboot (1987 → 1994 → G.I. Joe)"
+     },
+     {
+      "id": "tf1",
+      "title": "Transformers",
+      "year": 2007,
+      "setLabel": "Set 2007",
+      "branch": "The Bay Continuity (2007–2017)",
+      "why": "The Bay line treats 2007 as first contact, which the two films above contradict."
+     },
+     {
+      "id": "rotf",
+      "title": "Revenge of the Fallen",
+      "year": 2009,
+      "setLabel": "Set 2009",
+      "branch": "The Bay Continuity (2007–2017)"
+     },
+     {
+      "id": "dotm",
+      "title": "Dark of the Moon",
+      "year": 2011,
+      "setLabel": "Set 2011",
+      "branch": "The Bay Continuity (2007–2017)"
+     },
+     {
+      "id": "aoe",
+      "title": "Age of Extinction",
+      "year": 2014,
+      "setLabel": "Set 2015",
+      "branch": "The Bay Continuity (2007–2017)"
+     },
+     {
+      "id": "tlk",
+      "title": "The Last Knight",
+      "year": 2017,
+      "setLabel": "Set 484 AD / 2017",
+      "branch": "The Bay Continuity (2007–2017)",
+      "why": "Claims fifteen centuries of hidden history, then spends most of its length in the present."
+     }
+    ]
+   }
+  }
+ },
+ "dune": {
+  "id": "dune",
+  "noun": "read and watch",
+  "kindDefault": "book",
+  "intro": "Dune is six novels by Frank Herbert, a prequel trilogy written decades later by other hands, and two films covering the first book only. So the real question is not which film first — it is where to start reading, and when the films fit in.",
+  "orders": {
+   "first": {
+    "note": "Watch the two films, then read from the first novel. The films cover the first book faithfully and are the least painful way in; the prequel novels are the worst possible starting point despite being earliest in story time. Everything after Messiah gets stranger, and most people stop somewhere in the middle by choice.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "d1",
+        "title": "Dune: Part One",
+        "year": 2021,
+        "kind": "film",
+        "branch": "Epoch III — House Corrino & the Desert War",
+        "why": "Covers roughly the first half of the 1965 novel and assumes no prior knowledge."
+       },
+       {
+        "id": "d2",
+        "title": "Dune: Part Two",
+        "year": 2024,
+        "kind": "film",
+        "branch": "Epoch III — House Corrino & the Desert War",
+        "why": "Finishes the novel, and changes one major thread from the book — worth knowing <b>before</b> you read it."
+       }
+      ]
+     },
+     {
+      "label": "Then read",
+      "items": [
+       {
+        "id": "b1",
+        "title": "Dune",
+        "year": 1965,
+        "branch": "Epoch III — House Corrino & the Desert War",
+        "why": "Still the whole foundation. The films are faithful, but nearly all the interior argument is only in the book."
+       },
+       {
+        "id": "b2",
+        "title": "Dune Messiah",
+        "year": 1969,
+        "branch": "Epoch IV — The Atreides Empire & the God Emperor",
+        "why": "Short, and deliberately <b>dismantles</b> the ending of the first book — Herbert wrote it because readers took Paul for a hero."
+       },
+       {
+        "id": "b3",
+        "title": "Children of Dune",
+        "year": 1976,
+        "branch": "Epoch IV — The Atreides Empire & the God Emperor",
+        "why": "Closes the Paul story properly. A reasonable place to stop."
+       }
+      ]
+     },
+     {
+      "label": "The deep end",
+      "items": [
+       {
+        "id": "b4",
+        "title": "God Emperor of Dune",
+        "year": 1981,
+        "branch": "Epoch IV — The Atreides Empire & the God Emperor",
+        "why": "Jumps <b>3,500 years</b> forward and is mostly one character thinking. The point at which most readers stop, and the favourite of those who do not."
+       },
+       {
+        "id": "b5",
+        "title": "Heretics of Dune",
+        "year": 1984,
+        "branch": "Epoch V — The Scattering & Kralizek"
+       },
+       {
+        "id": "b6",
+        "title": "Chapterhouse: Dune",
+        "year": 1985,
+        "branch": "Epoch V — The Scattering & Kralizek",
+        "why": "Herbert's last, and it ends <b>unresolved</b> — he died before writing the next one."
+       }
+      ]
+     },
+     {
+      "label": "The prequels, last",
+      "items": [
+       {
+        "id": "p1",
+        "title": "The Butlerian Jihad",
+        "year": 2002,
+        "branch": "Epoch II — The Butlerian Jihad",
+        "why": "Set 10,000 years earlier and written 37 years later, by different authors — it explains references the original books deliberately left as myth."
+       },
+       {
+        "id": "p2",
+        "title": "The Machine Crusade",
+        "year": 2003,
+        "branch": "Epoch II — The Butlerian Jihad"
+       },
+       {
+        "id": "p3",
+        "title": "The Battle of Corrin",
+        "year": 2004,
+        "branch": "Epoch II — The Butlerian Jihad"
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "Publication and release order. Herbert's six novels run 1965 to 1985; the prequels and the films both arrive long after he died.",
+    "items": [
+     {
+      "id": "b1",
+      "title": "Dune",
+      "year": 1965,
+      "branch": "Epoch III — House Corrino & the Desert War",
+      "why": "Everything else on this page exists because of this one book."
+     },
+     {
+      "id": "b2",
+      "title": "Dune Messiah",
+      "year": 1969,
+      "branch": "Epoch IV — The Atreides Empire & the God Emperor",
+      "why": "A deliberate correction to how the first book was received."
+     },
+     {
+      "id": "b3",
+      "title": "Children of Dune",
+      "year": 1976,
+      "branch": "Epoch IV — The Atreides Empire & the God Emperor"
+     },
+     {
+      "id": "b4",
+      "title": "God Emperor of Dune",
+      "year": 1981,
+      "branch": "Epoch IV — The Atreides Empire & the God Emperor",
+      "why": "Skips <b>three and a half millennia</b> in a single step."
+     },
+     {
+      "id": "b5",
+      "title": "Heretics of Dune",
+      "year": 1984,
+      "branch": "Epoch V — The Scattering & Kralizek"
+     },
+     {
+      "id": "b6",
+      "title": "Chapterhouse: Dune",
+      "year": 1985,
+      "branch": "Epoch V — The Scattering & Kralizek",
+      "why": "Ends on a cliffhanger that was never resolved by its author."
+     },
+     {
+      "id": "p1",
+      "title": "The Butlerian Jihad",
+      "year": 2002,
+      "branch": "Epoch II — The Butlerian Jihad",
+      "why": "The first prequel, written by Brian Herbert and Kevin J. Anderson — a <b>separate authorship</b>, and treated as such by many readers."
+     },
+     {
+      "id": "p2",
+      "title": "The Machine Crusade",
+      "year": 2003,
+      "branch": "Epoch II — The Butlerian Jihad"
+     },
+     {
+      "id": "p3",
+      "title": "The Battle of Corrin",
+      "year": 2004,
+      "branch": "Epoch II — The Butlerian Jihad"
+     },
+     {
+      "id": "d1",
+      "title": "Dune: Part One",
+      "year": 2021,
+      "kind": "film",
+      "branch": "Epoch III — House Corrino & the Desert War",
+      "why": "The first adaptation to split the novel rather than compress it."
+     },
+     {
+      "id": "d2",
+      "title": "Dune: Part Two",
+      "year": 2024,
+      "kind": "film",
+      "branch": "Epoch III — House Corrino & the Desert War"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order, spanning more than fifteen thousand years. A terrible reading order and a useful map — the prequels come first here and should be read last.",
+    "items": [
+     {
+      "id": "p1",
+      "title": "The Butlerian Jihad",
+      "year": 2002,
+      "setLabel": "Set c. 10,000 BG",
+      "branch": "Epoch II — The Butlerian Jihad",
+      "why": "The war against thinking machines, which the original novels only ever refer to as <b>ancient history</b>."
+     },
+     {
+      "id": "p2",
+      "title": "The Machine Crusade",
+      "year": 2003,
+      "setLabel": "Set c. 10,000 BG",
+      "branch": "Epoch II — The Butlerian Jihad"
+     },
+     {
+      "id": "p3",
+      "title": "The Battle of Corrin",
+      "year": 2004,
+      "setLabel": "Set c. 10,000 BG",
+      "branch": "Epoch II — The Butlerian Jihad"
+     },
+     {
+      "id": "b1",
+      "title": "Dune",
+      "year": 1965,
+      "setLabel": "Set 10,191 AG",
+      "branch": "Epoch III — House Corrino & the Desert War",
+      "why": "Ten thousand years later, and where the story people mean by Dune actually starts."
+     },
+     {
+      "id": "d1",
+      "title": "Dune: Part One",
+      "year": 2021,
+      "kind": "film",
+      "branch": "Epoch III — House Corrino & the Desert War",
+      "setLabel": "Set 10,191 AG"
+     },
+     {
+      "id": "d2",
+      "title": "Dune: Part Two",
+      "year": 2024,
+      "kind": "film",
+      "branch": "Epoch III — House Corrino & the Desert War",
+      "setLabel": "Set 10,191 AG"
+     },
+     {
+      "id": "b2",
+      "title": "Dune Messiah",
+      "year": 1969,
+      "setLabel": "Set 10,207 AG",
+      "branch": "Epoch IV — The Atreides Empire & the God Emperor"
+     },
+     {
+      "id": "b3",
+      "title": "Children of Dune",
+      "year": 1976,
+      "setLabel": "Set 10,216 AG",
+      "branch": "Epoch IV — The Atreides Empire & the God Emperor"
+     },
+     {
+      "id": "b4",
+      "title": "God Emperor of Dune",
+      "year": 1981,
+      "setLabel": "Set 13,725 AG",
+      "branch": "Epoch IV — The Atreides Empire & the God Emperor",
+      "why": "The <b>largest single jump</b> in the series — three and a half thousand years with one character still alive across it."
+     },
+     {
+      "id": "b5",
+      "title": "Heretics of Dune",
+      "year": 1984,
+      "setLabel": "Set 15,225 AG",
+      "branch": "Epoch V — The Scattering & Kralizek"
+     },
+     {
+      "id": "b6",
+      "title": "Chapterhouse: Dune",
+      "year": 1985,
+      "setLabel": "Set 15,232 AG",
+      "branch": "Epoch V — The Scattering & Kralizek"
+     }
+    ]
+   }
+  }
+ },
+ "marvel": {
+  "id": "marvel",
+  "intro": "The MCU was built in release order but doesn't play in one: Captain America starts in 1943, Captain Marvel in 1995, and Endgame ends by splitting the timeline into branches the later films keep wandering between. Thirty-seven films in any single order also means sitting through several that carry nothing forward.",
+  "orders": {
+   "first": {
+    "note": "Roughly half the MCU is setup for the two Avengers films that close it, and the other half is homework. This path keeps every film that changes what a later film means and drops the ones that only introduce someone you'd meet again anyway. It also leaves out the Disney+ series, which means Multiverse of Madness picks Wanda up mid-arc — that is the one real seam in the whole route.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "ironman",
+        "title": "Iron Man",
+        "year": 2008,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Sets the tone the next decade copies, and ends with the first post-credits scene that promises a shared universe."
+       },
+       {
+        "id": "capfirst",
+        "title": "Captain America: The First Avenger",
+        "year": 2011,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "The 1943 half of the story: it plants the Tesseract, the serum, and the man every later film keeps <b>measuring itself against</b>."
+       },
+       {
+        "id": "avengers",
+        "title": "The Avengers",
+        "year": 2012,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "The first film that assumes you watched the others, and the <b>template</b> every crossover since has followed."
+       }
+      ]
+     },
+     {
+      "label": "The board gets bigger",
+      "items": [
+       {
+        "id": "gotg",
+        "title": "Guardians of the Galaxy",
+        "year": 2014,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Opens the cosmic side of the map with no Avengers in it, and turns the Infinity Stones from a tease into a working plot device."
+       },
+       {
+        "id": "capwinter",
+        "title": "Captain America: The Winter Soldier",
+        "year": 2014,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Deletes S.H.I.E.L.D., which quietly <b>invalidates the premise</b> of everything before it."
+       },
+       {
+        "id": "ultron",
+        "title": "Avengers: Age of Ultron",
+        "year": 2015,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Mostly a machine for producing Vision and Wanda, and you need both later."
+       },
+       {
+        "id": "antman",
+        "title": "Ant-Man",
+        "year": 2015,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Introduces the Quantum Realm, which is the mechanism <b>Endgame runs on</b>."
+       }
+      ]
+     },
+     {
+      "label": "The team breaks",
+      "items": [
+       {
+        "id": "civilwar",
+        "title": "Captain America: Civil War",
+        "year": 2016,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Splits the Avengers along a line that stays split until the last twenty minutes of Endgame."
+       },
+       {
+        "id": "strange",
+        "title": "Doctor Strange",
+        "year": 2016,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Adds magic and the Time Stone, and installs the one character who can see how bad the next few years get."
+       },
+       {
+        "id": "ragnarok",
+        "title": "Thor: Ragnarok",
+        "year": 2017,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Destroys Asgard and strands the survivors on a ship in deep space, which is <b>where Infinity War opens</b>."
+       },
+       {
+        "id": "blackpanther",
+        "title": "Black Panther",
+        "year": 2018,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Builds Wakanda into the only place on Earth that can host a fight at the scale Infinity War needs."
+       }
+      ]
+     },
+     {
+      "label": "The two-part ending",
+      "items": [
+       {
+        "id": "infinitywar",
+        "title": "Avengers: Infinity War",
+        "year": 2018,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "The hinge: the villain wins, and half of everyone stays gone for <b>five years of story time</b>."
+       },
+       {
+        "id": "endgame",
+        "title": "Avengers: Endgame",
+        "year": 2019,
+        "branch": "The Time Heist Splinters",
+        "why": "Reverses the snap by <b>splintering the timeline</b> into branches nobody in the film tidies up — every multiverse story after this is downstream of that."
+       }
+      ]
+     },
+     {
+      "label": "After the ending",
+      "items": [
+       {
+        "id": "nowayhome",
+        "title": "Spider-Man: No Way Home",
+        "year": 2021,
+        "branch": "Incursions & Neighbouring Universes",
+        "why": "The first film to treat other universes as places you can <b>pull people out of</b>, permanently."
+       },
+       {
+        "id": "strange2",
+        "title": "Doctor Strange in the Multiverse of Madness",
+        "year": 2022,
+        "branch": "Incursions & Neighbouring Universes",
+        "why": "Turns the multiverse into geography and names incursions as the thing that kills universes. It collects Wanda mid-arc from a series this route skips, so expect one <b>unexplained jump</b> in her."
+       },
+       {
+        "id": "dpw",
+        "title": "Deadpool & Wolverine",
+        "year": 2024,
+        "branch": "The TVA & the Unbound Multiverse",
+        "why": "Sets out the rules plainly — the TVA, pruned timelines, and universes that die when their anchor being does."
+       },
+       {
+        "id": "thunderbolts",
+        "title": "Thunderbolts*",
+        "year": 2025,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "The current Earth-616 team, assembled from people the earlier films discarded."
+       },
+       {
+        "id": "f4first",
+        "title": "The Fantastic Four: First Steps",
+        "year": 2025,
+        "branch": "Earth-828: First Steps",
+        "why": "A <b>separate universe</b> with its own 1960s and no shared history with anything above, until the ending reaches across."
+       }
+      ]
+     },
+     {
+      "label": "Only if you're staying",
+      "items": [
+       {
+        "id": "captainmarvel",
+        "title": "Captain Marvel",
+        "year": 2019,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "A 1995 origin, and the reason Fury's pager means anything at the end of Infinity War."
+       },
+       {
+        "id": "ironman3",
+        "title": "Iron Man 3",
+        "year": 2013,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Tony alone with the aftermath of The Avengers. Nothing in it is required; it's still the best read on him."
+       },
+       {
+        "id": "gotg2",
+        "title": "Guardians of the Galaxy Vol. 2",
+        "year": 2017,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Matters for one thing: Nebula stops being a henchman, which is what makes her useful in Endgame."
+       },
+       {
+        "id": "homecoming",
+        "title": "Spider-Man: Homecoming",
+        "year": 2017,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Peter's first solo film. Skippable alone, load-bearing if you intend to watch the other two."
+       },
+       {
+        "id": "antman2",
+        "title": "Ant-Man and the Wasp",
+        "year": 2018,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Ends with the snap catching Scott mid-experiment — the <b>exact position</b> Endgame finds him in."
+       },
+       {
+        "id": "blackwidow",
+        "title": "Black Widow",
+        "year": 2021,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Fills the gap after Civil War and introduces Yelena, who ends up leading Thunderbolts*."
+       },
+       {
+        "id": "farfromhome",
+        "title": "Spider-Man: Far From Home",
+        "year": 2019,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Post-Endgame cleanup, plus the identity reveal that No Way Home spends its first act undoing."
+       },
+       {
+        "id": "shangchi",
+        "title": "Shang-Chi and the Legend of the Ten Rings",
+        "year": 2021,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "A self-contained corner that promotes the Ten Rings from a throwaway in Iron Man into a real power."
+       },
+       {
+        "id": "eternals",
+        "title": "Eternals",
+        "year": 2021,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "<b>Rewrites the planet's deep history</b> and then barely touches anything else — the largest retcon with the smallest consequences so far."
+       },
+       {
+        "id": "quantumania",
+        "title": "Ant-Man and the Wasp: Quantumania",
+        "year": 2023,
+        "branch": "The TVA & the Unbound Multiverse",
+        "why": "Introduces Kang and the council standing behind him, which is the frame the multiverse arc hangs on."
+       },
+       {
+        "id": "gotg3",
+        "title": "Guardians of the Galaxy Vol. 3",
+        "year": 2023,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Closes that team out properly. No timeline consequences, a real ending."
+       },
+       {
+        "id": "bnw",
+        "title": "Captain America: Brave New World",
+        "year": 2025,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Sam as Captain America, and it converts a loose end from The Incredible Hulk into a sitting president."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "Straight release order, 2008 to 2025. It is how the films were built and how each one assumes you saw the last, but it puts a 1943 origin fifth and a 1995 origin twenty-first.",
+    "items": [
+     {
+      "id": "ironman",
+      "title": "Iron Man",
+      "year": 2008,
+      "branch": "The Sacred Timeline (Earth-616)",
+      "why": "Where it starts, and the first post-credits scene to promise a shared universe."
+     },
+     {
+      "id": "hulk",
+      "title": "The Incredible Hulk",
+      "year": 2008,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "ironman2",
+      "title": "Iron Man 2",
+      "year": 2010,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "thor",
+      "title": "Thor",
+      "year": 2011,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "capfirst",
+      "title": "Captain America: The First Avenger",
+      "year": 2011,
+      "branch": "The Sacred Timeline (Earth-616)",
+      "why": "Released fifth, set first — the whole film happens <b>seventy years before</b> the one either side of it."
+     },
+     {
+      "id": "avengers",
+      "title": "The Avengers",
+      "year": 2012,
+      "branch": "The Sacred Timeline (Earth-616)",
+      "why": "First crossover. From here on, every film assumes the others."
+     },
+     {
+      "id": "ironman3",
+      "title": "Iron Man 3",
+      "year": 2013,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "thordark",
+      "title": "Thor: The Dark World",
+      "year": 2013,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "capwinter",
+      "title": "Captain America: The Winter Soldier",
+      "year": 2014,
+      "branch": "The Sacred Timeline (Earth-616)",
+      "why": "Collapses S.H.I.E.L.D. and <b>changes what every earlier film was about</b>."
+     },
+     {
+      "id": "gotg",
+      "title": "Guardians of the Galaxy",
+      "year": 2014,
+      "branch": "The Sacred Timeline (Earth-616)",
+      "why": "Opens a second front in space that doesn't touch Earth for another four years."
+     },
+     {
+      "id": "ultron",
+      "title": "Avengers: Age of Ultron",
+      "year": 2015,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "antman",
+      "title": "Ant-Man",
+      "year": 2015,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "civilwar",
+      "title": "Captain America: Civil War",
+      "year": 2016,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "strange",
+      "title": "Doctor Strange",
+      "year": 2016,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "gotg2",
+      "title": "Guardians of the Galaxy Vol. 2",
+      "year": 2017,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "homecoming",
+      "title": "Spider-Man: Homecoming",
+      "year": 2017,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "ragnarok",
+      "title": "Thor: Ragnarok",
+      "year": 2017,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "blackpanther",
+      "title": "Black Panther",
+      "year": 2018,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "infinitywar",
+      "title": "Avengers: Infinity War",
+      "year": 2018,
+      "branch": "The Sacred Timeline (Earth-616)",
+      "why": "The hinge — it ends with the villain having won and stays that way for a year."
+     },
+     {
+      "id": "antman2",
+      "title": "Ant-Man and the Wasp",
+      "year": 2018,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "captainmarvel",
+      "title": "Captain Marvel",
+      "year": 2019,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "endgame",
+      "title": "Avengers: Endgame",
+      "year": 2019,
+      "branch": "The Time Heist Splinters",
+      "why": "Time travel <b>creates branch timelines</b> the franchise never goes back and closes."
+     },
+     {
+      "id": "farfromhome",
+      "title": "Spider-Man: Far From Home",
+      "year": 2019,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "blackwidow",
+      "title": "Black Widow",
+      "year": 2021,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "shangchi",
+      "title": "Shang-Chi and the Legend of the Ten Rings",
+      "year": 2021,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "eternals",
+      "title": "Eternals",
+      "year": 2021,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "nowayhome",
+      "title": "Spider-Man: No Way Home",
+      "year": 2021,
+      "branch": "Incursions & Neighbouring Universes",
+      "why": "Opens the multiverse for real, using two decades of films made outside this one."
+     },
+     {
+      "id": "strange2",
+      "title": "Doctor Strange in the Multiverse of Madness",
+      "year": 2022,
+      "branch": "Incursions & Neighbouring Universes"
+     },
+     {
+      "id": "thor4",
+      "title": "Thor: Love and Thunder",
+      "year": 2022,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "wakandaforever",
+      "title": "Black Panther: Wakanda Forever",
+      "year": 2022,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "quantumania",
+      "title": "Ant-Man and the Wasp: Quantumania",
+      "year": 2023,
+      "branch": "The TVA & the Unbound Multiverse"
+     },
+     {
+      "id": "gotg3",
+      "title": "Guardians of the Galaxy Vol. 3",
+      "year": 2023,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "marvels",
+      "title": "The Marvels",
+      "year": 2023,
+      "branch": "Incursions & Neighbouring Universes"
+     },
+     {
+      "id": "dpw",
+      "title": "Deadpool & Wolverine",
+      "year": 2024,
+      "branch": "The TVA & the Unbound Multiverse",
+      "why": "Brings in the TVA and the pruned-universe rules, and folds a rival studio's twenty-four years of films into the same structure."
+     },
+     {
+      "id": "bnw",
+      "title": "Captain America: Brave New World",
+      "year": 2025,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "thunderbolts",
+      "title": "Thunderbolts*",
+      "year": 2025,
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "f4first",
+      "title": "The Fantastic Four: First Steps",
+      "year": 2025,
+      "branch": "Earth-828: First Steps",
+      "why": "A <b>different universe</b>, cold-started with its own history and no cast in common."
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order. It reads as one clean line until Endgame's time heist, after which it stops being a line at all — Deadpool & Wolverine happens partly outside time, and First Steps happens in another universe, so both sit where they make sense rather than where a calendar would put them.",
+    "items": [
+     {
+      "id": "capfirst",
+      "title": "Captain America: The First Avenger",
+      "year": 2011,
+      "setLabel": "Set 1943 – 1945",
+      "branch": "The Sacred Timeline (Earth-616)",
+      "why": "The chronological start, and the last event on this list for another fifty years."
+     },
+     {
+      "id": "captainmarvel",
+      "title": "Captain Marvel",
+      "year": 2019,
+      "setLabel": "Set 1995",
+      "branch": "The Sacred Timeline (Earth-616)",
+      "why": "Sits alone in the 1990s and quietly explains why Fury reaches for a pager decades later."
+     },
+     {
+      "id": "ironman",
+      "title": "Iron Man",
+      "year": 2008,
+      "setLabel": "Set 2010",
+      "branch": "The Sacred Timeline (Earth-616)",
+      "why": "The modern era begins here, and runs as <b>one unbroken line</b> until Endgame."
+     },
+     {
+      "id": "hulk",
+      "title": "The Incredible Hulk",
+      "year": 2008,
+      "setLabel": "Set 2011",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "ironman2",
+      "title": "Iron Man 2",
+      "year": 2010,
+      "setLabel": "Set 2011",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "thor",
+      "title": "Thor",
+      "year": 2011,
+      "setLabel": "Set 2011",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "avengers",
+      "title": "The Avengers",
+      "year": 2012,
+      "setLabel": "Set 2012",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "ironman3",
+      "title": "Iron Man 3",
+      "year": 2013,
+      "setLabel": "Set 2012 – 2013",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "thordark",
+      "title": "Thor: The Dark World",
+      "year": 2013,
+      "setLabel": "Set 2013",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "capwinter",
+      "title": "Captain America: The Winter Soldier",
+      "year": 2014,
+      "setLabel": "Set 2014",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "gotg",
+      "title": "Guardians of the Galaxy",
+      "year": 2014,
+      "setLabel": "Set 2014",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "gotg2",
+      "title": "Guardians of the Galaxy Vol. 2",
+      "year": 2017,
+      "setLabel": "Set 2014",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "ultron",
+      "title": "Avengers: Age of Ultron",
+      "year": 2015,
+      "setLabel": "Set 2015",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "antman",
+      "title": "Ant-Man",
+      "year": 2015,
+      "setLabel": "Set 2015",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "civilwar",
+      "title": "Captain America: Civil War",
+      "year": 2016,
+      "setLabel": "Set 2016",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "blackwidow",
+      "title": "Black Widow",
+      "year": 2021,
+      "setLabel": "Set 2016",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "blackpanther",
+      "title": "Black Panther",
+      "year": 2018,
+      "setLabel": "Set 2016",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "homecoming",
+      "title": "Spider-Man: Homecoming",
+      "year": 2017,
+      "setLabel": "Set 2016",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "strange",
+      "title": "Doctor Strange",
+      "year": 2016,
+      "setLabel": "Set 2016 – 2017",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "ragnarok",
+      "title": "Thor: Ragnarok",
+      "year": 2017,
+      "setLabel": "Set 2017",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "antman2",
+      "title": "Ant-Man and the Wasp",
+      "year": 2018,
+      "setLabel": "Set 2018",
+      "branch": "The Sacred Timeline (Earth-616)",
+      "why": "Overlaps Infinity War almost exactly, and its last scene is the same moment seen from a different room."
+     },
+     {
+      "id": "infinitywar",
+      "title": "Avengers: Infinity War",
+      "year": 2018,
+      "setLabel": "Set 2018",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "endgame",
+      "title": "Avengers: Endgame",
+      "year": 2019,
+      "setLabel": "Set 2018 – 2023",
+      "branch": "The Time Heist Splinters",
+      "why": "Jumps <b>five years forward</b> mid-film, then travels back into six earlier films and leaves branch timelines behind it."
+     },
+     {
+      "id": "shangchi",
+      "title": "Shang-Chi and the Legend of the Ten Rings",
+      "year": 2021,
+      "setLabel": "Set 2024",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "eternals",
+      "title": "Eternals",
+      "year": 2021,
+      "setLabel": "Set 5000 BC – 2024",
+      "branch": "The Sacred Timeline (Earth-616)",
+      "why": "Reaches back <b>seven thousand years</b> while its present sits here, so it fits badly wherever you put it."
+     },
+     {
+      "id": "farfromhome",
+      "title": "Spider-Man: Far From Home",
+      "year": 2019,
+      "setLabel": "Set 2024",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "nowayhome",
+      "title": "Spider-Man: No Way Home",
+      "year": 2021,
+      "setLabel": "Set 2024",
+      "branch": "Incursions & Neighbouring Universes",
+      "why": "The point where chronology stops being a single line and other universes start arriving in this one."
+     },
+     {
+      "id": "dpw",
+      "title": "Deadpool & Wolverine",
+      "year": 2024,
+      "setLabel": "Set 2024, and outside time",
+      "branch": "The TVA & the Unbound Multiverse",
+      "why": "Half of it happens somewhere the calendar doesn't apply — the TVA sits <b>outside the timeline</b> it polices."
+     },
+     {
+      "id": "strange2",
+      "title": "Doctor Strange in the Multiverse of Madness",
+      "year": 2022,
+      "setLabel": "Set 2025",
+      "branch": "Incursions & Neighbouring Universes"
+     },
+     {
+      "id": "thor4",
+      "title": "Thor: Love and Thunder",
+      "year": 2022,
+      "setLabel": "Set 2025",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "wakandaforever",
+      "title": "Black Panther: Wakanda Forever",
+      "year": 2022,
+      "setLabel": "Set 2025",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "quantumania",
+      "title": "Ant-Man and the Wasp: Quantumania",
+      "year": 2023,
+      "setLabel": "Set 2026",
+      "branch": "The TVA & the Unbound Multiverse"
+     },
+     {
+      "id": "marvels",
+      "title": "The Marvels",
+      "year": 2023,
+      "setLabel": "Set 2026",
+      "branch": "Incursions & Neighbouring Universes",
+      "why": "Ends by dropping a character into a <b>neighbouring universe</b> and leaving her there."
+     },
+     {
+      "id": "gotg3",
+      "title": "Guardians of the Galaxy Vol. 3",
+      "year": 2023,
+      "setLabel": "Set 2026",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "bnw",
+      "title": "Captain America: Brave New World",
+      "year": 2025,
+      "setLabel": "Set 2027",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "thunderbolts",
+      "title": "Thunderbolts*",
+      "year": 2025,
+      "setLabel": "Set 2027",
+      "branch": "The Sacred Timeline (Earth-616)"
+     },
+     {
+      "id": "f4first",
+      "title": "The Fantastic Four: First Steps",
+      "year": 2025,
+      "setLabel": "Set 1964, Earth-828",
+      "branch": "Earth-828: First Steps",
+      "why": "Its 1964 is <b>not this timeline's 1964</b>, so it goes last rather than second."
+     }
+    ]
+   }
+  }
+ },
+ "starwars": {
+  "id": "starwars",
+  "intro": "Star Wars is the franchise that turned watch order into an argument: the films were made out of sequence, and the one reveal the original trilogy is built around only works if you meet it cold. Add four decades of television written to fill the gaps between films, and the question stops being trivial.",
+  "orders": {
+   "first": {
+    "note": "Release order, with one edit: the prequels come after the original trilogy, as prequels, rather than woven into it. Machete order is right that The Empire Strikes Back's reveal is the whole reason chronological order fails a newcomer, and wrong to interleave — Return of the Jedi should land while you still know only what the originals have told you.",
+    "groups": [
+     {
+      "label": "Start here: the original three",
+      "items": [
+       {
+        "id": "anh",
+        "title": "A New Hope",
+        "year": 1977,
+        "branch": "Age of Rebellion",
+        "why": "Self-contained, explains its own galaxy from scratch, and assumes you know nothing — which is still the correct assumption."
+       },
+       {
+        "id": "esb",
+        "title": "The Empire Strikes Back",
+        "year": 1980,
+        "branch": "Age of Rebellion",
+        "why": "Everything a chronological order gives away is in this film, and it <b>only lands once</b>."
+       },
+       {
+        "id": "rotj",
+        "title": "Return of the Jedi",
+        "year": 1983,
+        "branch": "Age of Rebellion",
+        "why": "Closes the only complete story the franchise has finished telling, and it should close with the prequels still unseen."
+       }
+      ]
+     },
+     {
+      "label": "The prequels — and skip The Phantom Menace",
+      "items": [
+       {
+        "id": "aotc",
+        "title": "Attack of the Clones",
+        "year": 2002,
+        "branch": "Fall of the Jedi",
+        "why": "Start the prequels here: <b>The Phantom Menace introduces nothing</b> the later films don't reintroduce, and this is where Anakin, Padmé and the clone army enter the story properly."
+       },
+       {
+        "id": "rots",
+        "title": "Revenge of the Sith",
+        "year": 2005,
+        "branch": "Fall of the Jedi",
+        "why": "The only prequel that changes how the original trilogy reads afterwards, and it needs the film before it to work."
+       }
+      ]
+     },
+     {
+      "label": "The road back into A New Hope",
+      "items": [
+       {
+        "id": "andor",
+        "title": "Andor",
+        "year": 2022,
+        "branch": "Age of Rebellion",
+        "kind": "tv",
+        "why": "No Jedi, no Force, no returning heroes — the one series that works as television first, and it feeds directly into the film below."
+       },
+       {
+        "id": "r1",
+        "title": "Rogue One",
+        "year": 2016,
+        "branch": "Age of Rebellion",
+        "why": "Ends on the shot A New Hope opens with, which is why it plays better <b>after</b> that film than before it."
+       }
+      ]
+     },
+     {
+      "label": "Where the TV shows earn their place",
+      "items": [
+       {
+        "id": "tcw",
+        "title": "The Clone Wars",
+        "year": 2008,
+        "branch": "Fall of the Jedi",
+        "kind": "tv",
+        "why": "Follow a recommended-arc list rather than episode one — the early seasons are made for children and the final three are not."
+       },
+       {
+        "id": "mando",
+        "title": "The Mandalorian",
+        "year": 2019,
+        "branch": "The New Republic",
+        "kind": "tv",
+        "why": "The only post-Return of the Jedi story that assumes nothing; it also sets up three more shows, which is the reason to stop here."
+       }
+      ]
+     },
+     {
+      "label": "The sequels, if you're still going",
+      "items": [
+       {
+        "id": "tfa",
+        "title": "The Force Awakens",
+        "year": 2015,
+        "branch": "Rise of the First Order & the New Jedi Order",
+        "why": "A deliberate restaging of A New Hope, which is exactly why it belongs after the originals rather than anywhere near them."
+       },
+       {
+        "id": "tlj",
+        "title": "The Last Jedi",
+        "year": 2017,
+        "branch": "Rise of the First Order & the New Jedi Order",
+        "why": "The only sequel that argues with the other two, and the reason the third one behaves the way it does."
+       },
+       {
+        "id": "tros",
+        "title": "The Rise of Skywalker",
+        "year": 2019,
+        "branch": "Rise of the First Order & the New Jedi Order",
+        "why": "Watch it to close the run; nothing else on any of these lists depends on it."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order the films actually arrived in, and the only order where every reveal reaches you as written. Twelve theatrical features, no television.",
+    "items": [
+     {
+      "id": "anh",
+      "title": "A New Hope",
+      "year": 1977,
+      "branch": "Age of Rebellion",
+      "why": "Released with no episode number and no context — everything that later calls it Episode IV was invented after it succeeded."
+     },
+     {
+      "id": "esb",
+      "title": "The Empire Strikes Back",
+      "year": 1980,
+      "branch": "Age of Rebellion",
+      "why": "The reveal this entire ordering argument exists to protect."
+     },
+     {
+      "id": "rotj",
+      "title": "Return of the Jedi",
+      "year": 1983,
+      "branch": "Age of Rebellion"
+     },
+     {
+      "id": "tpm",
+      "title": "The Phantom Menace",
+      "year": 1999,
+      "branch": "Fall of the Jedi",
+      "why": "Sixteen years later, and the first Star Wars film made knowing the ending it has to arrive at."
+     },
+     {
+      "id": "aotc",
+      "title": "Attack of the Clones",
+      "year": 2002,
+      "branch": "Fall of the Jedi"
+     },
+     {
+      "id": "rots",
+      "title": "Revenge of the Sith",
+      "year": 2005,
+      "branch": "Fall of the Jedi",
+      "why": "Written to hand off directly to the 1977 film, which is the point release order and story order briefly agree."
+     },
+     {
+      "id": "tcw-film",
+      "title": "The Clone Wars (film)",
+      "year": 2008,
+      "branch": "Fall of the Jedi",
+      "why": "The only animated feature in the run, and it exists because a television pilot was pushed into cinemas."
+     },
+     {
+      "id": "tfa",
+      "title": "The Force Awakens",
+      "year": 2015,
+      "branch": "Rise of the First Order & the New Jedi Order",
+      "why": "Restarts the numbered run after a ten-year gap and rebuilds A New Hope's shape to do it."
+     },
+     {
+      "id": "r1",
+      "title": "Rogue One",
+      "year": 2016,
+      "branch": "Age of Rebellion",
+      "why": "The first film with <b>no episode number</b>, and the moment Star Wars stopped meaning one story per trilogy."
+     },
+     {
+      "id": "tlj",
+      "title": "The Last Jedi",
+      "year": 2017,
+      "branch": "Rise of the First Order & the New Jedi Order"
+     },
+     {
+      "id": "solo",
+      "title": "Solo",
+      "year": 2018,
+      "branch": "Reign of the Empire",
+      "why": "Its box office ended the standalone-film plan, which is why the years after it are television instead."
+     },
+     {
+      "id": "tros",
+      "title": "The Rise of Skywalker",
+      "year": 2019,
+      "branch": "Rise of the First Order & the New Jedi Order",
+      "why": "Closes the numbered run, and spends much of its length reversing the film before it."
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order, films plus the series that carry real weight, running from 132 BBY to 35 ABY. It reads well on a second pass and wrecks two reveals on a first.",
+    "items": [
+     {
+      "id": "acolyte",
+      "title": "The Acolyte",
+      "year": 2024,
+      "branch": "The High Republic",
+      "kind": "tv",
+      "setLabel": "Set 132 BBY",
+      "why": "The earliest point on the map by a century, and <b>nothing else here depends on it</b>."
+     },
+     {
+      "id": "tales-jedi",
+      "title": "Tales of the Jedi",
+      "year": 2022,
+      "branch": "Fall of the Jedi",
+      "kind": "tv",
+      "setLabel": "Set 60–19 BBY"
+     },
+     {
+      "id": "tpm",
+      "title": "The Phantom Menace",
+      "year": 1999,
+      "branch": "Fall of the Jedi",
+      "setLabel": "Set 32 BBY"
+     },
+     {
+      "id": "aotc",
+      "title": "Attack of the Clones",
+      "year": 2002,
+      "branch": "Fall of the Jedi",
+      "setLabel": "Set 22 BBY"
+     },
+     {
+      "id": "clone-wars-2003",
+      "title": "Clone Wars (2003 micro-series)",
+      "year": 2003,
+      "branch": "Legends (the Expanded Universe)",
+      "kind": "tv",
+      "setLabel": "Set 22–19 BBY",
+      "why": "<b>Cut from canon in 2014</b>, but still built to run from the end of Attack of the Clones to the opening minutes of Revenge of the Sith."
+     },
+     {
+      "id": "tcw-film",
+      "title": "The Clone Wars (film)",
+      "year": 2008,
+      "branch": "Fall of the Jedi",
+      "setLabel": "Set 22 BBY",
+      "why": "Sold as a film, made as the series pilot, and it sits inside its own show's opening stretch."
+     },
+     {
+      "id": "tcw",
+      "title": "The Clone Wars",
+      "year": 2008,
+      "branch": "Fall of the Jedi",
+      "kind": "tv",
+      "setLabel": "Set 22–19 BBY",
+      "why": "Carries characters Revenge of the Sith quietly assumes you know — <b>Ahsoka never appears in a film</b>."
+     },
+     {
+      "id": "rots",
+      "title": "Revenge of the Sith",
+      "year": 2005,
+      "branch": "Fall of the Jedi",
+      "setLabel": "Set 19 BBY",
+      "why": "The hinge of the whole map: everything before it is a republic, everything after is an empire."
+     },
+     {
+      "id": "bad-batch",
+      "title": "The Bad Batch",
+      "year": 2021,
+      "branch": "Reign of the Empire",
+      "kind": "tv",
+      "setLabel": "Set 19–18 BBY"
+     },
+     {
+      "id": "tales-underworld",
+      "title": "Tales of the Underworld",
+      "year": 2025,
+      "branch": "Reign of the Empire",
+      "kind": "tv",
+      "setLabel": "Set 19–18 BBY"
+     },
+     {
+      "id": "tales-empire",
+      "title": "Tales of the Empire",
+      "year": 2024,
+      "branch": "Reign of the Empire",
+      "kind": "tv",
+      "setLabel": "Set 20–2 BBY"
+     },
+     {
+      "id": "solo",
+      "title": "Solo",
+      "year": 2018,
+      "branch": "Reign of the Empire",
+      "setLabel": "Set 10 BBY"
+     },
+     {
+      "id": "kenobi",
+      "title": "Obi-Wan Kenobi",
+      "year": 2022,
+      "branch": "Reign of the Empire",
+      "kind": "tv",
+      "setLabel": "Set 9 BBY"
+     },
+     {
+      "id": "andor",
+      "title": "Andor",
+      "year": 2022,
+      "branch": "Age of Rebellion",
+      "kind": "tv",
+      "setLabel": "Set 5–0 BBY",
+      "why": "Ends days before Rogue One starts, and the handoff is exact rather than thematic."
+     },
+     {
+      "id": "rebels",
+      "title": "Rebels",
+      "year": 2014,
+      "branch": "Age of Rebellion",
+      "kind": "tv",
+      "setLabel": "Set 5–1 BBY",
+      "why": "Runs alongside Andor rather than after it, and its closing scenes jump past Return of the Jedi."
+     },
+     {
+      "id": "r1",
+      "title": "Rogue One",
+      "year": 2016,
+      "branch": "Age of Rebellion",
+      "setLabel": "Set 0 BBY",
+      "why": "Ends with <b>no gap at all</b> before A New Hope's opening shot."
+     },
+     {
+      "id": "anh",
+      "title": "A New Hope",
+      "year": 1977,
+      "branch": "Age of Rebellion",
+      "setLabel": "Set 0 BBY"
+     },
+     {
+      "id": "esb",
+      "title": "The Empire Strikes Back",
+      "year": 1980,
+      "branch": "Age of Rebellion",
+      "setLabel": "Set 3 ABY"
+     },
+     {
+      "id": "rotj",
+      "title": "Return of the Jedi",
+      "year": 1983,
+      "branch": "Age of Rebellion",
+      "setLabel": "Set 4 ABY"
+     },
+     {
+      "id": "mando",
+      "title": "The Mandalorian",
+      "year": 2019,
+      "branch": "The New Republic",
+      "kind": "tv",
+      "setLabel": "Set 9 ABY",
+      "why": "Opens the five-year window that <b>four other shows then share</b>, so everything below it is effectively simultaneous."
+     },
+     {
+      "id": "boba",
+      "title": "The Book of Boba Fett",
+      "year": 2021,
+      "branch": "The New Republic",
+      "kind": "tv",
+      "setLabel": "Set 9 ABY"
+     },
+     {
+      "id": "ahsoka",
+      "title": "Ahsoka",
+      "year": 2023,
+      "branch": "The New Republic",
+      "kind": "tv",
+      "setLabel": "Set 9 ABY"
+     },
+     {
+      "id": "skeleton-crew",
+      "title": "Skeleton Crew",
+      "year": 2024,
+      "branch": "The New Republic",
+      "kind": "tv",
+      "setLabel": "Set 9 ABY"
+     },
+     {
+      "id": "resistance",
+      "title": "Resistance",
+      "year": 2018,
+      "branch": "Rise of the First Order & the New Jedi Order",
+      "kind": "tv",
+      "setLabel": "Set 34–35 ABY",
+      "why": "Straddles the sequel films rather than preceding them — its first season runs into The Force Awakens, its second past The Last Jedi."
+     },
+     {
+      "id": "tfa",
+      "title": "The Force Awakens",
+      "year": 2015,
+      "branch": "Rise of the First Order & the New Jedi Order",
+      "setLabel": "Set 34 ABY"
+     },
+     {
+      "id": "tlj",
+      "title": "The Last Jedi",
+      "year": 2017,
+      "branch": "Rise of the First Order & the New Jedi Order",
+      "setLabel": "Set 34 ABY"
+     },
+     {
+      "id": "tros",
+      "title": "The Rise of Skywalker",
+      "year": 2019,
+      "branch": "Rise of the First Order & the New Jedi Order",
+      "setLabel": "Set 35 ABY"
+     }
+    ]
+   }
+  }
+ },
+ "startrek": {
+  "id": "startrek",
+  "intro": "Star Trek is a television franchise with fourteen films attached, not a film franchise with spin-off shows — the films only make sense as a supplement to roughly 900 hours of TV. So the order question is really two questions: which series you start with, and where the single line stops being single.",
+  "orders": {
+   "first": {
+    "note": "This path assumes you have watched nothing and want to know within a few hours whether Star Trek is for you. It starts in 2022, not 1966, treats the series as the main text and the films as samples, and skips the two weakest openings in the franchise. It leaves out Voyager, Enterprise, Picard, Prodigy and most of the film run — all easier to judge once you know which era you like.",
+    "groups": [
+     {
+      "label": "Start here — not at the beginning",
+      "items": [
+       {
+        "id": "snw",
+        "title": "Strange New Worlds",
+        "year": 2022,
+        "branch": "Prime Timeline",
+        "kind": "tv",
+        "why": "The only entry that assumes nothing: <b>self-contained hours</b> that reset at the end, shot recently enough to look like a current show."
+       },
+       {
+        "id": "tng",
+        "title": "The Next Generation",
+        "year": 1987,
+        "branch": "Prime Timeline",
+        "kind": "tv",
+        "why": "Start at <b>season 3</b> — the first two seasons are where most people quit, and almost nothing in them is referenced later."
+       }
+      ]
+     },
+     {
+      "label": "How much of the 1960s you actually need",
+      "items": [
+       {
+        "id": "tos",
+        "title": "The Original Series",
+        "year": 1966,
+        "branch": "Prime Timeline",
+        "kind": "tv",
+        "why": "You do not need all 79 episodes — <b>six carry the weight</b>: Balance of Terror, Space Seed, The Doomsday Machine, Amok Time, The Trouble with Tribbles, The City on the Edge of Forever."
+       },
+       {
+        "id": "twok",
+        "title": "II: The Wrath of Khan",
+        "year": 1982,
+        "branch": "Prime Timeline",
+        "why": "Watchable cold, but it is the one film built on <b>a single old TV episode</b>, so Space Seed first changes what it is."
+       }
+      ]
+     },
+     {
+      "label": "The films worth your time",
+      "items": [
+       {
+        "id": "tvh",
+        "title": "IV: The Voyage Home",
+        "year": 1986,
+        "branch": "Prime Timeline",
+        "why": "Runs on comedy and 1986 San Francisco rather than continuity, so its <b>middle-film baggage</b> barely registers."
+       },
+       {
+        "id": "tuc",
+        "title": "VI: The Undiscovered Country",
+        "year": 1991,
+        "branch": "Prime Timeline",
+        "why": "Closes the original cast's run and sets the political shape every 24th-century show inherits."
+       },
+       {
+        "id": "fc",
+        "title": "First Contact",
+        "year": 1996,
+        "branch": "Prime Timeline",
+        "why": "The one TNG film that works standalone — <b>no series homework</b> beyond knowing who Picard is."
+       }
+      ]
+     },
+     {
+      "label": "The long game",
+      "items": [
+       {
+        "id": "ds9",
+        "title": "Deep Space Nine",
+        "year": 1993,
+        "branch": "Prime Timeline",
+        "kind": "tv",
+        "why": "The best sustained run here: it <b>serializes</b>, consequences stick, and it argues with the rest of Star Trek on purpose — give it to the end of season 2."
+       },
+       {
+        "id": "low",
+        "title": "Lower Decks",
+        "year": 2020,
+        "branch": "Prime Timeline",
+        "kind": "tv",
+        "why": "Half-hour animation that only pays off once TNG and DS9 are in your head, so <b>watch it late</b>."
+       }
+      ]
+     },
+     {
+      "label": "Where the timeline splits",
+      "items": [
+       {
+        "id": "st09",
+        "title": "Star Trek",
+        "year": 2009,
+        "branch": "Kelvin Timeline",
+        "why": "Destroys a ship in 2233 and <b>splits the timeline at that point</b>, so nothing in the trilogy constrains the Prime shows."
+       },
+       {
+        "id": "dsc",
+        "title": "Discovery",
+        "year": 2017,
+        "branch": "The Moved Timeline (Discovery era)",
+        "kind": "tv",
+        "why": "Starts nine years before TOS, then jumps <b>930 years forward</b> in season 3 and never returns."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order the audience got them in, and the order each entry was written to be seen in. Every series after 1987 assumes you have already seen the ones before it.",
+    "items": [
+     {
+      "id": "tos",
+      "title": "The Original Series",
+      "year": 1966,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "why": "Everything else in the franchise is a reaction to these three seasons."
+     },
+     {
+      "id": "tas",
+      "title": "The Animated Series",
+      "year": 1973,
+      "branch": "Prime Timeline",
+      "kind": "tv"
+     },
+     {
+      "id": "tmp",
+      "title": "The Motion Picture",
+      "year": 1979,
+      "branch": "Prime Timeline",
+      "why": "Arrives ten years after cancellation and sets the pattern of <b>films chasing a TV audience</b>, never the reverse."
+     },
+     {
+      "id": "twok",
+      "title": "II: The Wrath of Khan",
+      "year": 1982,
+      "branch": "Prime Timeline",
+      "why": "Built directly on a TOS episode, which is why the film line never really stood alone."
+     },
+     {
+      "id": "tsfs",
+      "title": "III: The Search for Spock",
+      "year": 1984,
+      "branch": "Prime Timeline"
+     },
+     {
+      "id": "tvh",
+      "title": "IV: The Voyage Home",
+      "year": 1986,
+      "branch": "Prime Timeline"
+     },
+     {
+      "id": "tng",
+      "title": "The Next Generation",
+      "year": 1987,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "why": "Moves the franchise back to television and makes the 24th century the default setting for the next fifteen years."
+     },
+     {
+      "id": "tff",
+      "title": "V: The Final Frontier",
+      "year": 1989,
+      "branch": "Prime Timeline"
+     },
+     {
+      "id": "tuc",
+      "title": "VI: The Undiscovered Country",
+      "year": 1991,
+      "branch": "Prime Timeline"
+     },
+     {
+      "id": "ds9",
+      "title": "Deep Space Nine",
+      "year": 1993,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "why": "Runs alongside the TNG films and breaks the format — <b>one station, one long story</b>."
+     },
+     {
+      "id": "gen",
+      "title": "Generations",
+      "year": 1994,
+      "branch": "Prime Timeline",
+      "why": "The handoff: the only place the two casts share a frame."
+     },
+     {
+      "id": "voy",
+      "title": "Voyager",
+      "year": 1995,
+      "branch": "Prime Timeline",
+      "kind": "tv"
+     },
+     {
+      "id": "fc",
+      "title": "First Contact",
+      "year": 1996,
+      "branch": "Prime Timeline"
+     },
+     {
+      "id": "ins",
+      "title": "Insurrection",
+      "year": 1998,
+      "branch": "Prime Timeline"
+     },
+     {
+      "id": "ent",
+      "title": "Enterprise",
+      "year": 2001,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "why": "A prequel that ended the first continuous TV run; Star Trek was off television for <b>twelve years</b> afterwards."
+     },
+     {
+      "id": "nem",
+      "title": "Nemesis",
+      "year": 2002,
+      "branch": "Prime Timeline"
+     },
+     {
+      "id": "st09",
+      "title": "Star Trek",
+      "year": 2009,
+      "branch": "Kelvin Timeline",
+      "why": "Restarts the film line in a separate branch specifically so the Prime shows stay untouched."
+     },
+     {
+      "id": "into-darkness",
+      "title": "Into Darkness",
+      "year": 2013,
+      "branch": "Kelvin Timeline"
+     },
+     {
+      "id": "beyond",
+      "title": "Beyond",
+      "year": 2016,
+      "branch": "Kelvin Timeline"
+     },
+     {
+      "id": "dsc",
+      "title": "Discovery",
+      "year": 2017,
+      "branch": "The Moved Timeline (Discovery era)",
+      "kind": "tv",
+      "why": "Brings the franchise back to TV, and every series since has been built off its production line."
+     },
+     {
+      "id": "pic",
+      "title": "Picard",
+      "year": 2020,
+      "branch": "Prime Timeline",
+      "kind": "tv"
+     },
+     {
+      "id": "low",
+      "title": "Lower Decks",
+      "year": 2020,
+      "branch": "Prime Timeline",
+      "kind": "tv"
+     },
+     {
+      "id": "pro",
+      "title": "Prodigy",
+      "year": 2021,
+      "branch": "Prime Timeline",
+      "kind": "tv"
+     },
+     {
+      "id": "snw",
+      "title": "Strange New Worlds",
+      "year": 2022,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "why": "A Discovery spin-off that runs back toward TOS and returns the franchise to <b>episodes</b>."
+     },
+     {
+      "id": "s31",
+      "title": "Section 31",
+      "year": 2025,
+      "branch": "Mirror Universe",
+      "why": "A streaming one-off rather than a theatrical release, which is where the film line now sits."
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-universe order, from the first warp-five ship to the 32nd century. Four entries straddle two eras — they sit at their primary setting and are flagged there.",
+    "items": [
+     {
+      "id": "ent",
+      "title": "Enterprise",
+      "year": 2001,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "setLabel": "Set 2151-2161",
+      "why": "The earliest point on the line: <b>no Federation yet</b>, and warp five is experimental."
+     },
+     {
+      "id": "st09",
+      "title": "Star Trek",
+      "year": 2009,
+      "branch": "Kelvin Timeline",
+      "setLabel": "Set 2233 and 2258",
+      "why": "The break happens on screen in 2233, so these three films run <b>parallel to</b> everything that follows rather than inside it."
+     },
+     {
+      "id": "into-darkness",
+      "title": "Into Darkness",
+      "year": 2013,
+      "branch": "Kelvin Timeline",
+      "setLabel": "Set 2259-2260"
+     },
+     {
+      "id": "beyond",
+      "title": "Beyond",
+      "year": 2016,
+      "branch": "Kelvin Timeline",
+      "setLabel": "Set 2263"
+     },
+     {
+      "id": "dsc",
+      "title": "Discovery",
+      "year": 2017,
+      "branch": "The Moved Timeline (Discovery era)",
+      "kind": "tv",
+      "setLabel": "Set 2256-2258, then 3188-3191",
+      "why": "Occupies both ends of the chronology at once — nine years before TOS, then <b>900 years past everything else</b>."
+     },
+     {
+      "id": "snw",
+      "title": "Strange New Worlds",
+      "year": 2022,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "setLabel": "Set 2259-2260s",
+      "why": "Slots between Discovery's 23rd-century seasons and TOS, on the same ship with the earlier captain."
+     },
+     {
+      "id": "tos",
+      "title": "The Original Series",
+      "year": 1966,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "setLabel": "Set 2266-2269",
+      "why": "The five-year mission that every earlier entry on this list is a prequel to."
+     },
+     {
+      "id": "tas",
+      "title": "The Animated Series",
+      "year": 1973,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "setLabel": "Set 2269-2270"
+     },
+     {
+      "id": "tmp",
+      "title": "The Motion Picture",
+      "year": 1979,
+      "branch": "Prime Timeline",
+      "setLabel": "Set 2273"
+     },
+     {
+      "id": "twok",
+      "title": "II: The Wrath of Khan",
+      "year": 1982,
+      "branch": "Prime Timeline",
+      "setLabel": "Set 2285"
+     },
+     {
+      "id": "tsfs",
+      "title": "III: The Search for Spock",
+      "year": 1984,
+      "branch": "Prime Timeline",
+      "setLabel": "Set 2285"
+     },
+     {
+      "id": "tvh",
+      "title": "IV: The Voyage Home",
+      "year": 1986,
+      "branch": "Prime Timeline",
+      "setLabel": "Set 2286"
+     },
+     {
+      "id": "tff",
+      "title": "V: The Final Frontier",
+      "year": 1989,
+      "branch": "Prime Timeline",
+      "setLabel": "Set 2287"
+     },
+     {
+      "id": "tuc",
+      "title": "VI: The Undiscovered Country",
+      "year": 1991,
+      "branch": "Prime Timeline",
+      "setLabel": "Set 2293"
+     },
+     {
+      "id": "s31",
+      "title": "Section 31",
+      "year": 2025,
+      "branch": "Mirror Universe",
+      "setLabel": "Set c. 2324",
+      "why": "Drops into the empty stretch between the two casts, and is the only entry driven by <b>the Mirror Universe</b> rather than visiting it."
+     },
+     {
+      "id": "tng",
+      "title": "The Next Generation",
+      "year": 1987,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "setLabel": "Set 2364-2370"
+     },
+     {
+      "id": "ds9",
+      "title": "Deep Space Nine",
+      "year": 1993,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "setLabel": "Set 2369-2375",
+      "why": "Overlaps TNG's last two seasons and all four TNG films, so strict chronology <b>interleaves</b> rather than queues them."
+     },
+     {
+      "id": "gen",
+      "title": "Generations",
+      "year": 1994,
+      "branch": "Prime Timeline",
+      "setLabel": "Set 2293 and 2371",
+      "why": "Opens in 2293 and lands in 2371, which is literally how the timeline crosses from one crew to the next."
+     },
+     {
+      "id": "voy",
+      "title": "Voyager",
+      "year": 1995,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "setLabel": "Set 2371-2378"
+     },
+     {
+      "id": "fc",
+      "title": "First Contact",
+      "year": 1996,
+      "branch": "Prime Timeline",
+      "setLabel": "Set 2063 and 2373",
+      "why": "Half of it happens in <b>2063</b>, the first warp flight that Enterprise spends four seasons following on from."
+     },
+     {
+      "id": "ins",
+      "title": "Insurrection",
+      "year": 1998,
+      "branch": "Prime Timeline",
+      "setLabel": "Set 2375"
+     },
+     {
+      "id": "nem",
+      "title": "Nemesis",
+      "year": 2002,
+      "branch": "Prime Timeline",
+      "setLabel": "Set 2379"
+     },
+     {
+      "id": "low",
+      "title": "Lower Decks",
+      "year": 2020,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "setLabel": "Set 2380-2381"
+     },
+     {
+      "id": "pro",
+      "title": "Prodigy",
+      "year": 2021,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "setLabel": "Set 2383-2384"
+     },
+     {
+      "id": "pic",
+      "title": "Picard",
+      "year": 2020,
+      "branch": "Prime Timeline",
+      "kind": "tv",
+      "setLabel": "Set 2399-2402",
+      "why": "The far end of the Prime line, twenty-three years after Nemesis and the last word on that crew."
+     }
+    ]
+   }
+  }
+ }
+}
