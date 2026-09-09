@@ -561,19 +561,20 @@
       <svg width="30" height="30" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex:none;" aria-hidden="true"><g transform="translate(0 3.5)"><circle cx="12" cy="11" r="7" stroke="#E9EDF3" stroke-width="2.8"></circle><circle cx="12" cy="11" r="2" fill="#E9EDF3"></circle><circle cx="27" cy="11" r="5" stroke="#E9EDF3" stroke-width="2.8"></circle><circle cx="27" cy="11" r="1.8" fill="#E9EDF3"></circle><rect x="5" y="21" width="27" height="15" rx="4" stroke="#E9EDF3" stroke-width="2.8"></rect><path d="M34 26 L 46 21.5 M34 31 L 46 35.5" stroke="#FF2A1F" stroke-width="2.8" stroke-linecap="round"></path><circle cx="12" cy="28.5" r="3" fill="#FF2A1F"></circle></g></svg>
       <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:21px;letter-spacing:0.04em;text-transform:uppercase;color:#E9EDF3;">Reel<span style="color:#FF5747;">Order</span></span>
     </div>
-    <nav style="display:flex;align-items:center;gap:6px;">
+    <button onclick="{{ toggleNav }}" aria-label="Menu" style="{{ navToggleStyle }}">{{ navToggleIcon }}</button>
+    <nav style="{{ navStyle }}">
       <button onclick="{{ goHub }}" style="{{ navHubStyle }}">Hub</button>
       <button onclick="{{ goExplore }}" style="{{ navExploreStyle }}">Timeline</button>
       <button onclick="{{ goQueue }}" style="{{ navQueueStyle }}">Queue</button>
       <button onclick="{{ goPosters }}" style="{{ navPostersStyle }}">Poster Shop</button>
       <button onclick="{{ goContact }}" style="{{ navContactStyle }}">Contact</button>
       <sc-if value="{{ isAdminUser }}" hint-placeholder-val="{{ false }}"><button onclick="{{ goAdmin }}" style="{{ navAdminStyle }}">Admin</button></sc-if>
-      <button onclick="{{ goContribute }}" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:9px;border:1px solid rgba(255,42,31,0.45);background:rgba(255,42,31,0.12);color:#FF7A6E;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;" style-hover="background:rgba(255,42,31,0.2);border-color:rgba(255,42,31,0.7);color:#fff;">Contribute</button>
+      <button onclick="{{ goContribute }}" style="{{ navContribStyle }}" style-hover="background:rgba(255,42,31,0.2);border-color:rgba(255,42,31,0.7);color:#fff;">Contribute</button>
       <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}">
-        <button onclick="{{ openAuth }}" style="margin-left:6px;padding:9px 18px;border-radius:9px;border:none;background:#fff;color:#0a0c10;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:transform .16s ease;" style-hover="transform:translateY(-1px);">Sign in</button>
+        <button onclick="{{ openAuth }}" style="{{ navSignInStyle }}" style-hover="transform:translateY(-1px);">Sign in</button>
       </sc-if>
       <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
-        <div style="display:flex;align-items:center;gap:9px;margin-left:6px;padding:4px 6px 4px 5px;border-radius:999px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.04);">
+        <div style="{{ navUserStyle }}">
           <div style="{{ userAvatarStyle }}">{{ userInitials }}</div>
           <span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;color:#E9EDF3;">{{ userHandle }}</span>
           <button onclick="{{ signOut }}" title="Sign out" style="width:26px;height:26px;border-radius:50%;border:none;background:transparent;color:#7a8696;font-size:15px;line-height:1;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">⏻</button>
@@ -1539,6 +1540,8 @@
 class Component extends DCLogic {
   state = {
     screen: 'hub',
+    navOpen: false,
+    isNarrow: (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth <= 1000 : false,
     activeId: 'terminator',
     // posters store
     posters: [], postersLoaded: false, posterId: null, styleKey: null, galleryIdx: 0, checkoutBusy: false, thanks: null,
@@ -6044,7 +6047,7 @@ class Component extends DCLogic {
     return { display:'inline-flex', alignItems:'center', padding:'3px 9px', borderRadius:'7px', fontFamily:"'JetBrains Mono', monospace", fontSize:'10.5px', fontWeight:'600', letterSpacing:'0.05em', textTransform:'uppercase', color:c, background:this.rgba(c,0.13), border:`1px solid ${this.rgba(c,0.32)}` };
   }
   navBtn(active) {
-    return { padding:'9px 15px', borderRadius:'9px', border:'1px solid transparent', background: active?'rgba(255,255,255,0.08)':'transparent', color: active?'#fff':'#9DB0C4', fontFamily:"'DM Sans', sans-serif", fontWeight:'600', fontSize:'14px', cursor:'pointer', transition:'all .16s ease' };
+    return { textAlign:'left', padding:'9px 15px', borderRadius:'9px', border:'1px solid transparent', background: active?'rgba(255,255,255,0.08)':'transparent', color: active?'#fff':'#9DB0C4', fontFamily:"'DM Sans', sans-serif", fontWeight:'600', fontSize:'14px', cursor:'pointer', transition:'all .16s ease' };
   }
   tabBtn(active) {
     return { padding:'8px 15px', borderRadius:'8px', border:'none', background: active?'rgba(255,255,255,0.14)':'transparent', color: active?'#fff':'#7a8696', fontFamily:"'DM Sans', sans-serif", fontWeight:'600', fontSize:'13.5px', cursor:'pointer', transition:'all .16s ease', whiteSpace:'nowrap' };
@@ -6058,7 +6061,7 @@ class Component extends DCLogic {
   }
 
   // ---------- poster silhouette art ----------
-  kindFor(id){ return ({terminator:'terminator',bttf:'bttf',dune:'dune',xmen:'xmen',apes:'apes',predator:'predator',startrek:'startrek',marvel:'marvel',starwars:'starwars',transformers:'transformers',alien:'alien'})[id] || 'terminator'; }
+  kindFor(id){ return ({terminator:'terminator',bttf:'bttf',dune:'dune',xmen:'xmen',apes:'apes',predator:'predator',startrek:'startrek',marvel:'marvel',starwars:'starwars',transformers:'transformers',alien:'alien',tenet:'tenet',matrix:'matrix',spiderverse:'spiderverse',dc:'dc',wizarding:'wizarding',avatar:'avatar',jurassic:'jurassic',monsterverse:'monsterverse',halloween:'halloween',mib:'mib'})[id] || 'terminator'; }
   artSVG(kind, accent) {
     const a = (o) => this.rgba(accent, o);
     const defs = `<defs><linearGradient id="g-${kind}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a(0.62)}"/><stop offset="0.5" stop-color="${a(0.18)}"/><stop offset="1" stop-color="rgba(18,21,26,0.5)"/></linearGradient><filter id="f-${kind}" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="7"/></filter></defs>`;
@@ -6087,8 +6090,90 @@ class Component extends DCLogic {
       body = `<g opacity="0.95"><path d="M200 40 L286 92 L286 186 L262 236 L236 284 L200 306 L164 284 L138 236 L114 186 L114 92 Z" fill="url(#g-${kind})" stroke="${a(0.5)}" stroke-width="1.4"/><path d="M200 60 L268 102 L268 176 L246 222 L200 262 L154 222 L132 176 L132 102 Z" fill="none" stroke="${a(0.28)}" stroke-width="1"/><path d="M186 54 L200 40 L214 54 L214 96 L200 108 L186 96 Z" fill="${a(0.55)}"/><g fill="#070809" opacity="0.85"><path d="M142 132 L188 146 L188 168 L150 160 Z"/><path d="M258 132 L212 146 L212 168 L250 160 Z"/></g><g fill="${accent}" filter="url(#f-${kind})"><path d="M150 138 L186 149 L186 163 L154 157 Z"/><path d="M250 138 L214 149 L214 163 L246 157 Z"/></g><path d="M164 196 L200 184 L236 196 L236 252 L200 276 L164 252 Z" fill="${a(0.22)}" stroke="${a(0.5)}" stroke-width="1.2"/><path d="M178 214 L222 214 M176 232 L224 232 M182 250 L218 250" stroke="${a(0.55)}" stroke-width="2" stroke-linecap="round"/><path d="M114 120 L84 150 L84 214 L114 186" fill="${a(0.3)}" stroke="${a(0.45)}" stroke-width="1.2"/><path d="M286 120 L316 150 L316 214 L286 186" fill="${a(0.3)}" stroke="${a(0.45)}" stroke-width="1.2"/><circle cx="348" cy="70" r="2" fill="${a(0.7)}"/><circle cx="60" cy="90" r="1.6" fill="${a(0.5)}"/><circle cx="332" cy="250" r="1.8" fill="${a(0.5)}"/></g>`;
     } else if (kind === 'alien') {
       body = `<g opacity="0.95"><ellipse cx="200" cy="196" rx="74" ry="98" fill="url(#g-${kind})" stroke="${a(0.45)}" stroke-width="1.4"/><ellipse cx="200" cy="200" rx="56" ry="80" fill="none" stroke="${a(0.28)}" stroke-width="1"/><path d="M200 100 L214 150 L200 172 L186 150 Z" fill="#070809" opacity="0.8"/><path d="M170 118 L200 172 L230 118" fill="none" stroke="${a(0.55)}" stroke-width="3" stroke-linecap="round"/><path d="M200 172 L200 292" stroke="${a(0.4)}" stroke-width="2"/><path d="M136 208 C120 140 160 84 200 82 C240 84 280 140 264 208" fill="none" stroke="${accent}" stroke-width="2" opacity="0.5" filter="url(#f-${kind})"/><g stroke="${a(0.6)}" stroke-width="5" stroke-linecap="round" fill="none"><path d="M148 246 C120 262 110 288 118 302"/><path d="M252 246 C280 262 290 288 282 302"/><path d="M162 262 C146 280 144 296 150 306"/><path d="M238 262 C254 280 256 296 250 306"/></g><circle cx="316" cy="84" r="8" fill="${accent}" filter="url(#f-${kind})"/><circle cx="316" cy="84" r="3.4" fill="#e6fff3"/><circle cx="84" cy="120" r="2.4" fill="${a(0.6)}"/><circle cx="340" cy="150" r="1.8" fill="${a(0.5)}"/><circle cx="70" cy="60" r="1.6" fill="${a(0.5)}"/><path d="M0 300 L0 270 C90 254 180 282 270 264 C322 254 366 262 400 256 L400 300 Z" fill="url(#g-${kind})"/></g>`;
+    } else if (kind === 'matrix') {
+      let rain = '';
+      const cols = [26,64,102,140,178,216,254,292,330,368];
+      for (let c=0;c<cols.length;c++){
+        const x = cols[c];
+        const n = 3 + ((c*3)%5);
+        const top = 16 + ((c*43)%96);
+        for (let i=0;i<n;i++){
+          const y = top + i*27;
+          const o = (0.10 + i*0.10).toFixed(2);
+          rain += `<rect x="${x}" y="${y}" width="13" height="15" rx="2" fill="${accent}" opacity="${o}"/>`;
+        }
+        rain += `<rect x="${x}" y="${top + n*27}" width="13" height="15" rx="2" fill="#dcffe8" opacity="0.7"/>`;
+      }
+      body = `<g opacity="0.95">${rain}<path d="M148 300 L148 132 C148 98 171 74 200 74 C229 74 252 98 252 132 L252 300" fill="none" stroke="url(#g-${kind})" stroke-width="13" stroke-linecap="round"/><path d="M170 300 L170 134 C170 112 183 98 200 98 C217 98 230 112 230 134 L230 300 Z" fill="${a(0.16)}"/><path d="M186 300 L186 140 C186 126 192 118 200 118 C208 118 214 126 214 140 L214 300 Z" fill="${a(0.24)}"/><circle cx="200" cy="150" r="34" fill="${accent}" opacity="0.22" filter="url(#f-${kind})"/><circle cx="200" cy="150" r="6" fill="#e8fff1" opacity="0.8"/></g>`;
+    } else if (kind === 'spiderverse') {
+      const cx = 214, cy = 150;
+      let web = '';
+      for (let i=0;i<8;i++){
+        const ang = (i/8)*Math.PI*2 - Math.PI/2;
+        web += `<path d="M${cx} ${cy} L${(cx+Math.cos(ang)*152).toFixed(1)} ${(cy+Math.sin(ang)*152).toFixed(1)}" stroke="${a(0.5)}" stroke-width="1.7"/>`;
+      }
+      for (let r=36;r<=152;r+=29){
+        let pts = '';
+        for (let i=0;i<=8;i++){
+          const ang = (i/8)*Math.PI*2 - Math.PI/2;
+          pts += `${(cx+Math.cos(ang)*r).toFixed(1)},${(cy+Math.sin(ang)*r).toFixed(1)} `;
+        }
+        web += `<polyline points="${pts.trim()}" fill="none" stroke="${a(0.42)}" stroke-width="1.7"/>`;
+      }
+      body = `<g opacity="0.95"><g opacity="0.3" transform="translate(96,104) scale(0.46)">${web}</g><g opacity="0.45" transform="translate(52,58) scale(0.7)">${web}</g><g>${web}</g><circle cx="${cx}" cy="${cy}" r="13" fill="${accent}" filter="url(#f-${kind})"/><circle cx="${cx}" cy="${cy}" r="5.5" fill="#ffe6f0"/></g>`;
+    } else if (kind === 'dc') {
+      body = `<g opacity="0.95"><path d="M28 178 C96 178 136 152 190 150" fill="none" stroke="${a(0.45)}" stroke-width="3.4"/><g fill="none" stroke="${a(0.42)}" stroke-width="3.2" stroke-dasharray="11 9"><path d="M236 128 C290 110 322 88 384 82"/><path d="M240 158 C300 156 332 154 390 152"/><path d="M236 192 C290 214 322 236 384 248"/></g><path d="M230 38 L148 174 L196 174 L166 292 L272 136 L218 136 Z" fill="url(#g-${kind})" stroke="${a(0.55)}" stroke-width="1.6"/><path d="M226 68 L172 158 L208 158 L190 244 L248 148 L208 148 Z" fill="${accent}" opacity="0.28" filter="url(#f-${kind})"/><circle cx="192" cy="150" r="9" fill="${accent}" filter="url(#f-${kind})"/><circle cx="192" cy="150" r="4" fill="#e8f1ff"/><circle cx="384" cy="82" r="4.4" fill="${a(0.75)}"/><circle cx="390" cy="152" r="4.4" fill="${a(0.75)}"/><circle cx="384" cy="248" r="4.4" fill="${a(0.75)}"/></g>`;
+    } else if (kind === 'wizarding') {
+      let sparks = '';
+      const sp = [[104,96,3.2],[136,66,2.4],[152,116,2.6],[80,138,2.2],[120,156,1.9],[168,78,1.7],[92,182,1.6]];
+      for (let i=0;i<sp.length;i++){ sparks += `<circle cx="${sp[i][0]}" cy="${sp[i][1]}" r="${sp[i][2]}" fill="${a(0.8)}"/>`; }
+      body = `<g opacity="0.95"><circle cx="256" cy="162" r="106" fill="none" stroke="url(#g-${kind})" stroke-width="7"/><circle cx="256" cy="162" r="88" fill="none" stroke="${a(0.26)}" stroke-width="1.4" stroke-dasharray="6 11"/><path d="M210 94 L302 94 L262 162 L302 230 L210 230 L250 162 Z" fill="url(#g-${kind})" stroke="${a(0.5)}" stroke-width="1.4"/><path d="M220 104 L292 104 L256 160 Z" fill="#070809" opacity="0.5"/><path d="M238 178 L274 178 L288 220 L224 220 Z" fill="${accent}" opacity="0.38" filter="url(#f-${kind})"/><circle cx="256" cy="162" r="6" fill="#efe6ff"/><path d="M36 254 L154 126" stroke="url(#g-${kind})" stroke-width="9" stroke-linecap="round"/><path d="M36 254 L72 214" stroke="${a(0.7)}" stroke-width="13" stroke-linecap="round"/>${sparks}</g>`;
+    } else if (kind === 'avatar') {
+      let glow = '';
+      const gp = [[92,216,3.2],[128,248,2.3],[302,118,2.7],[338,168,2.1],[264,84,1.9],[68,152,2.5],[352,232,2.1],[186,246,2.2]];
+      for (let i=0;i<gp.length;i++){ glow += `<circle cx="${gp[i][0]}" cy="${gp[i][1]}" r="${gp[i][2]}" fill="${a(0.85)}"/>`; }
+      body = `<g opacity="0.95"><circle cx="106" cy="80" r="48" fill="${a(0.2)}"/><circle cx="106" cy="80" r="48" fill="none" stroke="${a(0.4)}" stroke-width="1.2"/><path d="M330 300 C324 250 318 210 314 174 C312 154 316 138 322 126" fill="none" stroke="url(#g-${kind})" stroke-width="26" stroke-linecap="round"/><path d="M228 90 C262 82 308 92 324 112 C334 126 316 140 288 145 C250 150 220 132 216 116 C214 103 219 95 228 90 Z" fill="url(#g-${kind})" stroke="${a(0.45)}" stroke-width="1.2"/><path d="M148 160 C186 149 228 158 242 176 C250 189 232 200 205 204 C172 208 146 194 142 179 C140 169 142 164 148 160 Z" fill="url(#g-${kind})" stroke="${a(0.4)}" stroke-width="1.2"/><g stroke="${a(0.45)}" stroke-width="2.2" fill="none" stroke-linecap="round"><path d="M258 146 C254 178 264 198 258 222"/><path d="M296 145 C300 172 292 188 298 208"/><path d="M178 203 C174 228 182 242 176 260"/><path d="M214 201 C218 222 210 236 216 252"/></g><path d="M0 300 L0 266 C88 250 176 278 264 260 C320 250 364 258 400 252 L400 300 Z" fill="url(#g-${kind})"/>${glow}</g>`;
+    } else if (kind === 'jurassic') {
+      let fern = '';
+      for (let i=0;i<9;i++){
+        const t = i/8;
+        const x = 62 + t*118;
+        const y = 282 - t*156;
+        const len = 36 - t*22;
+        fern += `<path d="M${x.toFixed(1)} ${y.toFixed(1)} l-${len.toFixed(1)} -13" stroke="${a(0.5)}" stroke-width="4.2" stroke-linecap="round"/><path d="M${x.toFixed(1)} ${y.toFixed(1)} l${len.toFixed(1)} -7" stroke="${a(0.34)}" stroke-width="4.2" stroke-linecap="round"/>`;
+      }
+      body = `<g opacity="0.95"><path d="M62 292 C102 252 146 194 182 124" fill="none" stroke="${a(0.55)}" stroke-width="5" stroke-linecap="round"/>${fern}<path d="M278 58 C320 58 350 106 350 164 C350 228 320 270 278 270 C236 270 206 228 206 164 C206 106 236 58 278 58 Z" fill="url(#g-${kind})" stroke="${a(0.5)}" stroke-width="1.6"/><path d="M278 80 C312 80 334 118 334 164 C334 216 312 250 278 250 C244 250 222 216 222 164 C222 118 244 80 278 80 Z" fill="${accent}" opacity="0.2" filter="url(#f-${kind})"/><g opacity="0.9"><ellipse cx="280" cy="172" rx="7.5" ry="27" transform="rotate(-14 280 172)" fill="#070809"/><circle cx="273" cy="139" r="8.5" fill="#070809"/><g stroke="#070809" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M265 131 L234 98"/><path d="M285 133 L316 102"/><path d="M269 156 L230 150"/><path d="M291 158 L328 152"/><path d="M271 194 L241 220"/><path d="M289 196 L318 222"/></g></g><circle cx="304" cy="110" r="11" fill="${accent}" opacity="0.45" filter="url(#f-${kind})"/></g>`;
+    } else if (kind === 'monsterverse') {
+      let city = '';
+      const hs = [56,88,42,104,66,122,48,94,60,78,44,112,64,86];
+      for (let i=0;i<hs.length;i++){
+        const x = i*29;
+        const h = hs[i];
+        city += `<rect x="${x}" y="${300-h}" width="24" height="${h}" fill="#070809" opacity="0.92"/>`;
+        const rows = Math.floor(h/20);
+        for (let r=0;r<rows;r++){
+          const wy = 300 - h + 9 + r*20;
+          city += `<rect x="${x+5}" y="${wy}" width="5" height="6" fill="${a(0.5)}"/><rect x="${x+14}" y="${wy}" width="5" height="6" fill="${a(0.28)}"/>`;
+        }
+      }
+      body = `<g opacity="0.95"><path d="M118 300 C110 230 140 166 186 126 C214 102 250 90 288 94 C338 99 374 132 386 178 C396 216 390 262 394 300 Z" fill="url(#g-${kind})" stroke="${a(0.4)}" stroke-width="1.2"/><g fill="url(#g-${kind})"><path d="M196 128 L174 70 L216 110 Z"/><path d="M240 104 L230 42 L264 94 Z"/><path d="M288 98 L294 40 L318 106 Z"/><path d="M336 122 L356 68 L362 134 Z"/></g><circle cx="230" cy="170" r="12" fill="${accent}" filter="url(#f-${kind})"/><circle cx="230" cy="170" r="5" fill="#dffbff"/><circle cx="294" cy="166" r="12" fill="${accent}" filter="url(#f-${kind})"/><circle cx="294" cy="166" r="5" fill="#dffbff"/>${city}</g>`;
+    } else if (kind === 'halloween') {
+      body = `<g opacity="0.95"><circle cx="300" cy="90" r="66" fill="${a(0.45)}" filter="url(#f-${kind})"/><circle cx="300" cy="90" r="48" fill="${a(0.72)}"/><circle cx="286" cy="78" r="9" fill="#070809" opacity="0.22"/><circle cx="314" cy="102" r="6" fill="#070809" opacity="0.2"/><circle cx="308" cy="68" r="4" fill="#070809" opacity="0.18"/><g stroke="#070809" stroke-width="4.2" stroke-linecap="round" fill="none" opacity="0.92"><path d="M232 300 C250 228 256 172 246 106"/><path d="M246 148 C272 136 294 126 312 106"/><path d="M248 188 C276 184 302 174 326 156"/><path d="M244 120 C222 106 204 90 194 68"/><path d="M250 212 C228 206 210 194 196 176"/><path d="M252 250 C280 244 302 232 320 214"/></g><path d="M128 262 L210 150 L222 160 L142 276 Z" fill="url(#g-${kind})" stroke="${a(0.5)}" stroke-width="1.2"/><path d="M133 258 L206 157 L212 162 L139 264 Z" fill="#f2f5f8" opacity="0.4"/><path d="M126 266 L142 280 L108 304 L95 291 Z" fill="#070809" opacity="0.92" stroke="${a(0.4)}" stroke-width="1"/></g>`;
+    } else if (kind === 'mib') {
+      let stars = '';
+      const st = [[52,56,1.9],[104,94,1.5],[334,50,2.1],[368,124,1.7],[286,40,1.5],[36,142,1.7],[382,198,1.9],[146,38,1.5],[64,214,1.5]];
+      for (let i=0;i<st.length;i++){ stars += `<circle cx="${st[i][0]}" cy="${st[i][1]}" r="${st[i][2]}" fill="${a(0.7)}"/>`; }
+      let figs = '';
+      const fx = [126,192];
+      for (let i=0;i<fx.length;i++){
+        const x = fx[i];
+        figs += `<g><path d="M${x-28} 302 L${x-25} 246 C${x-23} 225 ${x-13} 212 ${x} 212 C${x+13} 212 ${x+23} 225 ${x+25} 246 L${x+28} 302 Z" fill="url(#g-${kind})" stroke="${a(0.42)}" stroke-width="1"/><path d="M${x} 212 L${x-10} 242 L${x} 266 L${x+10} 242 Z" fill="#0a0c10" opacity="0.85"/><circle cx="${x}" cy="192" r="19" fill="url(#g-${kind})" stroke="${a(0.42)}" stroke-width="1"/><rect x="${x-16}" y="186" width="32" height="8" rx="4" fill="#070809" opacity="0.92"/></g>`;
+      }
+      body = `<g opacity="0.95">${stars}<path d="M188 120 L146 300 L352 300 L310 120 Z" fill="${accent}" opacity="0.08"/><ellipse cx="249" cy="112" rx="118" ry="23" fill="url(#g-${kind})" stroke="${a(0.45)}" stroke-width="1.2"/><path d="M188 106 C198 72 227 56 249 56 C271 56 300 72 310 106 Z" fill="url(#g-${kind})" stroke="${a(0.4)}" stroke-width="1"/><ellipse cx="249" cy="113" rx="72" ry="10" fill="${accent}" opacity="0.35" filter="url(#f-${kind})"/><circle cx="200" cy="118" r="4.2" fill="${a(0.85)}"/><circle cx="249" cy="124" r="4.2" fill="${a(0.85)}"/><circle cx="298" cy="118" r="4.2" fill="${a(0.85)}"/>${figs}</g>`;
     } else if (kind === 'predator') {
       body = `<g opacity="0.95"><path d="M200 56 C154 56 124 88 122 136 C121 168 130 196 148 214 L148 246 C148 262 162 272 178 274 L222 274 C238 272 252 262 252 246 L252 214 C270 196 279 168 278 136 C276 88 246 56 200 56 Z" fill="url(#g-${kind})" stroke="${a(0.4)}" stroke-width="1.2"/><g fill="#070809"><path d="M152 128 L190 138 L186 166 L156 158 Z"/><path d="M248 128 L210 138 L214 166 L244 158 Z"/><rect x="164" y="196" width="72" height="10" rx="5"/><rect x="164" y="216" width="72" height="10" rx="5"/><rect x="164" y="236" width="72" height="10" rx="5"/></g><g stroke="${a(0.5)}" stroke-width="7" stroke-linecap="round"><path d="M136 118 C120 140 114 176 120 210"/><path d="M264 118 C280 140 286 176 280 210"/></g><g><circle cx="304" cy="98" r="7" fill="${accent}" filter="url(#f-${kind})"/><circle cx="330" cy="112" r="7" fill="${accent}" filter="url(#f-${kind})"/><circle cx="316" cy="134" r="7" fill="${accent}" filter="url(#f-${kind})"/><circle cx="304" cy="98" r="3" fill="#ffe3de"/><circle cx="330" cy="112" r="3" fill="#ffe3de"/><circle cx="316" cy="134" r="3" fill="#ffe3de"/></g></g>`;
+    } else if (kind === 'tenet') {
+      body = `<g opacity="0.95"><path d="M116 300 L116 150 C116 86 152 54 200 54 C248 54 284 86 284 150 L284 300" fill="none" stroke="url(#g-${kind})" stroke-width="20" stroke-linecap="round"/><path d="M150 300 L150 152 C150 108 172 88 200 88 C228 88 250 108 250 152 L250 300" fill="none" stroke="${a(0.3)}" stroke-width="2"/><rect x="197" y="72" width="6" height="228" fill="url(#g-${kind})"/><g stroke="url(#g-${kind})" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M232 152 L232 236"/><path d="M216 214 L232 240 L248 214"/></g><g stroke="${a(0.6)}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M168 236 L168 152"/><path d="M152 174 L168 148 L184 174"/></g><circle cx="200" cy="120" r="12" fill="${accent}" filter="url(#f-${kind})" opacity="0.85"/><circle cx="200" cy="120" r="5" fill="#ffe9dc"/><path d="M0 300 L0 274 C90 258 180 286 270 268 C322 258 366 266 400 260 L400 300 Z" fill="url(#g-${kind})"/></g>`;
     }
     return `<svg viewBox="0 0 400 320" width="100%" height="100%" preserveAspectRatio="xMidYMax meet" fill="none" xmlns="http://www.w3.org/2000/svg">${defs}${body}</svg>`;
   }
@@ -6101,6 +6186,8 @@ class Component extends DCLogic {
   }
 
   // ---------- actions ----------
+  toggleNav = () => this.setState(s => ({ navOpen: !s.navOpen }));
+  closeNav = () => { if (this.state.navOpen) this.setState({ navOpen:false }); };
   goHub = () => { this.setState({ screen:'hub' }); this.pushRoute('/'); this.toTop(); };
   goExplore = () => { this.setState({ screen:'timeline' }); this.pushRoute(this.routeFor('timeline', this.state.activeId)); this.toTop(); };
   goContribute = (prefill) => { this.setState(s=>({ screen:'contribute', submitted:false, form: typeof prefill==='string'? {...s.form, type:'new', name:prefill} : s.form })); this.pushRoute('/contribute'); this.toTop(); };
@@ -6141,6 +6228,7 @@ class Component extends DCLogic {
   };
   setTitle = (path) => { try { document.title = this.titleFor(path); } catch(e){} };
   pushRoute = (path) => {
+    this.closeNav();
     try {
       if (location.pathname !== path) history.pushState({ path }, '', path);
       this.setTitle(path);
@@ -6341,6 +6429,13 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.initRouting();
+    try {
+      const mq = window.matchMedia('(max-width: 1000px)');
+      const applyMQ = () => this.setState({ isNarrow: mq.matches, navOpen: false });
+      if (mq.matches !== this.state.isNarrow) this.setState({ isNarrow: mq.matches });
+      if (mq.addEventListener) mq.addEventListener('change', applyMQ);
+      else if (mq.addListener) mq.addListener(applyMQ);
+    } catch(e){}
     try {
       if (window.supabase && this.SUPABASE_KEY.indexOf('__') !== 0) {
         this.db = window.supabase.createClient(this.SUPABASE_URL, this.SUPABASE_KEY);
@@ -6952,6 +7047,17 @@ class Component extends DCLogic {
       submitContact: this.submitContact, resetContact: this.resetContact,
       contactBtnLabel: s.contactBusy ? 'Sending…' : 'Send message',
       contactBtnStyle: { alignSelf:'flex-start', padding:'14px 28px', borderRadius:'11px', border:'none', background: s.contactBusy ? '#9aa6b4' : '#FF2A1F', color:'#fff', fontFamily:"'Oswald', sans-serif", fontWeight:'600', fontSize:'15px', letterSpacing:'0.05em', textTransform:'uppercase', cursor: s.contactBusy ? 'wait' : 'pointer', transition:'all .16s ease' },
+      toggleNav: this.toggleNav,
+      navToggleIcon: s.navOpen ? '\u2715' : '\u2630',
+      navToggleStyle: { display: s.isNarrow ? 'inline-flex' : 'none', alignItems:'center', justifyContent:'center', flex:'none', width:'42px', height:'42px', borderRadius:'10px', border:'1px solid rgba(255,255,255,0.14)', background: s.navOpen ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.03)', color:'#E9EDF3', fontSize:'19px', lineHeight:'1', cursor:'pointer', transition:'all .16s ease' },
+      navStyle: s.isNarrow
+        ? (s.navOpen
+            ? { position:'absolute', top:'100%', left:'0', right:'0', display:'flex', flexDirection:'column', alignItems:'stretch', gap:'8px', padding:'14px clamp(20px,5vw,56px) 20px', zIndex:'60', background:'#080A0E', borderBottom:'1px solid rgba(255,255,255,0.07)', boxShadow:'0 26px 54px -22px rgba(0,0,0,0.9)', maxHeight:'calc(100vh - 74px)', overflowY:'auto' }
+            : { display:'none' })
+        : { display:'flex', alignItems:'center', gap:'6px' },
+      navContribStyle: { display:'inline-flex', alignItems:'center', justifyContent: s.isNarrow ? 'center' : 'flex-start', gap:'7px', padding: s.isNarrow ? '12px 16px' : '9px 16px', marginTop: s.isNarrow ? '4px' : '0', borderRadius:'9px', border:'1px solid rgba(255,42,31,0.45)', background:'rgba(255,42,31,0.12)', color:'#FF7A6E', fontFamily:"'DM Sans', sans-serif", fontWeight:'600', fontSize:'14px', cursor:'pointer', transition:'all .16s ease' },
+      navSignInStyle: { marginLeft: s.isNarrow ? '0' : '6px', padding: s.isNarrow ? '12px 18px' : '9px 18px', borderRadius:'9px', border:'none', background:'#fff', color:'#0a0c10', fontFamily:"'DM Sans', sans-serif", fontWeight:'600', fontSize:'14px', cursor:'pointer', transition:'transform .16s ease' },
+      navUserStyle: { display:'flex', alignItems:'center', gap:'9px', marginLeft: s.isNarrow ? '0' : '6px', alignSelf: s.isNarrow ? 'flex-start' : 'auto', padding:'4px 6px 4px 5px', borderRadius:'999px', border:'1px solid rgba(255,255,255,0.13)', background:'rgba(255,255,255,0.04)' },
       navHubStyle: this.navBtn(s.screen==='hub'),
       navExploreStyle: this.navBtn(s.screen==='timeline'),
       goHub:this.goHub, goExplore:this.goExplore, goContribute:()=>this.goContribute(),
