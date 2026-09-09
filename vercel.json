@@ -35,8 +35,12 @@
       "destination": "/posters.html"
     },
     {
-      "source": "/posters/:id",
+      "source": "/posters/thanks",
       "destination": "/index.html"
+    },
+    {
+      "source": "/posters/:id",
+      "destination": "/posters/:id.html"
     }
   ],
   "headers": [

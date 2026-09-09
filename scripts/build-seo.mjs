@@ -24,6 +24,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://reelorder.com';
 const CHECK = process.argv.includes('--check');
 const SRC = path.join(ROOT, 'index.html');
+const CACHE = path.join(ROOT, 'scripts', 'posters-cache.json');
 
 const html = fs.readFileSync(SRC, 'utf8');
 
@@ -123,6 +124,29 @@ for (const id of ids) {
   });
 }
 
+/* ---------- poster detail pages ----------
+   These sit in the sitemap, so they cannot keep serving index.html's head:
+   its canonical points at the homepage, which reads as 13 duplicates of "/". */
+const { base: sbBase, rows: posterRows } = await fetchPosters();
+const posterRoutes = posterRows.map((p) => {
+  const name = p.title || p.id;
+  const desc = p.tagline || p.description ||
+    `A print-ready ${name} movie collection poster \u2014 instant digital download at 24x36, plus A-series, 4:3 and 5:7 crops and a matching phone wallpaper.`;
+  return {
+    url: `/posters/${p.id}`,
+    file: path.join('posters', `${p.id}.html`),
+    title: `${name} Poster \u00b7 ReelOrder`,
+    desc,
+    og: 'og-posters',
+    ogOverride: (sbBase && p.preview_path)
+      ? `${sbBase}/storage/v1/object/public/poster-previews/${p.preview_path}`
+      : null,
+    priority: '0.7',
+    poster: p,
+  };
+});
+routes.push(...posterRoutes);
+
 /* ---------- structured data ---------- */
 function jsonLd(r) {
   const url = SITE + r.url;
@@ -158,6 +182,22 @@ function jsonLd(r) {
       url: SITE + '/',
       logo: { '@type': 'ImageObject', url: SITE + '/assets/brand/icon-512.png', width: 512, height: 512 },
     });
+  }
+  if (r.poster) {
+    graph.push({
+      '@type': 'Product',
+      '@id': url + '#product',
+      name: `${r.poster.title || r.poster.id} Poster`,
+      description: r.desc,
+      image: r.ogOverride || ogUrl(r.og),
+      brand: { '@type': 'Brand', name: 'ReelOrder' },
+      offers: {
+        '@type': 'Offer', url, price: '12.95', priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        itemCondition: 'https://schema.org/NewCondition',
+      },
+    });
+    return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
   }
   if (r.watchOrder) {
     const f = r.franchise;
@@ -221,8 +261,10 @@ function jsonLd(r) {
 /* ---------- the head block ---------- */
 function metaBlock(r) {
   const url = SITE + (r.url === '/' ? '/' : r.url);
-  const img = ogUrl(r.og);
-  const alt = r.franchise ? `${r.franchise.title} timeline map on ReelOrder` : 'ReelOrder — untangle every timeline';
+  const img = r.ogOverride || ogUrl(r.og);
+  const alt = r.poster ? `${r.poster.title || r.poster.id} poster from ReelOrder`
+    : r.franchise ? `${r.franchise.title} timeline map on ReelOrder`
+    : 'ReelOrder — untangle every timeline';
   return [
     '<!--RO:META-->',
     `<title>${esc(r.title)}</title>`,
@@ -239,8 +281,8 @@ function metaBlock(r) {
     `<meta property="og:description" content="${esc(r.desc)}">`,
     `<meta property="og:url" content="${url}">`,
     `<meta property="og:image" content="${img}">`,
-    '<meta property="og:image:width" content="1200">',
-    '<meta property="og:image:height" content="630">',
+    ...(r.ogOverride ? [] : ['<meta property="og:image:width" content="1200">',
+                             '<meta property="og:image:height" content="630">']),
     `<meta property="og:image:alt" content="${esc(alt)}">`,
     '<meta name="twitter:card" content="summary_large_image">',
     `<meta name="twitter:title" content="${esc(r.title)}">`,
@@ -325,28 +367,36 @@ for (const r of routes) {
 emit('realorder.html', hubPage);
 
 /* ---------- sitemap + robots ---------- */
-async function posterUrls() {
+async function fetchPosters() {
   const m = html.match(/https:\/\/([a-z0-9]+)\.supabase\.co/);
   const keyMatch = html.match(/(sb_publishable_[A-Za-z0-9_-]+|eyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+)/);
-  if (!m || !keyMatch) return [];
+  if (!m || !keyMatch) return { base: null, rows: [] };
   try {
-    const res = await fetch(`${m[0]}/rest/v1/posters?select=id&active=eq.true`, {
-      headers: { apikey: keyMatch[1], Authorization: `Bearer ${keyMatch[1]}` },
-    });
+    const res = await fetch(
+      `${m[0]}/rest/v1/posters?select=id,title,tagline,description,preview_path&active=eq.true`,
+      { headers: { apikey: keyMatch[1], Authorization: `Bearer ${keyMatch[1]}` } }
+    );
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const rows = await res.json();
-    return rows.map((r) => `/posters/${r.id}`);
+    if (!CHECK) { try { fs.writeFileSync(CACHE, JSON.stringify(rows, null, 1) + '\n'); } catch (e) {} }
+    return { base: m[0], rows };
   } catch (e) {
-    console.warn('build-seo: skipping poster URLs in sitemap (' + e.message + ')');
-    return [];
+    // No egress (Cowork sandbox, offline) - fall back to the last good copy so
+    // the build stays deterministic instead of silently dropping 13 pages.
+    try {
+      const cached = JSON.parse(fs.readFileSync(CACHE, 'utf8'));
+      console.warn('build-seo: live poster fetch failed (' + e.message + ') - using ' + path.basename(CACHE));
+      return { base: m[0], rows: cached };
+    } catch (e2) {
+      console.warn('build-seo: no poster data (' + e.message + ') and no cache - poster pages skipped');
+      return { base: null, rows: [] };
+    }
   }
 }
 
 const today = new Date().toISOString().slice(0, 10);
-const posters = await posterUrls();
 const sitemapUrls = [
   ...routes.filter((r) => !r.noindex).map((r) => ({ loc: r.url, priority: r.priority || '0.5' })),
-  ...posters.map((u) => ({ loc: u, priority: '0.7' })),
   { loc: '/print-guide.html', priority: '0.3' },
   { loc: '/privacy.html', priority: '0.2' },
   { loc: '/terms.html', priority: '0.2' },
@@ -370,6 +420,6 @@ if (CHECK) {
   }
   console.log('build-seo --check: all generated files are current');
 } else {
-  console.log(`build-seo: ${routes.length} routes, ${posters.length} poster URLs, ${written.length} file(s) updated`);
+  console.log(`build-seo: ${routes.length} routes (${posterRoutes.length} posters), ${written.length} file(s) updated`);
   written.forEach((f) => console.log('  ' + f));
 }

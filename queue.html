@@ -1164,7 +1164,9 @@
         <!-- gallery -->
         <div style="display:flex;flex-direction:column;gap:12px;min-width:0;">
           <div style="position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,0.09);background:#0b0d11;">
-            <img src="{{ poster.heroImg }}" alt="{{ poster.title }} timeline poster" style="width:100%;height:auto;display:block;max-height:78vh;object-fit:contain;background:#0b0d11;">
+            <sc-if value="{{ poster.hasHero }}" hint-placeholder-val="{{ true }}">
+              <img src="{{ poster.heroImg }}" alt="{{ poster.title }} poster preview" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;max-height:78vh;object-fit:contain;background:#0b0d11;">
+            </sc-if>
           </div>
           <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;">
             <sc-for list="{{ poster.thumbs }}" as="t" hint-placeholder-count="5">
@@ -7213,6 +7215,7 @@ class Component extends DCLogic {
           border: '2px solid ' + (isBundle ? accentCol : 'rgba(255,255,255,0.14)'), background: isBundle ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.025)', color:'#E9EDF3' },
         bundleBadgeStyle: { fontFamily:"'JetBrains Mono', monospace", fontSize:'10.5px', fontWeight:'600', letterSpacing:'0.08em', textTransform:'uppercase', padding:'3px 7px', borderRadius:'6px', background: accentCol, color:'#0a0c10' },
         heroImg: this.posterImg(gallery[gi]),
+        hasHero: !!this.posterImg(gallery[gi]),
         thumbs: gallery.map((g, i) => ({
           img: this.posterImg(g), onPick: () => this.pickGallery(i),
           style: { flex:'none', width:'84px', height:'84px', padding:0, borderRadius:'10px', overflow:'hidden', border: '2px solid ' + (i === gi ? (cur.accent || accent) : 'rgba(255,255,255,0.12)'), opacity: i === gi ? 1 : 0.7, background:'#0b0d11', cursor:'pointer', transition:'all .15s ease' },
@@ -7253,7 +7256,7 @@ class Component extends DCLogic {
       posterCount: postersList.length ? (postersList.length + ' poster' + (postersList.length === 1 ? '' : 's')) : '',
       postersLoading: !s.postersLoaded && !!this.db,
       postersEmpty: s.postersLoaded && postersList.length === 0,
-      poster: poster || { title:'', tagline:'', description:'', hasDescription:false, sizeLabel:'', fileLabel:'', price:'', currencyLabel:'', heroImg:'', thumbs:[], styles:[], hasStyles:false, styleLabel:'', eyebrowStyle:{}, hasMap:false, onOpenMap:()=>{}, hasBundle:false, bundleTitle:'', bundlePrice:'', bundleSave:'', bundleVsLine:'', onPickBundle:()=>{}, bundleStyle:{}, bundleBadgeStyle:{} },
+      poster: poster || { title:'', tagline:'', description:'', hasDescription:false, sizeLabel:'', fileLabel:'', price:'', currencyLabel:'', heroImg:'', hasHero:false, thumbs:[], styles:[], hasStyles:false, styleLabel:'', eyebrowStyle:{}, hasMap:false, onOpenMap:()=>{}, hasBundle:false, bundleTitle:'', bundlePrice:'', bundleSave:'', bundleVsLine:'', onPickBundle:()=>{}, bundleStyle:{}, bundleBadgeStyle:{} },
       posterReady: !!poster, posterMissing: s.postersLoaded && !poster,
       buyPoster: this.buyPoster, buyBtnStyle,
       buyLabel: s.checkoutBusy ? 'Opening secure checkout…' : (poster && poster.hasBundle && s.styleKey === this.BUNDLE_KEY ? 'Buy the bundle & download all files' : 'Buy & download the file'),

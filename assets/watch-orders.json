@@ -756,7 +756,7 @@
       "id": "kingdom",
       "title": "Kingdom of the Planet of the Apes",
       "year": 2024,
-      "setLabel": "Set c. 2328",
+      "setLabel": "300 years after War",
       "branch": "The Simian Flu Reboot (2008 – ~2330s)",
       "why": "Three centuries later, and the end of the modern line so far."
      },
@@ -972,7 +972,7 @@
       "year": 2025,
       "setLabel": "Set 841 / 1609 / 1942",
       "branch": "Killer of Killers → Badlands: The Far Future",
-      "why": "An anthology across three separate centuries, so it sits at no single point."
+      "why": "Three segments in 841, 1609 and 1942, wrapped in a <b>far-future</b> frame on an alien world — so it sits at no single point."
      },
      {
       "id": "pred1",
@@ -1658,7 +1658,7 @@
       "id": "p1",
       "title": "The Butlerian Jihad",
       "year": 2002,
-      "setLabel": "Set c. 10,000 BG",
+      "setLabel": "Set ~10,000 years before Dune",
       "branch": "Epoch II — The Butlerian Jihad",
       "why": "The war against thinking machines, which the original novels only ever refer to as <b>ancient history</b>."
      },
@@ -1666,14 +1666,14 @@
       "id": "p2",
       "title": "The Machine Crusade",
       "year": 2003,
-      "setLabel": "Set c. 10,000 BG",
+      "setLabel": "Set ~10,000 years before Dune",
       "branch": "Epoch II — The Butlerian Jihad"
      },
      {
       "id": "p3",
       "title": "The Battle of Corrin",
       "year": 2004,
-      "setLabel": "Set c. 10,000 BG",
+      "setLabel": "Set ~10,000 years before Dune",
       "branch": "Epoch II — The Butlerian Jihad"
      },
      {
@@ -1704,21 +1704,21 @@
       "id": "b2",
       "title": "Dune Messiah",
       "year": 1969,
-      "setLabel": "Set 10,207 AG",
+      "setLabel": "12 years after Dune",
       "branch": "Epoch IV — The Atreides Empire & the God Emperor"
      },
      {
       "id": "b3",
       "title": "Children of Dune",
       "year": 1976,
-      "setLabel": "Set 10,216 AG",
+      "setLabel": "9 years after Messiah",
       "branch": "Epoch IV — The Atreides Empire & the God Emperor"
      },
      {
       "id": "b4",
       "title": "God Emperor of Dune",
       "year": 1981,
-      "setLabel": "Set 13,725 AG",
+      "setLabel": "3,500 years later",
       "branch": "Epoch IV — The Atreides Empire & the God Emperor",
       "why": "The <b>largest single jump</b> in the series — three and a half thousand years with one character still alive across it."
      },
@@ -1726,14 +1726,14 @@
       "id": "b5",
       "title": "Heretics of Dune",
       "year": 1984,
-      "setLabel": "Set 15,225 AG",
+      "setLabel": "~1,500 years after God Emperor",
       "branch": "Epoch V — The Scattering & Kralizek"
      },
      {
       "id": "b6",
       "title": "Chapterhouse: Dune",
       "year": 1985,
-      "setLabel": "Set 15,232 AG",
+      "setLabel": "Directly after Heretics",
       "branch": "Epoch V — The Scattering & Kralizek"
      }
     ]
@@ -3340,7 +3340,7 @@
       "title": "Section 31",
       "year": 2025,
       "branch": "Mirror Universe",
-      "setLabel": "Set c. 2324",
+      "setLabel": "Set in the early 24th century",
       "why": "Drops into the empty stretch between the two casts, and is the only entry driven by <b>the Mirror Universe</b> rather than visiting it."
      },
      {
