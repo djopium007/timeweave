@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/favicon-64.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/apple-touch-icon-180.png">
 <script src="/assets/asset-00.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/assets/supabase-js-2.115.0.js"></script>
 </head>
 <body>
 <x-dc>
@@ -565,7 +565,7 @@
       <button onclick="{{ goHub }}" style="{{ navHubStyle }}">Hub</button>
       <button onclick="{{ goExplore }}" style="{{ navExploreStyle }}">Timeline</button>
       <button onclick="{{ goQueue }}" style="{{ navQueueStyle }}">Queue</button>
-      <button onclick="{{ goPosters }}" style="{{ navPostersStyle }}">Posters</button>
+      <button onclick="{{ goPosters }}" style="{{ navPostersStyle }}">Poster Shop</button>
       <button onclick="{{ goContact }}" style="{{ navContactStyle }}">Contact</button>
       <sc-if value="{{ isAdminUser }}" hint-placeholder-val="{{ false }}"><button onclick="{{ goAdmin }}" style="{{ navAdminStyle }}">Admin</button></sc-if>
       <button onclick="{{ goContribute }}" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:9px;border:1px solid rgba(255,42,31,0.45);background:rgba(255,42,31,0.12);color:#FF7A6E;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;" style-hover="background:rgba(255,42,31,0.2);border-color:rgba(255,42,31,0.7);color:#fff;">Contribute</button>
@@ -1456,7 +1456,7 @@
         <button onclick="{{ goHub }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Hub</button>
         <button onclick="{{ goExplore }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Terminator map</button>
         <button onclick="{{ goContribute }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Contribute</button>
-        <button onclick="{{ goPosters }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Posters</button>
+        <button onclick="{{ goPosters }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Poster Shop</button>
         <button onclick="{{ goContact }}" style="text-align:left;padding:0;border:none;background:none;color:#A9B4C2;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">Contact</button>
       </div>
 
@@ -6326,7 +6326,9 @@ class Component extends DCLogic {
       return k;
     } catch(e) { return 'dev-anon'; }
   }
-  voterKey() { return this.state.user ? this.state.user.id : this.deviceKey(); }
+  // Votes and likes are keyed to the signed-in user. There is no anonymous write path any more:
+  // the old device-key rows were writable (and deletable) by anyone holding the publishable key.
+  voterKey() { return this.state.user ? this.state.user.id : null; }
   timeAgo(iso) {
     const t = new Date(iso).getTime(); if (!t) return 'just now';
     const sec = Math.max(0, (Date.now() - t) / 1000);
@@ -6390,41 +6392,32 @@ class Component extends DCLogic {
     const user = { id:authUser.id, name:profile.name, handle:profile.handle, color:profile.avatar_color, provider:profile.provider };
     this.setState({ user, authOpen:false, authEmail:'' });
     this.showToast({ kind:'ok', title:`Signed in as ${user.handle}`, body:'Your votes and comments now carry your handle.' });
-    await this.migrateDeviceVotes(user.id);
     this.refreshCommunity();
   };
 
-  migrateDeviceVotes = async (uid) => {
-    try {
-      const dev = this.deviceKey();
-      const got = await this.db.from('votes').select('project_id,direction').eq('voter_key', dev);
-      if (got.data && got.data.length) {
-        for (const v of got.data) {
-          await this.db.from('votes').upsert({ project_id:v.project_id, voter_key:uid, direction:v.direction }, { onConflict:'project_id,voter_key', ignoreDuplicates:true });
-        }
-        await this.db.from('votes').delete().eq('voter_key', dev);
-      }
-    } catch(e){}
-  };
 
   refreshCommunity = async () => {
     if (!this.db) return;
     try {
+      // Totals come from aggregate RPCs and only *my own* vote/like rows are fetched. The old
+      // version pulled every row of both tables on every page load — unbounded payload, and it
+      // exposed every other visitor's voter_key to the browser.
       const me = this.voterKey();
-      const [pend, allVotes, cms, cls] = await Promise.all([
-        this.db.from('pending_projects').select('*').order('created_at', { ascending:true }),
-        this.db.from('votes').select('project_id,voter_key,direction'),
-        this.db.from('comments').select('*').order('created_at', { ascending:false }),
-        this.db.from('comment_likes').select('comment_id,liker_key'),
+      const none = Promise.resolve({ data: [] });
+      const [pend, scoreRows, cms, likeRows, myVotes, myLikes] = await Promise.all([
+        this.db.from('pending_projects').select('id,title,meta,pitch,status,base_votes').order('created_at', { ascending:true }),
+        this.db.rpc('vote_scores'),
+        this.db.from('comments').select('id,context_key,name,handle,color,body,base_likes,created_at').order('created_at', { ascending:false }).limit(300),
+        this.db.rpc('comment_like_counts'),
+        me ? this.db.from('votes').select('project_id,direction').eq('voter_key', me) : none,
+        me ? this.db.from('comment_likes').select('comment_id').eq('liker_key', me) : none,
       ]);
       const patch = {};
       if (pend.data) patch.pendingList = pend.data.map(p => ({ id:p.id, title:p.title, meta:p.meta, pitch:p.pitch, status:p.status, votes:p.base_votes||0 }));
-      if (allVotes.data) {
+      if (scoreRows.data) {
         const scores = {}, mine = {};
-        for (const v of allVotes.data) {
-          scores[v.project_id] = (scores[v.project_id]||0) + v.direction;
-          if (v.voter_key === me) mine[v.project_id] = v.direction;
-        }
+        for (const r of scoreRows.data) scores[r.project_id] = Number(r.score) || 0;
+        for (const v of (myVotes.data || [])) mine[v.project_id] = v.direction;
         patch.scores = scores; patch.serverMine = mine; patch.votes = { ...mine };
       }
       if (cms.data) {
@@ -6434,9 +6427,10 @@ class Component extends DCLogic {
         }
         patch.comments = grouped;
       }
-      if (cls.data) {
+      if (likeRows.data) {
         const counts = {}, mine = {};
-        for (const l of cls.data) { counts[l.comment_id] = (counts[l.comment_id]||0) + 1; if (l.liker_key === me) mine[l.comment_id] = true; }
+        for (const r of likeRows.data) counts[r.comment_id] = Number(r.likes) || 0;
+        for (const l of (myLikes.data || [])) mine[l.comment_id] = true;
         patch.likeCounts = counts; patch.serverLikes = mine; patch.likes = { ...mine };
       }
       this.setState(patch);
@@ -6481,6 +6475,7 @@ class Component extends DCLogic {
   // ---------- queue: votes, threads, comments, suggestions ----------
   goQueue = () => { this.setState({ screen:'queue' }); this.pushRoute('/queue'); this.toTop(); };
   vote = (id, dir) => {
+    if (!this.state.user) { this.openAuth(); return; }
     const cur = this.state.votes[id] || 0;
     const next = cur === dir ? 0 : dir;
     this.setState(s => ({ votes: { ...s.votes, [id]: next } }));
@@ -6508,6 +6503,7 @@ class Component extends DCLogic {
       });
   };
   toggleLike = (id) => {
+    if (!this.state.user) { this.openAuth(); return; }
     const on = !this.state.likes[id];
     this.setState(s => ({ likes: { ...s.likes, [id]: on } }));
     if (!this.db || String(id).indexOf('tmp-') === 0) return;
@@ -6581,7 +6577,9 @@ class Component extends DCLogic {
     if (!this.db || this.state.postersLoaded || this._postersLoading) return;
     this._postersLoading = true;
     try {
-      const { data, error } = await this.db.from('posters').select('*').eq('active', true).order('sort_order', { ascending:true });
+      const { data, error } = await this.db.from('posters')
+        .select('id,title,franchise_id,tagline,description,accent,size_label,file_label,price_cents,currency,preview_path,mockup_paths,sort_order,styles,bundle_step_cents,bundle_enabled')
+        .eq('active', true).order('sort_order', { ascending:true });
       if (error) throw error;
       this.setState({ posters: data || [], postersLoaded: true });
     } catch(e) {

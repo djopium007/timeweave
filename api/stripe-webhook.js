@@ -2,7 +2,7 @@
 // Configure in Stripe Dashboard: endpoint https://reelorder.com/api/stripe-webhook,
 // events: checkout.session.completed, checkout.session.async_payment_succeeded, charge.refunded
 // Sends the ReelOrder confirmation email (Resend) once per paid session; api/download.js is the fallback sender.
-import { stripe, db, json, readRawBody, recordOrder, maybeSendOrderEmail } from './_lib.js';
+import { stripe, db, json, readRawBody, recordOrder, maybeSendOrderEmail, safeError } from './_lib.js';
 
 export const config = { api: { bodyParser: false } };
 
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     event = stripe().webhooks.constructEvent(raw, req.headers['stripe-signature'], secret);
   } catch (e) {
     console.error('webhook signature failed', e.message);
-    return json(res, 400, { error: `Webhook signature verification failed: ${e.message}` });
+    return json(res, 400, { error: 'Webhook signature verification failed' });
   }
 
   try {
@@ -45,7 +45,6 @@ export default async function handler(req, res) {
     }
     return json(res, 200, { received: true });
   } catch (e) {
-    console.error('webhook handler error', e);
-    return json(res, 500, { error: e.message });
+    return safeError(res, e, 'Webhook handling failed');
   }
 }

@@ -2,7 +2,7 @@
 // GET  /api/checkout?poster=<id>&style=<vN|bundle> -> 303 redirect straight to Stripe Checkout
 // style = 'bundle' buys every style of the poster: price_cents + bundle_step_cents × (styles − 1).
 // Prices are passed inline (price_data), so nothing needs to be pre-created in the Stripe dashboard.
-import { stripe, db, previewUrl, siteOrigin, json, readJsonBody, resolveStyle } from './_lib.js';
+import { stripe, db, previewUrl, siteOrigin, json, readJsonBody, resolveStyle, safeError } from './_lib.js';
 
 export default async function handler(req, res) {
   try {
@@ -74,7 +74,6 @@ export default async function handler(req, res) {
     }
     return json(res, 200, { url: session.url, id: session.id });
   } catch (e) {
-    console.error('checkout error', e);
-    return json(res, 500, { error: e.message || 'Checkout failed' });
+    return safeError(res, e, 'Checkout failed');
   }
 }

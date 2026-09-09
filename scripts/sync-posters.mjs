@@ -96,6 +96,22 @@ const RATIOS = [
   { folder: '4 - 5x7 ratio',      w: 5,   h: 7,     px: [5906, 8268],  note: '50x70cm' },
 ];
 const WALLPAPER = { folder: 'BONUS - Phone wallpaper', px: [1290, 2796], note: 'phone' };
+const WALL_WIDTH = 0.90;   // poster width as a share of the screen
+const WALL_Y = 0.62;       // vertical position (0.5 = centred, higher = lower, clears the lock-screen clock)
+
+// The whole poster, letterboxed on black with a thin accent frame. Never crops: a 2:3 poster
+// loses ~31% of its width (title + cast text) if it is cropped to fill a 1290x2796 screen.
+async function makeWallpaper(masterBuf, meta, accent) {
+  const [W, H] = WALLPAPER.px;
+  let pw = Math.round(W * WALL_WIDTH), ph = Math.round(meta.height * pw / meta.width);
+  if (ph > H - 140) { ph = H - 140; pw = Math.round(meta.width * ph / meta.height); }
+  const x0 = Math.round((W - pw) / 2), y0 = Math.round((H - ph) * WALL_Y);
+  const poster = await sharp(masterBuf).resize({ width: pw, height: ph, fit: 'fill' }).toBuffer();
+  const frame = Buffer.from(`<svg width="${W}" height="${H}"><rect x="${x0 - 3}" y="${y0 - 3}" width="${pw + 6}" height="${ph + 6}" fill="none" stroke="${accent}" stroke-width="3"/></svg>`);
+  return sharp({ create: { width: W, height: H, channels: 3, background: '#000000' } })
+    .composite([{ input: frame, top: 0, left: 0 }, { input: poster, top: y0, left: x0 }])
+    .jpeg({ quality: 88 }).toBuffer();
+}
 
 async function cropTo(masterBuf, meta, ratioW, ratioH, outW, outH) {
   // centre-crop master to ratio, then resize (never enlarge beyond master)
@@ -108,7 +124,7 @@ async function cropTo(masterBuf, meta, ratioW, ratioH, outW, outH) {
     .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true }).toBuffer();
 }
 
-async function buildPack(slug, title, masterBuf, masterMeta) {
+async function buildPack(slug, title, masterBuf, masterMeta, accent = '#FFFFFF') {
   const safe = title.replace(/[\\/:*?"<>|]+/g, '');
   const rootDir = `ReelOrder - ${safe} - Timeline Poster`;
   const archive = archiver('zip', { zlib: { level: 6 } });
@@ -121,13 +137,9 @@ async function buildPack(slug, title, masterBuf, masterMeta) {
     archive.append(buf, { name: `${rootDir}/${r.folder}/${safe} - ${r.note} - 300dpi.jpg` });
     console.log(`   pack: ${r.folder}  (${(buf.length / 1048576).toFixed(1)} MB)`);
   }
-  // wallpaper: 9:19.5 crop, biased toward the top third of the poster where the title sits
+  // bonus wallpaper: whole poster, letterboxed on black (see makeWallpaper)
   {
-    const target = WALLPAPER.px[0] / WALLPAPER.px[1];
-    const ch = masterMeta.height, cw = Math.round(ch * target);
-    const left = Math.round((masterMeta.width - cw) / 2);
-    const buf = await sharp(masterBuf).extract({ left, top: 0, width: cw, height: ch })
-      .resize({ width: WALLPAPER.px[0], height: WALLPAPER.px[1], fit: 'cover' }).jpeg({ quality: 88 }).toBuffer();
+    const buf = await makeWallpaper(masterBuf, masterMeta, accent);
     archive.append(buf, { name: `${rootDir}/${WALLPAPER.folder}/${safe} - phone wallpaper.jpg` });
   }
   if (fs.existsSync(GUIDE_PDF)) archive.file(GUIDE_PDF, { name: `${rootDir}/READ ME FIRST - Printing Guide.pdf` });
@@ -212,7 +224,7 @@ for (const folder of folders) {
     fileLabel = 'Hi-res JPG · 24×36 in · 300 dpi · print-ready';
     await upload('poster-masters', masterPath, masterBuf, ext === '.png' ? 'image/png' : 'image/jpeg');
   } else {
-    const zipBuf = await buildPack(slug, title, masterBuf, masterMeta);
+    const zipBuf = await buildPack(slug, title, masterBuf, masterMeta, ACCENTS[slug] || '#FFFFFF');
     masterPath = `${slug}/${slug}-poster-pack.zip`;
     fileLabel = 'ZIP pack · 24×36 master + A-series, 4:3 & 5:7 crops · 300 dpi · bonus phone wallpaper';
     console.log(`   pack total: ${(zipBuf.length / 1048576).toFixed(1)} MB`);

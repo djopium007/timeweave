@@ -28,11 +28,26 @@ export function previewUrl(path) {
   return path ? `${SUPABASE_URL}/storage/v1/object/public/${PREVIEW_BUCKET}/${path}` : null;
 }
 
+// Host allow-list. The Host / X-Forwarded-Host headers are attacker-controlled, and this origin
+// ends up in Stripe success_url and in the download link we email to buyers — an unchecked value
+// there is a phishing primitive. Anything unrecognised falls back to the canonical domain.
+export const CANONICAL_ORIGIN = 'https://reelorder.com';
+const ALLOWED_HOSTS = new Set(['reelorder.com', 'www.reelorder.com']);
+const PREVIEW_HOST = /^[a-z0-9][a-z0-9-]*(\.[a-z0-9-]+)*\.vercel\.app$/;
+
 export function siteOrigin(req) {
   if (process.env.SITE_URL) return process.env.SITE_URL.replace(/\/$/, '');
-  const proto = ((req && req.headers && req.headers['x-forwarded-proto']) || 'https').split(',')[0];
-  const host = req && req.headers && (req.headers['x-forwarded-host'] || req.headers.host);
-  return host ? `${proto}://${host}` : 'https://reelorder.com';
+  const host = String((req && req.headers && (req.headers['x-forwarded-host'] || req.headers.host)) || '')
+    .split(',')[0].trim().toLowerCase();
+  if (ALLOWED_HOSTS.has(host)) return `https://${host}`;
+  if (PREVIEW_HOST.test(host)) return `https://${host}`;
+  return CANONICAL_ORIGIN;
+}
+
+/** Log the real error, return a generic one. Internal messages must not reach the client. */
+export function safeError(res, e, fallback = 'Something went wrong', status = 500) {
+  console.error(fallback, e);
+  return json(res, status, { error: fallback });
 }
 
 export function json(res, status, body) {
@@ -95,6 +110,10 @@ export function resolveStyle(poster, styleKey) {
 /** Record (or refresh) an order row from a Checkout Session. Idempotent on session id. */
 export async function recordOrder(session) {
   const posterId = session.metadata && session.metadata.poster_id;
+  // A refund lives only in our own row (the Checkout Session stays payment_status='paid' forever),
+  // so never let a later write downgrade 'refunded' back to 'paid'.
+  const { data: existing } = await db().from('poster_orders').select('status').eq('stripe_session_id', session.id).maybeSingle();
+  const locked = existing && (existing.status === 'refunded' || existing.status === 'revoked');
   const row = {
     stripe_session_id: session.id,
     stripe_payment_intent: typeof session.payment_intent === 'string' ? session.payment_intent : (session.payment_intent && session.payment_intent.id) || null,
@@ -103,7 +122,7 @@ export async function recordOrder(session) {
     style_key: (session.metadata && session.metadata.style_key) || null,
     amount_cents: session.amount_total,
     currency: session.currency,
-    status: session.payment_status === 'paid' ? 'paid' : session.payment_status,
+    status: locked ? existing.status : (session.payment_status === 'paid' ? 'paid' : session.payment_status),
   };
   const { error } = await db().from('poster_orders').upsert(row, { onConflict: 'stripe_session_id', ignoreDuplicates: false });
   if (error) throw error;

@@ -5,7 +5,7 @@
 // The session id is the buyer's receipt: it lives in the success URL and in their Stripe email.
 // A bundle purchase (metadata.style_key = 'bundle') returns one signed URL per style in `files`;
 // `url` is always the first file so older clients keep working.
-import { stripe, db, json, recordOrder, maybeSendOrderEmail, resolveStyle, MASTER_BUCKET } from './_lib.js';
+import { stripe, db, json, recordOrder, maybeSendOrderEmail, resolveStyle, MASTER_BUCKET, safeError } from './_lib.js';
 
 const SIGNED_TTL_SECONDS = 15 * 60;
 
@@ -33,7 +33,11 @@ export default async function handler(req, res) {
     if (!r.ok) return json(res, r.status === 400 ? 404 : r.status, { error: 'Poster file not found' });
 
     // Make sure an order row exists even if the webhook was late/missed, then count the download.
-    await recordOrder(session);
+    const order = await recordOrder(session);
+    // Stripe keeps payment_status='paid' after a refund, so the refund state lives in our own row.
+    if (order.status === 'refunded' || order.status === 'revoked') {
+      return json(res, 403, { error: 'This order was refunded — the download is no longer available.' });
+    }
     await maybeSendOrderEmail(session, req);   // no-op if the webhook already sent it
     await db().rpc('bump_poster_download', { p_session_id: session.id }).then(() => {}, () => {});
 
@@ -74,8 +78,7 @@ export default async function handler(req, res) {
       expiresIn: SIGNED_TTL_SECONDS,
     });
   } catch (e) {
-    console.error('download error', e);
-    const code = e && e.statusCode === 404 ? 404 : 500;
-    return json(res, code, { error: code === 404 ? 'Unknown checkout session' : (e.message || 'Download failed') });
+    if (e && e.statusCode === 404) return json(res, 404, { error: 'Unknown checkout session' });
+    return safeError(res, e, 'Download failed');
   }
 }

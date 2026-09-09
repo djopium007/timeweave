@@ -3,8 +3,8 @@
 // type 'contact' = the /contact page: `name` is the sender's name, `topic` one of order|licensing|other, email required.
 // Stores the submission in Supabase `contributions` (service-role only) and emails the editor via Resend.
 // Env: SUPABASE_SERVICE_ROLE_KEY, RESEND_API_KEY, CONTRIBUTE_NOTIFY_EMAIL (default opi@jayasinghe.me).
-import { createHash } from 'node:crypto';
-import { db, json, readJsonBody, siteOrigin, FROM_EMAIL, SUPPORT_EMAIL } from './_lib.js';
+import { createHmac } from 'node:crypto';
+import { db, json, readJsonBody, siteOrigin, FROM_EMAIL, SUPPORT_EMAIL, safeError } from './_lib.js';
 
 const NOTIFY_TO = process.env.CONTRIBUTE_NOTIFY_EMAIL || 'opi@jayasinghe.me';
 const clean = (v, max) => String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, max);
@@ -43,8 +43,11 @@ export default async function handler(req, res) {
     if (isContact && !note) return json(res, 400, { error: 'Please write a message.' });
     if (email && !EMAIL_RE.test(email)) return json(res, 400, { error: 'That email address doesn’t look right.' });
 
+    // Keyed hash, not a bare SHA-256: the IPv4 space is small enough that an unsalted digest
+    // is reversible by brute force, which would make ip_hash personal data at rest.
     const ip = ((req.headers['x-forwarded-for'] || '') + '').split(',')[0].trim();
-    const ipHash = ip ? createHash('sha256').update(ip).digest('hex').slice(0, 24) : null;
+    const IP_SALT = process.env.IP_HASH_SALT || process.env.SUPABASE_SERVICE_ROLE_KEY || 'reelorder-local';
+    const ipHash = ip ? createHmac('sha256', IP_SALT).update(ip).digest('hex').slice(0, 24) : null;
 
     // Light rate limit: max 5 submissions per IP per hour.
     if (ipHash) {
@@ -96,8 +99,8 @@ export default async function handler(req, res) {
       sendEmail({
         to: [email], reply_to: SUPPORT_EMAIL,
         subject: `We got your message — ReelOrder`,
-        text: `Hi ${title},\n\nThanks for getting in touch about "${TOPICS[topic]}". We usually reply within two business days — just reply to this email if you want to add anything.\n\nYour message:\n${note}\n\n${origin}`,
-        html: `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#111"><p>Hi ${esc(title)},</p><p>Thanks for getting in touch about <b>${esc(TOPICS[topic])}</b>. We usually reply within two business days — just reply to this email if you want to add anything.</p><pre style="white-space:pre-wrap;font-family:inherit;background:#f4f5f7;border-radius:8px;padding:14px">${esc(note)}</pre><p style="color:#888;font-size:13px"><a href="${esc(origin)}" style="color:#888">reelorder.com</a></p></div>`,
+        text: `Hi ${title},\n\nThanks for getting in touch about "${TOPICS[topic]}". We usually reply within two business days — just reply to this email if you want to add anything.\n\n${origin}`,
+        html: `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#111"><p>Hi ${esc(title)},</p><p>Thanks for getting in touch about <b>${esc(TOPICS[topic])}</b>. We usually reply within two business days — just reply to this email if you want to add anything.</p><p style="color:#888;font-size:13px"><a href="${esc(origin)}" style="color:#888">reelorder.com</a></p></div>`,
       }).catch(e => console.error('contact ack failed', e));
     } else if (email) {
       sendEmail({
@@ -110,7 +113,6 @@ export default async function handler(req, res) {
 
     return json(res, 200, { ok: true, id: row.id, queuePosition, notified: !!(notify && notify.sent) });
   } catch (e) {
-    console.error('contribute error', e);
-    return json(res, 500, { error: e.message || 'Could not submit right now' });
+    return safeError(res, e, 'Could not submit right now');
   }
 }

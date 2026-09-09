@@ -9,7 +9,7 @@
 //   comments.hide / comments.unhide / comments.delete { id }
 //   users.ban { userId, reason? } / users.unban { userId }
 //   orders.list { limit? }                -> { items }
-import { db, json, readJsonBody } from './_lib.js';
+import { db, json, readJsonBody, safeError } from './_lib.js';
 
 const STATUSES = ['pending', 'reviewing', 'accepted', 'rejected'];
 const lim = (v, d = 100, max = 500) => Math.min(max, Math.max(1, parseInt(v, 10) || d));
@@ -65,7 +65,10 @@ export default async function handler(req, res) {
         if (body.hidden === true) q = q.eq('hidden', true);
         if (body.hidden === false) q = q.eq('hidden', false);
         const text = String(body.q || '').trim();
-        if (text) q = q.or(`body.ilike.%${text.replace(/[%,()]/g, ' ')}%,name.ilike.%${text.replace(/[%,()]/g, ' ')}%,handle.ilike.%${text.replace(/[%,()]/g, ' ')}%`);
+        if (text) {
+          const safe = text.replace(/[%_,().:*"'\\]/g, ' ').trim().slice(0, 80);
+          if (safe) q = q.or(`body.ilike."%${safe}%",name.ilike."%${safe}%",handle.ilike."%${safe}%"`);
+        }
         const { data, error } = await q; if (error) throw error;
         const ids = [...new Set((data || []).map(c => c.user_id).filter(Boolean))];
         const banned = new Set();
@@ -74,13 +77,13 @@ export default async function handler(req, res) {
       }
       case 'comments.hide':
       case 'comments.unhide': {
-        const id = body.id; if (id == null) return json(res, 400, { error: 'Bad id' });
+        const id = uuid(body.id); if (!id) return json(res, 400, { error: 'Bad id' });
         const hidden = action === 'comments.hide';
         const { error } = await sb.from('comments').update({ hidden, hidden_at: hidden ? new Date().toISOString() : null }).eq('id', id); if (error) throw error;
         return json(res, 200, { ok: true, hidden });
       }
       case 'comments.delete': {
-        const id = body.id; if (id == null) return json(res, 400, { error: 'Bad id' });
+        const id = uuid(body.id); if (!id) return json(res, 400, { error: 'Bad id' });
         await sb.from('comment_likes').delete().eq('comment_id', id);
         const { error } = await sb.from('comments').delete().eq('id', id); if (error) throw error;
         return json(res, 200, { ok: true });
@@ -114,7 +117,6 @@ export default async function handler(req, res) {
         return json(res, 400, { error: `Unknown action: ${action}` });
     }
   } catch (e) {
-    console.error('admin error', e);
-    return json(res, 500, { error: e.message || 'Admin request failed' });
+    return safeError(res, e, 'Admin request failed');
   }
 }

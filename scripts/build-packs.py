@@ -16,6 +16,7 @@ Then upload with:  SUPABASE_SERVICE_ROLE_KEY=... node scripts/sync-posters.mjs -
 """
 import os, re, sys, json, time, io, zipfile
 from PIL import Image
+from posterlib import WALL, wallpaper          # phone-wallpaper geometry lives in posterlib.py
 Image.MAX_IMAGE_PIXELS = None
 
 HOME = os.path.expanduser('~')
@@ -57,7 +58,6 @@ RATIOS = [
   ('3 - 4x3 ratio',      3, 4,      (5400, 7200),  '18x24in'),
   ('4 - 5x7 ratio',      5, 7,      (5906, 8268),  '50x70cm'),
 ]
-WALL = (1290, 2796)
 MAX_MASTER_BYTES = 24 * 1048576   # keep every pack comfortably under Supabase's 50 MB per-object limit
 
 def ver_of(path):
@@ -109,7 +109,7 @@ def crop_ratio(im, rw, rh, maxpx):
 def jpeg_bytes(im, q=92, subsampling=0):
     b = io.BytesIO(); im.save(b, 'JPEG', quality=q, subsampling=subsampling, optimize=True); return b.getvalue()
 
-def build_style(slug, title, ver, master_path, mockups, out_dir):
+def build_style(slug, title, ver, master_path, mockups, out_dir, accent='#FFFFFF'):
     os.makedirs(out_dir, exist_ok=True)
     tag = f'v{ver}'
     zip_path = os.path.join(out_dir, f'{slug}-{tag}-poster-pack.zip')
@@ -133,9 +133,8 @@ def build_style(slug, title, ver, master_path, mockups, out_dir):
                         data = jpeg_bytes(crop_ratio(im, rw, rh, maxpx))
                     z.writestr(f'{root}/{folder}/{safe} - {note} - 300dpi.jpg', data)
                     print(f'   pack {folder}: {len(data)/1048576:.1f} MB', flush=True)
-                W, H = im.size; cw = round(H * WALL[0] / WALL[1]); l = (W - cw) // 2
-                wp = im.crop((l, 0, l + cw, H)).resize(WALL, Image.LANCZOS)
-                z.writestr(f'{root}/BONUS - Phone wallpaper/{safe} - phone wallpaper.jpg', jpeg_bytes(wp, 88, 2))
+                z.writestr(f'{root}/BONUS - Phone wallpaper/{safe} - phone wallpaper.jpg',
+                           jpeg_bytes(wallpaper(im, accent), 88, 2))
                 if os.path.exists(GUIDE): z.write(GUIDE, f'{root}/READ ME FIRST - Printing Guide.pdf')
                 else: print('   !! printing guide PDF missing')
                 z.writestr(f'{root}/README.txt', f'Thanks for buying the {title} timeline poster ({tag}) from ReelOrder.\n\nOpen "READ ME FIRST - Printing Guide.pdf" to pick the right file for your frame.\nLost this pack? Your Stripe receipt email has a link that always issues a fresh download.\n\nreelorder.com/posters\n')
@@ -172,7 +171,7 @@ def main():
             print(f'▸ {title} v{ver}', flush=True)
             mocks = find_mockups(stem, ver, len(masters))
             if len(mocks) < 6: print(f'   note: {len(mocks)} mockups found')
-            style = build_style(slug, title, ver, masters[ver], mocks, os.path.join(OUT, slug, f'v{ver}'))
+            style = build_style(slug, title, ver, masters[ver], mocks, os.path.join(OUT, slug, f'v{ver}'), accent)
             entry['styles'].append(style); entry['styles'].sort(key=lambda s: s['key'])
             json.dump(catalog, open(cat_path, 'w'), indent=1)
     json.dump(catalog, open(cat_path, 'w'), indent=1)
