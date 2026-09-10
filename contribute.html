@@ -2293,82 +2293,69 @@ class Component extends DCLogic {
       "id": "startrek",
       "title": "Star Trek",
       "accent": "#3B82C4",
-      "tagline": "Six decades, thirteen shows, fourteen films — three timelines plus a mirror.",
-      "blurb": "One Prime line from First Contact to the 32nd century — until Nero forked 2233, temporal agents moved Khan, and the Terran Empire glowered from its mirror.",
-      "meta": "13 shows & 14 films · 3 timelines + Mirror",
-      "framing": "Star Trek mostly runs on one 'Prime' line from First Contact in 2063 to the 32nd century. But Nero's incursion in 2233 forked the Kelvin timeline, Strange New Worlds revealed that temporal agents shoved Khan and World War III decades forward, and the Mirror Universe has been running dark alongside all of it. Filter by branch to follow each line.",
+      "tagline": "Sixty years, twelve series, fifty seasons and fourteen films — mapped season by season.",
+      "blurb": "One Prime line runs from Cochrane's warp flight in 2063 to the 32nd century — but Nero forked 2233, temporal agents shoved Khan's war decades later, and the Terran Empire has been running dark alongside all of it.",
+      "meta": "12 series · 50 seasons · 14 films",
+      "framing": "Star Trek is mostly one continuity, but it is a very long one — so this map splits the Prime timeline into its four eras and gives every season of every series its own beat, in chronological order rather than release order. That means Deep Space Nine and Voyager interleave with The Next Generation the way they actually happened, and Discovery's 930-year jump lands on its own rail. Two true forks sit alongside: the Kelvin timeline Nero created in 2233, and the Mirror Universe. Pick a branch to isolate it.",
       "forkLabel": "2387 → 2233 · Nero's Incursion",
       "films": [
-        "The Original Series (1966) · TV",
-        "The Animated Series (1973) · TV",
+        "The Original Series (1966–69) · TV · 3 seasons",
+        "The Animated Series (1973–74) · TV · 2 seasons",
         "The Motion Picture (1979)",
         "II: The Wrath of Khan (1982)",
         "III: The Search for Spock (1984)",
         "IV: The Voyage Home (1986)",
+        "The Next Generation (1987–94) · TV · 7 seasons",
         "V: The Final Frontier (1989)",
         "VI: The Undiscovered Country (1991)",
-        "The Next Generation (1987) · TV",
-        "Deep Space Nine (1993) · TV",
+        "Deep Space Nine (1993–99) · TV · 7 seasons",
         "Generations (1994)",
-        "Voyager (1995) · TV",
+        "Voyager (1995–2001) · TV · 7 seasons",
         "First Contact (1996)",
         "Insurrection (1998)",
-        "Enterprise (2001) · TV",
+        "Enterprise (2001–05) · TV · 4 seasons",
         "Nemesis (2002)",
-        "Star Trek (2009) (2009)",
+        "Star Trek (2009)",
         "Into Darkness (2013)",
         "Beyond (2016)",
-        "Discovery (2017) · TV",
-        "Picard (2020) · TV",
-        "Lower Decks (2020) · TV",
-        "Prodigy (2021) · TV",
-        "Strange New Worlds (2022) · TV",
+        "Discovery (2017–24) · TV · 5 seasons",
+        "Picard (2020–23) · TV · 3 seasons",
+        "Lower Decks (2020–24) · TV · 5 seasons",
+        "Prodigy (2021–24) · TV · 2 seasons",
+        "Strange New Worlds (2022– ) · TV · 4 seasons aired",
         "Section 31 (2025)",
-        "Starfleet Academy (2026) · TV"
+        "Starfleet Academy (2026– ) · TV · 1 season aired"
       ],
       "branches": [
         {
           "id": "b1",
-          "title": "Prime Timeline",
-          "color": "#FFB02E",
+          "title": "Prime · Founding Era",
+          "color": "#5BC0BE",
           "films": [
-            "Enterprise (TV)",
-            "The Original Series (TV)",
-            "The Animated Series (TV)",
-            "The Motion Picture",
-            "II: The Wrath of Khan",
-            "III: The Search for Spock",
-            "IV: The Voyage Home",
-            "V: The Final Frontier",
-            "VI: The Undiscovered Country",
-            "The Next Generation (TV)",
-            "Deep Space Nine (TV)",
-            "Voyager (TV)",
-            "Generations",
-            "First Contact",
-            "Insurrection",
-            "Nemesis",
-            "Lower Decks (TV)",
-            "Prodigy (TV)",
-            "Picard (TV)"
+            "First Contact (2063 section)",
+            "Enterprise S1–S4"
           ],
-          "summary": "The original continuity: from Cochrane's warp flight to Picard's final voyage.",
+          "summary": "From the ashes of World War III to the founding of the Federation — humanity's first century in space.",
           "nodes": [
             {
-              "era": "1992–1996",
+              "era": "2020s–2050s",
               "type": "event",
-              "text": "The <b>Eugenics Wars</b>: augment tyrant <b>Khan Noonien Singh</b> conquers a quarter of Earth, is overthrown, and flees aboard the sleeper ship <b>SS Botany Bay</b>.",
+              "text": "The Eugenics Wars. Genetically engineered Augments led by Khan Noonien Singh seize roughly a quarter of Earth before being overthrown; Khan and his followers flee aboard the sleeper ship SS Botany Bay. Originally dated 1992–96, this whole era was pushed decades later by temporal interference — see the Strange New Worlds beats below.",
               "tags": [
                 {
                   "label": "Khan",
                   "kind": "character"
+                },
+                {
+                  "label": "Retcon",
+                  "kind": "paradox"
                 }
               ]
             },
             {
               "era": "2026–2053",
               "type": "death",
-              "text": "<b>World War III</b> devastates Earth — 600 million dead, records erased, a post-atomic dark age.",
+              "text": "World War III. Roughly 600 million dead, most of Earth's digital records destroyed by EMP, and 30 percent of the human population gone. The in-universe explanation for why Star Trek's 20th-century history never matched ours.",
               "tags": [
                 {
                   "label": "WWIII",
@@ -2377,156 +2364,85 @@ class Component extends DCLogic {
               ]
             },
             {
-              "era": "2063",
+              "era": "2053–2063",
+              "type": "event",
+              "text": "The post-atomic horror. Surviving nations fracture under warlords like Colonel Green; societies collapse into tribal courts and show trials — the era Q later drags Picard back to.",
+              "tags": []
+            },
+            {
+              "era": "5 April 2063",
               "type": "turning-point",
-              "text": "<b>Zefram Cochrane</b>'s first warp flight in the Phoenix draws a passing Vulcan ship: <b>First Contact</b> unites humanity.",
+              "text": "Zefram Cochrane's Phoenix makes Earth's first warp flight from Bozeman, Montana. A passing Vulcan survey ship, the T'Plana-Hath, notices — First Contact. This date has never moved in any retcon.",
               "tags": [
                 {
                   "label": "Warp drive",
-                  "kind": "model"
+                  "kind": "tech"
                 }
               ]
             },
             {
-              "era": "2151–2161",
+              "era": "2063–2151",
               "type": "event",
-              "text": "Captain <b>Jonathan Archer</b> and the NX-01 Enterprise open deep space; the series ends with the founding of the <b>United Federation of Planets</b> in 2161.",
+              "text": "Ninety years of Vulcan tutelage. United Earth forms, poverty and money are abolished, and the Vulcans slow-walk warp technology until humanity proves it can be trusted with it.",
+              "tags": [
+                {
+                  "label": "United Earth",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2151–2152",
+              "type": "turning-point",
+              "text": "Enterprise S1. The NX-01 launches under Captain Jonathan Archer — humanity's first deep-space ship, warp 5, with a Vulcan advisor aboard. First contact with the Klingons, the Suliban, and the opening moves of the Temporal Cold War.",
+              "tags": [
+                {
+                  "label": "NX-01",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2152–2153",
+              "type": "death",
+              "text": "Enterprise S2. Archer's crew stumble through the Romulan minefield and the Vulcan-Andorian cold war, then the season ends with the Xindi probe carving a scar across Florida and killing seven million people.",
+              "tags": [
+                {
+                  "label": "Xindi attack",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2153–2154",
+              "type": "event",
+              "text": "Enterprise S3. The Delphic Expanse arc: Enterprise hunts the Xindi weapon, and the Sphere Builders are revealed as temporal aggressors manipulating the whole conflict from a future that no longer exists.",
+              "tags": [
+                {
+                  "label": "Sphere Builders",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2154–2155",
+              "type": "event",
+              "text": "Enterprise S4. The Augment crisis explains the smooth-headed Klingons, Surak's katra reforms Vulcan society, and Archer brokers the Vulcan-Andorian-Tellarite peace that becomes the Coalition of Planets.",
+              "tags": [
+                {
+                  "label": "Augments",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2161",
+              "type": "resolution",
+              "text": "The United Federation of Planets is founded. Archer gives the charter speech, the NX-01 is decommissioned, and Starfleet as the rest of the franchise knows it begins.",
               "tags": [
                 {
                   "label": "Federation",
-                  "kind": "faction"
-                }
-              ]
-            },
-            {
-              "era": "2265–2269",
-              "type": "event",
-              "text": "<b>Kirk</b>'s five-year mission aboard the USS Enterprise. In 'Space Seed' the crew wakes Khan and exiles him to <b>Ceti Alpha V</b>.",
-              "tags": [
-                {
-                  "label": "Khan",
-                  "kind": "character"
-                }
-              ]
-            },
-            {
-              "era": "2285",
-              "type": "death",
-              "text": "The Wrath of Khan: Khan escapes, detonates the <b>Genesis Device</b> — and <b>Spock dies</b> saving the Enterprise.",
-              "tags": [
-                {
-                  "label": "Genesis",
-                  "kind": "model"
-                }
-              ]
-            },
-            {
-              "era": "2285–2286",
-              "type": "event",
-              "text": "Spock is reborn on the Genesis planet; the crew destroys the Enterprise to save him, then time-travels to 1986 to fetch two humpback whales and save Earth.",
-              "tags": [
-                {
-                  "label": "Time travel",
-                  "kind": "paradox"
-                }
-              ]
-            },
-            {
-              "era": "2293",
-              "type": "turning-point",
-              "text": "The <b>Khitomer Accords</b> end the Klingon cold war. On the Enterprise-B's maiden voyage, <b>Kirk is lost to the Nexus</b> — presumed dead.",
-              "tags": [
-                {
-                  "label": "Kirk",
-                  "kind": "character"
-                }
-              ]
-            },
-            {
-              "era": "2364–2370",
-              "type": "event",
-              "text": "<b>Jean-Luc Picard</b> commands the Enterprise-D: encounters with <b>Q</b>, the Borg's arrival, and Picard's assimilation as <b>Locutus</b> before Wolf 359 (2367).",
-              "tags": [
-                {
-                  "label": "Borg",
-                  "kind": "faction"
-                }
-              ]
-            },
-            {
-              "era": "2369–2375",
-              "type": "event",
-              "text": "On station <b>Deep Space 9</b>, Sisko becomes Emissary of the wormhole Prophets; the <b>Dominion War</b> engulfs the quadrant before the Founders surrender.",
-              "tags": [
-                {
-                  "label": "Dominion War",
                   "kind": "event"
-                }
-              ]
-            },
-            {
-              "era": "2371–2378",
-              "type": "event",
-              "text": "<b>Voyager</b> is flung 70,000 light-years to the Delta Quadrant; Captain <b>Janeway</b> gets her crew (and ex-Borg <b>Seven of Nine</b>) home in seven years.",
-              "tags": [
-                {
-                  "label": "Seven of Nine",
-                  "kind": "character"
-                }
-              ]
-            },
-            {
-              "era": "2371–2373",
-              "type": "turning-point",
-              "text": "Kirk returns from the Nexus to die stopping Soran (Generations); the Enterprise-E then follows the <b>Borg Queen</b> to 2063 to protect Cochrane's flight.",
-              "tags": [
-                {
-                  "label": "Bootstrap",
-                  "kind": "paradox"
-                }
-              ]
-            },
-            {
-              "era": "2379",
-              "type": "death",
-              "text": "Nemesis: Picard's clone <b>Shinzon</b> seizes Romulus; <b>Data sacrifices himself</b> to save the Enterprise.",
-              "tags": [
-                {
-                  "label": "Data",
-                  "kind": "character"
-                }
-              ]
-            },
-            {
-              "era": "2385",
-              "type": "event",
-              "text": "Rogue synths (secretly triggered by the Romulan <b>Zhat Vash</b>) burn the Mars shipyards; the Federation bans synthetic life.",
-              "tags": [
-                {
-                  "label": "Synth ban",
-                  "kind": "event"
-                }
-              ]
-            },
-            {
-              "era": "2387",
-              "type": "turning-point",
-              "text": "The <b>Romulan supernova</b> destroys Romulus. Ambassador Spock's red-matter black hole swallows him and Nero's ship — spawning the <b>Kelvin timeline</b>.",
-              "tags": [
-                {
-                  "label": "Branch point",
-                  "kind": "paradox"
-                }
-              ]
-            },
-            {
-              "era": "2399–2402",
-              "type": "resolution",
-              "text": "Picard: synths are legalised, Picard is reborn in a golem body, the TNG crew reunites to beat the Borg Queen one last time — and <b>Seven of Nine</b> captains the new Enterprise-G.",
-              "tags": [
-                {
-                  "label": "Enterprise-G",
-                  "kind": "model"
                 }
               ]
             }
@@ -2534,144 +2450,33 @@ class Component extends DCLogic {
         },
         {
           "id": "b2",
-          "title": "Kelvin Timeline",
-          "color": "#28D7E0",
+          "title": "Prime · 23rd Century",
+          "color": "#FFB02E",
           "films": [
-            "Star Trek (2009)",
-            "Into Darkness",
-            "Beyond"
+            "Discovery S1–S2",
+            "Strange New Worlds S1–S4",
+            "The Original Series",
+            "The Animated Series",
+            "Films I–VI",
+            "Generations (prologue)"
           ],
-          "summary": "Nero's revenge fork: the USS Kelvin dies in 2233 and a harder, faster universe grows from it.",
+          "summary": "Pike, Kirk and the five-year mission — the century that gave the franchise Khan, the Klingon cold war, and the Khitomer Accords.",
           "nodes": [
-            {
-              "era": "2387 → 2233",
-              "type": "paradox",
-              "text": "Chasing Spock through the red-matter black hole, the Romulan miner <b>Nero</b> emerges 154 years early and attacks the <b>USS Kelvin</b>.",
-              "tags": [
-                {
-                  "label": "Branch point",
-                  "kind": "paradox"
-                }
-              ]
-            },
             {
               "era": "2233",
-              "type": "death",
-              "text": "<b>George Kirk</b> dies buying his crew time as his son <b>James T. Kirk</b> is born mid-evacuation — the moment the timelines split.",
-              "tags": [
-                {
-                  "label": "Kirk",
-                  "kind": "character"
-                }
-              ]
-            },
-            {
-              "era": "2258",
-              "type": "death",
-              "text": "Nero drills into <b>Vulcan</b> and destroys it with red matter; Spock's mother dies and the Vulcans become an endangered species.",
-              "tags": [
-                {
-                  "label": "Vulcan destroyed",
-                  "kind": "event"
-                }
-              ]
-            },
-            {
-              "era": "2258",
-              "type": "turning-point",
-              "text": "Cadet Kirk (with help from elderly Prime Spock) defeats Nero and jumps straight to captain of the Enterprise.",
-              "tags": [
-                {
-                  "label": "Enterprise",
-                  "kind": "model"
-                }
-              ]
-            },
-            {
-              "era": "2259",
-              "type": "event",
-              "text": "Into Darkness: Section 31's Admiral Marcus wakes a 300-year-old superman — <b>Khan</b>, again — whose blood later revives a dead Kirk.",
-              "tags": [
-                {
-                  "label": "Khan",
-                  "kind": "character"
-                }
-              ]
-            },
-            {
-              "era": "2263",
-              "type": "resolution",
-              "text": "Beyond: the Enterprise is destroyed by <b>Krall</b>'s swarm; the crew prevails and a new Enterprise-A is built. Ambassador Spock's death mirrors Leonard Nimoy's.",
-              "tags": [
-                {
-                  "label": "Enterprise-A",
-                  "kind": "model"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "b3",
-          "title": "The Moved Timeline (Discovery era)",
-          "color": "#B07CFF",
-          "films": [
-            "Discovery (TV)",
-            "Strange New Worlds (TV)",
-            "Lower Decks (TV)",
-            "Section 31",
-            "Starfleet Academy (TV)"
-          ],
-          "summary": "Temporal agents shoved Khan's birth ~55 years forward. Showrunners call it the same Prime line; the on-screen dates say otherwise.",
-          "nodes": [
-            {
-              "era": "1992 → 2022",
               "type": "paradox",
-              "text": "SNW 'Tomorrow and Tomorrow and Tomorrow': Romulan agents have delayed human progress for decades — <b>Khan is a child in Toronto in 2022</b>, not a 1990s tyrant. Time itself 'pushes back.'",
+              "text": "A Romulan mining ship falls out of a black hole from 2387 and destroys the USS Kelvin. In the Prime line nothing changes — the incursion creates a separate reality instead. Follow it on the Kelvin Timeline branch.",
               "tags": [
                 {
-                  "label": "Branch point",
+                  "label": "Fork point",
                   "kind": "paradox"
                 }
               ]
             },
             {
-              "era": "2022",
-              "type": "turning-point",
-              "text": "<b>La'an Noonien-Singh</b>, Khan's descendant, is sent by temporal investigators to keep her infamous ancestor alive — a Kirk from an alternate future dies helping her.",
-              "tags": [
-                {
-                  "label": "La'an",
-                  "kind": "character"
-                }
-              ]
-            },
-            {
-              "era": "2256–2257",
+              "era": "2254",
               "type": "event",
-              "text": "Discovery: <b>Michael Burnham</b>'s mutiny sparks the <b>Klingon War</b>; the spore-drive ship Discovery ends it — and brings back the Mirror Universe's Emperor <b>Georgiou</b>.",
-              "tags": [
-                {
-                  "label": "Klingon War",
-                  "kind": "event"
-                }
-              ]
-            },
-            {
-              "era": "2258",
-              "type": "turning-point",
-              "text": "To starve the rogue AI <b>Control</b> of sphere data, Discovery and Burnham jump <b>930 years into the future</b>; Starfleet is ordered never to speak of them again.",
-              "tags": [
-                {
-                  "label": "Time jump",
-                  "kind": "paradox"
-                }
-              ]
-            },
-            {
-              "era": "2259–2260s",
-              "type": "event",
-              "text": "Strange New Worlds: <b>Pike</b> — who has foreseen the accident that will maim him — commands the Enterprise with Spock, Uhura, La'an and Chapel before Kirk's era.",
+              "text": "The Cage. Christopher Pike commands the Enterprise NCC-1701 and is captured by the illusion-casting Talosians — the pilot that Star Trek was built on top of, and the event Strange New Worlds keeps circling back to.",
               "tags": [
                 {
                   "label": "Pike",
@@ -2680,43 +2485,14 @@ class Component extends DCLogic {
               ]
             },
             {
-              "era": "2324",
-              "type": "event",
-              "text": "Section 31: in the 'lost era', ex-Emperor <b>Georgiou</b> runs black ops for Starfleet's secret police and faces her Terran past.",
-              "tags": [
-                {
-                  "label": "Section 31",
-                  "kind": "faction"
-                }
-              ]
-            },
-            {
-              "era": "2380–2382",
-              "type": "event",
-              "text": "Lower Decks: the USS Cerritos' ensigns handle Starfleet's dumbest missions; Boimler and Mariner even time-travel into the SNW era, welding the shows together.",
-              "tags": [
-                {
-                  "label": "Cerritos",
-                  "kind": "model"
-                }
-              ]
-            },
-            {
-              "era": "3069",
-              "type": "death",
-              "text": "<b>The Burn</b>: nearly all dilithium detonates at once, shattering warp travel and reducing the Federation to fragments.",
-              "tags": [
-                {
-                  "label": "The Burn",
-                  "kind": "event"
-                }
-              ]
-            },
-            {
-              "era": "3188–3191",
+              "era": "2256–2257",
               "type": "turning-point",
-              "text": "Discovery arrives in the 32nd century, finds the cause of the Burn, and rebuilds the Federation; Burnham finally takes the captain's chair.",
+              "text": "Discovery S1. Michael Burnham's mutiny at the Battle of the Binary Stars ignites the Federation-Klingon war. She is imprisoned, then conscripted onto the USS Discovery and its spore drive; Captain Lorca turns out to be a Terran, and Emperor Georgiou crosses over from the Mirror Universe as the war ends.",
               "tags": [
+                {
+                  "label": "Spore drive",
+                  "kind": "tech"
+                },
                 {
                   "label": "Burnham",
                   "kind": "character"
@@ -2724,68 +2500,536 @@ class Component extends DCLogic {
               ]
             },
             {
-              "era": "3191+",
-              "type": "resolution",
-              "text": "Starfleet Academy reopens to its first new class in over a century — Tilly and the Doctor (Voyager's EMH) helping train the Federation's next generation.",
+              "era": "2257–2258",
+              "type": "paradox",
+              "text": "Discovery S2. Pike takes temporary command, the Red Angel turns out to be Burnham herself, and to keep the rogue AI Control from the Sphere data the crew fly Discovery 930 years into the future. Every officer who stays behind is ordered never to speak of the ship again — which is how the 23rd century keeps its clean continuity.",
               "tags": [
                 {
-                  "label": "Academy",
-                  "kind": "faction"
+                  "label": "930-year jump",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2259",
+              "type": "event",
+              "text": "Strange New Worlds S1. Pike, knowing exactly how and when he will be crippled saving cadets, takes the Enterprise out anyway. Number One's illegal genetic modification, Spock's divided loyalties, and a young Uhura on comms.",
+              "tags": [
+                {
+                  "label": "Enterprise",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2259–2260",
+              "type": "event",
+              "text": "Strange New Worlds S2. La'an is thrown to Toronto in 2022 and finds Khan as a child — the episode that formally moves the Eugenics Wars into the 21st century. Also Sybok, the Gorn hegemony, and a young Montgomery Scott.",
+              "tags": [
+                {
+                  "label": "Eugenics retcon",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2260–2261",
+              "type": "event",
+              "text": "Strange New Worlds S3. The Gorn cliffhanger resolves, and the Federation marks its 100th anniversary — which pins the season to 2261, a century after Archer's charter speech.",
+              "tags": [
+                {
+                  "label": "Federation centennial",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "≈2261–2262",
+              "type": "event",
+              "text": "Strange New Worlds S4, airing through September 2026, picks up six months after S3. A sixth and final season of six episodes has been shot, intended to run right up to Kirk taking command of the Enterprise.",
+              "tags": [
+                {
+                  "label": "Airing now",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2265",
+              "type": "turning-point",
+              "text": "Where No Man Has Gone Before. James T. Kirk has the Enterprise and the five-year mission begins.",
+              "tags": [
+                {
+                  "label": "Kirk",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2266",
+              "type": "event",
+              "text": "The Original Series S1. The Enterprise meets the Romulans face to face for the first time, tangles with Balok, Charlie Evans and the Horta, and Kirk and Spock's partnership sets the template for everything after.",
+              "tags": []
+            },
+            {
+              "era": "2267–2268",
+              "type": "turning-point",
+              "text": "The Original Series S2. Space Seed: the Enterprise finds the Botany Bay, revives Khan, and maroons him on Ceti Alpha V. Also Mirror, Mirror, the tribbles, and the Guardian of Forever.",
+              "tags": [
+                {
+                  "label": "Khan marooned",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2268–2269",
+              "type": "event",
+              "text": "The Original Series S3. The Enterprise's last televised year — the Tholians, the Kelvans, and a Federation-Klingon cold war that never quite goes hot.",
+              "tags": []
+            },
+            {
+              "era": "2269–2270",
+              "type": "resolution",
+              "text": "The Animated Series S1–S2. The fifth and final year of the five-year mission, ending with the Enterprise's return to Earth.",
+              "tags": []
+            },
+            {
+              "era": "2273",
+              "type": "event",
+              "text": "The Motion Picture. A refit Enterprise intercepts V'Ger, a Voyager probe that machine intelligence grew into a god. Memory Alpha declines to fix the year — 2271 and 2273 both have official backing.",
+              "tags": [
+                {
+                  "label": "V'Ger",
+                  "kind": "tech"
+                },
+                {
+                  "label": "Disputed date",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2285",
+              "type": "death",
+              "text": "The Wrath of Khan. Khan escapes Ceti Alpha V after eighteen years, steals the Genesis Device and detonates it. Spock dies saving the ship; his body is fired into the Genesis nebula.",
+              "tags": [
+                {
+                  "label": "Spock dies",
+                  "kind": "death"
+                },
+                {
+                  "label": "Genesis",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2285",
+              "type": "event",
+              "text": "The Search for Spock. Genesis resurrects Spock. Kirk steals and then scuttles the Enterprise to escape the Klingons, and David Marcus is murdered.",
+              "tags": [
+                {
+                  "label": "Enterprise destroyed",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2286",
+              "type": "event",
+              "text": "The Voyage Home. A probe hailing extinct humpback whales starts boiling Earth's oceans, so the crew slingshot to 1986 San Francisco, steal two whales, and are pardoned with a new ship — the Enterprise NCC-1701-A.",
+              "tags": [
+                {
+                  "label": "Slingshot",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2287",
+              "type": "event",
+              "text": "The Final Frontier. Spock's half-brother Sybok hijacks the Enterprise to reach a being at the galaxy's centre claiming to be God. It is not.",
+              "tags": []
+            },
+            {
+              "era": "2293",
+              "type": "turning-point",
+              "text": "The Undiscovered Country. Praxis explodes, a conspiracy tries to sabotage peace, and Kirk's crew stop it — producing the Khitomer Accords that end seventy years of Klingon cold war.",
+              "tags": [
+                {
+                  "label": "Khitomer Accords",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2293",
+              "type": "death",
+              "text": "Generations, prologue. The Enterprise-B's maiden voyage hits the Nexus ribbon. Kirk is pulled into it and presumed dead — though the Nexus is outside time, which is how he shows up again seventy-eight years later.",
+              "tags": [
+                {
+                  "label": "The Nexus",
+                  "kind": "paradox"
                 }
               ]
             }
           ]
         },
         {
-          "id": "b4",
-          "title": "Mirror Universe",
-          "color": "#FF2A1F",
+          "id": "b3",
+          "title": "Prime · 24th Century",
+          "color": "#3B82C4",
           "films": [
-            "The Original Series (TV)",
-            "Enterprise (TV)",
-            "Deep Space Nine (TV)",
-            "Discovery (TV)",
-            "Section 31"
+            "Section 31",
+            "The Next Generation",
+            "Deep Space Nine",
+            "Voyager",
+            "Generations",
+            "First Contact",
+            "Insurrection",
+            "Nemesis",
+            "Lower Decks",
+            "Prodigy",
+            "Picard"
           ],
-          "summary": "Not a branch but a parallel universe: the fascist Terran Empire, where the Federation's ideals are inverted.",
+          "summary": "The franchise's densest era: four series running concurrently, four films, the Dominion War, and the supernova that forks the timeline.",
           "nodes": [
             {
-              "era": "2063",
-              "type": "turning-point",
-              "text": "The divergence in miniature: Mirror <b>Cochrane</b> shoots the first Vulcan visitor and humanity loots the ship — the <b>Terran Empire</b> is born of conquest.",
-              "tags": [
-                {
-                  "label": "Terran Empire",
-                  "kind": "faction"
-                }
-              ]
-            },
-            {
-              "era": "2155",
+              "era": "2324",
               "type": "event",
-              "text": "'In a Mirror, Darkly': Archer's mirror self seizes a 23rd-century Federation ship from a rift and makes a grab for the throne.",
-              "tags": [
-                {
-                  "label": "USS Defiant",
-                  "kind": "model"
-                }
-              ]
-            },
-            {
-              "era": "2250s",
-              "type": "event",
-              "text": "A young Terran <b>Philippa Georgiou</b> murders her way to the throne and rules as Emperor — with a Michael Burnham of her own at her side.",
+              "text": "Section 31. Philippa Georgiou, decades out of her own universe and her own century, runs a black-ops crew for Starfleet Intelligence. Set in the early 24th century — not the Discovery era, which is the single most commonly misplaced entry in the whole franchise.",
               "tags": [
                 {
                   "label": "Georgiou",
+                  "kind": "character"
+                },
+                {
+                  "label": "Section 31",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2364",
+              "type": "turning-point",
+              "text": "The Next Generation S1. The Enterprise-D launches under Jean-Luc Picard, and Q puts humanity on trial at Farpoint — the first of a relationship that runs to the end of Picard.",
+              "tags": [
+                {
+                  "label": "Q",
+                  "kind": "character"
+                },
+                {
+                  "label": "Enterprise-D",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2365",
+              "type": "event",
+              "text": "The Next Generation S2. Q hurls the Enterprise 7,000 light years to meet the Borg at System J-25 — the Federation's first proper look at them, and a warning nobody acts on fast enough.",
+              "tags": [
+                {
+                  "label": "Borg",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2366",
+              "type": "death",
+              "text": "The Next Generation S3. The Borg return; Picard is captured and assimilated as Locutus, and the fleet assembles at Wolf 359.",
+              "tags": [
+                {
+                  "label": "Locutus",
+                  "kind": "death"
+                }
+              ]
+            },
+            {
+              "era": "2367",
+              "type": "turning-point",
+              "text": "The Next Generation S4. Wolf 359: thirty-nine ships and roughly 11,000 lives lost. Picard is recovered, Worf is discommendated, and Starfleet's confidence never fully returns.",
+              "tags": [
+                {
+                  "label": "Wolf 359",
+                  "kind": "death"
+                }
+              ]
+            },
+            {
+              "era": "2368",
+              "type": "event",
+              "text": "The Next Generation S5. Spock is found on Romulus pursuing unification, Picard's Kataan flute life plays out in twenty-five minutes, and a rescued drone named Hugh brings individuality back into the Collective.",
+              "tags": [
+                {
+                  "label": "Hugh",
                   "kind": "character"
                 }
               ]
             },
             {
-              "era": "2257",
+              "era": "2369",
+              "type": "event",
+              "text": "The Next Generation S6. Lore raises a Borg splinter faction on Hugh's individuality, and Data installs his emotion chip.",
+              "tags": [
+                {
+                  "label": "Data",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2369",
               "type": "turning-point",
-              "text": "Discovery crosses over; Burnham topples the Emperor's reign and drags <b>Georgiou back to the Prime universe</b>, where Section 31 recruits her.",
+              "text": "Deep Space Nine S1. Bajor is free after fifty years of Cardassian occupation. Commander Sisko takes over the station, finds the first stable wormhole in known space, and meets the non-linear Prophets living inside it.",
+              "tags": [
+                {
+                  "label": "Wormhole",
+                  "kind": "tech"
+                },
+                {
+                  "label": "Sisko",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2370",
+              "type": "event",
+              "text": "The Next Generation S7. All Good Things: Q runs Picard through 2364, 2370 and 2395 at once to prove humanity's trial never ended. The Enterprise-D's last television year.",
+              "tags": [
+                {
+                  "label": "Anti-time",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2370",
+              "type": "event",
+              "text": "Deep Space Nine S2. The Federation-Cardassian border treaty strands colonists on the wrong side and the Maquis take up arms. First contact with the Jem'Hadar — the Dominion announces itself by destroying a starship.",
+              "tags": [
+                {
+                  "label": "Maquis",
+                  "kind": "event"
+                },
+                {
+                  "label": "Dominion",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2371",
+              "type": "death",
+              "text": "Generations. Soran destroys a star to reach the Nexus; the Enterprise-D's saucer crashes on Veridian III; Picard pulls Kirk out of the Nexus and Kirk dies for real.",
+              "tags": [
+                {
+                  "label": "Kirk dies",
+                  "kind": "death"
+                }
+              ]
+            },
+            {
+              "era": "2371",
+              "type": "event",
+              "text": "Deep Space Nine S3. The USS Defiant arrives — a warship the Federation pretends is an escort. Odo learns his people, the Founders, are the Dominion's rulers.",
+              "tags": [
+                {
+                  "label": "Defiant",
+                  "kind": "tech"
+                },
+                {
+                  "label": "Odo",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2371",
+              "type": "turning-point",
+              "text": "Voyager S1. The Caretaker throws USS Voyager and a Maquis raider 70,000 light years into the Delta Quadrant. Janeway destroys the array rather than hand it to the Kazon, stranding both crews on a seventy-year trip home.",
+              "tags": [
+                {
+                  "label": "Janeway",
+                  "kind": "character"
+                },
+                {
+                  "label": "Caretaker",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2372",
+              "type": "event",
+              "text": "Deep Space Nine S4. Worf transfers to the station, the Klingons invade Cardassia and the Khitomer Accords collapse; changeling paranoia reaches Earth.",
+              "tags": [
+                {
+                  "label": "Worf",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2372",
+              "type": "event",
+              "text": "Voyager S2. Seska's betrayal, the Kazon-Nistrim take the ship, and the crew's Starfleet-Maquis integration is tested to breaking.",
+              "tags": []
+            },
+            {
+              "era": "2373",
+              "type": "paradox",
+              "text": "First Contact. A Borg cube attacks Earth and its sphere escapes to 2063 to stop Cochrane's warp flight. The Enterprise-E follows, saves the launch, and Picard kills the Borg Queen — the encounter she spends the next thirty years avenging.",
+              "tags": [
+                {
+                  "label": "Borg Queen",
+                  "kind": "character"
+                },
+                {
+                  "label": "Enterprise-E",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2373",
+              "type": "turning-point",
+              "text": "Deep Space Nine S5. Cardassia joins the Dominion. Sisko mines the wormhole, the station falls, and the Dominion War begins.",
+              "tags": [
+                {
+                  "label": "Dominion War",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2373",
+              "type": "event",
+              "text": "Voyager S3. Voyager reaches Borg space and cuts a deal with the Collective against Species 8472 — the alliance that delivers Seven of Nine.",
+              "tags": [
+                {
+                  "label": "Species 8472",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2374",
+              "type": "event",
+              "text": "Deep Space Nine S6. The station is retaken, Betazed falls, the Romulans are manoeuvred into the war on a forged pretext, and Jadzia Dax is killed by a possessed Dukat.",
+              "tags": [
+                {
+                  "label": "Jadzia dies",
+                  "kind": "death"
+                }
+              ]
+            },
+            {
+              "era": "2374",
+              "type": "event",
+              "text": "Voyager S4. Seven of Nine is severed from the Collective and begins the slow work of becoming a person again. The Year of Hell plays out and is erased.",
+              "tags": [
+                {
+                  "label": "Seven of Nine",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2375",
+              "type": "resolution",
+              "text": "Deep Space Nine S7. The Dominion War ends with Cardassia in ruins and 800 million Cardassians dead. Sisko joins the Prophets, Odo returns to the Great Link to cure his people, and the crew scatters.",
+              "tags": [
+                {
+                  "label": "War ends",
+                  "kind": "resolution"
+                }
+              ]
+            },
+            {
+              "era": "2375",
+              "type": "event",
+              "text": "Insurrection. Picard mutinies against his own admiralty to stop the forced relocation of 600 Ba'ku from a planet whose radiation reverses ageing. Ex Astris Scientia argues for 2374; no stardate is ever spoken on screen.",
+              "tags": [
+                {
+                  "label": "Disputed date",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2375",
+              "type": "event",
+              "text": "Voyager S5. The Equinox is found — a second stranded Starfleet ship that chose to murder its way home, and the mirror Janeway refuses to become.",
+              "tags": []
+            },
+            {
+              "era": "2376",
+              "type": "event",
+              "text": "Voyager S6. The Pathfinder project opens a monthly comms link to Earth; the Doctor becomes a person in law as much as in fact.",
+              "tags": [
+                {
+                  "label": "The Doctor",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2377–2378",
+              "type": "paradox",
+              "text": "Voyager S7. Endgame: Admiral Janeway arrives from 2404, gives her younger self transphasic torpedoes and ablative armour, and dies destroying the Borg transwarp hub. Voyager gets home in seven years instead of twenty-three.",
+              "tags": [
+                {
+                  "label": "Endgame",
+                  "kind": "paradox"
+                },
+                {
+                  "label": "Homecoming",
+                  "kind": "resolution"
+                }
+              ]
+            },
+            {
+              "era": "2379",
+              "type": "death",
+              "text": "Nemesis. Shinzon, a Reman-raised clone of Picard, seizes the Romulan Senate and turns a thalaron weapon on Earth. Data destroys the Scimitar and himself; his memories survive in the prototype B-4.",
+              "tags": [
+                {
+                  "label": "Data dies",
+                  "kind": "death"
+                }
+              ]
+            },
+            {
+              "era": "2380",
+              "type": "event",
+              "text": "Lower Decks S1. Life on the USS Cerritos, a second-contact ship doing the paperwork after the heroes leave: Ensigns Mariner, Boimler, Tendi and Rutherford, and a captain who is also Mariner's mother.",
+              "tags": [
+                {
+                  "label": "Cerritos",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2381",
+              "type": "event",
+              "text": "Lower Decks S2. Boimler bounces to the Titan under Riker and back again; the Pakleds escalate from nuisance to genuine threat.",
+              "tags": []
+            },
+            {
+              "era": "2381",
+              "type": "event",
+              "text": "Lower Decks S3. The Cerritos is nearly scrapped, Mariner's record is finally read honestly, and Rutherford's implant turns out to hide a Starfleet weapons programme.",
+              "tags": []
+            },
+            {
+              "era": "2381",
+              "type": "event",
+              "text": "Lower Decks S4. A rogue ship destroys vessels across the quadrant; the four are promoted to lieutenant junior grade, and the crossover with Strange New Worlds drops Boimler and Mariner into 2259 in live action.",
               "tags": [
                 {
                   "label": "Crossover",
@@ -2794,24 +3038,376 @@ class Component extends DCLogic {
               ]
             },
             {
-              "era": "2267",
-              "type": "event",
-              "text": "'Mirror, Mirror': a transporter storm swaps Kirk's landing party with their goateed counterparts; Kirk plants doubt in Mirror Spock.",
+              "era": "2381–2382",
+              "type": "resolution",
+              "text": "Lower Decks S5. Interdimensional rifts start bleeding parallel universes into each other. The crew close them, Freeman is promoted to run extra-dimensional exploration, and Ransom takes the Cerritos.",
               "tags": [
                 {
-                  "label": "Mirror Spock",
+                  "label": "Multiverse rifts",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2383–2384",
+              "type": "event",
+              "text": "Prodigy S1. Alien kids escaping a mining colony find a buried Federation ship, the USS Protostar, and are taught Starfleet by a hologram of Captain Janeway. Its protodrive turns out to carry a weapon aimed at the Federation itself.",
+              "tags": [
+                {
+                  "label": "Protostar",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2384–2385",
+              "type": "paradox",
+              "text": "Prodigy S2. The crew take the Voyager-A after the Protostar's lost crew, and end up fifty-two years forward through the Solum wormhole and then back to 2367 — a loop that has to be closed exactly, or Chakotay never comes home.",
+              "tags": [
+                {
+                  "label": "Solum loop",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2385",
+              "type": "death",
+              "text": "Synthetic workers on the Utopia Planitia shipyards turn on Mars, kill over 3,000 and leave the planet burning for decades. The Federation bans synthetic life outright — and abandons the Romulan evacuation to do it.",
+              "tags": [
+                {
+                  "label": "Mars attack",
+                  "kind": "death"
+                },
+                {
+                  "label": "Synth ban",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2387",
+              "type": "paradox",
+              "text": "Romulus's sun goes supernova. Ambassador Spock's red matter contains it too late; he and the Romulan miner Nero are both pulled through the resulting singularity into the past. This is the fork — Nero arrives in 2233, Spock twenty-five years later.",
+              "tags": [
+                {
+                  "label": "Fork point",
+                  "kind": "paradox"
+                },
+                {
+                  "label": "Romulus destroyed",
+                  "kind": "death"
+                }
+              ]
+            },
+            {
+              "era": "2399–2400",
+              "type": "event",
+              "text": "Picard S1. A retired, disgraced Picard is pulled back out by Dahj and Soji, synthetic daughters grown from Data's neurons. The Zhat Vash — Romulans who engineered the Mars attack to force the synth ban — try to finish the job. Picard dies of a brain abnormality and wakes in a synthetic golem body.",
+              "tags": [
+                {
+                  "label": "Soji",
+                  "kind": "character"
+                },
+                {
+                  "label": "Picard reborn",
+                  "kind": "resolution"
+                }
+              ]
+            },
+            {
+              "era": "2401",
+              "type": "paradox",
+              "text": "Picard S2. Q rewrites history into a fascist Confederation of Earth, and the crew go back to 2024 Los Angeles to repair it. Agnes Jurati merges with the Borg Queen to found a better Collective, and Q dies making his last point.",
+              "tags": [
+                {
+                  "label": "Q's last gambit",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2401–2402",
+              "type": "turning-point",
+              "text": "Picard S3. Changelings infiltrate Starfleet and the Borg Queen turns the fleet's own crews against it through assimilated DNA in the transporters. The TNG crew reunite on a salvaged Enterprise-D; Data is restored one last time; Jack Crusher is revealed as Picard's son.",
+              "tags": [
+                {
+                  "label": "Enterprise-D returns",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2402",
+              "type": "resolution",
+              "text": "The Titan is renamed Enterprise-G under Captain Seven of Nine, with Raffi as first officer and Jack aboard — and Q turns up to tell Jack his trial is only beginning. Paramount never continued the story.",
+              "tags": [
+                {
+                  "label": "Enterprise-G",
+                  "kind": "tech"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b4",
+          "title": "Prime · 32nd Century",
+          "color": "#39D98A",
+          "films": [
+            "Discovery S3–S5",
+            "Starfleet Academy S1"
+          ],
+          "summary": "Nine hundred years later: the Federation is a rumour, dilithium doesn't work, and Discovery arrives with no way back.",
+          "nodes": [
+            {
+              "era": "3069",
+              "type": "death",
+              "text": "The Burn. Almost every dilithium crystal in the galaxy detonates at once, taking warp-capable ships with them. Interstellar civilisation ends overnight; the Federation shrinks from hundreds of worlds to thirty-eight.",
+              "tags": [
+                {
+                  "label": "The Burn",
+                  "kind": "death"
+                }
+              ]
+            },
+            {
+              "era": "3188",
+              "type": "event",
+              "text": "Discovery S3 begins. Burnham arrives 930 years out of her own time, alone — Discovery is a year behind her. She spends that year running courier work with a freelancer named Book.",
+              "tags": [
+                {
+                  "label": "Burnham",
                   "kind": "character"
                 }
               ]
             },
             {
-              "era": "2370s",
+              "era": "3189",
               "type": "resolution",
-              "text": "DS9 returns repeatedly: Mirror Spock's reforms let the Alliance crush the Empire, and Terran rebels fight back from a mirror DS9.",
+              "text": "Discovery arrives. The crew find what's left of Starfleet, trace the Burn to a Kelpien child's grief-scream amplified through a dilithium nursery, and reverse the shortage. Burnham takes the captain's chair.",
+              "tags": [
+                {
+                  "label": "Burn solved",
+                  "kind": "resolution"
+                }
+              ]
+            },
+            {
+              "era": "3190",
+              "type": "event",
+              "text": "Discovery S4. A Dark Matter Anomaly carves through inhabited space; it turns out to be a mining rig belonging to Species 10-C, who never knew anyone was there. First contact resolves it. Twenty-one worlds rejoin the Federation and Starfleet Academy reopens.",
+              "tags": [
+                {
+                  "label": "Species 10-C",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "3191",
+              "type": "turning-point",
+              "text": "Discovery S5. A race against the Breen for Progenitor technology — the machinery of the ancient species that seeded humanoid life across the galaxy, including on Earth. Discovery wins it and chooses to hide it again.",
+              "tags": [
+                {
+                  "label": "Progenitors",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "3191+",
+              "type": "resolution",
+              "text": "The series coda jumps decades on: Burnham is an admiral with a son in Starfleet, and Discovery makes one last classified flight into deep space with the Progenitor secret aboard.",
+              "tags": []
+            },
+            {
+              "era": "≈3195",
+              "type": "event",
+              "text": "Starfleet Academy S1. The first new cadet class in over a century, training in a Federation still rebuilding from the Burn. Memory Alpha flags the exact year as unconfirmed; the Academy's own class is dated to 3194.",
+              "tags": [
+                {
+                  "label": "New Academy",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "≈3195–3196",
+              "type": "event",
+              "text": "Starfleet Academy S2, shot in early 2026 and announced as the final season, is expected in 2027. As of September 2026 no other Star Trek series is in production — the furthest point of the timeline is also, for now, its edge.",
+              "tags": [
+                {
+                  "label": "Unaired",
+                  "kind": "event"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b5",
+          "title": "Kelvin Timeline",
+          "color": "#FF5E5B",
+          "films": [
+            "Star Trek (2009)",
+            "Into Darkness",
+            "Beyond"
+          ],
+          "summary": "A true fork: Nero's 2387 ship arrives in 2233 and the 23rd century grows up differently.",
+          "nodes": [
+            {
+              "era": "4 January 2233",
+              "type": "paradox",
+              "text": "The Narada, twenty-five years out of 2387, destroys the USS Kelvin. George Kirk holds the ship steady for twelve minutes so 800 people can escape, and dies the minute his son is born. Everything after this point is a separate reality.",
+              "tags": [
+                {
+                  "label": "Fork point",
+                  "kind": "paradox"
+                },
+                {
+                  "label": "George Kirk",
+                  "kind": "death"
+                }
+              ]
+            },
+            {
+              "era": "2233–2255",
+              "type": "event",
+              "text": "The divergence widens well beyond one dead captain: Starfleet militarises, ship designs change, and Kirk grows up a delinquent in Iowa rather than a golden cadet. Spock's childhood on Vulcan runs harder for the same reason.",
+              "tags": []
+            },
+            {
+              "era": "2258",
+              "type": "death",
+              "text": "Star Trek. Nero destroys Vulcan with red matter — six billion dead, the species reduced to about 10,000 survivors. Spock Prime is stranded to watch it. Kirk goes from stowaway to captain of the Enterprise in a single mission.",
+              "tags": [
+                {
+                  "label": "Vulcan destroyed",
+                  "kind": "death"
+                }
+              ]
+            },
+            {
+              "era": "2259",
+              "type": "event",
+              "text": "Into Darkness. Admiral Marcus wakes Khan seventy years early to build weapons for a Klingon war he wants. Kirk dies of radiation poisoning in the reactor and is revived with Khan's blood; Khan goes back into cryosleep.",
+              "tags": [
+                {
+                  "label": "Khan early",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2260",
+              "type": "event",
+              "text": "The Enterprise begins its own five-year mission — the mission the Prime timeline started five years later, under a captain who reached the chair a decade younger.",
+              "tags": []
+            },
+            {
+              "era": "2263",
+              "type": "resolution",
+              "text": "Beyond. Krall — a lost MACO captain kept alive by alien tech — is stopped at Starbase Yorktown; the Enterprise is destroyed and replaced by the Enterprise-A. No fourth Kelvin film has been made; the new feature announced in November 2025 starts a fresh cast and story instead.",
+              "tags": [
+                {
+                  "label": "Enterprise-A",
+                  "kind": "tech"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b6",
+          "title": "Mirror Universe",
+          "color": "#B07CFF",
+          "films": [
+            "Enterprise: In a Mirror, Darkly",
+            "Discovery S1",
+            "TOS: Mirror, Mirror",
+            "Deep Space Nine mirror arc"
+          ],
+          "summary": "The Terran Empire and its fall — the same people, the same century, none of the restraint.",
+          "nodes": [
+            {
+              "era": "2155",
+              "type": "paradox",
+              "text": "In a Mirror, Darkly. The ISS Enterprise captures the USS Defiant, a Constitution-class ship thrown here from 2268 through an interphasic rift. Hoshi Sato seizes it, poisons Archer, and crowns herself Empress with a ship a century ahead of anything else in the quadrant.",
+              "tags": [
+                {
+                  "label": "Empress Sato",
+                  "kind": "character"
+                },
+                {
+                  "label": "Displaced ship",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2256–2257",
+              "type": "turning-point",
+              "text": "Discovery's Terran arc. Emperor Philippa Georgiou rules an empire at its height. Captain Lorca — a Terran who crossed to the Prime universe and passed for Starfleet — attempts a coup, fails, and Georgiou is carried back to the Prime side by Discovery.",
+              "tags": [
+                {
+                  "label": "Emperor Georgiou",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2267",
+              "type": "event",
+              "text": "Mirror, Mirror. A transporter accident swaps four of Kirk's officers with their Terran counterparts. Kirk tells mirror-Spock the Empire has about 240 years left, and asks him what a single man of conscience can do about it.",
+              "tags": [
+                {
+                  "label": "The wager",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "post-2267",
+              "type": "turning-point",
+              "text": "Mirror-Spock takes Kirk's argument seriously, rises to Commander-in-Chief and reforms the Empire — disarming it in the process, which is exactly how it dies.",
+              "tags": [
+                {
+                  "label": "Spock's reforms",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "2370",
+              "type": "death",
+              "text": "Crossover. The Empire is gone. A defenceless Terran state was overrun by the Klingon-Cardassian Alliance and humans are now slaves; Terok Nor is run by Intendant Kira. Spock's conscience cost his species everything.",
+              "tags": [
+                {
+                  "label": "Empire falls",
+                  "kind": "death"
+                }
+              ]
+            },
+            {
+              "era": "2371–2375",
+              "type": "resolution",
+              "text": "Deep Space Nine's mirror arc. Sisko's counterpart and a Terran rebellion claw territory back across five visits, taking a mirror Defiant and eventually the station itself.",
               "tags": [
                 {
                   "label": "Terran rebellion",
-                  "kind": "faction"
+                  "kind": "resolution"
+                }
+              ]
+            },
+            {
+              "era": "3189 → 2324",
+              "type": "paradox",
+              "text": "Terra Firma. The Guardian of Forever sends Georgiou back to relive her own past and choose differently, then delivers her out of the 32nd century entirely — she resurfaces in the Prime universe's early 24th century, which is where Section 31 finds her.",
+              "tags": [
+                {
+                  "label": "Guardian of Forever",
+                  "kind": "paradox"
                 }
               ]
             }
@@ -2821,106 +3417,125 @@ class Component extends DCLogic {
       "characters": [
         {
           "name": "James T. Kirk",
-          "role": "Captain of the Enterprise in two timelines; lost to the Nexus in 2293, reborn as a Kelvin cadet-captain.",
-          "color": "#ffb02e"
+          "role": "Captain of the Enterprise in two timelines — lost to the Nexus in 2293, and born the day his father died in 2233.",
+          "color": "#FFB02E"
         },
         {
           "name": "Spock",
-          "role": "The constant across all three timelines — his 2387 time-slip creates the Kelvin fork he then mentors.",
-          "color": "#28d7e0"
+          "role": "The constant across every line. His 2387 attempt to save Romulus creates the Kelvin fork he then mentors.",
+          "color": "#3B82C4"
         },
         {
           "name": "Jean-Luc Picard",
-          "role": "Enterprise-D/E captain, ex-Locutus of Borg; dies human, continues as a synthetic golem.",
-          "color": "#ffb02e"
+          "role": "Assimilated in 2366, killed by his own brain in 2400, and rebuilt as a synthetic — the man the Borg Queen never finishes with.",
+          "color": "#3B82C4"
         },
         {
           "name": "Michael Burnham",
-          "role": "Spock's foster sister; starts the Klingon War, then saves all organic life and captains Discovery in the 3190s.",
-          "color": "#b07cff"
-        },
-        {
-          "name": "Khan Noonien Singh",
-          "role": "Augment tyrant of the 1990s — or a child in 2022, depending on which timeline you're standing in.",
-          "color": "#ff2a1f"
-        },
-        {
-          "name": "Philippa Georgiou",
-          "role": "Starfleet captain in Prime; genocidal Emperor in the Mirror; Section 31 operative in between.",
-          "color": "#ff2a1f"
+          "role": "Starts a war in 2256 and ends up 930 years downstream captaining the ship that saves what's left of the Federation.",
+          "color": "#39D98A"
         },
         {
           "name": "Christopher Pike",
-          "role": "Enterprise captain who has seen his own maiming and accepts it to protect the future.",
-          "color": "#b07cff"
-        },
-        {
-          "name": "Benjamin Sisko",
-          "role": "DS9's commander and Emissary of the Prophets; wins the Dominion War, then joins the wormhole aliens.",
-          "color": "#ffb02e"
+          "role": "Sees the exact date and manner of his own crippling, and flies on anyway rather than trade it for a worse future.",
+          "color": "#FFB02E"
         },
         {
           "name": "Kathryn Janeway",
-          "role": "Brought Voyager home across 70,000 light-years; returns as Prodigy's hologram and admiral.",
-          "color": "#ffb02e"
+          "role": "Strands her own crew on principle in 2371, and breaks temporal law in 2404 to undo it.",
+          "color": "#3B82C4"
+        },
+        {
+          "name": "Benjamin Sisko",
+          "role": "Wins the Dominion War by methods Starfleet would rather not examine, then leaves linear time altogether.",
+          "color": "#3B82C4"
+        },
+        {
+          "name": "Philippa Georgiou",
+          "role": "Emperor of the Terran Empire, then a Prime-universe fugitive, then a black-ops asset two centuries out of place.",
+          "color": "#B07CFF"
         },
         {
           "name": "Seven of Nine",
-          "role": "Borg drone turned Voyager crew, Fenris Ranger, and finally captain of the Enterprise-G.",
-          "color": "#39d98a"
+          "role": "Assimilated at six, severed at thirty, a Fenris Ranger at fifty, and captain of the Enterprise-G by 2402.",
+          "color": "#3B82C4"
         },
         {
           "name": "Data",
-          "role": "Soong's android who wanted to be human; dies in Nemesis, dies again (at peace) in Picard.",
-          "color": "#9aa6b6"
+          "role": "Dies twice — once for Picard in 2379, once at his own request in 2400 — and comes back a third time in 2401.",
+          "color": "#3B82C4"
         },
         {
-          "name": "La'an Noonien-Singh",
-          "role": "SNW security chief and Khan's descendant — guardian of the very timeline shift that saves her ancestor.",
-          "color": "#b07cff"
+          "name": "Khan Noonien Singh",
+          "role": "Ruled a quarter of Earth, was marooned in 2267, and in the Kelvin line was woken seventy years early as a weapons designer.",
+          "color": "#FF5E5B"
+        },
+        {
+          "name": "Q",
+          "role": "Opens the franchise by putting humanity on trial and closes Picard by telling his son the trial never ended.",
+          "color": "#B07CFF"
+        },
+        {
+          "name": "The Borg Queen",
+          "role": "Killed in 2373, avenged across three centuries, and finally split into a hostile Collective and a benevolent one.",
+          "color": "#3B82C4"
+        },
+        {
+          "name": "Jonathan Archer",
+          "role": "Flies humanity's first warp-5 ship and signs the charter that turns three species' truce into the Federation.",
+          "color": "#5BC0BE"
         }
       ],
       "items": [
         {
           "name": "USS Enterprise",
-          "desc": "NX-01 through NCC-1701-G: the flagship lineage every era rebuilds."
+          "desc": "NX-01 through NCC-1701-G — the flagship lineage every era destroys and rebuilds."
         },
         {
           "name": "Genesis Device",
-          "desc": "Terraforming torpedo that creates life from lifelessness — and resurrects Spock."
-        },
-        {
-          "name": "Red matter",
-          "desc": "One drop makes a black hole; destroyed Nero's ship, birthed the Kelvin timeline."
-        },
-        {
-          "name": "SS Botany Bay",
-          "desc": "Khan's sleeper ship — adrift since the 1990s (or the 2040s, post-shift)."
+          "desc": "Terraforming torpedo that makes life out of lifelessness, and resurrects Spock by accident."
         },
         {
           "name": "Spore drive",
-          "desc": "Discovery's mycelial jump drive; instantaneous travel anywhere in the galaxy."
+          "desc": "Discovery's mycelial jump drive — instant travel anywhere, and the reason the ship had to be erased from history."
         },
         {
-          "name": "The Borg Collective",
-          "desc": "Hive-mind cyborgs; assimilated Picard, invaded 2063, finally beaten in 2402."
+          "name": "Red matter",
+          "desc": "Spock's singularity-in-a-drop. Fails to save Romulus, succeeds in creating a second timeline."
         },
         {
-          "name": "Bajoran wormhole",
-          "desc": "Stable passage to the Gamma Quadrant beside DS9; home of the Prophets."
+          "name": "The Nexus",
+          "desc": "An energy ribbon outside time. Whatever you want, forever — which is how Kirk survives seventy-eight years to die in 2371."
         },
         {
-          "name": "Dilithium / The Burn",
-          "desc": "The crystal that powers warp — until 3069, when almost all of it exploded."
+          "name": "Dilithium",
+          "desc": "The crystal every warp core needs. When it all detonated at once in 3069, the galaxy stopped."
+        },
+        {
+          "name": "The Guardian of Forever",
+          "desc": "A sentient time portal that both TOS and Discovery use to rewrite a life — and that moved itself off Earth to stop being used."
+        },
+        {
+          "name": "Progenitor technology",
+          "desc": "The machinery of the species that seeded humanoid life across the galaxy. Found in 3191, and immediately hidden again."
+        },
+        {
+          "name": "The Defiant (NCC-1764)",
+          "desc": "A Constitution-class ship that fell through a rift into the Mirror Universe a century early and handed the Terran Empire a technological jump."
+        },
+        {
+          "name": "Transphasic torpedo",
+          "desc": "31st-century weapon Admiral Janeway carries back to 2378 — the Borg's counter to it never arrives."
         }
       ],
       "themes": [
-        "<b>Branches need a cause:</b> if Nero destroying one ship in 2233 forks a timeline, moving Khan's whole life 55 years must too — the core argument for counting Discovery/SNW as a third line.",
-        "<b>Time pushes back:</b> per SNW, repeated tampering with the Eugenics Wars made key events 'reassert' themselves later — Khan still rises, just decades late.",
-        "<b>The First Contact loop:</b> the Enterprise-E crew help launch the warp flight their own history depends on — Cochrane builds the future that comes back to save him.",
-        "<b>The whale loop:</b> Kirk's crew fetch whales from 1986 so a probe in 2286 finds someone to talk to — cause and effect shrug.",
-        "<b>The Mirror is parallel, not branched:</b> the Terran Empire diverged so early it's a separate universe you cross into, not a timeline you create.",
-        "<b>Canon is what's on screen:</b> showrunners may insist nothing changed, but once a child Khan appears in 2022, the map has to draw the line."
+        "Branches need a cause. If one Romulan ship destroying one Federation vessel in 2233 forks a whole reality, then moving Khan's entire life several decades later must fork one too — which is the strongest argument for reading Discovery and Strange New Worlds as their own line rather than as the Prime past.",
+        "Time pushes back. Strange New Worlds' Sera has been sabotaging Earth's 20th century since 1992 and keeps failing: events reassert themselves in a different decade. Khan still rises — just late.",
+        "The concurrency problem. Between 2369 and 2375 there are three series running at once. Release order tells you nothing about what is happening simultaneously; the Dominion War is being fought while Voyager is 70,000 light years away and cannot help.",
+        "Every era's ending is the next era's founding trauma. Wolf 359 makes Sisko, the synth ban makes Picard's exile, the Burn makes the 32nd century, and the destruction of Romulus makes both Picard S1 and the entire Kelvin timeline.",
+        "The Mirror Universe is a moral argument, not a gimmick. Kirk asks one man to act on conscience in 2267; the Empire is destroyed and his species enslaved by 2370. The show never lets that be a clean win.",
+        "Star Trek keeps its continuity clean by classifying it. Discovery's crew are ordered never to be spoken of, the Progenitor technology is rehidden, Section 31's records don't exist — the franchise's tidiest retcon device is an order not to talk.",
+        "Two of the fourteen films are the same event from two directions: Generations' prologue and its main story sit seventy-eight years apart, and First Contact plays out in 2373 and 2063 at once."
       ]
     },
     marvel: {
@@ -6178,7 +6793,7 @@ class Component extends DCLogic {
     } else if (kind === 'apes') {
       body = `<g opacity="0.92"><circle cx="86" cy="76" r="32" fill="${a(0.45)}" filter="url(#f-${kind})"/><circle cx="86" cy="76" r="14" fill="${a(0.7)}"/><path d="M310 258 C296 220 288 188 278 152 L262 96 L286 88 L302 146 C310 178 318 214 326 250 Z" fill="url(#g-${kind})" stroke="${a(0.35)}" stroke-width="1"/><circle cx="272" cy="82" r="17" fill="${accent}" filter="url(#f-${kind})" opacity="0.8"/><circle cx="272" cy="82" r="8" fill="url(#g-${kind})"/><g fill="url(#g-${kind})"><path d="M186 262 L200 200 L214 262 Z"/><path d="M226 264 L238 214 L250 264 Z"/><path d="M152 266 L162 224 L172 266 Z"/></g><path d="M0 300 L0 262 C80 246 170 278 260 258 C320 246 360 258 400 250 L400 300 Z" fill="url(#g-${kind})"/></g>`;
     } else if (kind === 'startrek') {
-      body = `<g opacity="0.95"><path d="M200 48 L262 236 C236 204 164 204 138 236 Z" fill="url(#g-${kind})" stroke="${a(0.45)}" stroke-width="1.4"/><path d="M200 92 L228 196 C212 182 188 182 172 196 Z" fill="${a(0.55)}" filter="url(#f-${kind})"/><ellipse cx="200" cy="150" rx="150" ry="44" fill="none" stroke="${a(0.30)}" stroke-width="1.2" transform="rotate(-18 200 150)"/><circle cx="318" cy="104" r="7" fill="${accent}" filter="url(#f-${kind})"/><circle cx="318" cy="104" r="3.4" fill="url(#g-${kind})"/><circle cx="96" cy="210" r="4" fill="${a(0.7)}"/><circle cx="140" cy="84" r="2.6" fill="${a(0.55)}"/><circle cx="282" cy="236" r="2.6" fill="${a(0.5)}"/><path d="M0 300 L0 268 C90 252 180 280 268 262 C322 252 366 262 400 254 L400 300 Z" fill="url(#g-${kind})"/></g>`;
+      body = `<g opacity="0.95"><circle cx="150" cy="60" r="2.2" fill="${a(0.5)}"/><circle cx="188" cy="96" r="1.6" fill="${a(0.4)}"/><circle cx="246" cy="54" r="2.8" fill="${a(0.6)}"/><circle cx="330" cy="70" r="1.8" fill="${a(0.45)}"/><circle cx="372" cy="132" r="2.4" fill="${a(0.5)}"/><circle cx="292" cy="44" r="1.5" fill="${a(0.35)}"/><circle cx="136" cy="148" r="1.7" fill="${a(0.4)}"/><circle cx="356" cy="200" r="2" fill="${a(0.4)}"/><ellipse cx="286" cy="336" rx="176" ry="40" fill="none" stroke="${a(0.22)}" stroke-width="1.1" transform="rotate(-14 286 336)"/><circle cx="286" cy="336" r="112" fill="url(#g-${kind})" stroke="${a(0.34)}" stroke-width="1.2"/><path d="M118 322 A176 40 -14 0 0 454 350" fill="none" stroke="${a(0.5)}" stroke-width="2.4" stroke-linecap="round"/><path d="M120 250 C176 240 200 222 216 202" fill="none" stroke="${a(0.5)}" stroke-width="2.6" stroke-linecap="round"/><path d="M116 292 C176 272 200 240 218 210" fill="none" stroke="${a(0.28)}" stroke-width="2" stroke-linecap="round"/><path d="M138 322 C190 290 210 250 222 216" fill="none" stroke="${a(0.16)}" stroke-width="1.6" stroke-linecap="round"/><g transform="translate(-46 12) rotate(-22 272 160)"><path d="M262 176 L240 186 M264 180 L246 202" stroke="${a(0.34)}" stroke-width="3" stroke-linecap="round"/><rect x="222" y="180" width="72" height="9.5" rx="4.75" fill="url(#g-${kind})" stroke="${a(0.42)}" stroke-width="1"/><circle cx="224" cy="184.75" r="6.5" fill="${accent}" filter="url(#f-${kind})" opacity="0.85"/><rect x="228" y="198" width="64" height="8.5" rx="4.25" fill="url(#g-${kind})" stroke="${a(0.3)}" stroke-width="0.9" opacity="0.85"/><circle cx="230" cy="202.25" r="5.5" fill="${accent}" filter="url(#f-${kind})" opacity="0.6"/><path d="M274 152 L292 152 L296 166 L278 166 Z" fill="url(#g-${kind})" stroke="${a(0.3)}" stroke-width="0.9"/><rect x="250" y="162" width="66" height="17" rx="8.5" fill="url(#g-${kind})" stroke="${a(0.45)}" stroke-width="1.1"/><circle cx="313" cy="170.5" r="4.6" fill="${accent}" filter="url(#f-${kind})" opacity="0.75"/><ellipse cx="276" cy="142" rx="54" ry="15" fill="url(#g-${kind})" stroke="${a(0.58)}" stroke-width="1.4"/><ellipse cx="276" cy="138" rx="20" ry="5.6" fill="${a(0.55)}"/></g></g>`;
     } else if (kind === 'marvel') {
       body = `<g opacity="0.95"><circle cx="200" cy="150" r="104" fill="url(#g-${kind})" stroke="${a(0.4)}" stroke-width="1.6"/><circle cx="200" cy="150" r="76" fill="none" stroke="${a(0.5)}" stroke-width="1.4"/><circle cx="200" cy="150" r="50" fill="${a(0.22)}" stroke="${a(0.4)}" stroke-width="1.2"/><path d="M200 108 L212 138 L244 140 L219 160 L228 192 L200 173 L172 192 L181 160 L156 140 L188 138 Z" fill="${accent}" filter="url(#f-${kind})" opacity="0.8"/><path d="M200 112 L211 139 L240 141 L217 159 L225 188 L200 171 L175 188 L183 159 L160 141 L189 139 Z" fill="url(#g-${kind})"/><circle cx="322" cy="86" r="3" fill="${a(0.6)}"/><circle cx="86" cy="94" r="2.4" fill="${a(0.5)}"/><circle cx="316" cy="228" r="2.6" fill="${a(0.55)}"/><path d="M0 300 L0 272 C96 258 190 284 276 266 C326 256 368 264 400 258 L400 300 Z" fill="url(#g-${kind})"/></g>`;
     } else if (kind === 'starwars') {
