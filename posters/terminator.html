@@ -653,13 +653,16 @@
               </div>
             </div>
           </div>
-          <button onclick="{{ featured.onPrev }}" aria-label="Previous spotlight map" style="{{ featured.prevStyle }}" style-hover="background:rgba(14,17,23,0.96);color:#ffffff;border-color:rgba(255,255,255,0.34);">&#8249;</button>
-          <button onclick="{{ featured.onNext }}" aria-label="Next spotlight map" style="{{ featured.nextStyle }}" style-hover="background:rgba(14,17,23,0.96);color:#ffffff;border-color:rgba(255,255,255,0.34);">&#8250;</button>
         </div>
         <div style="{{ featured.dotsWrapStyle }}">
-          <sc-for list="{{ featured.dots }}" as="d" hint-placeholder-count="11">
-            <button onclick="{{ d.onClick }}" aria-label="{{ d.label }}" title="{{ d.label }}" style="{{ d.btnStyle }}"><span style="{{ d.barStyle }}"></span></button>
-          </sc-for>
+          <span style="{{ featured.counterSpacerStyle }}"></span>
+          <button onclick="{{ featured.onPrev }}" aria-label="Previous spotlight map" style="{{ featured.prevStyle }}" style-hover="background:rgba(255,255,255,0.1);color:#ffffff;border-color:rgba(255,255,255,0.3);">&#8249;</button>
+          <span style="{{ featured.dotsRowStyle }}">
+            <sc-for list="{{ featured.dots }}" as="d" hint-placeholder-count="11">
+              <button onclick="{{ d.onClick }}" aria-label="{{ d.label }}" title="{{ d.label }}" style="{{ d.btnStyle }}"><span style="{{ d.barStyle }}"></span></button>
+            </sc-for>
+          </span>
+          <button onclick="{{ featured.onNext }}" aria-label="Next spotlight map" style="{{ featured.nextStyle }}" style-hover="background:rgba(255,255,255,0.1);color:#ffffff;border-color:rgba(255,255,255,0.3);">&#8250;</button>
           <span style="{{ featured.counterStyle }}">{{ featured.counter }}</span>
         </div>
       </section>
@@ -7729,11 +7732,10 @@ class Component extends DCLogic {
     const shift = 28;
     const pad = s.isNarrow ? '24px' : '34px';
     const arrowBase = {
-      position:'absolute', top:'50%', zIndex:6, width:'42px', height:'42px', padding:'0 0 3px',
-      borderRadius:'50%', border:'1px solid rgba(255,255,255,0.16)', background:'rgba(9,11,15,0.74)',
-      backdropFilter:'blur(6px)', WebkitBackdropFilter:'blur(6px)', color:'#C4CDD8',
-      fontFamily:"'DM Sans', sans-serif", fontSize:'26px', lineHeight:'1',
-      display: s.isNarrow ? 'none' : 'flex', alignItems:'center', justifyContent:'center',
+      flex:'none', width:'34px', height:'34px', padding:'0 0 3px', margin:'0',
+      borderRadius:'50%', border:'1px solid rgba(255,255,255,0.14)', background:'rgba(255,255,255,0.04)',
+      color:'#9DB0C4', fontFamily:"'DM Sans', sans-serif", fontSize:'22px', lineHeight:'1',
+      display:'flex', alignItems:'center', justifyContent:'center',
       cursor:'pointer', transition:'all .16s ease',
     };
     const featured = {
@@ -7782,10 +7784,12 @@ class Component extends DCLogic {
         fontFamily:"'Oswald', sans-serif", fontWeight:'500', fontSize:'15px', letterSpacing:'0.05em',
         textTransform:'uppercase', color: fac,
       },
-      prevStyle: { ...arrowBase, left:'14px', transform:'translateY(-50%)' },
-      nextStyle: { ...arrowBase, right:'14px', transform:'translateY(-50%)' },
-      dotsWrapStyle: { display:'flex', alignItems:'center', justifyContent:'center', flexWrap:'wrap', gap:'2px', marginTop:'10px' },
-      counterStyle: { display: s.isNarrow ? 'none' : 'inline-block', marginLeft:'10px', fontFamily:"'JetBrains Mono', monospace", fontSize:'11.5px', letterSpacing:'0.14em', color:'#6b7686' },
+      prevStyle: { ...arrowBase, marginRight:'6px' },
+      nextStyle: { ...arrowBase, marginLeft:'6px' },
+      dotsWrapStyle: { display:'flex', alignItems:'center', justifyContent:'center', flexWrap:'wrap', gap:'2px', marginTop:'12px' },
+      dotsRowStyle: { display:'flex', alignItems:'center', justifyContent:'center', flexWrap:'wrap', gap:'2px' },
+      counterStyle: { display: s.isNarrow ? 'none' : 'inline-block', minWidth:'56px', marginLeft:'12px', textAlign:'left', fontFamily:"'JetBrains Mono', monospace", fontSize:'11.5px', letterSpacing:'0.14em', color:'#6b7686' },
+      counterSpacerStyle: { display: s.isNarrow ? 'none' : 'inline-block', minWidth:'56px', marginRight:'12px' },
       dots: spotIds.map((id, i) => ({
         label: (this.data[id] || {}).title || id,
         onClick: this.gotoSpot(i),
