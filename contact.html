@@ -629,28 +629,40 @@
         <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b7686;">try <span onclick="{{ tryTerminator }}" style="color:#9DB0C4;cursor:pointer;border-bottom:1px dashed rgba(157,176,196,0.5);">Terminator</span></div>
       </section>
 
-      <!-- FEATURED -->
-      <section style="margin-top:clamp(20px,4vw,40px);">
-        <div onclick="{{ featured.onOpen }}" style="position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:0;border-radius:20px;overflow:hidden;border:1px solid rgba(255,42,31,0.28);background:#0c0e13;cursor:pointer;box-shadow:0 30px 80px -40px rgba(255,42,31,0.4);transition:transform .2s ease,border-color .2s ease;" style-hover="transform:translateY(-3px);border-color:rgba(255,42,31,0.55);">
-          <div style="position:relative;min-height:300px;padding:34px;display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(135% 135% at 82% 96%, rgba(255,42,31,0.32), transparent 56%),linear-gradient(135deg,#170a09,#08090c);">
-            <div style="position:absolute;inset:0;opacity:0.45;background:repeating-linear-gradient(115deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 9px);pointer-events:none;"></div>
-            {{ featured.art }}
-            <span style="position:relative;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#FF9C92;">Spotlight Map</span>
-            <div style="position:relative;">
-              <div style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(40px,5vw,68px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;">{{ featured.title }}</div>
-              <div style="margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#FFB7AF;">{{ featured.meta }}</div>
+      <!-- FEATURED (spotlight carousel) -->
+      <section style="margin-top:clamp(20px,4vw,40px);" onmouseenter="{{ featured.onEnter }}" onmouseleave="{{ featured.onLeave }}">
+        <div style="{{ featured.frameStyle }}">
+          <div onclick="{{ featured.onOpen }}" style="{{ featured.cardStyle }}" style-hover="transform:translateY(-3px);">
+            <div id="spot-slide" style="{{ featured.slideStyle }}">
+              <div style="{{ featured.heroStyle }}">
+                <div style="position:absolute;inset:0;opacity:0.45;background:repeating-linear-gradient(115deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 9px);pointer-events:none;"></div>
+                {{ featured.art }}
+                <span style="{{ featured.eyebrowStyle }}">Spotlight Map</span>
+                <div style="position:relative;">
+                  <div style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(38px,5vw,68px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;">{{ featured.title }}</div>
+                  <div style="{{ featured.metaStyle }}">{{ featured.meta }}</div>
+                </div>
+              </div>
+              <div style="{{ featured.bodyStyle }}">
+                <p style="margin:0;color:#C4CDD8;font-size:17px;line-height:1.6;text-wrap:pretty;">{{ featured.tagline }}</p>
+                <p style="margin:0;color:#8b97a6;font-size:15px;line-height:1.6;text-wrap:pretty;">{{ featured.blurb }}</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                  <sc-for list="{{ featured.branchChips }}" as="chip" hint-placeholder-count="4">
+                    <span style="{{ chip.style }}">{{ chip.label }}</span>
+                  </sc-for>
+                </div>
+                <div style="{{ featured.ctaStyle }}">Open the map <span style="font-size:18px;">&#8594;</span></div>
+              </div>
             </div>
           </div>
-          <div style="padding:34px;display:flex;flex-direction:column;gap:18px;justify-content:center;">
-            <p style="margin:0;color:#C4CDD8;font-size:17px;line-height:1.6;text-wrap:pretty;">{{ featured.tagline }}</p>
-            <p style="margin:0;color:#8b97a6;font-size:15px;line-height:1.6;text-wrap:pretty;">{{ featured.blurb }}</p>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <sc-for list="{{ featured.branchChips }}" as="chip" hint-placeholder-count="4">
-                <span style="{{ chip.style }}">{{ chip.label }}</span>
-              </sc-for>
-            </div>
-            <div style="display:inline-flex;align-items:center;gap:9px;margin-top:6px;font-family:'Oswald',sans-serif;font-weight:500;font-size:15px;letter-spacing:0.05em;text-transform:uppercase;color:#FF7A6E;">Open the map <span style="font-size:18px;">→</span></div>
-          </div>
+          <button onclick="{{ featured.onPrev }}" aria-label="Previous spotlight map" style="{{ featured.prevStyle }}" style-hover="background:rgba(14,17,23,0.96);color:#ffffff;border-color:rgba(255,255,255,0.34);">&#8249;</button>
+          <button onclick="{{ featured.onNext }}" aria-label="Next spotlight map" style="{{ featured.nextStyle }}" style-hover="background:rgba(14,17,23,0.96);color:#ffffff;border-color:rgba(255,255,255,0.34);">&#8250;</button>
+        </div>
+        <div style="{{ featured.dotsWrapStyle }}">
+          <sc-for list="{{ featured.dots }}" as="d" hint-placeholder-count="11">
+            <button onclick="{{ d.onClick }}" aria-label="{{ d.label }}" title="{{ d.label }}" style="{{ d.btnStyle }}"><span style="{{ d.barStyle }}"></span></button>
+          </sc-for>
+          <span style="{{ featured.counterStyle }}">{{ featured.counter }}</span>
         </div>
       </section>
 
@@ -1640,6 +1652,8 @@ class Component extends DCLogic {
     isNarrow: (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth <= 1000 : false,
     woOrder: 'first', woData: null, woLoading: false, woWatched: {},
     activeId: 'terminator',
+    // hub spotlight carousel
+    spotIdx: 0, spotPhase: 'idle', spotDir: 1, spotPaused: false, spotH: null,
     // posters store
     posters: [], postersLoaded: false, posterId: null, styleKey: null, galleryIdx: 0, checkoutBusy: false, thanks: null,
     search: '',
@@ -6900,6 +6914,66 @@ class Component extends DCLogic {
   // ---------- actions ----------
   toggleNav = () => this.setState(s => ({ navOpen: !s.navOpen }));
   closeNav = () => { if (this.state.navOpen) this.setState({ navOpen:false }); };
+
+  // ---------- hub spotlight carousel ----------
+  spotIds = () => Object.keys(this.data);
+  spotCount = () => this.spotIds().length;
+  spotIndex = () => { const n = this.spotCount() || 1; return ((this.state.spotIdx % n) + n) % n; };
+  spotReduced = () => { try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e) { return false; } };
+  transitionSpot = (next, dir) => {
+    const n = this.spotCount();
+    if (n < 2) return;
+    if ((this.state.spotPhase || 'idle') !== 'idle') return;
+    const target = ((next % n) + n) % n;
+    if (target === this.spotIndex()) return;
+    if (this.spotReduced()) { this.setState({ spotIdx: target }); return; }
+    // lock the card at its current height so the swap doesn't jolt the page
+    this.setState({ spotPhase:'out', spotDir: dir > 0 ? 1 : -1, spotH: this.spotSlideH() });
+    if (this.spotT1) clearTimeout(this.spotT1);
+    this.spotT1 = setTimeout(() => {
+      this.setState({ spotIdx: target, spotPhase:'in' });
+      if (this.spotRaf) cancelAnimationFrame(this.spotRaf);
+      this.spotRaf = requestAnimationFrame(() => {
+        this.spotRaf = requestAnimationFrame(() => {
+          // measure the incoming card and glide the container to it
+          this.setState({ spotPhase:'idle', spotH: this.spotSlideH() });
+          if (this.spotT2) clearTimeout(this.spotT2);
+          this.spotT2 = setTimeout(() => this.setState({ spotH: null }), 460);
+        });
+      });
+    }, 200);
+  };
+  spotSlideH = () => {
+    try {
+      const el = document.getElementById('spot-slide');
+      return el ? Math.round(el.getBoundingClientRect().height) : null;
+    } catch(e) { return null; }
+  };
+  startSpotTimer = () => {
+    this.stopSpotTimer();
+    this.spotTimer = setInterval(() => {
+      if (this.state.screen !== 'hub') return;
+      if (this.state.spotPaused) return;
+      if (this.props.ambientMotion === false) return;
+      if (this.spotReduced()) return;
+      try { if (document.hidden) return; } catch(e) {}
+      this.transitionSpot(this.state.spotIdx + 1, 1);
+    }, 7000);
+  };
+  stopSpotTimer = () => { if (this.spotTimer) { clearInterval(this.spotTimer); this.spotTimer = null; } };
+  bumpSpotTimer = () => { if (this.spotTimer) this.startSpotTimer(); };
+  nextSpot = (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.bumpSpotTimer(); this.transitionSpot(this.state.spotIdx + 1, 1); };
+  prevSpot = (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.bumpSpotTimer(); this.transitionSpot(this.state.spotIdx - 1, -1); };
+  gotoSpot = (i) => (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    this.bumpSpotTimer();
+    const n = this.spotCount() || 1;
+    const cur = this.spotIndex();
+    const fwd = (((i - cur) % n) + n) % n;
+    this.transitionSpot(i, fwd <= n / 2 ? 1 : -1);
+  };
+  pauseSpot = () => { if (!this.state.spotPaused) this.setState({ spotPaused:true }); };
+  resumeSpot = () => { if (this.state.spotPaused) this.setState({ spotPaused:false }); };
   goHub = () => { this.setState({ screen:'hub' }); this.pushRoute('/'); this.toTop(); };
   goExplore = () => { this.setState({ screen:'timeline' }); this.pushRoute(this.routeFor('timeline', this.state.activeId)); this.toTop(); };
   goContribute = (prefill) => { this.setState(s=>({ screen:'contribute', submitted:false, form: typeof prefill==='string'? {...s.form, type:'new', name:prefill} : s.form })); this.pushRoute('/contribute'); this.toTop(); };
@@ -7334,6 +7408,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.initRouting();
+    this.startSpotTimer();
     try {
       const mq = window.matchMedia('(max-width: 1000px)');
       const applyMQ = () => this.setState({ isNarrow: mq.matches, navOpen: false });
@@ -7365,6 +7440,14 @@ class Component extends DCLogic {
       }
     } catch(e){}
     this.refreshCommunity();
+  }
+
+  componentWillUnmount() {
+    this.stopSpotTimer();
+    if (this.spotT1) { clearTimeout(this.spotT1); this.spotT1 = null; }
+    if (this.spotT2) { clearTimeout(this.spotT2); this.spotT2 = null; }
+    if (this.spotRaf) { try { cancelAnimationFrame(this.spotRaf); } catch(e) {} this.spotRaf = null; }
+    if (this.toastTimer) { clearTimeout(this.toastTimer); this.toastTimer = null; }
   }
 
   adoptSession = async (authUser) => {
@@ -7637,12 +7720,88 @@ class Component extends DCLogic {
     const a = this.data[s.activeId] || this.data.terminator;
     const nodeGap = compact ? '14px' : '22px';
 
-    // featured (hub spotlight)
+    // featured (hub spotlight carousel)
+    const spotIds = Object.keys(this.data);
+    const spotN = spotIds.length || 1;
+    const si = ((s.spotIdx % spotN) + spotN) % spotN;
+    const fa = this.data[spotIds[si]] || a;
+    const fac = fa.accent || accent;
+    const phase = s.spotPhase || 'idle';
+    const dir = s.spotDir > 0 ? 1 : -1;
+    const shift = 28;
+    const pad = s.isNarrow ? '24px' : '34px';
+    const arrowBase = {
+      position:'absolute', top:'50%', zIndex:6, width:'42px', height:'42px', padding:'0 0 3px',
+      borderRadius:'50%', border:'1px solid rgba(255,255,255,0.16)', background:'rgba(9,11,15,0.74)',
+      backdropFilter:'blur(6px)', WebkitBackdropFilter:'blur(6px)', color:'#C4CDD8',
+      fontFamily:"'DM Sans', sans-serif", fontSize:'26px', lineHeight:'1',
+      display: s.isNarrow ? 'none' : 'flex', alignItems:'center', justifyContent:'center',
+      cursor:'pointer', transition:'all .16s ease',
+    };
     const featured = {
-      title: a.title, meta: a.meta, tagline: a.tagline, blurb: a.blurb,
-      onOpen: () => this.openFranchise(a.id),
-      art: this.makeArtEl(this.kindFor(a.id), a.accent, 'hero'),
-      branchChips: a.branches.map(b => ({ label: b.title, style: this.branchChipStyle(b.color) })),
+      title: fa.title, meta: fa.meta, tagline: fa.tagline, blurb: fa.blurb,
+      onOpen: () => this.openFranchise(fa.id),
+      art: this.makeArtEl(this.kindFor(fa.id), fac, 'hero'),
+      branchChips: fa.branches.map(b => ({ label: b.title, style: this.branchChipStyle(b.color) })),
+      counter: String(si + 1).padStart(2, '0') + ' / ' + String(spotN).padStart(2, '0'),
+      onEnter: this.pauseSpot,
+      onLeave: this.resumeSpot,
+      onPrev: this.prevSpot,
+      onNext: this.nextSpot,
+      frameStyle: { position:'relative' },
+      cardStyle: {
+        position:'relative', borderRadius:'20px', overflow:'hidden',
+        border:`1px solid ${this.rgba(fac, 0.28)}`, background:'#0c0e13', cursor:'pointer',
+        boxShadow:`0 30px 80px -40px ${this.rgba(fac, 0.45)}`,
+        height: s.spotH ? s.spotH + 'px' : 'auto',
+        transition:'height .4s cubic-bezier(.22,.61,.36,1), transform .2s ease, border-color .35s ease, box-shadow .35s ease',
+      },
+      slideStyle: {
+        display:'grid',
+        gridTemplateColumns: s.isNarrow ? 'minmax(0,1fr)' : 'minmax(0,1.05fr) minmax(0,1fr)',
+        gap:'0',
+        opacity: phase === 'idle' ? 1 : 0,
+        transform: phase === 'out' ? `translateX(${-shift * dir}px)`
+                 : phase === 'in'  ? `translateX(${ shift * dir}px)`
+                 : 'translateX(0)',
+        transition: phase === 'in' ? 'none' : 'opacity .2s ease, transform .38s cubic-bezier(.22,.61,.36,1)',
+        willChange:'opacity, transform',
+      },
+      heroStyle: {
+        position:'relative', minHeight: s.isNarrow ? '250px' : '300px', padding: pad,
+        display:'flex', flexDirection:'column', justifyContent:'space-between',
+        background:`radial-gradient(135% 135% at 82% 96%, ${this.rgba(fac,0.32)}, transparent 56%), linear-gradient(135deg, ${this.rgba(fac,0.16)}, rgba(8,9,12,0) 62%), linear-gradient(#08090c, #08090c)`,
+        transition:'background .45s ease',
+      },
+      bodyStyle: { padding: pad, display:'flex', flexDirection:'column', gap:'18px', justifyContent:'center' },
+      eyebrowStyle: {
+        position:'relative', fontFamily:"'JetBrains Mono', monospace", fontSize:'11.5px', fontWeight:'600',
+        letterSpacing:'0.2em', textTransform:'uppercase', color: fac, textShadow:`0 0 18px ${this.rgba(fac,0.6)}`,
+      },
+      metaStyle: { marginTop:'10px', fontFamily:"'JetBrains Mono', monospace", fontSize:'13px', color: this.rgba(fac, 0.92) },
+      ctaStyle: {
+        display:'inline-flex', alignItems:'center', gap:'9px', marginTop:'6px',
+        fontFamily:"'Oswald', sans-serif", fontWeight:'500', fontSize:'15px', letterSpacing:'0.05em',
+        textTransform:'uppercase', color: fac,
+      },
+      prevStyle: { ...arrowBase, left:'14px', transform:'translateY(-50%)' },
+      nextStyle: { ...arrowBase, right:'14px', transform:'translateY(-50%)' },
+      dotsWrapStyle: { display:'flex', alignItems:'center', justifyContent:'center', flexWrap:'wrap', gap:'2px', marginTop:'10px' },
+      counterStyle: { display: s.isNarrow ? 'none' : 'inline-block', marginLeft:'10px', fontFamily:"'JetBrains Mono', monospace", fontSize:'11.5px', letterSpacing:'0.14em', color:'#6b7686' },
+      dots: spotIds.map((id, i) => ({
+        label: (this.data[id] || {}).title || id,
+        onClick: this.gotoSpot(i),
+        btnStyle: {
+          display:'block', padding:'8px 3px', margin:'0', border:'none',
+          background:'transparent', cursor:'pointer', lineHeight:'0', fontSize:'0',
+        },
+        barStyle: {
+          display:'block', width: i === si ? '26px' : '8px', height:'8px',
+          borderRadius:'999px', background: i === si ? fac : 'rgba(255,255,255,0.2)',
+          boxShadow: i === si ? `0 0 14px ${this.rgba(fac, 0.75)}` : 'none',
+          transition:'width .32s cubic-bezier(.22,.61,.36,1), background-color .32s ease, box-shadow .32s ease',
+        },
+      })),
     };
 
     // hub grid
