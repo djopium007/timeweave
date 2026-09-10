@@ -15,6 +15,18 @@
       "destination": "/contact.html"
     },
     {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/print-guide",
+      "destination": "/print-guide.html"
+    },
+    {
       "source": "/admin",
       "destination": "/index.html"
     },

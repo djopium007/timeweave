@@ -397,9 +397,9 @@ async function fetchPosters() {
 const today = new Date().toISOString().slice(0, 10);
 const sitemapUrls = [
   ...routes.filter((r) => !r.noindex).map((r) => ({ loc: r.url, priority: r.priority || '0.5' })),
-  { loc: '/print-guide.html', priority: '0.3' },
-  { loc: '/privacy.html', priority: '0.2' },
-  { loc: '/terms.html', priority: '0.2' },
+  { loc: '/print-guide', priority: '0.3' },
+  { loc: '/privacy', priority: '0.2' },
+  { loc: '/terms', priority: '0.2' },
 ];
 
 emit('sitemap.xml',

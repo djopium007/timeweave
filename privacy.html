@@ -3,8 +3,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy · ReelOrder</title>
-<link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
+<meta name="description" content="What ReelOrder collects when you browse, sign in, contribute or buy a poster — and what happens to it.">
+<link rel="canonical" href="https://reelorder.com/privacy">
+<meta name="robots" content="index,follow">
+<link rel="icon" type="image/svg+xml" href="/assets/brand/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=DM+Sans:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
@@ -17,35 +20,99 @@
   h2{font-family:'Oswald',sans-serif;font-weight:600;font-size:20px;margin:36px 0 8px;text-transform:uppercase;letter-spacing:.04em}
   .meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b7686;margin-bottom:32px}
   p,li{color:#A9B4C2}
+  ul{padding-left:20px}
+  li{margin-bottom:6px}
   .back{display:inline-block;margin-bottom:28px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#9DB0C4;text-decoration:none}
   .back:hover{color:#E9EDF3}
+  .tldr{border-left:3px solid #FF2A1F;background:rgba(255,42,31,0.06);padding:16px 18px;border-radius:0 8px 8px 0;margin:0 0 8px}
+  .tldr p{margin:0;color:#E9EDF3}
+  .tldr ul{margin:10px 0 0}
+  .tldr li{color:#A9B4C2}
+  code{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:3px;color:#C9D4E2}
+  .scroll{overflow-x:auto;margin:14px 0 0}
+  table{border-collapse:collapse;width:100%;min-width:460px;font-size:14.5px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,0.08);vertical-align:top}
+  th{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#6b7686;font-weight:400;border-bottom-color:rgba(255,255,255,0.16)}
+  td{color:#A9B4C2}
+  td:first-child{color:#E9EDF3;white-space:nowrap}
+  .foot{margin-top:44px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.08);font-family:'JetBrains Mono',monospace;font-size:12px;color:#5e6878}
+  .foot a{color:#9DB0C4;text-decoration:none}
+  .foot a:hover{color:#E9EDF3}
 </style></head><body><main>
 <a class="back" href="/">&larr; reelorder.com</a>
 <h1>Privacy <span>Policy</span></h1>
-<div class="meta">Last updated 29 August 2026</div>
+<div class="meta">Last updated 10 September 2026</div>
 
-<p>ReelOrder (reelorder.com) is a free site with interactive timeline maps of movie and TV franchises. This page explains what we collect when you use it and what we do with it.</p>
+<p>ReelOrder (reelorder.com) is a site of interactive timeline maps for movie and TV franchises, with a small store selling digital poster files. It is operated by <b>Jayasinghe Consulting Pty Ltd</b> in Victoria, Australia. This page sets out what we collect, why, and what you can do about it.</p>
 
-<h2>What we collect</h2>
-<p>You can browse every timeline without an account. If you sign in — with Google, Facebook, or an email magic link — we receive your basic profile from that provider: a display name, an avatar image, an email address, and the provider's user ID. That is all we ask for. We do not read your posts, timeline, friends, or contacts, and we never post on your behalf.</p>
-<p>When you vote or comment, we store those votes and comments alongside your account so you get credit for them.</p>
-<p>Like most websites, our hosting provider records standard server logs (IP address, browser type, pages requested) for security and reliability.</p>
+<div class="tldr">
+<p><b>The short version</b></p>
+<ul>
+<li>You can browse every timeline without an account, and we store nothing about you on our servers when you do.</li>
+<li>We don't sell or rent your data, and we run no advertising or cross-site tracking.</li>
+<li>Card details never touch our servers — Stripe handles payment end to end.</li>
+<li>Email <a href="mailto:hello@reelorder.com">hello@reelorder.com</a> and we'll delete your account and everything tied to it.</li>
+</ul>
+</div>
 
-<h2>How we use it</h2>
-<p>Your account is used only for identity: to sign you in, to show your name and avatar next to your contributions, and to stop duplicate votes. Your email is used to send you the magic link if you sign in that way and for essential account notices. We do not send marketing email.</p>
+<h2>Browsing without an account</h2>
+<p>No sign-in is needed to use any timeline map or watch order. While you browse, the site keeps a few things in your own browser's storage. They stay on your device, are readable only by reelorder.com, and are never sent to us:</p>
+<ul>
+<li><code>reelorder_watched_*</code> — which films you've ticked off in a watch order, so your progress survives a refresh.</li>
+<li><code>reelorder_route</code> — the page you were on, so a reload returns you there.</li>
+<li><code>reelorder_device</code> — a random string generated in your browser, used to stop the same device voting twice. It isn't derived from anything about you and isn't linked to your identity.</li>
+</ul>
+<p>Clearing your browser storage removes all three. We set no advertising cookies.</p>
 
-<h2>Sharing</h2>
-<p>We do not sell or rent your data. Your public display name, avatar, votes, and comments are visible to other visitors. Data is processed by the services we run on — Supabase (authentication and database), Vercel (hosting), and Resend (transactional email) — each under their own privacy terms. We share data with no one else, except where the law requires it.</p>
+<h2>Signing in</h2>
+<p>If you sign in — with Google, Facebook, or an email magic link — we receive only your basic profile from that provider: display name, avatar image, email address, and the provider's user ID. We do not request or receive your posts, timeline, friends, or contacts, and we never post on your behalf. Sign-in is handled by Supabase Auth.</p>
 
-<h2>Cookies and storage</h2>
-<p>We use a session token in your browser's local storage to keep you signed in. We do not run advertising or cross-site tracking cookies.</p>
+<h2>Contributing</h2>
+<p>When you vote, comment, or like a comment, we store that alongside your account so it counts once and you get credit for it. Your display name, avatar, comments and votes are visible to other visitors — that part is public by design.</p>
+<p>Suggesting a franchise or sending us a message through the contact form stores what you typed: your name or handle, your email (optional on suggestions, required on contact so we can reply), and your note. We also store a <b>salted, truncated HMAC hash of your IP address</b> — used only to rate-limit spam. The raw IP isn't kept, and the hash can't be turned back into it.</p>
+
+<h2>Buying a poster</h2>
+<p>Poster checkout runs on <b>Stripe Checkout</b>, hosted by Stripe. Your card number never reaches ReelOrder's servers and we never see it. Once a payment succeeds we store an order record containing: the Stripe session and payment-intent IDs, the email address you gave Stripe, which poster and style you bought, the amount and currency, the order's status, and whether the confirmation email went out.</p>
+<p>That confirmation email is sent through <b>Resend</b>. Your download link is issued against your Stripe session, which is why the link in your email keeps working — it mints a fresh download each time rather than storing one.</p>
+
+<h2>Analytics and server logs</h2>
+<p>We use Vercel Web Analytics and Speed Insights to see which pages get read and how fast they load. Both are aggregate and cookieless: they don't build a profile of you and don't follow you to other sites. Separately, our host keeps standard server logs (IP address, browser type, page requested) for security and reliability.</p>
+
+<h2>Who else handles your data</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>Service</th><th>What it does</th><th>What it sees</th></tr></thead>
+<tbody>
+<tr><td>Supabase</td><td>Sign-in and database</td><td>Account profile, votes, comments, suggestions, order records</td></tr>
+<tr><td>Vercel</td><td>Hosting, CDN, analytics</td><td>Server logs, aggregate page metrics</td></tr>
+<tr><td>Stripe</td><td>Payments</td><td>Card details, billing email, purchase amount</td></tr>
+<tr><td>Resend</td><td>Transactional email</td><td>Your email address and the message sent to it</td></tr>
+</tbody>
+</table>
+</div>
+<p>Each processes data under its own privacy terms. We share your data with no one else, except where the law requires it. We do not sell or rent it, and we send no marketing email.</p>
+<p>These providers operate globally, so your data may be stored or processed outside Australia.</p>
+
+<h2>How long we keep it</h2>
+<ul>
+<li><b>Account and contributions</b> — until you ask us to delete them.</li>
+<li><b>Order records</b> — at least five years, which is what Australian tax record-keeping rules require of us.</li>
+<li><b>Contact messages and suggestions</b> — while they're still useful to the queue, then removed.</li>
+</ul>
 
 <h2>Your choices</h2>
-<p>You can sign out at any time. To delete your account and everything tied to it, email <a href="mailto:hello@reelorder.com">hello@reelorder.com</a> and we will remove it. You can also revoke ReelOrder's access from your Google or Facebook account settings.</p>
+<p>You can sign out at any time, and revoke ReelOrder's access from your Google or Facebook account settings. To see, correct, or delete what we hold, email <a href="mailto:hello@reelorder.com">hello@reelorder.com</a> — we'll action it and confirm when it's done.</p>
+<p>We handle personal information in line with the Australian Privacy Principles. If you're unhappy with how we've handled yours, write to us first; if that doesn't resolve it, you can complain to the <a href="https://www.oaic.gov.au/" target="_blank" rel="noopener noreferrer">Office of the Australian Information Commissioner</a>. Visitors in the UK and EU have the usual rights of access, correction, erasure, restriction, portability and objection — same address.</p>
+
+<h2>Children</h2>
+<p>ReelOrder isn't directed at children under 13, and we don't knowingly collect their information. If you believe a child has signed up, email us and we'll remove the account.</p>
 
 <h2>Changes</h2>
-<p>If this policy changes we will update the date at the top of this page.</p>
+<p>If this policy changes, the date at the top of this page changes with it. Material changes will be flagged on the site.</p>
 
 <h2>Contact</h2>
-<p>Questions: <a href="mailto:hello@reelorder.com">hello@reelorder.com</a></p>
+<p>Jayasinghe Consulting Pty Ltd, Victoria, Australia<br>
+<a href="mailto:hello@reelorder.com">hello@reelorder.com</a></p>
+
+<div class="foot"><a href="/">Home</a> &middot; <a href="/terms">Terms</a> &middot; <a href="/contact">Contact</a></div>
 </main></body></html>
