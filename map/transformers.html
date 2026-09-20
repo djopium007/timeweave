@@ -606,8 +606,11 @@
       </sc-if>
       <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
         <div style="{{ navUserStyle }}">
-          <div style="{{ userAvatarStyle }}">{{ userInitials }}</div>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;color:#E9EDF3;">{{ userHandle }}</span>
+          <button onclick="{{ openProfile }}" title="Edit your profile" style="display:flex;align-items:center;gap:9px;padding:0;border:none;background:transparent;cursor:pointer;color:#E9EDF3;">
+            <sc-if value="{{ userHasPic }}" hint-placeholder-val="{{ false }}"><img src="{{ userPic }}" alt="" style="{{ userPicStyle }}"></sc-if>
+            <sc-if value="{{ userNoPic }}" hint-placeholder-val="{{ true }}"><div style="{{ userAvatarStyle }}">{{ userInitials }}</div></sc-if>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;color:#E9EDF3;">{{ userHandle }}</span>
+          </button>
           <button onclick="{{ signOut }}" title="Sign out" style="width:26px;height:26px;border-radius:50%;border:none;background:transparent;color:#7a8696;font-size:15px;line-height:1;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">⏻</button>
         </div>
       </sc-if>
@@ -904,7 +907,8 @@
 
         <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
           <div style="display:flex;gap:14px;padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(180deg,rgba(18,21,27,0.85),rgba(11,13,17,0.85));">
-            <div style="{{ composerAvatarStyle }}">{{ userInitials }}</div>
+            <sc-if value="{{ userHasPic }}" hint-placeholder-val="{{ false }}"><img src="{{ userPic }}" alt="" style="{{ composerPicStyle }}"></sc-if>
+            <sc-if value="{{ userNoPic }}" hint-placeholder-val="{{ true }}"><div style="{{ composerAvatarStyle }}">{{ userInitials }}</div></sc-if>
             <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;">
               <textarea value="{{ communityDraft }}" onchange="{{ onCommunityDraft }}" rows="3" placeholder="Add to the discussion — theories, corrections, deep cuts…" style="width:100%;resize:vertical;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:14.5px;line-height:1.5;padding:12px 14px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);"></textarea>
               <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
@@ -930,7 +934,7 @@
 
         <sc-for list="{{ communityComments }}" as="cm" hint-placeholder-count="3">
           <div style="display:flex;gap:14px;padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,0.08);background:rgba(13,15,20,0.6);">
-            <div style="{{ cm.avatarStyle }}">{{ cm.initials }}</div>
+            <sc-if value="{{ cm.hasPic }}" hint-placeholder-val="{{ false }}"><img src="{{ cm.pic }}" alt="" loading="lazy" style="{{ cm.picStyle }}"></sc-if><sc-if value="{{ cm.noPic }}" hint-placeholder-val="{{ true }}"><div style="{{ cm.avatarStyle }}">{{ cm.initials }}</div></sc-if>
             <div style="flex:1;min-width:0;">
               <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;">
                 <span style="font-weight:600;font-size:14.5px;color:#fff;">{{ cm.name }}</span>
@@ -992,7 +996,8 @@
               <div style="border-top:1px solid rgba(255,255,255,0.07);padding:18px 20px 20px;display:flex;flex-direction:column;gap:14px;background:rgba(6,7,10,0.45);">
                 <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
                   <div style="display:flex;gap:12px;">
-                    <div style="{{ userAvatarStyle }}">{{ userInitials }}</div>
+                    <sc-if value="{{ userHasPic }}" hint-placeholder-val="{{ false }}"><img src="{{ userPic }}" alt="" style="{{ userPicStyle }}"></sc-if>
+                    <sc-if value="{{ userNoPic }}" hint-placeholder-val="{{ true }}"><div style="{{ userAvatarStyle }}">{{ userInitials }}</div></sc-if>
                     <div style="flex:1;min-width:0;display:flex;gap:8px;">
                       <input value="{{ q.draft }}" onchange="{{ q.onDraft }}" placeholder="Weigh in on this map…" style="flex:1;min-width:0;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:10px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 13px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);">
                       <button onclick="{{ q.onPost }}" style="flex:none;padding:10px 16px;border-radius:9px;border:none;background:#FF2A1F;color:#fff;font-family:'Oswald',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all .16s ease;" style-hover="background:#ff3a30;">Post</button>
@@ -1007,7 +1012,7 @@
                 </sc-if>
                 <sc-for list="{{ q.comments }}" as="cm" hint-placeholder-count="2">
                   <div style="display:flex;gap:12px;padding:14px 15px;border-radius:13px;border:1px solid rgba(255,255,255,0.07);background:rgba(13,15,20,0.55);">
-                    <div style="{{ cm.avatarStyle }}">{{ cm.initials }}</div>
+                    <sc-if value="{{ cm.hasPic }}" hint-placeholder-val="{{ false }}"><img src="{{ cm.pic }}" alt="" loading="lazy" style="{{ cm.picStyle }}"></sc-if><sc-if value="{{ cm.noPic }}" hint-placeholder-val="{{ true }}"><div style="{{ cm.avatarStyle }}">{{ cm.initials }}</div></sc-if>
                     <div style="flex:1;min-width:0;">
                       <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;">
                         <span style="font-weight:600;font-size:14px;color:#fff;">{{ cm.name }}</span>
@@ -1634,6 +1639,51 @@
   </sc-if>
 
 
+  <!-- PROFILE MODAL -->
+  <sc-if value="{{ profileOpen }}" hint-placeholder-val="{{ false }}">
+    <div onclick="{{ closeProfile }}" style="position:fixed;inset:0;z-index:90;background:rgba(3,4,6,0.72);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);display:grid;place-items:center;padding:20px;">
+      <div onclick="{{ stopClick }}" style="width:min(460px,94vw);max-height:92vh;overflow-y:auto;border-radius:20px;border:1px solid rgba(255,255,255,0.13);background:linear-gradient(180deg,#13161c,#0a0c10);box-shadow:0 40px 100px -30px rgba(0,0,0,0.95);padding:30px;position:relative;">
+        <button onclick="{{ closeProfile }}" style="position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:9px;border:none;background:transparent;color:#7a8696;font-size:20px;line-height:1;cursor:pointer;transition:color .15s ease;" style-hover="color:#fff;">×</button>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#7a8696;">Your profile</div>
+        <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:27px;letter-spacing:0.01em;margin:6px 0 4px;">Make it <span style="color:#FF5747;">yours</span></h2>
+        <p style="margin:0;color:#9aa6b4;font-size:14px;line-height:1.55;text-wrap:pretty;">Pick a unique username and a photo. Your comments and queue suggestions update to match.</p>
+
+        <div style="display:flex;align-items:center;gap:18px;margin-top:24px;">
+          <sc-if value="{{ pf.hasPic }}" hint-placeholder-val="{{ false }}"><img src="{{ pf.pic }}" alt="" style="{{ pf.picStyle }}"></sc-if>
+          <sc-if value="{{ pf.noPic }}" hint-placeholder-val="{{ true }}"><div style="{{ pf.avatarStyle }}">{{ pf.initials }}</div></sc-if>
+          <div style="display:flex;flex-direction:column;gap:8px;min-width:0;">
+            <label style="display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:9px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:all .15s ease;" style-hover="border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);">
+              <input type="file" accept="image/png,image/jpeg,image/webp" onchange="{{ onProfilePic }}" style="display:none;">{{ pf.uploadLabel }}
+            </label>
+            <sc-if value="{{ pf.hasPic }}" hint-placeholder-val="{{ false }}">
+              <button onclick="{{ removeProfilePic }}" style="align-self:flex-start;padding:0;border:none;background:transparent;color:#7a8696;font-family:'JetBrains Mono',monospace;font-size:11.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;" style-hover="color:#fff;">Remove photo</button>
+            </sc-if>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5a6573;">JPG, PNG or WebP · square works best</span>
+          </div>
+        </div>
+
+        <div style="margin-top:22px;">
+          <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8b97a6;margin-bottom:8px;">Display name</label>
+          <input value="{{ pf.name }}" onchange="{{ onProfileName }}" maxlength="40" placeholder="Your name" style="width:100%;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:15px;padding:12px 14px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);">
+        </div>
+        <div style="margin-top:16px;">
+          <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8b97a6;margin-bottom:8px;">Username</label>
+          <div style="{{ pf.handleWrapStyle }}">
+            <span style="flex:none;padding:12px 0 12px 14px;color:#7a8696;font-family:'JetBrains Mono',monospace;font-size:15px;">@</span>
+            <input value="{{ pf.handle }}" onchange="{{ onProfileHandle }}" onkeydown="{{ onProfileKey }}" maxlength="20" placeholder="username" autocapitalize="off" autocorrect="off" spellcheck="false" style="flex:1;min-width:0;background:transparent;border:none;color:#E9EDF3;font-family:'JetBrains Mono',monospace;font-size:15px;padding:12px 14px 12px 4px;">
+          </div>
+          <div style="{{ pf.hintStyle }}">{{ pf.hint }}</div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:22px;">
+          <button onclick="{{ saveProfile }}" style="{{ pf.saveStyle }}" style-hover="background:#ff3a30;box-shadow:0 0 20px -2px rgba(255,42,31,0.7);">{{ pf.saveLabel }}</button>
+          <button onclick="{{ closeProfile }}" style="padding:12px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:transparent;color:#9aa6b4;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;">Cancel</button>
+        </div>
+        <p style="margin:18px 0 0;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6;color:#5a6573;text-wrap:pretty;">Usernames are 3–20 characters: letters, numbers and underscores. Your photo is public next to your comments.</p>
+      </div>
+    </div>
+  </sc-if>
+
   <!-- TOAST -->
   <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:100;display:flex;align-items:center;gap:14px;max-width:90vw;padding:14px 16px 14px 18px;border-radius:13px;border:1px solid rgba(255,255,255,0.14);background:rgba(16,18,24,0.96);backdrop-filter:blur(12px);box-shadow:0 24px 60px -20px rgba(0,0,0,0.9);">
@@ -1681,6 +1731,7 @@ class Component extends DCLogic {
     seriesTab: 'map',
     user: null,
     authOpen: false,
+    profileOpen: false, profile: { name:'', handle:'', pic:'', busy:false, checking:false, taken:false, dirty:false },
     authEmail: '',
     pendingList: [],
     votes: {},        // my current vote per project: {id: 1|-1}
@@ -7474,7 +7525,9 @@ class Component extends DCLogic {
         const provider = (authUser.app_metadata && authUser.app_metadata.provider) || 'email';
         const raw = (meta.full_name || meta.name || email.split('@')[0] || 'reel fan');
         const name = raw.replace(/[._-]+/g,' ').replace(/\b\w/g, c => c.toUpperCase());
-        let handle = '@' + ((email.split('@')[0] || raw).replace(/[^a-z0-9_]/gi,'').toLowerCase().slice(0,14) || 'reelfan');
+        let base = (email.split('@')[0] || raw).replace(/[^a-z0-9_]/gi,'').toLowerCase().slice(0,14);
+        if (base.length < 3) base = (base + 'reelfan').slice(0,14);
+        let handle = '@' + base;
         const color = providerColors[provider] || '#3DDC84';
         let ins = await this.db.from('profiles').insert({ id:authUser.id, name, handle, avatar_color:color, provider }).select().maybeSingle();
         if (ins.error) {
@@ -7484,9 +7537,9 @@ class Component extends DCLogic {
         profile = ins.data || { id:authUser.id, name, handle, avatar_color:color, provider };
       }
     } catch(e) { console.error(e); return; }
-    const user = { id:authUser.id, name:profile.name, handle:profile.handle, color:profile.avatar_color, provider:profile.provider };
+    const user = { id:authUser.id, name:profile.name, handle:profile.handle, color:profile.avatar_color, provider:profile.provider, avatar:profile.avatar_url || '' };
     this.setState({ user, authOpen:false, authEmail:'' });
-    this.showToast({ kind:'ok', title:`Signed in as ${user.handle}`, body:'Your votes and comments now carry your handle.' });
+    this.showToast({ kind:'ok', title:`Signed in as ${user.handle}`, body: user.avatar ? 'Your votes and comments carry your handle.' : 'Click your name up top to pick a username or add a photo.' });
     this.refreshCommunity();
   };
 
@@ -7502,7 +7555,7 @@ class Component extends DCLogic {
       const [pend, scoreRows, cms, likeRows, myVotes, myLikes] = await Promise.all([
         this.db.from('pending_projects').select('id,title,meta,pitch,status,base_votes').order('created_at', { ascending:true }),
         this.db.rpc('vote_scores'),
-        this.db.from('comments').select('id,context_key,name,handle,color,body,base_likes,created_at').order('created_at', { ascending:false }).limit(300),
+        this.db.from('comments').select('id,context_key,user_id,name,handle,color,body,base_likes,created_at').order('created_at', { ascending:false }).limit(300),
         this.db.rpc('comment_like_counts'),
         me ? this.db.from('votes').select('project_id,direction').eq('voter_key', me) : none,
         me ? this.db.from('comment_likes').select('comment_id').eq('liker_key', me) : none,
@@ -7516,9 +7569,18 @@ class Component extends DCLogic {
         patch.scores = scores; patch.serverMine = mine; patch.votes = { ...mine };
       }
       if (cms.data) {
+        // One extra lookup for authors' current photos (comments store name/handle, not the picture).
+        const pics = {};
+        try {
+          const ids = [...new Set(cms.data.map(c => c.user_id).filter(Boolean))];
+          if (ids.length) {
+            const pr = await this.db.from('profiles').select('id,avatar_url').in('id', ids);
+            for (const r of (pr.data || [])) if (r.avatar_url) pics[r.id] = r.avatar_url;
+          }
+        } catch(e) {}
         const grouped = {};
         for (const c of cms.data) {
-          (grouped[c.context_key] = grouped[c.context_key] || []).push({ id:c.id, name:c.name, handle:c.handle, color:c.color, time:this.timeAgo(c.created_at), likes:c.base_likes||0, body:c.body });
+          (grouped[c.context_key] = grouped[c.context_key] || []).push({ id:c.id, name:c.name, handle:c.handle, color:c.color, pic:pics[c.user_id] || '', time:this.timeAgo(c.created_at), likes:c.base_likes||0, body:c.body });
         }
         patch.comments = grouped;
       }
@@ -7536,6 +7598,97 @@ class Component extends DCLogic {
   openAuth = () => this.setState({ authOpen:true });
   closeAuth = () => this.setState({ authOpen:false });
   stopClick = (e) => e.stopPropagation();
+
+  // ---------- profile: username + photo ----------
+  openProfile = () => {
+    const u = this.state.user; if (!u) { this.openAuth(); return; }
+    this.setState({ profileOpen:true, profile:{ name:u.name||'', handle:(u.handle||'').replace(/^@/,''), pic:u.avatar||'', busy:false, checking:false, taken:false, dirty:false } });
+  };
+  closeProfile = () => this.setState({ profileOpen:false });
+  setProfile = (patch) => this.setState(s=>({ profile:{ ...s.profile, ...patch } }));
+  onProfileName = (e) => this.setProfile({ name: e.target.value.slice(0,40), dirty:true });
+  onProfileKey = (e) => { if (e.key === 'Enter') this.saveProfile(); };
+  cleanHandle = (v) => String(v||'').replace(/^@+/,'').toLowerCase().replace(/[^a-z0-9_]/g,'').slice(0,20);
+  onProfileHandle = (e) => {
+    const h = this.cleanHandle(e.target.value);
+    this.setProfile({ handle:h, dirty:true, taken:false, checking: h.length >= 3 && ('@'+h) !== (this.state.user||{}).handle });
+    clearTimeout(this.handleTimer);
+    this.handleTimer = setTimeout(() => this.checkHandle(h), 350);
+  };
+  checkHandle = async (h) => {
+    const u = this.state.user; if (!u || !this.db || h.length < 3 || ('@'+h) === u.handle) { this.setProfile({ checking:false }); return; }
+    try {
+      const { data } = await this.db.from('profiles').select('id').eq('handle', '@'+h).neq('id', u.id).maybeSingle();
+      if (this.state.profile.handle === h) this.setProfile({ checking:false, taken: !!data });
+    } catch(e) { this.setProfile({ checking:false }); }
+  };
+  // Downscale in the browser so the bucket only ever holds a small square JPEG.
+  squareImage = (file, size) => new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file); const img = new Image();
+    img.onload = () => {
+      try {
+        const side = Math.min(img.naturalWidth, img.naturalHeight);
+        const sx = (img.naturalWidth - side) / 2, sy = (img.naturalHeight - side) / 2;
+        const c = document.createElement('canvas'); c.width = size; c.height = size;
+        const ctx = c.getContext('2d'); ctx.fillStyle = '#0a0c10'; ctx.fillRect(0,0,size,size);
+        ctx.drawImage(img, sx, sy, side, side, 0, 0, size, size);
+        c.toBlob(b => { URL.revokeObjectURL(url); b ? resolve(b) : reject(new Error('encode failed')); }, 'image/jpeg', 0.86);
+      } catch(e) { URL.revokeObjectURL(url); reject(e); }
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('That file is not an image we can read.')); };
+    img.src = url;
+  });
+  onProfilePic = async (e) => {
+    const file = e.target.files && e.target.files[0]; e.target.value = '';
+    const u = this.state.user; if (!file || !u || !this.db) return;
+    if (!/^image\/(png|jpeg|webp)$/.test(file.type)) { this.showToast({ kind:'unknown', title:'Unsupported image', body:'Use a JPG, PNG or WebP file.' }); return; }
+    if (file.size > 12 * 1024 * 1024) { this.showToast({ kind:'unknown', title:'Image too large', body:'Pick a photo under 12 MB.' }); return; }
+    this.setProfile({ busy:true });
+    try {
+      const blob = await this.squareImage(file, 256);
+      const path = u.id + '/avatar.jpg';
+      const up = await this.db.storage.from('avatars').upload(path, blob, { upsert:true, contentType:'image/jpeg', cacheControl:'3600' });
+      if (up.error) throw up.error;
+      const pub = this.db.storage.from('avatars').getPublicUrl(path).data.publicUrl + '?v=' + Date.now();
+      const { error } = await this.db.from('profiles').update({ avatar_url: pub }).eq('id', u.id);
+      if (error) throw error;
+      this.setState(s => ({ user:{ ...s.user, avatar:pub }, profile:{ ...s.profile, pic:pub, busy:false } }));
+      this.refreshCommunity();
+    } catch(err) {
+      console.error('ReelOrder: avatar upload failed', err);
+      this.setProfile({ busy:false });
+      this.showToast({ kind:'unknown', title:'Photo not saved', body: (err && err.message) || 'Try a different image.' });
+    }
+  };
+  removeProfilePic = async () => {
+    const u = this.state.user; if (!u || !this.db) return;
+    this.setProfile({ busy:true });
+    try {
+      const { error } = await this.db.from('profiles').update({ avatar_url:null }).eq('id', u.id);
+      if (error) throw error;
+      this.db.storage.from('avatars').remove([u.id + '/avatar.jpg']).catch(()=>{});
+      this.setState(s => ({ user:{ ...s.user, avatar:'' }, profile:{ ...s.profile, pic:'', busy:false } }));
+      this.refreshCommunity();
+    } catch(err) { this.setProfile({ busy:false }); this.showToast({ kind:'unknown', title:'Could not remove photo', body: err.message || '' }); }
+  };
+  saveProfile = async () => {
+    const u = this.state.user, p = this.state.profile; if (!u || !this.db || p.busy) return;
+    const name = p.name.trim().slice(0,40) || u.name;
+    const handle = '@' + this.cleanHandle(p.handle);
+    if (handle.length < 4) { this.setProfile({ taken:false }); this.showToast({ kind:'unknown', title:'Username too short', body:'Use at least 3 characters.' }); return; }
+    if (name === u.name && handle === u.handle) { this.closeProfile(); return; }
+    this.setProfile({ busy:true });
+    const { data, error } = await this.db.from('profiles').update({ name, handle }).eq('id', u.id).select('name,handle,avatar_url').maybeSingle();
+    if (error) {
+      this.setProfile({ busy:false, taken: error.code === '23505' });
+      this.showToast({ kind:'unknown', title: error.code === '23505' ? 'Username taken' : 'Profile not saved', body: error.code === '23505' ? `@${this.cleanHandle(p.handle)} is already in use — try another.` : (error.message || '') });
+      return;
+    }
+    const next = data || { name, handle, avatar_url:u.avatar };
+    this.setState(s => ({ user:{ ...s.user, name:next.name, handle:next.handle }, profileOpen:false, profile:{ ...s.profile, busy:false, dirty:false } }));
+    this.showToast({ kind:'ok', title:`You're now ${next.handle}`, body:'Your comments and suggestions have been updated.' });
+    this.refreshCommunity();
+  };
   onAuthEmail = (e) => this.setState({ authEmail: e.target.value });
   onAuthKey = (e) => { if (e.key === 'Enter') this.signEmail(); };
   oauth = (provider) => {
@@ -7588,7 +7741,7 @@ class Component extends DCLogic {
     if (!u) { this.openAuth(); return; }
     const body = (this.state.drafts[key]||'').trim();
     if (!body) return;
-    const local = { id:'tmp-'+Date.now(), name:u.name, handle:u.handle, color:u.color, time:'just now', likes:0, body };
+    const local = { id:'tmp-'+Date.now(), name:u.name, handle:u.handle, color:u.color, pic:u.avatar||'', time:'just now', likes:0, body };
     this.setState(s => ({ comments: { ...s.comments, [key]: [local, ...(s.comments[key]||[])] }, drafts: { ...s.drafts, [key]:'' } }));
     if (!this.db) return;
     this.db.from('comments').insert({ context_key:key, user_id:u.id, name:u.name, handle:u.handle, color:u.color, body }).select().maybeSingle()
@@ -7920,10 +8073,12 @@ class Component extends DCLogic {
     const user = s.user;
     const avatarStyleFor = (color, size) => ({ flex:'none', width:size+'px', height:size+'px', borderRadius:'10px', display:'grid', placeItems:'center', background:`linear-gradient(135deg, ${this.rgba(color||'#9DB0C4',0.4)}, rgba(255,255,255,0.05))`, border:'1px solid rgba(255,255,255,0.14)', fontFamily:"'Oswald', sans-serif", fontWeight:'600', fontSize:Math.round(size*0.37)+'px', letterSpacing:'0.02em', color:'#fff' });
     const likeCountFor = (c) => (c.likes||0) + ((s.likeCounts[c.id]||0) - (s.serverLikes[c.id]?1:0) + (s.likes[c.id]?1:0));
+    const picStyleFor = (size) => ({ flex:'none', width:size+'px', height:size+'px', borderRadius:'10px', objectFit:'cover', display:'block', border:'1px solid rgba(255,255,255,0.14)', background:'#0a0c10' });
     const mkComment = (c) => ({
       id:c.id, name:c.name, handle:c.handle, time:c.time, body:c.body,
       initials: this.initials(c.name),
       avatarStyle: avatarStyleFor(c.color, 38),
+      hasPic: !!c.pic, noPic: !c.pic, pic: c.pic || '', picStyle: picStyleFor(38),
       likeCount: likeCountFor(c),
       onLike: () => this.toggleLike(c.id),
       likeStyle: { display:'inline-flex', alignItems:'center', gap:'6px', padding:'6px 12px', borderRadius:'8px', border:`1px solid ${s.likes[c.id]?'rgba(255,42,31,0.5)':'rgba(255,255,255,0.1)'}`, background: s.likes[c.id]?'rgba(255,42,31,0.13)':'rgba(255,255,255,0.02)', color: s.likes[c.id]?'#FF7A6E':'#9DB0C4', fontFamily:"'JetBrains Mono', monospace", fontSize:'12px', fontWeight:'600', cursor:'pointer', transition:'all .15s ease' },
@@ -8179,6 +8334,29 @@ class Component extends DCLogic {
       userHandle: user ? user.handle : '',
       userAvatarStyle: avatarStyleFor(user ? user.color : '#9DB0C4', 30),
       composerAvatarStyle: avatarStyleFor(user ? user.color : '#9DB0C4', 38),
+      userHasPic: !!(user && user.avatar), userNoPic: !(user && user.avatar), userPic: (user && user.avatar) || '',
+      userPicStyle: picStyleFor(30), composerPicStyle: picStyleFor(38),
+      // profile editor
+      profileOpen: s.profileOpen, openProfile:this.openProfile, closeProfile:this.closeProfile,
+      onProfileName:this.onProfileName, onProfileHandle:this.onProfileHandle, onProfileKey:this.onProfileKey,
+      onProfilePic:this.onProfilePic, removeProfilePic:this.removeProfilePic, saveProfile:this.saveProfile,
+      pf: (() => {
+        const p = s.profile, h = p.handle, mine = user && ('@'+h) === user.handle;
+        const short = h.length > 0 && h.length < 3;
+        const hint = p.checking ? 'Checking availability…' : p.taken ? `@${h} is taken` : short ? 'At least 3 characters' : (h && !mine) ? `@${h} is available` : (mine ? 'This is your current username' : 'Letters, numbers and underscores');
+        const bad = p.taken || short || !h;
+        const col = p.taken || short ? '#FF7A6E' : (h && !mine && !p.checking) ? '#3DDC84' : '#5a6573';
+        return {
+          name:p.name, handle:h, hint, hasPic: !!p.pic, noPic: !p.pic, pic:p.pic,
+          initials: this.initials(p.name || (user ? user.name : '') || 'RF'),
+          avatarStyle: avatarStyleFor(user ? user.color : '#9DB0C4', 72), picStyle: { ...picStyleFor(72), borderRadius:'18px' },
+          uploadLabel: p.busy ? 'Working…' : (p.pic ? 'Change photo' : 'Upload photo'),
+          handleWrapStyle: { display:'flex', alignItems:'center', background:'rgba(6,7,10,0.7)', border:`1px solid ${p.taken||short ? 'rgba(255,77,125,0.55)' : 'rgba(255,255,255,0.13)'}`, borderRadius:'11px', transition:'border-color .16s ease' },
+          hintStyle: { marginTop:'7px', fontFamily:"'JetBrains Mono', monospace", fontSize:'11.5px', color:col },
+          saveLabel: p.busy ? 'Saving…' : 'Save changes',
+          saveStyle: { flex:1, padding:'12px 18px', borderRadius:'10px', border:'none', background: bad || p.busy ? 'rgba(255,42,31,0.35)' : '#FF2A1F', color:'#fff', fontFamily:"'Oswald', sans-serif", fontWeight:'500', fontSize:'13.5px', letterSpacing:'0.05em', textTransform:'uppercase', cursor: bad || p.busy ? 'not-allowed' : 'pointer', transition:'all .16s ease' },
+        };
+      })(),
       signOut:this.signOut,
       authOpen: s.authOpen, openAuth:this.openAuth, closeAuth:this.closeAuth, stopClick:this.stopClick,
       authEmail: s.authEmail, onAuthEmail:this.onAuthEmail, onAuthKey:this.onAuthKey,
