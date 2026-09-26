@@ -8,6 +8,7 @@
 //   comments.list { q?, hidden?, limit? } -> { items }   (all timelines, newest first, with author + banned flag)
 //   comments.hide / comments.unhide / comments.delete { id }
 //   users.ban { userId, reason? } / users.unban { userId }
+//   users.delete { userId }                -> { ok }      removes the account + its rows so the email can sign up fresh
 //   orders.list { limit? }                -> { items }
 //   users.list { q? }                     -> { items }   (every registered user + counts + last login)
 //   users.logins { userId, limit? }       -> { items }   (that user's sign-in history, newest first)
@@ -98,6 +99,23 @@ export default async function handler(req, res) {
         if (userId === who.user.id) return json(res, 400, { error: 'You cannot ban yourself' });
         const { error } = await sb.from('banned_users').upsert({ user_id: userId, reason: String(body.reason || '').slice(0, 300) || null }); if (error) throw error;
         if (body.hideAll) await sb.from('comments').update({ hidden: true, hidden_at: new Date().toISOString() }).eq('user_id', userId).eq('hidden', false);
+        return json(res, 200, { ok: true });
+      }
+      case 'users.delete': {
+        // Full removal: the visitor can sign up again with the same email as a brand-new account.
+        // Nothing in public.* has an FK to auth.users, so each table is cleared explicitly.
+        const userId = uuid(body.userId); if (!userId) return json(res, 400, { error: 'Bad userId' });
+        if (userId === who.user.id) return json(res, 400, { error: 'You cannot delete yourself' });
+        const { data: isAdmin } = await sb.from('admins').select('user_id').eq('user_id', userId).maybeSingle();
+        if (isAdmin) return json(res, 400, { error: 'That account is an admin — remove it from admins first' });
+        try {
+          const { data: files } = await sb.storage.from('avatars').list(userId);
+          if (files && files.length) await sb.storage.from('avatars').remove(files.map(f => userId + '/' + f.name));
+        } catch (e) { console.error('avatar cleanup', e); }
+        for (const [table, col] of [['comment_likes', 'liker_key'], ['comments', 'user_id'], ['votes', 'voter_key'], ['banned_users', 'user_id'], ['login_events', 'user_id'], ['profiles', 'id']]) {
+          const { error } = await sb.from(table).delete().eq(col, userId); if (error) throw error;
+        }
+        const { error } = await sb.auth.admin.deleteUser(userId); if (error) throw error;
         return json(res, 200, { ok: true });
       }
       case 'users.unban': {

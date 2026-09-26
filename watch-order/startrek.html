@@ -1489,6 +1489,7 @@
                       <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">Sign-in history {{ u.loginsLabel }}</div>
                       <div style="display:flex;gap:6px;">
                         <a href="{{ u.mailto }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;text-decoration:none;display:inline-block;">Email</a>
+                        <button onclick="{{ u.onDelete }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,122,110,0.4);background:rgba(255,122,110,0.08);color:#FF7A6E;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;" style-hover="background:rgba(255,122,110,0.18);">Delete user</button>
                         <button onclick="{{ u.onToggleBan }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;text-decoration:none;display:inline-block;">{{ u.banLabel }}</button>
                       </div>
                     </div>
@@ -7712,6 +7713,11 @@ class Component extends DCLogic {
     } catch(e){}
   };
   onAdminUserQ = (e) => this.setAdmin({ userQ: e.target.value });
+  userDelete = (u) => {
+    const who = u.handle || u.name || u.email || 'this user';
+    if (!confirm('Delete ' + who + '?\n\nThis removes the account, profile, photo, comments, votes and sign-in history. They can sign up again with the same email as a new user.')) return;
+    this.adminAct('users.delete', { userId: u.id }, () => { this.setAdmin({ openUser:null }); this.loadAdmin('users'); this.showToast({ kind:'ok', title:'User deleted', body: who + ' can sign up again any time.' }); });
+  };
   onAdminUserKey = (e) => { if (e.key === 'Enter') this.loadAdmin('users'); };
   toggleAdminUser = async (id) => {
     const a = this.state.admin;
@@ -7769,6 +7775,7 @@ class Component extends DCLogic {
           mailto: u.email ? 'mailto:' + u.email : '#',
           banLabel: u.banned ? 'Unban' : 'Ban user',
           onToggleBan: () => this.userToggleBan({ user_id:u.id, banned:u.banned, handle:u.handle, name:u.name }),
+          onDelete: () => this.userDelete(u),
           loginsLabel: logins ? '(' + logins.length + ')' : '',
           loginsLoading: open && !logins && a.loginsLoading,
           loginsEmpty: open && !!logins && logins.length === 0,
