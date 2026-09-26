@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html><head><script>window.__resources = {};</script><!--RO:META-->
-<title>ReelOrder — Movie Timeline Maps</title>
-<meta name="description" content="Sequels, reboots, time-loops and multiverse forks — every movie timeline mapped as clean, interactive branch diagrams. Search a film and follow the threads.">
+<title>All Timeline Maps · ReelOrder</title>
+<meta name="description" content="Every ReelOrder movie timeline map in one list — filter by franchise or film and jump straight to its branch map.">
 <link rel="canonical" href="https://reelorder.com/timeline">
 <meta name="robots" content="noindex,follow">
 <meta name="theme-color" content="#070809">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ReelOrder">
 <meta property="og:locale" content="en_AU">
-<meta property="og:title" content="ReelOrder — Movie Timeline Maps">
-<meta property="og:description" content="Sequels, reboots, time-loops and multiverse forks — every movie timeline mapped as clean, interactive branch diagrams. Search a film and follow the threads.">
+<meta property="og:title" content="All Timeline Maps · ReelOrder">
+<meta property="og:description" content="Every ReelOrder movie timeline map in one list — filter by franchise or film and jump straight to its branch map.">
 <meta property="og:url" content="https://reelorder.com/timeline">
 <meta property="og:image" content="https://reelorder.com/assets/og/og-default.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="ReelOrder — untangle every timeline">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ReelOrder — Movie Timeline Maps">
-<meta name="twitter:description" content="Sequels, reboots, time-loops and multiverse forks — every movie timeline mapped as clean, interactive branch diagrams. Search a film and follow the threads.">
+<meta name="twitter:title" content="All Timeline Maps · ReelOrder">
+<meta name="twitter:description" content="Every ReelOrder movie timeline map in one list — filter by franchise or film and jump straight to its branch map.">
 <meta name="twitter:image" content="https://reelorder.com/assets/og/og-default.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://reelorder.com/timeline#webpage","url":"https://reelorder.com/timeline","name":"ReelOrder — Movie Timeline Maps","description":"Sequels, reboots, time-loops and multiverse forks — every movie timeline mapped as clean, interactive branch diagrams. Search a film and follow the threads.","isPartOf":{"@id":"https://reelorder.com/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://reelorder.com/assets/og/og-default.png"},"inLanguage":"en"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://reelorder.com/timeline#webpage","url":"https://reelorder.com/timeline","name":"All Timeline Maps · ReelOrder","description":"Every ReelOrder movie timeline map in one list — filter by franchise or film and jump straight to its branch map.","isPartOf":{"@id":"https://reelorder.com/#website"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://reelorder.com/assets/og/og-default.png"},"inLanguage":"en"}]}</script>
 <!--/RO:META-->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -730,11 +730,69 @@
     </div>
     </sc-if>
 
+    <!-- ============ MAPS INDEX (Timeline tab) ============ -->
+    <sc-if value="{{ isMaps }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1080px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(20px,5vw,56px) 96px;">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#6b7686;">Timeline index</div>
+          <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,56px);line-height:1;margin:6px 0 0;text-transform:uppercase;letter-spacing:0.01em;">Pick a timeline</h1>
+          <p style="margin:12px 0 0;max-width:60ch;color:#A9B4C2;font-size:15.5px;line-height:1.55;">Every live branch map in one list. Filter by franchise or film title.</p>
+        </div>
+        <sc-if value="{{ hasContinue }}" hint-placeholder-val="{{ false }}">
+          <button onclick="{{ continueOpen }}" style="{{ continueStyle }}" style-hover="transform:translateY(-2px);">Continue: {{ continueTitle }} →</button>
+        </sc-if>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:26px;">
+        <div style="flex:1 1 260px;display:flex;align-items:center;gap:10px;padding:4px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.13);background:rgba(13,15,20,0.9);" style-focus-within="border-color:rgba(255,42,31,0.5);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" style="flex:none;opacity:0.6;"><circle cx="11" cy="11" r="7" stroke="#9DB0C4" stroke-width="2"></circle><path d="M20 20l-3.2-3.2" stroke="#9DB0C4" stroke-width="2" stroke-linecap="round"></path></svg>
+          <input value="{{ mapsQ }}" onchange="{{ onMapsQ }}" placeholder="Filter — e.g. Judgment Day, Dune…" style="flex:1;min-width:0;background:transparent;border:none;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:15px;padding:9px 0;">
+        </div>
+        <div style="display:flex;gap:4px;padding:4px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(13,15,20,0.85);">
+          <sc-for list="{{ mapsSorts }}" as="so" hint-placeholder-count="3">
+            <button onclick="{{ so.onClick }}" style="{{ so.style }}">{{ so.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b7686;">{{ mapsCountLabel }}</div>
+
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px;">
+        <sc-for list="{{ mapsList }}" as="m" hint-placeholder-count="6">
+          <div onclick="{{ m.onOpen }}" style="{{ m.rowStyle }}" style-hover="transform:translateX(3px);border-color:rgba(255,255,255,0.22);background:rgba(20,23,29,0.95);">
+            <div style="{{ m.crestStyle }}"><span style="font-family:'Oswald',sans-serif;font-weight:700;font-size:17px;text-transform:uppercase;color:#fff;">{{ m.initials }}</span></div>
+            <div style="flex:1 1 220px;min-width:0;">
+              <div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:21px;line-height:1.1;text-transform:uppercase;letter-spacing:0.01em;">{{ m.title }}</div>
+              <div style="margin-top:4px;color:#8b97a6;font-size:13.5px;line-height:1.45;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ m.sub }}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:18px;flex:none;">
+              <div style="text-align:right;"><div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:20px;line-height:1;">{{ m.films }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;margin-top:4px;">{{ m.filmsLabel }}</div></div>
+              <div style="text-align:right;"><div style="{{ m.branchNumStyle }}">{{ m.branches }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;margin-top:4px;">{{ m.branchesLabel }}</div></div>
+              <sc-if value="{{ m.hasWo }}" hint-placeholder-val="{{ true }}">
+                <button onclick="{{ m.onWatch }}" title="What order to watch" style="padding:7px 11px;border-radius:9px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;white-space:nowrap;" style-hover="border-color:rgba(255,255,255,0.35);color:#fff;">▶ Order</button>
+              </sc-if>
+              <span style="{{ m.arrowStyle }}">→</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ mapsEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:18px;padding:26px;border-radius:14px;border:1px dashed rgba(255,255,255,0.14);text-align:center;color:#9aa6b4;font-size:15px;">No live map matches “{{ mapsQ }}”. <span onclick="{{ goContribute }}" style="color:#FF7A6E;cursor:pointer;border-bottom:1px dashed rgba(255,122,110,0.5);">Suggest it →</span></div>
+      </sc-if>
+
+      <div style="margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px 20px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);">
+        <span style="color:#9aa6b4;font-size:14.5px;">{{ mapsSoonLabel }}</span>
+        <button onclick="{{ goQueue }}" style="padding:9px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.16);background:transparent;color:#E9EDF3;font-family:'Oswald',sans-serif;font-weight:500;font-size:13.5px;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;" style-hover="border-color:rgba(255,255,255,0.4);">Vote in the Queue →</button>
+      </div>
+    </div>
+    </sc-if>
+
     <!-- ============ TIMELINE ============ -->
     <sc-if value="{{ isTimeline }}" hint-placeholder-val="{{ false }}">
     <div style="max-width:1280px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(20px,5vw,56px) 96px;">
 
-      <button onclick="{{ goHub }}" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;margin-bottom:22px;" style-hover="border-color:rgba(255,255,255,0.25);color:#fff;">← All franchises</button>
+      <button onclick="{{ goExplore }}" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;margin-bottom:22px;" style-hover="border-color:rgba(255,255,255,0.25);color:#fff;">← All timelines</button>
 
       <!-- TITLE BLOCK -->
       <div style="display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;">
@@ -1865,6 +1923,8 @@ class Component extends DCLogic {
     isNarrow: (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth <= 1000 : false,
     woOrder: 'first', woData: null, woLoading: false, woWatched: {},
     activeId: 'terminator',
+    // Timeline tab index: filter, sort, and the last map actually opened this session
+    mapsQ: '', mapsSort: 'az', lastViewedId: null,
     // hub spotlight carousel
     spotIdx: 0, spotPhase: 'idle', spotDir: 1, spotPaused: false, spotH: null,
     // posters store
@@ -7277,12 +7337,14 @@ class Component extends DCLogic {
   pauseSpot = () => { if (!this.state.spotPaused) this.setState({ spotPaused:true }); };
   resumeSpot = () => { if (this.state.spotPaused) this.setState({ spotPaused:false }); };
   goHub = () => { this.setState({ screen:'hub' }); this.pushRoute('/'); this.toTop(); };
-  goExplore = () => { this.setState({ screen:'timeline' }); this.pushRoute(this.routeFor('timeline', this.state.activeId)); this.toTop(); };
+  goExplore = () => { this.setState({ screen:'maps' }); this.pushRoute('/timeline'); this.toTop(); };
+  onMapsQ = (e) => this.setState({ mapsQ: e.target.value });
+  setMapsSort = (k) => this.setState({ mapsSort: k });
   goContribute = (prefill) => { this.setState(s=>({ screen:'contribute', submitted:false, form: typeof prefill==='string'? {...s.form, type:'new', name:prefill} : s.form })); this.pushRoute('/contribute'); this.toTop(); };
   toTop = () => { try { window.scrollTo({top:0,behavior:'auto'}); } catch(e){} };
 
   openFranchise = (id) => {
-    if (this.data[id]) { this.setState({ screen:'timeline', activeId:id, filter:'all', collapsed:{}, view:'rail', seriesTab:'map' }); this.pushRoute(this.routeFor('timeline', id)); this.toTop(); }
+    if (this.data[id]) { this.setState({ screen:'timeline', activeId:id, lastViewedId:id, filter:'all', collapsed:{}, view:'rail', seriesTab:'map' }); this.pushRoute(this.routeFor('timeline', id)); this.toTop(); }
   };
 
   // ---------- watch order ----------
@@ -7420,10 +7482,12 @@ class Component extends DCLogic {
     if (screen === 'poster') return activeId ? '/posters/' + activeId : '/posters';
     if (screen === 'posterThanks') return '/posters/thanks';
     if (screen === 'watchOrder') return activeId ? '/watch-order/' + activeId : '/';
+    if (screen === 'maps') return '/timeline';
     if (screen === 'timeline') return activeId && this.data[activeId] ? '/map/' + activeId : '/timeline';
     return '/';
   };
   titleFor = (path) => {
+    if (path === '/timeline') return 'All Timeline Maps \u00b7 ReelOrder';
     if (path === '/queue') return 'The Queue \u00b7 ReelOrder';
     if (path === '/contribute') return 'Contribute \u00b7 ReelOrder';
     if (path === '/contact') return 'Contact \u00b7 ReelOrder';
@@ -7460,6 +7524,7 @@ class Component extends DCLogic {
     return this.SITE + '/assets/og/' + n + '.png';
   };
   descFor = (path) => {
+    if (path === '/timeline') return 'Every ReelOrder movie timeline map in one list \u2014 filter by franchise or film and jump straight to its branch map.';
     if (path === '/queue') return 'Vote on which movie franchise gets its timeline mapped next \u2014 or suggest one. Live community rankings on ReelOrder.';
     if (path === '/contribute') return 'Know a franchise inside out? Send us its branches, forks and turning points and we will build the timeline map.';
     if (path === '/contact') return 'Get in touch with ReelOrder \u2014 questions, corrections, and poster download support.';
@@ -7533,9 +7598,9 @@ class Component extends DCLogic {
       return (this.data[b] && this.hasWatchOrder(b)) ? { screen:'watchOrder', activeId:b } : { screen:'hub' };
     }
     if (a === 'timeline' || a === 'map') {
-      return this.data[b] ? { screen:'timeline', activeId:b } : { screen:'timeline' };
+      return this.data[b] ? { screen:'timeline', activeId:b, lastViewedId:b } : { screen:'maps' };
     }
-    if (this.data[a]) return { screen:'timeline', activeId:a };
+    if (this.data[a]) return { screen:'timeline', activeId:a, lastViewedId:a };
     return null;
   };
   onPopState = () => {
@@ -8470,6 +8535,36 @@ class Component extends DCLogic {
       ctaStyle: { fontFamily:"'Oswald', sans-serif", fontWeight:'500', fontSize:'13px', letterSpacing:'0.05em', textTransform:'uppercase', color:'#9DB0C4' },
     }));
     const franchises = [...liveCards, ...soonCards];
+    // ---- Timeline tab index ----
+    const mq = (s.mapsQ || '').trim().toLowerCase();
+    const mSort = s.mapsSort || 'az';
+    let mapsRows = Object.values(this.data).map(f => {
+      const films = (f.films || []).length, branches = (f.branches || []).length;
+      let hit = null;
+      if (mq && !f.title.toLowerCase().includes(mq)) hit = (f.films || []).find(x => x.toLowerCase().includes(mq)) || null;
+      const match = !mq || f.title.toLowerCase().includes(mq) || !!hit || (f.tagline || '').toLowerCase().includes(mq);
+      return { f, films, branches, hit, match };
+    }).filter(r => r.match);
+    mapsRows.sort((x, y) => mSort === 'branches' ? (y.branches - x.branches) || x.f.title.localeCompare(y.f.title)
+      : mSort === 'films' ? (y.films - x.films) || x.f.title.localeCompare(y.f.title)
+      : x.f.title.localeCompare(y.f.title));
+    const mapsList = mapsRows.map(({ f, films, branches, hit }) => ({
+      id: f.id, title: f.title, initials: this.initials(f.title),
+      sub: hit ? 'Includes ' + hit : f.tagline,
+      films, filmsLabel: films === 1 ? 'film' : 'films', branches, branchesLabel: branches === 1 ? 'branch' : 'branches',
+      hasWo: this.hasWatchOrder(f.id),
+      onOpen: () => this.openFranchise(f.id),
+      onWatch: (e) => { try { e && e.stopPropagation && e.stopPropagation(); } catch(_){} this.goWatchOrder(f.id); },
+      rowStyle: { display:'flex', alignItems:'center', gap:'16px', flexWrap:'wrap', padding:'14px 18px 14px 14px', borderRadius:'14px', border:'1px solid rgba(255,255,255,0.09)', borderLeft:`3px solid ${f.accent}`, background:'rgba(13,15,20,0.85)', cursor:'pointer', transition:'transform .16s ease, border-color .16s ease, background .16s ease' },
+      crestStyle: { flex:'none', width:'46px', height:'46px', borderRadius:'12px', display:'grid', placeItems:'center', background:`radial-gradient(120% 120% at 30% 0%, ${this.rgba(f.accent,0.6)}, ${this.rgba(f.accent,0.08)})`, border:`1px solid ${this.rgba(f.accent,0.45)}` },
+      branchNumStyle: { fontFamily:"'Oswald', sans-serif", fontWeight:'600', fontSize:'20px', lineHeight:'1', color: f.accent },
+      arrowStyle: { fontSize:'18px', color: f.accent, marginLeft:'2px' },
+    }));
+    const mapsSorts = [['az','A–Z'],['branches','Most branches'],['films','Most films']].map(([k, label]) => ({ label, onClick: () => this.setMapsSort(k), style: this.tabBtn(mSort === k) }));
+    const liveTotal = Object.keys(this.data).length;
+    const mapsCountLabel = mq ? `${mapsList.length} of ${liveTotal} maps` : `${liveTotal} live maps`;
+    const lastF = s.lastViewedId && this.data[s.lastViewedId];
+    const continueStyle = lastF ? { padding:'11px 18px', borderRadius:'11px', border:`1px solid ${this.rgba(lastF.accent,0.55)}`, background:this.rgba(lastF.accent,0.14), color:'#fff', fontFamily:"'Oswald', sans-serif", fontWeight:'500', fontSize:'14px', letterSpacing:'0.05em', textTransform:'uppercase', cursor:'pointer', transition:'transform .16s ease', whiteSpace:'nowrap' } : {};
     const franchiseCount = `${liveCards.length} live · ${soonCards.length} coming soon`;
 
     const steps = [
@@ -8778,11 +8873,14 @@ class Component extends DCLogic {
       navSignInStyle: { marginLeft: s.isNarrow ? '0' : '6px', padding: s.isNarrow ? '12px 18px' : '9px 18px', borderRadius:'9px', border:'none', background:'#fff', color:'#0a0c10', fontFamily:"'DM Sans', sans-serif", fontWeight:'600', fontSize:'14px', cursor:'pointer', transition:'transform .16s ease' },
       navUserStyle: { display:'flex', alignItems:'center', gap:'9px', marginLeft: s.isNarrow ? '0' : '6px', alignSelf: s.isNarrow ? 'flex-start' : 'auto', padding:'4px 6px 4px 5px', borderRadius:'999px', border:'1px solid rgba(255,255,255,0.13)', background:'rgba(255,255,255,0.04)' },
       navHubStyle: this.navBtn(s.screen==='hub'),
-      navExploreStyle: this.navBtn(s.screen==='timeline'),
+      navExploreStyle: this.navBtn(s.screen==='timeline' || s.screen==='maps'),
       goHub:this.goHub, goExplore:this.goExplore, goContribute:()=>this.goContribute(),
       // hub
       search:s.search, onSearchInput:this.onSearchInput, onSearchKey:this.onSearchKey, submitSearch:this.submitSearch, tryTerminator:this.tryTerminator,
       featured, franchises, franchiseCount, steps,
+      isMaps: s.screen === 'maps', mapsQ: s.mapsQ, onMapsQ: this.onMapsQ, mapsSorts, mapsList, mapsCountLabel, mapsEmpty: mapsList.length === 0,
+      mapsSoonLabel: `${this.comingSoon.length} more franchises are waiting to be mapped.`,
+      hasContinue: !!lastF, continueTitle: lastF ? lastF.title : '', continueOpen: () => lastF && this.openFranchise(lastF.id), continueStyle,
       // timeline
       active: { title:a.title, meta:a.meta, framing:a.framing, initials:this.initials(a.title), crestStyle, forkLabel:a.forkLabel, branchCount:a.branches.length },
       filterButtons,

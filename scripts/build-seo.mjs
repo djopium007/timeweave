@@ -92,7 +92,9 @@ const routes = [
     desc: 'Print-ready movie collection posters as instant digital downloads — 24x36 plus A-series, 4:3, 5:7 crops and a phone wallpaper.',
     og: 'og-posters', priority: '0.9' },
   { url: '/timeline', file: 'timeline.html', noindex: true,
-    title: 'ReelOrder — Movie Timeline Maps', desc: DEFAULT_DESC, og: 'og-default' },
+    title: 'All Timeline Maps · ReelOrder',
+    desc: 'Every ReelOrder movie timeline map in one list — filter by franchise or film and jump straight to its branch map.',
+    og: 'og-default' },
 ];
 
 for (const id of Object.keys(watchOrders)) {
