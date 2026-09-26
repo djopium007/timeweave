@@ -1621,12 +1621,21 @@
         </sc-for>
       </div>
 
+      <div style="max-width:450px;margin:26px auto 0;padding:18px 18px 16px;border-radius:14px;border:1px solid rgba(159,232,255,0.22);background:rgba(159,232,255,0.05);text-align:left;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#9FE8FF;">Reading the email on another device?</div>
+        <p style="margin:8px 0 12px;color:#A9B4C2;font-size:14px;line-height:1.55;text-wrap:pretty;">Type the 6-digit code from the email here, or paste the sign-in link itself \u2014 it works in any browser.</p>
+        <div style="display:flex;gap:8px;">
+          <input value="{{ ce.otp }}" onchange="{{ ce.onOtp }}" onkeydown="{{ ce.onOtpKey }}" placeholder="123456 or https://\u2026" inputmode="text" autocomplete="one-time-code" autocapitalize="off" autocorrect="off" spellcheck="false" style="flex:1;min-width:0;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'JetBrains Mono',monospace;font-size:15px;letter-spacing:0.08em;padding:12px 14px;transition:border-color .16s ease;" style-focus="border-color:rgba(159,232,255,0.6);">
+          <button onclick="{{ ce.onVerify }}" style="{{ ce.verifyStyle }}" style-hover="background:#ff3a30;box-shadow:0 0 20px -2px rgba(255,42,31,0.7);">{{ ce.verifyLabel }}</button>
+        </div>
+      </div>
+
       <div style="margin-top:30px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
         <button onclick="{{ ce.onResend }}" style="{{ ce.resendStyle }}">{{ ce.resendLabel }}</button>
         <button onclick="{{ ce.onChange }}" style="padding:12px 20px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;" style-hover="border-color:rgba(255,255,255,0.3);color:#fff;">Use a different email</button>
       </div>
 
-      <p style="margin:26px 0 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.85;color:#6b7686;text-wrap:pretty;">Nothing after a minute? Check spam and promotions — the link works once and expires in an hour.<br>Open it in this same browser so you land back here signed in.</p>
+      <p style="margin:26px 0 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.85;color:#6b7686;text-wrap:pretty;">Nothing after a minute? Check spam and promotions — the link works once and expires in an hour.<br>The link and the code both work once, on any device.</p>
 
       <div style="margin-top:34px;">
         <button onclick="{{ goHub }}" style="background:none;border:none;cursor:pointer;color:#6b7686;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;padding:6px;transition:color .15s ease;" style-hover="color:#fff;">Keep browsing without signing in</button>
@@ -1877,6 +1886,8 @@ class Component extends DCLogic {
     pendingEmail: '',
     resendLeft: 0,
     resendBusy: false,
+    otpCode: '',
+    otpBusy: false,
     pendingList: [],
     votes: {},        // my current vote per project: {id: 1|-1}
     serverMine: {},   // my vote as last fetched from the server
@@ -7916,7 +7927,7 @@ class Component extends DCLogic {
     const user = { id:authUser.id, name:profile.name, handle:profile.handle, color:profile.avatar_color, provider:profile.provider, avatar:profile.avatar_url || '' };
     this.setState({ user, authOpen:false, authEmail:'' });
     this.clearPendingEmail();
-    if (this.state.screen === 'checkEmail') this.goHub();
+    this.leaveCheckEmail();
     this.showToast({ kind:'ok', title:`Signed in as ${user.handle}`, body: user.avatar ? 'Your votes and comments carry your handle.' : 'Click your name up top to pick a username or add a photo.' });
     this.refreshCommunity();
   };
@@ -8129,6 +8140,42 @@ class Component extends DCLogic {
     const ok = await this.sendMagicLink(em);
     this.setState({ resendBusy:false });
     if (ok) this.showToast({ kind:'ok', title:'Link resent', body:'A fresh sign-in link is on its way.' });
+  };
+  onOtpCode = (e) => { const v = String(e.target.value || ''); this.setState({ otpCode: /https?:\/\//i.test(v) ? v.trim() : v.replace(/\D/g, '').slice(0, 6) }); };
+  onOtpKey = (e) => { if (e.key === 'Enter') this.verifyOtpCode(); };
+  // One field, two inputs: a 6-digit code (Supabase {{ .Token }} in the magic-link template) or the
+  // full sign-in link pasted from another device. The implicit auth flow means the link is not
+  // bound to the browser that requested it, so opening it here just works.
+  verifyOtpCode = async () => {
+    if (this.state.otpBusy) return;
+    const v = String(this.state.otpCode || '').trim();
+    if (/^https?:\/\//i.test(v)) {
+      let ok = false;
+      try { const u = new URL(v); ok = (u.origin === this.SUPABASE_URL && u.pathname.indexOf('/auth/v1/verify') === 0) || u.origin === window.location.origin; } catch(e) {}
+      if (!ok) { this.showToast({ kind:'unknown', title:'That doesn’t look like a ReelOrder sign-in link', body:'Paste the whole link from the email.' }); return; }
+      window.location.assign(v);
+      return;
+    }
+    const em = (this.state.pendingEmail || '').trim();
+    if (v.length !== 6) { this.showToast({ kind:'unknown', title:'Enter the 6-digit code', body:'It’s in the same email as the link.' }); return; }
+    if (!this.db || !em) { this.showToast({ kind:'unknown', title:'Sign-in unavailable', body:'Request a new link first.' }); return; }
+    this.setState({ otpBusy:true });
+    const { error } = await this.db.auth.verifyOtp({ email: em, token: v, type: 'email' });
+    this.setState({ otpBusy:false });
+    if (error) { this.showToast({ kind:'unknown', title:'That code didn’t work', body: /expired|invalid|not found/i.test(error.message || '') ? 'Codes work once and expire — resend and use the newest email.' : (error.message || 'Try again.') }); return; }
+    // onAuthStateChange adopts the session; this just puts the visitor back where they were.
+    this.clearPendingEmail();
+    this.leaveCheckEmail();
+  };
+  leaveCheckEmail = () => {
+    if (this.state.screen !== 'checkEmail') return;
+    let back = '/'; try { back = sessionStorage.getItem('reelorder_route') || '/'; sessionStorage.removeItem('reelorder_route'); } catch(e){}
+    if (back === '/check-email') back = '/';
+    const r = this.readRoute(back) || { screen:'hub' };
+    this.setState({ filter:'all', collapsed:{}, view:'rail', seriesTab:'map', otpCode:'', ...r });
+    this.pushRoute(this.routeFor(r.screen, r.posterId || r.activeId || this.state.activeId));
+    if (r.screen === 'posters' || r.screen === 'poster') this.loadPosters(); else if (r.screen === 'admin') this.loadAdmin(); else if (r.screen === 'watchOrder') { this.setState({ woWatched: this.readWatched(r.activeId), woOrder:'first' }); this.loadWatchOrders(); }
+    this.toTop();
   };
   changeAuthEmail = () => { this.setState({ authEmail: this.state.pendingEmail || '', authOpen:true }); };
   clearPendingEmail = () => {
@@ -8799,6 +8846,9 @@ class Component extends DCLogic {
           { n:'3', text:'You land back on ReelOrder, signed in and ready to vote and comment.' },
         ],
         onResend: this.resendMagic,
+        otp: s.otpCode, onOtp: this.onOtpCode, onOtpKey: this.onOtpKey, onVerify: this.verifyOtpCode,
+        verifyLabel: s.otpBusy ? 'Checking\u2026' : (/^https?:\/\//i.test(s.otpCode || '') ? 'Open link' : 'Sign in'),
+        verifyStyle: 'flex:none;padding:12px 18px;border-radius:10px;border:none;background:#FF2A1F;color:#fff;font-family:\'Oswald\',sans-serif;font-weight:500;font-size:13.5px;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all .16s ease;',
         onChange: this.changeAuthEmail,
         resendLabel: s.resendBusy ? 'Sending\u2026' : ((s.resendLeft || 0) > 0 ? 'Resend in ' + s.resendLeft + 's' : 'Resend the link'),
         resendStyle: 'padding:12px 20px;border-radius:10px;border:none;font-family:\'DM Sans\',sans-serif;font-weight:600;font-size:14px;transition:all .16s ease;' + (((s.resendLeft || 0) > 0 || s.resendBusy) ? 'background:rgba(255,255,255,0.07);color:#6b7686;cursor:default;' : 'background:#FF2A1F;color:#fff;cursor:pointer;'),
