@@ -1484,6 +1484,39 @@
     </div>
     </sc-if>
 
+    <!-- ============ CHECK EMAIL ============ -->
+    <sc-if value="{{ isCheckEmail }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:640px;margin:0 auto;padding:clamp(36px,6vw,80px) clamp(20px,5vw,40px) 120px;text-align:center;">
+      <div style="width:74px;height:74px;margin:0 auto 24px;border-radius:20px;border:1px solid rgba(61,220,132,0.32);background:rgba(61,220,132,0.08);display:grid;place-items:center;">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3DDC84" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4.5" width="20" height="15" rx="2.5"></rect><path d="M2.7 6.1 L12 13 L21.3 6.1"></path></svg>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#3DDC84;">Magic link sent</div>
+      <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,46px);line-height:1.03;margin:12px 0 14px;text-transform:uppercase;letter-spacing:0.01em;">Check your email</h1>
+      <p style="margin:0 0 6px;color:#A9B4C2;font-size:16px;line-height:1.6;">We sent a one-time sign-in link to</p>
+      <p style="margin:0 0 32px;font-family:'JetBrains Mono',monospace;font-size:16px;color:#fff;word-break:break-all;">{{ ce.email }}</p>
+
+      <div style="text-align:left;max-width:450px;margin:0 auto;display:flex;flex-direction:column;gap:12px;">
+        <sc-for list="{{ ce.steps }}" as="st" hint-placeholder-count="3">
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border:1px solid rgba(255,255,255,0.08);border-radius:13px;background:rgba(13,15,20,0.6);">
+            <span style="flex:none;width:26px;height:26px;border-radius:8px;background:rgba(255,42,31,0.13);border:1px solid rgba(255,42,31,0.32);color:#FF7A6E;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;display:grid;place-items:center;">{{ st.n }}</span>
+            <span style="color:#A9B4C2;font-size:14.5px;line-height:1.55;text-wrap:pretty;">{{ st.text }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:30px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
+        <button onclick="{{ ce.onResend }}" style="{{ ce.resendStyle }}">{{ ce.resendLabel }}</button>
+        <button onclick="{{ ce.onChange }}" style="padding:12px 20px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;" style-hover="border-color:rgba(255,255,255,0.3);color:#fff;">Use a different email</button>
+      </div>
+
+      <p style="margin:26px 0 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.85;color:#6b7686;text-wrap:pretty;">Nothing after a minute? Check spam and promotions — the link works once and expires in an hour.<br>Open it in this same browser so you land back here signed in.</p>
+
+      <div style="margin-top:34px;">
+        <button onclick="{{ goHub }}" style="background:none;border:none;cursor:pointer;color:#6b7686;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;padding:6px;transition:color .15s ease;" style-hover="color:#fff;">Keep browsing without signing in</button>
+      </div>
+    </div>
+    </sc-if>
+
     <!-- ============ WATCH ORDER ============ -->
     <sc-if value="{{ isWatchOrder }}" hint-placeholder-val="{{ false }}">
     <div style="max-width:900px;margin:0 auto;padding:clamp(24px,4vw,44px) clamp(20px,5vw,40px) 96px;">
@@ -1621,7 +1654,7 @@
         </div>
         <div style="display:flex;gap:8px;">
           <input value="{{ authEmail }}" onchange="{{ onAuthEmail }}" onkeydown="{{ onAuthKey }}" placeholder="you@email.com" style="flex:1;min-width:0;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:14.5px;padding:12px 14px;transition:border-color .16s ease;" style-focus="border-color:rgba(255,42,31,0.55);">
-          <button onclick="{{ signEmail }}" style="flex:none;padding:12px 20px;border-radius:10px;border:none;background:#FF2A1F;color:#fff;font-family:'Oswald',sans-serif;font-weight:500;font-size:13.5px;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all .16s ease;" style-hover="background:#ff3a30;box-shadow:0 0 20px -2px rgba(255,42,31,0.7);">Continue</button>
+          <button onclick="{{ signEmail }}" style="flex:none;padding:12px 20px;border-radius:10px;border:none;background:#FF2A1F;color:#fff;font-family:'Oswald',sans-serif;font-weight:500;font-size:13.5px;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all .16s ease;" style-hover="background:#ff3a30;box-shadow:0 0 20px -2px rgba(255,42,31,0.7);">{{ authBtnLabel }}</button>
         </div>
         <p style="margin:18px 0 0;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6;color:#5a6573;text-wrap:pretty;">We only use your account for identity — no posts on your behalf, ever. Email sign-in sends you a magic link.</p>
       </div>
@@ -1723,6 +1756,10 @@ class Component extends DCLogic {
     authOpen: false,
     profileOpen: false, profile: { name:'', handle:'', pic:'', busy:false, checking:false, taken:false, dirty:false },
     authEmail: '',
+    authBusy: false,
+    pendingEmail: '',
+    resendLeft: 0,
+    resendBusy: false,
     pendingList: [],
     votes: {},        // my current vote per project: {id: 1|-1}
     serverMine: {},   // my vote as last fetched from the server
@@ -7164,6 +7201,7 @@ class Component extends DCLogic {
     if (screen === 'queue') return '/queue';
     if (screen === 'contribute') return '/contribute';
     if (screen === 'contact') return '/contact';
+    if (screen === 'checkEmail') return '/check-email';
     if (screen === 'admin') return '/admin';
     if (screen === 'posters') return '/posters';
     if (screen === 'poster') return activeId ? '/posters/' + activeId : '/posters';
@@ -7176,6 +7214,7 @@ class Component extends DCLogic {
     if (path === '/queue') return 'The Queue \u00b7 ReelOrder';
     if (path === '/contribute') return 'Contribute \u00b7 ReelOrder';
     if (path === '/contact') return 'Contact \u00b7 ReelOrder';
+    if (path === '/check-email') return 'Check your email \u00b7 ReelOrder';
     if (path === '/admin') return 'Admin \u00b7 ReelOrder';
     if (path === '/posters') return 'Timeline Posters \u00b7 ReelOrder';
     if (path === '/posters/thanks') return 'Your download \u00b7 ReelOrder';
@@ -7264,6 +7303,11 @@ class Component extends DCLogic {
     if (a === 'queue') return { screen:'queue' };
     if (a === 'contribute') return { screen:'contribute' };
     if (a === 'contact') return { screen:'contact' };
+    if (a === 'check-email') {
+      let pe = '';
+      try { pe = sessionStorage.getItem('reelorder_pending_email') || ''; } catch(e){}
+      return pe ? { screen:'checkEmail', pendingEmail:pe } : { screen:'hub' };
+    }
     if (a === 'admin') return { screen:'admin' };
     if (a === 'posters') {
       if (!b) return { screen:'posters' };
@@ -7294,9 +7338,9 @@ class Component extends DCLogic {
       // a sign-in round-trip lands back on '/': restore where the visitor was
       let path = location.pathname;
       const stashed = sessionStorage.getItem('reelorder_route');
-      if (stashed) {
+      if (stashed && path === '/') {
         sessionStorage.removeItem('reelorder_route');
-        if (path === '/' && stashed !== '/') { path = stashed; history.replaceState({ path }, '', path); }
+        if (stashed !== '/') { path = stashed; history.replaceState({ path }, '', path); }
       }
       const r = this.readRoute(path);
       if (r) {
@@ -7500,6 +7544,7 @@ class Component extends DCLogic {
     if (this.spotT2) { clearTimeout(this.spotT2); this.spotT2 = null; }
     if (this.spotRaf) { try { cancelAnimationFrame(this.spotRaf); } catch(e) {} this.spotRaf = null; }
     if (this.toastTimer) { clearTimeout(this.toastTimer); this.toastTimer = null; }
+    if (this.ceTimer) { clearInterval(this.ceTimer); this.ceTimer = null; }
   }
 
   adoptSession = async (authUser) => {
@@ -7529,6 +7574,8 @@ class Component extends DCLogic {
     } catch(e) { console.error(e); return; }
     const user = { id:authUser.id, name:profile.name, handle:profile.handle, color:profile.avatar_color, provider:profile.provider, avatar:profile.avatar_url || '' };
     this.setState({ user, authOpen:false, authEmail:'' });
+    this.clearPendingEmail();
+    if (this.state.screen === 'checkEmail') this.goHub();
     this.showToast({ kind:'ok', title:`Signed in as ${user.handle}`, body: user.avatar ? 'Your votes and comments carry your handle.' : 'Click your name up top to pick a username or add a photo.' });
     this.refreshCommunity();
   };
@@ -7695,14 +7742,58 @@ class Component extends DCLogic {
   // accounts (never personal profiles) and returns no email, so it cannot be merged with a
   // ReelOrder identity. Supabase has no Instagram provider either. Stub kept as a no-op.
   signInstagram = () => {};
+  ceTimer = null;
+  startResendCountdown = (secs) => {
+    if (this.ceTimer) clearInterval(this.ceTimer);
+    this.setState({ resendLeft: secs });
+    this.ceTimer = setInterval(() => {
+      this.setState(s => {
+        const n = (s.resendLeft || 0) - 1;
+        if (n <= 0 && this.ceTimer) { clearInterval(this.ceTimer); this.ceTimer = null; }
+        return { resendLeft: n > 0 ? n : 0 };
+      });
+    }, 1000);
+  };
+  // Sends the OTP and remembers who it went to. emailRedirectTo is always origin + '/'
+  // (same reason as OAuth: keeps Supabase's redirect allow-list to a single entry); the
+  // pre-auth path rides in sessionStorage and initRouting() restores it.
+  sendMagicLink = async (em) => {
+    if (!this.db) { this.showToast({ kind:'unknown', title:'Sign-in unavailable', body:'The community backend is not reachable right now.' }); return false; }
+    try { if (location.pathname !== '/check-email') sessionStorage.setItem('reelorder_route', location.pathname); } catch(e){}
+    const { error } = await this.db.auth.signInWithOtp({ email: em, options:{ emailRedirectTo: window.location.origin + '/' } });
+    if (error) { this.showToast({ kind:'unknown', title:'Could not send the link', body:error.message }); return false; }
+    try { sessionStorage.setItem('reelorder_pending_email', em); } catch(e){}
+    this.startResendCountdown(45);
+    return true;
+  };
   signEmail = async () => {
+    if (this.state.authBusy) return;
     const em = (this.state.authEmail||'').trim();
-    if (!em || !em.includes('@')) { this.showToast({ kind:'unknown', title:'Enter a valid email', body:'We’ll use it as your identity — nothing else.' }); return; }
-    if (!this.db) { this.showToast({ kind:'unknown', title:'Sign-in unavailable', body:'The community backend is not reachable right now.' }); return; }
-    const { error } = await this.db.auth.signInWithOtp({ email: em, options:{ emailRedirectTo: window.location.origin + window.location.pathname } });
-    if (error) { this.showToast({ kind:'unknown', title:'Could not send the link', body:error.message }); return; }
-    this.setState({ authOpen:false, authEmail:'' });
-    this.showToast({ kind:'ok', title:'Check your email', body:`We sent a magic sign-in link to ${em}.` });
+    if (!em || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) { this.showToast({ kind:'unknown', title:'Enter a valid email', body:'We use it as your identity \u2014 nothing else.' }); return; }
+    this.setState({ authBusy:true });
+    const ok = await this.sendMagicLink(em);
+    this.setState({ authBusy:false });
+    if (!ok) return;
+    // A toast is the wrong home for this: it auto-dismisses and the visitor is about to
+    // switch to their mail app. The holding screen persists and survives a reload.
+    this.setState({ authOpen:false, authEmail:'', pendingEmail:em, screen:'checkEmail' });
+    this.pushRoute('/check-email');
+    this.toTop();
+  };
+  resendMagic = async () => {
+    if (this.state.resendBusy || (this.state.resendLeft || 0) > 0) return;
+    const em = (this.state.pendingEmail||'').trim();
+    if (!em) { this.setState({ authOpen:true }); return; }
+    this.setState({ resendBusy:true });
+    const ok = await this.sendMagicLink(em);
+    this.setState({ resendBusy:false });
+    if (ok) this.showToast({ kind:'ok', title:'Link resent', body:'A fresh sign-in link is on its way.' });
+  };
+  changeAuthEmail = () => { this.setState({ authEmail: this.state.pendingEmail || '', authOpen:true }); };
+  clearPendingEmail = () => {
+    if (this.ceTimer) { clearInterval(this.ceTimer); this.ceTimer = null; }
+    try { sessionStorage.removeItem('reelorder_pending_email'); } catch(e){}
+    this.setState({ pendingEmail:'', resendLeft:0 });
   };
   signOut = () => {
     if (this.db) this.db.auth.signOut();
@@ -8351,6 +8442,21 @@ class Component extends DCLogic {
       authOpen: s.authOpen, openAuth:this.openAuth, closeAuth:this.closeAuth, stopClick:this.stopClick,
       authEmail: s.authEmail, onAuthEmail:this.onAuthEmail, onAuthKey:this.onAuthKey,
       signGoogle:this.signGoogle, signApple:this.signApple, signFacebook:this.signFacebook, signX:this.signX, signInstagram:this.signInstagram, signEmail:this.signEmail,
+      authBtnLabel: s.authBusy ? 'Sending\u2026' : 'Continue',
+      // check-email holding page
+      isCheckEmail: s.screen === 'checkEmail',
+      ce: {
+        email: s.pendingEmail || 'your inbox',
+        steps: [
+          { n:'1', text:'Open the email from ReelOrder \u2014 subject line "Sign in to ReelOrder".' },
+          { n:'2', text:'Tap the sign-in link inside it. There is no password to remember.' },
+          { n:'3', text:'You land back on ReelOrder, signed in and ready to vote and comment.' },
+        ],
+        onResend: this.resendMagic,
+        onChange: this.changeAuthEmail,
+        resendLabel: s.resendBusy ? 'Sending\u2026' : ((s.resendLeft || 0) > 0 ? 'Resend in ' + s.resendLeft + 's' : 'Resend the link'),
+        resendStyle: 'padding:12px 20px;border-radius:10px;border:none;font-family:\'DM Sans\',sans-serif;font-weight:600;font-size:14px;transition:all .16s ease;' + (((s.resendLeft || 0) > 0 || s.resendBusy) ? 'background:rgba(255,255,255,0.07);color:#6b7686;cursor:default;' : 'background:#FF2A1F;color:#fff;cursor:pointer;'),
+      },
       // queue
       isWatchOrder: s.screen === 'watchOrder', wo: this.buildWO(s),
       watchOrderBtnLabel: 'What order to ' + (this.WO_NOUN[s.activeId] || 'watch') + ' these',
