@@ -9,6 +9,9 @@
 //   comments.hide / comments.unhide / comments.delete { id }
 //   users.ban { userId, reason? } / users.unban { userId }
 //   orders.list { limit? }                -> { items }
+//   users.list { q? }                     -> { items }   (every registered user + counts + last login)
+//   users.logins { userId, limit? }       -> { items }   (that user's sign-in history, newest first)
+//   traffic.summary { days? }             -> { summary } (first-party page views: totals, daily, pages, referrers, countries, devices)
 import { db, json, readJsonBody, safeError } from './_lib.js';
 
 const STATUSES = ['pending', 'reviewing', 'accepted', 'rejected'];
@@ -111,6 +114,28 @@ export default async function handler(req, res) {
         const { data: posters } = await sb.from('posters').select('id,title');
         const titles = Object.fromEntries((posters || []).map(p => [p.id, p.title]));
         return json(res, 200, { items: (data || []).map(o => ({ ...o, poster_title: titles[o.poster_id] || o.poster_id })) });
+      }
+
+      // ---------------- users ----------------
+      case 'users.list': {
+        const { data, error } = await sb.rpc('admin_users_overview'); if (error) throw error;
+        const q = String(body.q || '').trim().toLowerCase();
+        const items = (data || []).filter(u => !q || [u.email, u.name, u.handle, (u.providers || []).join(' ')].some(v => String(v || '').toLowerCase().includes(q)));
+        return json(res, 200, { items });
+      }
+      case 'users.logins': {
+        const userId = uuid(body.userId); if (!userId) return json(res, 400, { error: 'Bad userId' });
+        const { data, error } = await sb.from('login_events')
+          .select('id,provider,event,country,region,city,device,ua,created_at')
+          .eq('user_id', userId).order('created_at', { ascending: false }).limit(lim(body.limit, 100)); if (error) throw error;
+        return json(res, 200, { items: data || [] });
+      }
+
+      // ---------------- traffic ----------------
+      case 'traffic.summary': {
+        const days = Math.min(365, Math.max(1, parseInt(body.days, 10) || 30));
+        const { data, error } = await sb.rpc('admin_traffic_summary', { days }); if (error) throw error;
+        return json(res, 200, { summary: data || {} });
       }
 
       default:

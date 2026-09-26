@@ -1333,6 +1333,8 @@
             <button onclick="{{ adminTabInbox }}" style="{{ adminTabInboxStyle }}">Inbox {{ adminInboxCount }}</button>
             <button onclick="{{ adminTabComments }}" style="{{ adminTabCommentsStyle }}">Comments</button>
             <button onclick="{{ adminTabOrders }}" style="{{ adminTabOrdersStyle }}">Orders</button>
+            <button onclick="{{ adminTabUsers }}" style="{{ adminTabUsersStyle }}">Users</button>
+            <button onclick="{{ adminTabTraffic }}" style="{{ adminTabTrafficStyle }}">Traffic</button>
             <button onclick="{{ adminReload }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;" title="Reload">↻</button>
           </div>
         </div>
@@ -1437,6 +1439,119 @@
                 </sc-for>
               </tbody>
             </table>
+          </div>
+        </sc-if>
+
+        <!-- USERS -->
+        <sc-if value="{{ adminIsUsers }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
+            <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.025);padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:150px;flex:1;"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">Registered</div><div style="font-family:'Oswald',sans-serif;font-weight:700;font-size:28px;line-height:1;">{{ usersTotal }}</div></div>
+            <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.025);padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:150px;flex:1;"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">Active last 7 days</div><div style="font-family:'Oswald',sans-serif;font-weight:700;font-size:28px;line-height:1;">{{ usersActive7 }}</div></div>
+            <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.025);padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:150px;flex:1;"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">Sign-in methods</div><div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:17px;line-height:1.3;">{{ usersProviderMix }}</div></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">
+            <input value="{{ adminUserQ }}" onchange="{{ onAdminUserQ }}" onkeydown="{{ onAdminUserKey }}" placeholder="Search name, handle, email or provider…" style="flex:1;min-width:220px;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:10px;color:#E9EDF3;font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 13px;">
+            <button onclick="{{ adminUserSearch }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;text-decoration:none;display:inline-block;">Search</button>
+          </div>
+          <sc-if value="{{ usersEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:36px;border-radius:14px;border:1px dashed rgba(255,255,255,0.14);text-align:center;color:#7a8696;font-size:14px;">No users match.</div></sc-if>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <sc-for list="{{ userRows }}" as="u" hint-placeholder-count="3">
+              <div style="{{ u.cardStyle }}">
+                <div onclick="{{ u.onToggle }}" style="display:flex;align-items:center;gap:14px;cursor:pointer;flex-wrap:wrap;">
+                  <sc-if value="{{ u.hasPic }}" hint-placeholder-val="{{ false }}"><img src="{{ u.pic }}" alt="" loading="lazy" style="width:38px;height:38px;border-radius:10px;object-fit:cover;flex:none;"></sc-if>
+                  <sc-if value="{{ u.noPic }}" hint-placeholder-val="{{ true }}"><div style="{{ u.avatarStyle }}">{{ u.initials }}</div></sc-if>
+                  <div style="flex:1;min-width:200px;">
+                    <div style="font-weight:600;font-size:14.5px;">{{ u.name }} <span style="color:#7a8696;font-weight:400;">{{ u.handle }}</span></div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;">{{ u.email }}</div>
+                  </div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                    <sc-for list="{{ u.providers }}" as="pv" hint-placeholder-count="1"><span style="{{ pv.style }}">{{ pv.label }}</span></sc-for>
+                    <sc-if value="{{ u.isBanned }}" hint-placeholder-val="{{ false }}"><span style="{{ u.bannedStyle }}">Banned</span></sc-if>
+                  </div>
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;min-width:130px;"><span style="color:#6b7686;">Joined</span> {{ u.joined }}</div>
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;min-width:170px;"><span style="color:#6b7686;">Last sign-in</span> {{ u.lastLogin }}</div>
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;">{{ u.activity }}</div>
+                  <span style="color:#6b7686;font-size:14px;">{{ u.chevron }}</span>
+                </div>
+                <sc-if value="{{ u.open }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,0.07);padding-top:12px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+                      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">Sign-in history {{ u.loginsLabel }}</div>
+                      <div style="display:flex;gap:6px;">
+                        <a href="{{ u.mailto }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;text-decoration:none;display:inline-block;">Email</a>
+                        <button onclick="{{ u.onToggleBan }}" style="padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s ease;text-decoration:none;display:inline-block;">{{ u.banLabel }}</button>
+                      </div>
+                    </div>
+                    <sc-if value="{{ u.loginsLoading }}" hint-placeholder-val="{{ false }}"><div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;">Loading…</div></sc-if>
+                    <sc-if value="{{ u.loginsEmpty }}" hint-placeholder-val="{{ false }}"><div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;line-height:1.7;">No sign-ins recorded yet — history starts from the day this was deployed. Supabase last saw this account {{ u.lastSeen }}.</div></sc-if>
+                    <sc-if value="{{ u.hasLogins }}" hint-placeholder-val="{{ true }}">
+                    <div style="overflow-x:auto;">
+                      <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:640px;">
+                        <thead><tr style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;text-align:left;">
+                          <th style="padding:8px 10px;">When</th><th style="padding:8px 10px;">Method</th><th style="padding:8px 10px;">Where</th><th style="padding:8px 10px;">Device</th><th style="padding:8px 10px;">Browser</th>
+                        </tr></thead>
+                        <tbody>
+                          <sc-for list="{{ u.logins }}" as="l" hint-placeholder-count="2">
+                            <tr style="border-top:1px solid rgba(255,255,255,0.07);">
+                              <td style="padding:8px 10px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;white-space:nowrap;">{{ l.when }}</td>
+                              <td style="padding:8px 10px;">{{ l.provider }}</td>
+                              <td style="padding:8px 10px;color:#9DB0C4;">{{ l.where }}</td>
+                              <td style="padding:8px 10px;color:#9DB0C4;">{{ l.device }}</td>
+                              <td style="padding:8px 10px;color:#9DB0C4;">{{ l.ua }}</td>
+                            </tr>
+                          </sc-for>
+                        </tbody>
+                      </table>
+                    </div>
+                    </sc-if>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <p style="margin:16px 0 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;color:#6b7686;line-height:1.7;">* Last sign-in marked with an asterisk comes from Supabase's own last-seen timestamp — the account has not signed in since login history went live.</p>
+        </sc-if>
+
+        <!-- TRAFFIC -->
+        <sc-if value="{{ adminIsTraffic }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:16px;">
+            <button onclick="{{ trafficDays7 }}" style="{{ trafficDays7Style }}">7 days</button>
+            <button onclick="{{ trafficDays30 }}" style="{{ trafficDays30Style }}">30 days</button>
+            <button onclick="{{ trafficDays90 }}" style="{{ trafficDays90Style }}">90 days</button>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;color:#6b7686;margin-left:auto;">First-party, cookie-free. Admin visits excluded.</span>
+          </div>
+          <sc-if value="{{ trafficEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:36px;border-radius:14px;border:1px dashed rgba(255,255,255,0.14);text-align:center;color:#7a8696;font-size:14px;margin-bottom:18px;">No page views recorded in this window yet. Counting starts from the deploy that added the beacon.</div></sc-if>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
+            <sc-for list="{{ trafficTiles }}" as="t" hint-placeholder-count="4">
+              <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.025);padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:150px;flex:1;"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">{{ t.label }}</div><div style="font-family:'Oswald',sans-serif;font-weight:700;font-size:28px;line-height:1;">{{ t.value }}</div><div style="{{ t.deltaStyle }}">{{ t.delta }}</div></div>
+            </sc-for>
+          </div>
+          <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.025);padding:16px 18px;margin-bottom:18px;">
+            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">Daily</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;color:#6b7686;"><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#FF2A1F;vertical-align:middle;margin-right:5px;"></span>visitors <span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:rgba(255,255,255,0.16);vertical-align:middle;margin:0 5px 0 12px;"></span>page views</div>
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:3px;height:120px;margin-top:12px;">
+              <sc-for list="{{ trafficBars }}" as="b" hint-placeholder-count="14">
+                <div title="{{ b.title }}" style="flex:1;min-width:2px;height:100%;display:flex;align-items:flex-end;gap:1px;"><div style="{{ b.viewsStyle }}"></div><div style="{{ b.visitorsStyle }}"></div></div>
+              </sc-for>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;color:#6b7686;margin-top:6px;"><span>{{ trafficFirstDay }}</span><span>{{ trafficLastDay }}</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;">
+            <sc-for list="{{ trafficLists }}" as="tl" hint-placeholder-count="5">
+              <div style="border-radius:14px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.025);padding:16px 18px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">{{ tl.title }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6b7686;">visitors · views</div></div>
+                <sc-if value="{{ tl.empty }}" hint-placeholder-val="{{ false }}"><div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;padding:8px 0;">No data yet.</div></sc-if>
+                <sc-for list="{{ tl.rows }}" as="r" hint-placeholder-count="3">
+                  <div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid rgba(255,255,255,0.06);">
+                    <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;">{{ r.k }}</span>
+                    <span style="{{ r.barStyle }}"></span>
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DB0C4;min-width:78px;text-align:right;white-space:nowrap;">{{ r.n }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
           </div>
         </sc-if>
       </sc-if>
@@ -1747,7 +1862,7 @@ class Component extends DCLogic {
     toast: null,
     form: { type: 'new', name: '', handle: '', email: '', note: '', website: '' }, contributeBusy: false,
     contact: { topic: 'order', name: '', email: '', note: '', website: '' }, contactBusy: false, contactSent: false,
-    admin: { isAdmin:false, checked:false, tab:'inbox', inboxFilter:'pending', commentsFilter:'visible', q:'', inbox:[], comments:[], orders:[], loading:false, error:'' },
+    admin: { isAdmin:false, checked:false, tab:'inbox', inboxFilter:'pending', commentsFilter:'visible', q:'', inbox:[], comments:[], orders:[], users:[], userQ:'', openUser:null, userLogins:{}, loginsLoading:false, traffic:null, trafficDays:30, loading:false, error:'' },
     submitted: false,
     queuePos: 47,
     // community
@@ -7375,6 +7490,7 @@ class Component extends DCLogic {
     try {
       if (location.pathname !== path) history.pushState({ path }, '', path);
       this.setTitle(path);
+      this.trackView(path);
     } catch(e){}
   };
   readRoute = (pathname) => {
@@ -7413,6 +7529,7 @@ class Component extends DCLogic {
     this.setTitle(this.routeFor(r.screen, r.posterId || r.activeId || this.state.activeId));
     if (r.screen === 'posterThanks') this.loadThanks(); else if (r.screen === 'posters' || r.screen === 'poster') this.loadPosters(); else if (r.screen === 'admin') this.loadAdmin();
     if (r.screen === 'watchOrder') { this.setState({ woWatched: this.readWatched(r.activeId), woOrder:'first' }); this.loadWatchOrders(); }
+    this.trackView(location.pathname);
     this.toTop();
   };
   initRouting = () => {
@@ -7430,6 +7547,7 @@ class Component extends DCLogic {
         this.setTitle(this.routeFor(r.screen, r.posterId || r.activeId || this.state.activeId));
       }
       window.addEventListener('popstate', this.onPopState);
+      this.trackView(path, document.referrer || '');
       // /?q=terminator - powers the schema.org SearchAction
       try {
         const q = new URLSearchParams(location.search).get('q');
@@ -7527,7 +7645,7 @@ class Component extends DCLogic {
   };
   checkAdmin = async () => {
     if (!this.db) return;
-    try { const j = await this.adminCall('me'); this.setState(s=>({ admin:{ ...s.admin, isAdmin: !!j.admin, checked:true } })); if (j.admin && this.state.screen === 'admin') this.loadAdmin(); }
+    try { const j = await this.adminCall('me'); this.setState(s=>({ admin:{ ...s.admin, isAdmin: !!j.admin, checked:true } })); try { if (j.admin) localStorage.setItem('reelorder_notrack', '1'); else localStorage.removeItem('reelorder_notrack'); } catch(e){} if (j.admin && this.state.screen === 'admin') this.loadAdmin(); }
     catch(e) { this.setState(s=>({ admin:{ ...s.admin, isAdmin:false, checked:true } })); }
   };
   goAdmin = () => { this.setState({ screen:'admin' }); this.pushRoute('/admin'); this.toTop(); this.loadAdmin(); };
@@ -7541,9 +7659,148 @@ class Component extends DCLogic {
       if (tab === 'inbox') { const j = await this.adminCall('inbox.list', a.inboxFilter === 'all' ? {} : { status: a.inboxFilter }); this.setAdmin({ inbox: j.items || [], loading:false }); }
       else if (tab === 'comments') { const j = await this.adminCall('comments.list', { q: a.q, hidden: a.commentsFilter === 'all' ? undefined : a.commentsFilter === 'hidden' }); this.setAdmin({ comments: j.items || [], loading:false }); }
       else if (tab === 'orders') { const j = await this.adminCall('orders.list', {}); this.setAdmin({ orders: j.items || [], loading:false }); }
+      else if (tab === 'users') { const j = await this.adminCall('users.list', { q: a.userQ }); this.setAdmin({ users: j.items || [], loading:false }); }
+      else if (tab === 'traffic') { const j = await this.adminCall('traffic.summary', { days: a.trafficDays }); this.setAdmin({ traffic: j.summary || null, loading:false }); }
       else this.setAdmin({ loading:false });
     } catch(e) { this.setAdmin({ loading:false, error: String(e.message || e) }); }
   };
+  // ---------- first-party analytics (admin Traffic tab) ----------
+  // One beacon per route change. No cookies, no IP stored (api/hit.js hashes ip+ua+day).
+  // Admin accounts are excluded so the numbers stay honest.
+  lastTracked = null;
+  trackView = (path, referrer) => {
+    try {
+      path = path || location.pathname;
+      if (path === this.lastTracked) return;
+      if (localStorage.getItem('reelorder_notrack')) return;
+      if (this.state.admin && this.state.admin.isAdmin) return;
+      this.lastTracked = path;
+      const payload = JSON.stringify({ p: path, r: referrer || '' });
+      if (navigator.sendBeacon) navigator.sendBeacon('/api/hit', new Blob([payload], { type:'application/json' }));
+      else fetch('/api/hit', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: payload, keepalive:true }).catch(()=>{});
+    } catch(e){}
+  };
+  // One login_events row per real sign-in (admin Users tab → history). Per-tab dedupe here,
+  // 60 s dedupe server-side, so token refreshes and tab focus never double count.
+  recordLogin = async (session) => {
+    try {
+      const uid = session && session.user && session.user.id; if (!uid || !session.access_token) return;
+      if (sessionStorage.getItem('reelorder_login_logged') === uid) return;
+      sessionStorage.setItem('reelorder_login_logged', uid);
+      await fetch('/api/login-event', { method:'POST', headers:{ Authorization: 'Bearer ' + session.access_token } });
+    } catch(e){}
+  };
+  onAdminUserQ = (e) => this.setAdmin({ userQ: e.target.value });
+  onAdminUserKey = (e) => { if (e.key === 'Enter') this.loadAdmin('users'); };
+  toggleAdminUser = async (id) => {
+    const a = this.state.admin;
+    if (a.openUser === id) { this.setAdmin({ openUser:null }); return; }
+    this.setAdmin({ openUser:id });
+    if (a.userLogins[id]) return;
+    this.setAdmin({ loginsLoading:true });
+    try {
+      const j = await this.adminCall('users.logins', { userId:id });
+      this.setState(s => ({ admin:{ ...s.admin, userLogins:{ ...s.admin.userLogins, [id]: j.items || [] }, loginsLoading:false } }));
+    } catch(e) { this.setAdmin({ loginsLoading:false }); this.showToast({ kind:'unknown', title:'Could not load sign-ins', body:String(e.message || e) }); }
+  };
+  setTrafficDays = (d) => { this.setAdmin({ trafficDays:d }); setTimeout(() => this.loadAdmin('traffic'), 0); };
+  shortUA = (ua) => {
+    ua = String(ua || ''); if (!ua) return '—';
+    const b = /edg\//i.test(ua) ? 'Edge' : /opr\/|opera/i.test(ua) ? 'Opera' : /samsungbrowser/i.test(ua) ? 'Samsung' : /firefox|fxios/i.test(ua) ? 'Firefox' : /chrome|crios/i.test(ua) ? 'Chrome' : /safari/i.test(ua) ? 'Safari' : 'Browser';
+    const os = /iphone|ipad|ipod/i.test(ua) ? 'iOS' : /android/i.test(ua) ? 'Android' : /windows/i.test(ua) ? 'Windows' : /mac os/i.test(ua) ? 'macOS' : /linux/i.test(ua) ? 'Linux' : '';
+    return b + (os ? ' · ' + os : '');
+  };
+  countryName = (code) => {
+    if (!code || code === '??') return 'Unknown';
+    try { return new Intl.DisplayNames(['en'], { type:'region' }).of(code) || code; } catch(e) { return code; }
+  };
+  buildAdminUsers(s) {
+    const a = s.admin, users = a.users || [];
+    const weekAgo = Date.now() - 7 * 864e5;
+    const provColor = { google:'#54DBFF', facebook:'#3C7BE0', email:'#3DDC84', apple:'#B69CFF', x:'#E9EDF3', twitter:'#E9EDF3' };
+    const provLabel = { google:'Google', facebook:'Facebook', email:'Email', apple:'Apple', x:'X', twitter:'X' };
+    const mix = {}; users.forEach(u => (u.providers || []).forEach(p => { mix[p] = (mix[p] || 0) + 1; }));
+    const chip = (color) => ({ fontFamily:"'JetBrains Mono', monospace", fontSize:'10.5px', letterSpacing:'0.1em', textTransform:'uppercase', padding:'3px 7px', borderRadius:'6px', border:'1px solid ' + color, color });
+    return {
+      usersTotal: String(users.length),
+      usersActive7: String(users.filter(u => new Date(u.last_login_at || u.last_sign_in_at || 0).getTime() > weekAgo).length),
+      usersProviderMix: Object.keys(mix).length ? Object.keys(mix).sort((x, y) => mix[y] - mix[x]).map(p => (provLabel[p] || p) + ' ' + mix[p]).join(' · ') : '—',
+      adminUserQ: a.userQ, onAdminUserQ: this.onAdminUserQ, onAdminUserKey: this.onAdminUserKey, adminUserSearch: () => this.loadAdmin('users'),
+      usersEmpty: !a.loading && users.length === 0,
+      userRows: users.map(u => {
+        const open = a.openUser === u.id;
+        const logins = a.userLogins[u.id];
+        const name = u.name || (u.email ? u.email.split('@')[0] : 'Unnamed');
+        const color = u.avatar_color || '#3DDC84';
+        return {
+          id: u.id, name, handle: u.handle || '', email: u.email || '—',
+          hasPic: !!u.avatar_url, noPic: !u.avatar_url, pic: u.avatar_url || '',
+          initials: this.initials(name),
+          avatarStyle: { width:'38px', height:'38px', borderRadius:'10px', background: color + '33', color, display:'grid', placeItems:'center', fontWeight:700, fontSize:'14px', flex:'none' },
+          providers: (u.providers && u.providers.length ? u.providers : ['email']).map(p => ({ label: provLabel[p] || p, style: chip(provColor[p] || '#7a8696') })),
+          joined: this.adminWhen(u.created_at),
+          lastLogin: u.last_login_at ? this.adminWhen(u.last_login_at) + (u.last_login_country ? ' · ' + u.last_login_country : '') : (u.last_sign_in_at ? this.adminWhen(u.last_sign_in_at) + ' *' : 'never'),
+          activity: (u.comments || 0) + ' comments · ' + (u.votes || 0) + ' votes · ' + (u.logins || 0) + ' sign-ins',
+          isBanned: !!u.banned, bannedStyle: chip('#FF7A6E'),
+          chevron: open ? '▾' : '▸', open,
+          cardStyle: { borderRadius:'14px', border:'1px solid ' + (u.banned ? 'rgba(255,122,110,0.4)' : open ? 'rgba(159,232,255,0.35)' : 'rgba(255,255,255,0.09)'), background: u.banned ? 'rgba(255,122,110,0.05)' : 'rgba(255,255,255,0.025)', padding:'14px 18px' },
+          onToggle: () => this.toggleAdminUser(u.id),
+          mailto: u.email ? 'mailto:' + u.email : '#',
+          banLabel: u.banned ? 'Unban' : 'Ban user',
+          onToggleBan: () => this.userToggleBan({ user_id:u.id, banned:u.banned, handle:u.handle, name:u.name }),
+          loginsLabel: logins ? '(' + logins.length + ')' : '',
+          loginsLoading: open && !logins && a.loginsLoading,
+          loginsEmpty: open && !!logins && logins.length === 0,
+          hasLogins: open && !!logins && logins.length > 0,
+          lastSeen: u.last_sign_in_at ? this.adminWhen(u.last_sign_in_at) : 'never',
+          logins: (logins || []).map(l => ({
+            when: this.adminWhen(l.created_at), provider: provLabel[l.provider] || l.provider || '—',
+            where: [l.city, l.region, l.country ? this.countryName(l.country) : ''].filter(Boolean).join(', ') || '—',
+            device: l.device || '—', ua: this.shortUA(l.ua),
+          })),
+        };
+      }),
+    };
+  }
+  buildAdminTraffic(s) {
+    const a = s.admin, t = a.traffic;
+    const fmt = n => (n == null ? '—' : Number(n).toLocaleString());
+    const days = t ? t.days : a.trafficDays;
+    const delta = (cur, prev) => {
+      if (!prev) return { text: cur > 0 ? 'no prior data' : '', color:'#6b7686' };
+      const pct = Math.round((cur - prev) / prev * 100);
+      return { text: (pct >= 0 ? '+' : '') + pct + '% vs prior ' + days + 'd', color: pct >= 0 ? '#3DDC84' : '#FF7A6E' };
+    };
+    const tiles = t ? [
+      { label:'Unique visitors', value: fmt(t.visitors), d: delta(t.visitors, t.prev_visitors) },
+      { label:'Page views', value: fmt(t.views), d: delta(t.views, t.prev_views) },
+      { label:'Registered users', value: fmt(t.users_total), d: { text: '+' + fmt(t.users_new) + ' in the last ' + days + 'd', color:'#9FE8FF' } },
+      { label:'Sign-ins', value: fmt(t.logins), d: { text: 'last ' + days + 'd', color:'#6b7686' } },
+    ] : [];
+    const daily = (t && t.daily) || [];
+    const max = Math.max(1, ...daily.map(d => Number(d.views) || 0));
+    const bars = daily.map(d => ({
+      title: d.d + ': ' + d.visitors + ' visitors, ' + d.views + ' views',
+      viewsStyle: 'flex:1;height:' + Math.max(d.views > 0 ? 2 : 0, Math.round(d.views / max * 100)) + '%;background:rgba(255,255,255,0.16);border-radius:2px 2px 0 0;',
+      visitorsStyle: 'flex:1;height:' + Math.max(d.visitors > 0 ? 2 : 0, Math.round(d.visitors / max * 100)) + '%;background:#FF2A1F;border-radius:2px 2px 0 0;',
+    }));
+    const list = (title, rows, mapK) => {
+      rows = rows || []; const mx = Math.max(1, ...rows.map(r => Number(r.v) || 0));
+      return { title, empty: rows.length === 0, rows: rows.map(r => ({ k: mapK ? mapK(r.k) : r.k, n: fmt(r.v) + ' · ' + fmt(r.n), barStyle: 'display:inline-block;height:6px;width:' + Math.max(4, Math.round(r.v / mx * 72)) + 'px;border-radius:3px;background:rgba(255,42,31,0.6);flex:none;' })) };
+    };
+    return {
+      trafficDays7: () => this.setTrafficDays(7), trafficDays30: () => this.setTrafficDays(30), trafficDays90: () => this.setTrafficDays(90),
+      trafficDays7Style: this.tabBtn(a.trafficDays === 7), trafficDays30Style: this.tabBtn(a.trafficDays === 30), trafficDays90Style: this.tabBtn(a.trafficDays === 90),
+      trafficTiles: tiles.map(x => ({ label:x.label, value:x.value, delta:x.d.text, deltaStyle: "font-family:'JetBrains Mono',monospace;font-size:11px;color:" + x.d.color + ';' })),
+      trafficBars: bars,
+      trafficFirstDay: daily.length ? daily[0].d : '', trafficLastDay: daily.length ? daily[daily.length - 1].d : '',
+      trafficLists: t ? [
+        list('Top pages', t.pages), list('Referrers', t.referrers, k => k === '(direct)' ? 'Direct / none' : k),
+        list('Countries', t.countries, k => this.countryName(k)), list('Devices', t.devices), list('Browsers', t.browsers),
+      ] : [],
+      trafficEmpty: !a.loading && !!t && Number(t.views) === 0,
+    };
+  }
   adminAct = async (action, params, then) => {
     try { await this.adminCall(action, params); if (then) then(); else this.loadAdmin(); }
     catch(e) { this.showToast({ kind:'unknown', title:'Admin action failed', body: String(e.message || e) }); }
@@ -7604,8 +7861,8 @@ class Component extends DCLogic {
     if (this.state.screen === 'posterThanks') this.loadThanks();
     if (this.state.screen === 'posters' || this.state.screen === 'poster' || this.state.screen === 'posterThanks') this.loadPosters();
     this.db.auth.onAuthStateChange((event, session) => {
-      if (session && session.user) { this.adoptSession(session.user); this.checkAdmin(); }
-      else if (event === 'SIGNED_OUT') this.setState(s=>({ user:null, admin:{ ...s.admin, isAdmin:false, checked:true, inbox:[], comments:[], orders:[] } }));
+      if (session && session.user) { this.adoptSession(session.user); this.checkAdmin(); if (event === 'SIGNED_IN') this.recordLogin(session); }
+      else if (event === 'SIGNED_OUT') this.setState(s=>({ user:null, admin:{ ...s.admin, isAdmin:false, checked:true, inbox:[], comments:[], orders:[], users:[], traffic:null, openUser:null, userLogins:{} } }));
     });
     // surface provider errors bounced back in the URL
     try {
@@ -8385,6 +8642,11 @@ class Component extends DCLogic {
       adminIsInbox: s.admin.tab==='inbox', adminIsComments: s.admin.tab==='comments', adminIsOrders: s.admin.tab==='orders',
       adminTabInbox: () => this.setAdminTab('inbox'), adminTabComments: () => this.setAdminTab('comments'), adminTabOrders: () => this.setAdminTab('orders'),
       adminTabInboxStyle: this.typeBtn(s.admin.tab==='inbox'), adminTabCommentsStyle: this.typeBtn(s.admin.tab==='comments'), adminTabOrdersStyle: this.typeBtn(s.admin.tab==='orders'),
+      adminIsUsers: s.admin.tab==='users', adminIsTraffic: s.admin.tab==='traffic',
+      adminTabUsers: () => this.setAdminTab('users'), adminTabTraffic: () => this.setAdminTab('traffic'),
+      adminTabUsersStyle: this.typeBtn(s.admin.tab==='users'), adminTabTrafficStyle: this.typeBtn(s.admin.tab==='traffic'),
+      ...(s.screen === 'admin' && s.admin.tab === 'users' ? this.buildAdminUsers(s) : { userRows: [], usersEmpty: false, usersTotal:'', usersActive7:'', usersProviderMix:'', adminUserQ: s.admin.userQ, onAdminUserQ: this.onAdminUserQ, onAdminUserKey: this.onAdminUserKey, adminUserSearch: () => this.loadAdmin('users') }),
+      ...(s.screen === 'admin' && s.admin.tab === 'traffic' ? this.buildAdminTraffic(s) : { trafficTiles: [], trafficBars: [], trafficLists: [], trafficEmpty: false, trafficFirstDay:'', trafficLastDay:'', trafficDays7: () => this.setTrafficDays(7), trafficDays30: () => this.setTrafficDays(30), trafficDays90: () => this.setTrafficDays(90), trafficDays7Style:'', trafficDays30Style:'', trafficDays90Style:'' }),
       adminInboxCount: s.admin.tab==='inbox' && s.admin.inboxFilter==='pending' && s.admin.inbox.length ? '(' + s.admin.inbox.length + ')' : '',
       adminReload: () => this.loadAdmin(),
       inboxFilterPending: () => { this.setAdmin({ inboxFilter:'pending' }); setTimeout(() => this.loadAdmin('inbox'), 0); },
