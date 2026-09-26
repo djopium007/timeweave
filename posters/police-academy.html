@@ -1622,9 +1622,9 @@
 
       <div style="max-width:450px;margin:26px auto 0;padding:18px 18px 16px;border-radius:14px;border:1px solid rgba(159,232,255,0.22);background:rgba(159,232,255,0.05);text-align:left;">
         <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#9FE8FF;">Reading the email on another device?</div>
-        <p style="margin:8px 0 12px;color:#A9B4C2;font-size:14px;line-height:1.55;text-wrap:pretty;">Type the 6-digit code from the email here, or paste the sign-in link itself — it works in any browser.</p>
+        <p style="margin:8px 0 12px;color:#A9B4C2;font-size:14px;line-height:1.55;text-wrap:pretty;">Type the code from the email here, or paste the sign-in link itself — it works in any browser.</p>
         <div style="display:flex;gap:8px;">
-          <input value="{{ ce.otp }}" onchange="{{ ce.onOtp }}" onkeydown="{{ ce.onOtpKey }}" placeholder="123456 or https://…" inputmode="text" autocomplete="one-time-code" autocapitalize="off" autocorrect="off" spellcheck="false" style="flex:1;min-width:0;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'JetBrains Mono',monospace;font-size:15px;letter-spacing:0.08em;padding:12px 14px;transition:border-color .16s ease;" style-focus="border-color:rgba(159,232,255,0.6);">
+          <input value="{{ ce.otp }}" onchange="{{ ce.onOtp }}" onkeydown="{{ ce.onOtpKey }}" placeholder="57827584 or https://…" inputmode="text" autocomplete="one-time-code" autocapitalize="off" autocorrect="off" spellcheck="false" style="flex:1;min-width:0;background:rgba(6,7,10,0.7);border:1px solid rgba(255,255,255,0.13);border-radius:11px;color:#E9EDF3;font-family:'JetBrains Mono',monospace;font-size:15px;letter-spacing:0.08em;padding:12px 14px;transition:border-color .16s ease;" style-focus="border-color:rgba(159,232,255,0.6);">
           <button onclick="{{ ce.onVerify }}" style="{{ ce.verifyStyle }}" style-hover="background:#ff3a30;box-shadow:0 0 20px -2px rgba(255,42,31,0.7);">{{ ce.verifyLabel }}</button>
         </div>
       </div>
@@ -8149,9 +8149,9 @@ class Component extends DCLogic {
     this.setState({ resendBusy:false });
     if (ok) this.showToast({ kind:'ok', title:'Link resent', body:'A fresh sign-in link is on its way.' });
   };
-  onOtpCode = (e) => { const v = String(e.target.value || ''); this.setState({ otpCode: /https?:\/\//i.test(v) ? v.trim() : v.replace(/\D/g, '').slice(0, 6) }); };
+  onOtpCode = (e) => { const v = String(e.target.value || ''); this.setState({ otpCode: /https?:\/\//i.test(v) ? v.trim() : v.replace(/\D/g, '').slice(0, 10) }); };
   onOtpKey = (e) => { if (e.key === 'Enter') this.verifyOtpCode(); };
-  // One field, two inputs: a 6-digit code (Supabase {{ .Token }} in the magic-link template) or the
+  // One field, two inputs: the OTP code (Supabase {{ .Token }}; length is a project setting, 6-10 digits, currently 8) or the
   // full sign-in link pasted from another device. The implicit auth flow means the link is not
   // bound to the browser that requested it, so opening it here just works.
   verifyOtpCode = async () => {
@@ -8165,7 +8165,7 @@ class Component extends DCLogic {
       return;
     }
     const em = (this.state.pendingEmail || '').trim();
-    if (v.length !== 6) { this.showToast({ kind:'unknown', title:'Enter the 6-digit code', body:'It’s in the same email as the link.' }); return; }
+    if (!/^\d{6,10}$/.test(v)) { this.showToast({ kind:'unknown', title:'Enter the code from the email', body:'It’s the block of digits under the sign-in link.' }); return; }
     if (!this.db || !em) { this.showToast({ kind:'unknown', title:'Sign-in unavailable', body:'Request a new link first.' }); return; }
     this.setState({ otpBusy:true });
     const { error } = await this.db.auth.verifyOtp({ email: em, token: v, type: 'email' });
