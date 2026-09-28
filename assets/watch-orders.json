@@ -3426,5 +3426,169 @@
     ]
    }
   }
+ },
+ "rambo": {
+  "id": "rambo",
+  "intro": "Five films in one straight line, which makes this the easiest order on the site — the only real choices are whether to bother with the 1986 cartoon and how long to wait before the 2027 prequel.",
+  "orders": {
+   "first": {
+    "note": "Release order is story order here, so a first-timer just goes in sequence. The quality curve is steep, though: the first film is a different kind of movie from everything after it.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "fb",
+        "title": "First Blood",
+        "year": 1982,
+        "branch": "He Surrenders — The Film Saga",
+        "why": "A small, sad film about a veteran nobody wants home. <b>One person dies in it</b> — watch it before the sequels reshape what the name means."
+       },
+       {
+        "id": "fb2",
+        "title": "Rambo: First Blood Part II",
+        "year": 1985,
+        "branch": "He Surrenders — The Film Saga",
+        "why": "The one that turned him into the icon: back into Vietnam for POWs, and the template a decade of action films borrowed from."
+       }
+      ]
+     },
+     {
+      "label": "The rest of the saga",
+      "items": [
+       {
+        "id": "r3",
+        "title": "Rambo III",
+        "year": 1988,
+        "branch": "He Surrenders — The Film Saga",
+        "why": "Afghanistan, Trautman in a Soviet cell, and the biggest version of the formula."
+       },
+       {
+        "id": "r4",
+        "title": "Rambo",
+        "year": 2008,
+        "branch": "He Surrenders — The Film Saga",
+        "why": "Twenty years later and far more brutal — the film that brings him <b>home to Arizona</b>."
+       },
+       {
+        "id": "lb",
+        "title": "Rambo: Last Blood",
+        "year": 2019,
+        "branch": "He Surrenders — The Film Saga",
+        "why": "A border revenge story on the family ranch. Works as an ending if you want one."
+       }
+      ]
+     },
+     {
+      "label": "Optional",
+      "items": [
+       {
+        "id": "fof",
+        "title": "Rambo: The Force of Freedom",
+        "year": 1986,
+        "kind": "tv",
+        "branch": "Force of Freedom — The Cartoon",
+        "why": "A syndicated '80s kids' cartoon in its own continuity — a curiosity, not required viewing."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order they came out. Identical to the story order, with the 1986 cartoon slotting in between Part II and Rambo III.",
+    "items": [
+     {
+      "id": "fb",
+      "title": "First Blood",
+      "year": 1982,
+      "branch": "He Surrenders — The Film Saga",
+      "why": "Ends with a surrender the novel and the first cut didn't have — <b>the reason there are sequels at all</b>."
+     },
+     {
+      "id": "fb2",
+      "title": "Rambo: First Blood Part II",
+      "year": 1985,
+      "branch": "He Surrenders — The Film Saga"
+     },
+     {
+      "id": "fof",
+      "title": "Rambo: The Force of Freedom",
+      "year": 1986,
+      "kind": "tv",
+      "branch": "Force of Freedom — The Cartoon",
+      "why": "Launched a year after Part II, while the character was at peak popularity."
+     },
+     {
+      "id": "r3",
+      "title": "Rambo III",
+      "year": 1988,
+      "branch": "He Surrenders — The Film Saga"
+     },
+     {
+      "id": "r4",
+      "title": "Rambo",
+      "year": 2008,
+      "branch": "He Surrenders — The Film Saga",
+      "why": "A twenty-year gap on screen and in the story."
+     },
+     {
+      "id": "lb",
+      "title": "Rambo: Last Blood",
+      "year": 2019,
+      "branch": "He Surrenders — The Film Saga"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order. The films are set roughly when they were released, so this matches release order; the Vietnam backstory lives in flashbacks until the John Rambo prequel (dated June 4, 2027) puts it on screen. The cartoon sits outside the film timeline, so it goes last.",
+    "items": [
+     {
+      "id": "fb",
+      "title": "First Blood",
+      "year": 1982,
+      "setLabel": "Set c. 1982",
+      "branch": "He Surrenders — The Film Saga",
+      "why": "The Vietnam years arrive here only as flashbacks and one breakdown."
+     },
+     {
+      "id": "fb2",
+      "title": "Rambo: First Blood Part II",
+      "year": 1985,
+      "setLabel": "Set c. 1985",
+      "branch": "He Surrenders — The Film Saga"
+     },
+     {
+      "id": "r3",
+      "title": "Rambo III",
+      "year": 1988,
+      "setLabel": "Set during the Soviet–Afghan War",
+      "branch": "He Surrenders — The Film Saga"
+     },
+     {
+      "id": "r4",
+      "title": "Rambo",
+      "year": 2008,
+      "setLabel": "Set c. 2008",
+      "branch": "He Surrenders — The Film Saga"
+     },
+     {
+      "id": "lb",
+      "title": "Rambo: Last Blood",
+      "year": 2019,
+      "setLabel": "Set c. 2019",
+      "branch": "He Surrenders — The Film Saga"
+     },
+     {
+      "id": "fof",
+      "title": "Rambo: The Force of Freedom",
+      "year": 1986,
+      "kind": "tv",
+      "setLabel": "Separate continuity",
+      "branch": "Force of Freedom — The Cartoon",
+      "why": "Its own continuity — a team leader who never kills anyone."
+     }
+    ]
+   }
+  }
  }
 }
