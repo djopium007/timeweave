@@ -130,7 +130,7 @@ function homeCard() {
       <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:112px;line-height:1;margin:22px 0 0">
         UNTANGLE<br>EVERY TIMELINE<span style="color:${BRAND}">.</span></h1>
       <div style="font-size:27px;color:${MUTED};margin-top:26px;max-width:640px;line-height:1.4">
-        Sequels, reboots, time-loops and multiverse forks — mapped as clean, interactive branch diagrams.</div>
+        Sequels, reboots, time-loops and multiverse forks, all mapped as clean, interactive branch diagrams.</div>
     </div>
     <div class="foot">${wordmark}<div class="url">reelorder.com</div></div>`
   );
@@ -174,8 +174,8 @@ function watchOrderCard(f, wo) {
 
 const jobs = [
   ['og-default', homeCard()],
-  ['og-queue', simpleCard('The Queue', 'Vote on what gets mapped next', 'Every franchise waiting for a timeline map — upvote yours, or suggest one.', '#54DBFF')],
-  ['og-posters', simpleCard('Print Shop', 'Movie collection posters', 'Instant digital downloads, print-ready to 24×36 — plus A-series, 4:3, 5:7 and a phone wallpaper.', '#F5A623')],
+  ['og-queue', simpleCard('The Queue', 'Vote on what gets mapped next', 'Every franchise waiting for a timeline map: upvote yours, or suggest one.', '#54DBFF')],
+  ['og-posters', simpleCard('Print Shop', 'Movie collection posters', 'Instant digital downloads, print-ready to 24×36, plus A-series, 4:3, 5:7 and a phone wallpaper.', '#F5A623')],
   ['og-contribute', simpleCard('Contribute', 'Help map a timeline', 'Know a franchise inside out? Send us the branches and we will build the map.', '#3DDC84')],
   ...franchises.map((f) => [`og-${f.id}`, franchiseCard(f)]),
   ...franchises.filter((f) => watchOrders[f.id]).map((f) => [`og-wo-${f.id}`, watchOrderCard(f, watchOrders[f.id])]),

@@ -140,7 +140,7 @@ function esc(s) { return String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;'
 export function orderEmailHtml({ title, styleLabel, downloadUrl, guideUrl, amountLabel, bundleCount }) {
   const t = esc(title), st = styleLabel ? ` <span style="color:#9DB0C4">· ${esc(styleLabel)}</span>` : '';
   const packLine = bundleCount > 1
-    ? `Your bundle has <b style="color:#E9EDF3">${bundleCount} poster packs</b> — one per style — and the download page lists each ZIP separately. Every pack has the poster in four print ratios at 300&nbsp;dpi plus a bonus phone wallpaper.`
+    ? `Your bundle has <b style="color:#E9EDF3">${bundleCount} poster packs</b> (one per style) and the download page lists each ZIP separately. Every pack has the poster in four print ratios at 300&nbsp;dpi plus a bonus phone wallpaper.`
     : 'Your pack has the poster in four print ratios at 300&nbsp;dpi plus a bonus phone wallpaper.';
   return `<!doctype html><html><body style="margin:0;background:#0a0c10;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#E9EDF3">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0a0c10"><tr><td align="center" style="padding:32px 16px">
@@ -149,9 +149,9 @@ export function orderEmailHtml({ title, styleLabel, downloadUrl, guideUrl, amoun
 <tr><td style="background:#12151b;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px">
   <div style="font-family:Menlo,Consolas,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#3DDC84;margin-bottom:8px">Payment received</div>
   <h1 style="margin:0 0 10px;font-size:26px;line-height:1.15;color:#fff">Your ${t} poster is ready${st}</h1>
-  <p style="margin:0 0 22px;color:#A9B4C2;font-size:15px;line-height:1.6">Thanks for your order${amountLabel ? ` (${esc(amountLabel)})` : ''}. This is a <b style="color:#E9EDF3">digital file</b> — nothing is posted to you. ${packLine}</p>
+  <p style="margin:0 0 22px;color:#A9B4C2;font-size:15px;line-height:1.6">Thanks for your order${amountLabel ? ` (${esc(amountLabel)})` : ''}. This is a <b style="color:#E9EDF3">digital file</b>: nothing is posted to you. ${packLine}</p>
   <a href="${downloadUrl}" style="display:inline-block;background:#ffffff;color:#0a0c10;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:.04em;text-transform:uppercase;padding:14px 24px;border-radius:10px">&#8595;&nbsp; Download your poster pack${bundleCount > 1 ? 's' : ''}</a>
-  <p style="margin:18px 0 0;color:#8b97a6;font-size:13px;line-height:1.7">This page issues a fresh download link every time you open it, so keep this email — it's your permanent way back to the file.<br>Not sure which file to print? <a href="${guideUrl}" style="color:#9FE8FF">Read the printing guide</a> (it's also inside the ZIP).</p>
+  <p style="margin:18px 0 0;color:#8b97a6;font-size:13px;line-height:1.7">This page issues a fresh download link every time you open it, so keep this email: it's your permanent way back to the file.<br>Not sure which file to print? <a href="${guideUrl}" style="color:#9FE8FF">Read the printing guide</a> (it's also inside the ZIP).</p>
 </td></tr>
 <tr><td style="padding:22px 4px 0;color:#6b7686;font-size:12px;line-height:1.7;font-family:Menlo,Consolas,monospace">Personal-use licence: print as many copies as you like; please don't resell or share the file.<br>Questions? Reply to this email.<br><a href="https://reelorder.com/posters" style="color:#9DB0C4">reelorder.com/posters</a></td></tr>
 </table></td></tr></table></body></html>`;
@@ -160,7 +160,7 @@ export function orderEmailHtml({ title, styleLabel, downloadUrl, guideUrl, amoun
 /** Send the confirmation email for a paid Checkout Session, once. Never throws. */
 export async function maybeSendOrderEmail(session, req) {
   try {
-    if (!process.env.RESEND_API_KEY) { console.warn('RESEND_API_KEY not set — order email skipped'); return { skipped: 'no_api_key' }; }
+    if (!process.env.RESEND_API_KEY) { console.warn('RESEND_API_KEY not set: order email skipped'); return { skipped: 'no_api_key' }; }
     const to = (session.customer_details && session.customer_details.email) || session.customer_email;
     if (!to) return { skipped: 'no_email' };
     const { data: order } = await db().from('poster_orders').select('id,email_sent_at,poster_id,style_key').eq('stripe_session_id', session.id).maybeSingle();
@@ -184,9 +184,9 @@ export async function maybeSendOrderEmail(session, req) {
       headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         from: FROM_EMAIL, to: [to], reply_to: SUPPORT_EMAIL,
-        subject: `Your ${title} poster${isBundle ? ' bundle' : ''} is ready — download inside`,
+        subject: `Your ${title} poster${isBundle ? ' bundle' : ''} is ready: download inside`,
         html,
-        text: `Thanks for your ReelOrder order. Your ${title} poster pack${isBundle ? `s (${styles.length} styles, digital files, nothing is posted) are` : ' (digital file, nothing is posted) is'} ready.\n\nDownload: ${origin}/posters/thanks?session_id=${session.id}\nPrinting guide: ${origin}/print-guide.html\n\nKeep this email — the link above always issues a fresh download.`,
+        text: `Thanks for your ReelOrder order. Your ${title} poster pack${isBundle ? `s (${styles.length} styles, digital files, nothing is posted) are` : ' (digital file, nothing is posted) is'} ready.\n\nDownload: ${origin}/posters/thanks?session_id=${session.id}\nPrinting guide: ${origin}/print-guide.html\n\nKeep this email: the link above always issues a fresh download.`,
         headers: { 'X-Entity-Ref-ID': session.id },
       }),
     });

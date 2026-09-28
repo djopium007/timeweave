@@ -36,8 +36,8 @@ export default async function handler(req, res) {
     const origin = siteOrigin(req);
     const img = previewUrl(style ? style.preview_path : (styles[0] && styles[0].preview_path) || poster.preview_path);
     const description = isBundle
-      ? `Digital download only — no physical poster is posted. ${styles.length} poster packs (${styles.map(s => s.label).join(', ')}) · ${poster.size_label} · ${poster.file_label}`
-      : `Digital download only — no physical poster is posted. ${poster.size_label} · ${poster.file_label}`;
+      ? `Digital download only: no physical poster is posted. ${styles.length} poster packs (${styles.map(s => s.label).join(', ')}) · ${poster.size_label} · ${poster.file_label}`
+      : `Digital download only: no physical poster is posted. ${poster.size_label} · ${poster.file_label}`;
     const session = await stripe().checkout.sessions.create({
       mode: 'payment',
       line_items: [{
@@ -46,7 +46,7 @@ export default async function handler(req, res) {
           currency: poster.currency || 'usd',
           unit_amount: r.priceCents,
           product_data: {
-            name: `${poster.title} — Timeline Poster · DIGITAL FILE, nothing shipped${styleLabel}`,
+            name: `${poster.title} Timeline Poster · DIGITAL FILE, nothing shipped${styleLabel}`,
             description,
             images: img ? [img] : [],
             metadata: meta,
@@ -62,7 +62,7 @@ export default async function handler(req, res) {
       success_url: `${origin}/posters/thanks?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/posters/${poster.id}${r.key ? '?style=' + r.key : ''}`,
       custom_text: {
-        submit: { message: isBundle ? `Digital download — all ${styles.length} print-ready files are unlocked instantly after payment.` : 'Digital download — your print-ready file is unlocked instantly after payment.' },
+        submit: { message: isBundle ? `Digital download: all ${styles.length} print-ready files are unlocked instantly after payment.` : 'Digital download: your print-ready file is unlocked instantly after payment.' },
       },
     });
 

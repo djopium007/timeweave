@@ -67,17 +67,17 @@ const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const DEFAULT_DESC =
-  'Sequels, reboots, time-loops and multiverse forks — every movie timeline mapped as clean, ' +
+  'Sequels, reboots, time-loops and multiverse forks: every movie timeline mapped as clean, ' +
   'interactive branch diagrams. Search a film and follow the threads.';
 
 const ogUrl = (name) => `${SITE}/assets/og/${name}.png`;
 
 const routes = [
   { url: '/', file: 'index.html', inPlace: true,
-    title: 'ReelOrder — Movie Timeline Maps', desc: DEFAULT_DESC, og: 'og-default', priority: '1.0' },
+    title: 'ReelOrder | Movie Timeline Maps', desc: DEFAULT_DESC, og: 'og-default', priority: '1.0' },
   { url: '/queue', file: 'queue.html',
     title: 'The Queue · ReelOrder',
-    desc: 'Vote on which movie franchise gets its timeline mapped next — or suggest one. Live community rankings on ReelOrder.',
+    desc: 'Vote on which movie franchise gets its timeline mapped next, or suggest one. Live community rankings on ReelOrder.',
     og: 'og-queue', priority: '0.8' },
   { url: '/contribute', file: 'contribute.html',
     title: 'Contribute · ReelOrder',
@@ -85,15 +85,15 @@ const routes = [
     og: 'og-contribute', priority: '0.6' },
   { url: '/contact', file: 'contact.html',
     title: 'Contact · ReelOrder',
-    desc: 'Get in touch with ReelOrder — questions, corrections, and poster download support.',
+    desc: 'Get in touch with ReelOrder: questions, corrections, and poster download support.',
     og: 'og-default', priority: '0.4' },
   { url: '/posters', file: 'posters.html',
     title: 'Timeline Posters · ReelOrder',
-    desc: 'Print-ready movie collection posters as instant digital downloads — 24x36 plus A-series, 4:3, 5:7 crops and a phone wallpaper.',
+    desc: 'Print-ready movie collection posters as instant digital downloads: 24x36 plus A-series, 4:3, 5:7 crops and a phone wallpaper.',
     og: 'og-posters', priority: '0.9' },
   { url: '/timeline', file: 'timeline.html', noindex: true,
     title: 'All Timeline Maps · ReelOrder',
-    desc: 'Every ReelOrder movie timeline map in one list — filter by franchise or film and jump straight to its branch map.',
+    desc: 'Every ReelOrder movie timeline map in one list: filter by franchise or film and jump straight to its branch map.',
     og: 'og-default' },
 ];
 
@@ -105,7 +105,7 @@ for (const id of Object.keys(watchOrders)) {
     url: `/watch-order/${id}`,
     file: path.join('watch-order', `${id}.html`),
     title: `What Order to ${noun[1]} ${f.title} \u00b7 ReelOrder`,
-    desc: `What order to ${noun[0]} ${f.title} \u2014 release order, chronological order, and the order we would give a first-timer, with a reason for every entry.`,
+    desc: `What order to ${noun[0]} ${f.title}: release order, chronological order, and the order we would give a first-timer, with a reason for every entry.`,
     og: fs.existsSync(path.join(ROOT, 'assets', 'og', `og-wo-${id}.png`)) ? `og-wo-${id}` : (fs.existsSync(path.join(ROOT, 'assets', 'og', `og-${id}.png`)) ? `og-${id}` : 'og-default'),
     priority: '0.9',
     franchise: f,
@@ -119,7 +119,7 @@ for (const id of ids) {
     url: `/map/${id}`,
     file: path.join('map', `${id}.html`),
     title: `${f.title} Timeline Explained · ReelOrder`,
-    desc: `${f.title} timeline explained — ${f.meta}. ${f.tagline}`,
+    desc: `${f.title} timeline explained: ${f.meta}. ${f.tagline}`,
     og: fs.existsSync(path.join(ROOT, 'assets', 'og', `og-${id}.png`)) ? `og-${id}` : 'og-default',
     priority: '0.9',
     franchise: f,
@@ -133,7 +133,7 @@ const { base: sbBase, rows: posterRows } = await fetchPosters();
 const posterRoutes = posterRows.map((p) => {
   const name = p.title || p.id;
   const desc = p.tagline || p.description ||
-    `A print-ready ${name} movie collection poster \u2014 instant digital download at 24x36, plus A-series, 4:3 and 5:7 crops and a matching phone wallpaper.`;
+    `A print-ready ${name} movie collection poster, instant digital download at 24x36, plus A-series, 4:3 and 5:7 crops and a matching phone wallpaper.`;
   return {
     url: `/posters/${p.id}`,
     file: path.join('posters', `${p.id}.html`),
@@ -266,7 +266,7 @@ function metaBlock(r) {
   const img = r.ogOverride || ogUrl(r.og);
   const alt = r.poster ? `${r.poster.title || r.poster.id} poster from ReelOrder`
     : r.franchise ? `${r.franchise.title} timeline map on ReelOrder`
-    : 'ReelOrder — untangle every timeline';
+    : 'ReelOrder: untangle every timeline';
   return [
     '<!--RO:META-->',
     `<title>${esc(r.title)}</title>`,
@@ -305,8 +305,8 @@ function noscriptBlock(r) {
       `<h2>${esc(heading)}</h2>` + blocks;
     const listOf = (items) =>
       '<ol>' + items.map((it) =>
-        `<li><strong>${esc(it.title)}</strong>${it.year ? ` (${it.year})` : ''}${it.setLabel ? ` — ${esc(it.setLabel)}` : ''}` +
-        `${it.why ? ' — ' + esc(stripTags(it.why)) : ''} <em>[${esc(it.branch)}]</em></li>`).join('') + '</ol>';
+        `<li><strong>${esc(it.title)}</strong>${it.year ? ` (${it.year})` : ''}${it.setLabel ? ` · ${esc(it.setLabel)}` : ''}` +
+        `${it.why ? ': ' + esc(stripTags(it.why)) : ''} <em>[${esc(it.branch)}]</em></li>`).join('') + '</ol>';
     const firstGroups = (wo.orders.first.groups || [])
       .map((g) => `<h3>${esc(g.label)}</h3>` + listOf(g.items || [])).join('');
     return `<noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">
@@ -321,7 +321,7 @@ ${section('Chronological order', `<p>${esc(stripTags(wo.orders.chrono.note))}</p
   if (!r.franchise) return '';
   const f = r.franchise;
   const branches = (f.branches || [])
-    .map((b) => `<li><strong>${esc(b.title)}</strong>${b.summary ? ' — ' + esc(b.summary) : ''}</li>`)
+    .map((b) => `<li><strong>${esc(b.title)}</strong>${b.summary ? ': ' + esc(b.summary) : ''}</li>`)
     .join('');
   const films = (f.films || []).map((x) => `<li>${esc(x)}</li>`).join('');
   return `<noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">

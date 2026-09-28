@@ -36,7 +36,7 @@ export default async function handler(req, res) {
     const order = await recordOrder(session);
     // Stripe keeps payment_status='paid' after a refund, so the refund state lives in our own row.
     if (order.status === 'refunded' || order.status === 'revoked') {
-      return json(res, 403, { error: 'This order was refunded — the download is no longer available.' });
+      return json(res, 403, { error: 'This order was refunded. The download is no longer available.' });
     }
     await maybeSendOrderEmail(session, req);   // no-op if the webhook already sent it
     await db().rpc('bump_poster_download', { p_session_id: session.id }).then(() => {}, () => {});

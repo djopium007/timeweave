@@ -53,7 +53,7 @@ export default async function handler(req, res) {
     if (ipHash) {
       const since = new Date(Date.now() - 60 * 60 * 1000).toISOString();
       const { count } = await db().from('contributions').select('id', { count: 'exact', head: true }).eq('ip_hash', ipHash).gte('created_at', since);
-      if ((count || 0) >= 5) return json(res, 429, { error: 'Too many submissions — please try again in an hour.' });
+      if ((count || 0) >= 5) return json(res, 429, { error: 'Too many submissions. Please try again in an hour.' });
     }
 
     const { data: row, error } = await db().from('contributions')
@@ -72,20 +72,20 @@ export default async function handler(req, res) {
       `${label}${isContact ? '' : ': ' + title}`, '',
       `From: ${fromLine}`,
       isContact ? `id ${row.id}` : `Queue position: #${queuePosition} · id ${row.id}`, '',
-      note || '(no notes)', '', `— ${origin}${page}`,
+      note || '(no notes)', '', `Sent from ${origin}${page}`,
     ].join('\n');
     const html = `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#111">
 <p style="margin:0 0 4px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#888">${isContact ? 'ReelOrder contact' : 'ReelOrder contribution'} · ${esc(label)}</p>
 <h2 style="margin:0 0 14px;font-size:22px">${esc(isContact ? `Message from ${title}` : title)}</h2>
 <p style="margin:0 0 14px"><b>From:</b> ${esc(isContact ? title : (handle || '(no handle)'))}${email ? ` &lt;<a href="mailto:${esc(email)}">${esc(email)}</a>&gt;` : ' (no email)'}<br>${isContact ? '' : `<b>Queue:</b> #${queuePosition} &middot; `}<span style="color:#888">${esc(row.id)}</span></p>
 <pre style="white-space:pre-wrap;font-family:inherit;background:#f4f5f7;border-radius:8px;padding:14px;margin:0 0 14px">${esc(note || '(no notes)')}</pre>
-<p style="margin:0;color:#888;font-size:13px">Sent from ${esc(origin)}${esc(page)}${email ? ' — reply to this email to answer them.' : ''}</p></div>`;
+<p style="margin:0;color:#888;font-size:13px">Sent from ${esc(origin)}${esc(page)}${email ? '. Reply to this email to answer them.' : ''}</p></div>`;
 
     let notify;
     try {
       notify = await sendEmail({
         to: [NOTIFY_TO], reply_to: email || SUPPORT_EMAIL,
-        subject: isContact ? `[ReelOrder] ${label} — from ${title}` : `[ReelOrder] ${label}: ${title}${handle ? ` — from ${handle}` : ''}`,
+        subject: isContact ? `[ReelOrder] ${label} from ${title}` : `[ReelOrder] ${label}: ${title}${handle ? `, from ${handle}` : ''}`,
         text, html, headers: { 'X-Entity-Ref-ID': row.id },
       });
       await db().from('contributions').update({ notified_at: new Date().toISOString() }).eq('id', row.id);
@@ -98,14 +98,14 @@ export default async function handler(req, res) {
     if (email && isContact) {
       sendEmail({
         to: [email], reply_to: SUPPORT_EMAIL,
-        subject: `We got your message — ReelOrder`,
-        text: `Hi ${title},\n\nThanks for getting in touch about "${TOPICS[topic]}". We usually reply within two business days — just reply to this email if you want to add anything.\n\n${origin}`,
-        html: `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#111"><p>Hi ${esc(title)},</p><p>Thanks for getting in touch about <b>${esc(TOPICS[topic])}</b>. We usually reply within two business days — just reply to this email if you want to add anything.</p><p style="color:#888;font-size:13px"><a href="${esc(origin)}" style="color:#888">reelorder.com</a></p></div>`,
+        subject: `We got your message | ReelOrder`,
+        text: `Hi ${title},\n\nThanks for getting in touch about "${TOPICS[topic]}". We usually reply within two business days. Just reply to this email if you want to add anything.\n\n${origin}`,
+        html: `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#111"><p>Hi ${esc(title)},</p><p>Thanks for getting in touch about <b>${esc(TOPICS[topic])}</b>. We usually reply within two business days. Just reply to this email if you want to add anything.</p><p style="color:#888;font-size:13px"><a href="${esc(origin)}" style="color:#888">reelorder.com</a></p></div>`,
       }).catch(e => console.error('contact ack failed', e));
     } else if (email) {
       sendEmail({
         to: [email], reply_to: SUPPORT_EMAIL,
-        subject: `Got it — your ${title} ${type === 'edit' ? 'edit' : 'map'} is in the ReelOrder review queue`,
+        subject: `Got it! Your ${title} ${type === 'edit' ? 'edit' : 'map'} is in the ReelOrder review queue`,
         text: `Thanks${handle ? ` ${handle}` : ''}! Your ${label.toLowerCase()} for "${title}" is in the review queue at #${queuePosition}. Reviews usually take a few days; we'll reply here if we need anything.\n\n${origin}`,
         html: `<div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#111"><p>Thanks${esc(handle ? ` ${handle}` : '')}!</p><p>Your ${esc(label.toLowerCase())} for <b>${esc(title)}</b> is in the ReelOrder review queue at <b>#${queuePosition}</b>. Reviews usually take a few days; we'll reply to this email if we need anything.</p><p style="color:#888;font-size:13px"><a href="${esc(origin)}" style="color:#888">reelorder.com</a></p></div>`,
       }).catch(e => console.error('contribute ack failed', e));

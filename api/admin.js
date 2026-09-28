@@ -24,7 +24,7 @@ async function requireAdmin(req) {
   const token = auth.startsWith('Bearer ') ? auth.slice(7).trim() : '';
   if (!token) return { error: 'Sign in required', status: 401 };
   const { data, error } = await db().auth.getUser(token);
-  if (error || !data || !data.user) return { error: 'Session expired — sign in again', status: 401 };
+  if (error || !data || !data.user) return { error: 'Session expired. Sign in again', status: 401 };
   const { data: row } = await db().from('admins').select('user_id').eq('user_id', data.user.id).maybeSingle();
   if (!row) return { error: 'Not an admin', status: 403 };
   return { user: data.user };
@@ -107,7 +107,7 @@ export default async function handler(req, res) {
         const userId = uuid(body.userId); if (!userId) return json(res, 400, { error: 'Bad userId' });
         if (userId === who.user.id) return json(res, 400, { error: 'You cannot delete yourself' });
         const { data: isAdmin } = await sb.from('admins').select('user_id').eq('user_id', userId).maybeSingle();
-        if (isAdmin) return json(res, 400, { error: 'That account is an admin — remove it from admins first' });
+        if (isAdmin) return json(res, 400, { error: 'That account is an admin. Remove it from admins first' });
         try {
           const { data: files } = await sb.storage.from('avatars').list(userId);
           if (files && files.length) await sb.storage.from('avatars').remove(files.map(f => userId + '/' + f.name));
