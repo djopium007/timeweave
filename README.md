@@ -22,6 +22,7 @@ Rail ⇄ Fork-map toggle, branch filters, and character / item / theme panels).
 - **Alien** — 7 films, 1 game & 1 series, 5 branches (Engineers & David, the Company's hunt from Nostromo to Romulus, Ripley's war, Resurrection, and Alien: Earth as a disputed 2120 fork)
 - **Transformers** — 8 films, 4 branches (Bay-era deep lore, the 2007–2017 Bay continuity, the Bumblebee/Rise of the Beasts soft reboot, and Transformers One's animated reboot)
 - **Rambo** — 5 films & 1 series, 5 branches (Baker Team in Vietnam, the film saga after the surrender, Morrell's novel and the cut ending where he dies, and the 1986 Force of Freedom cartoon)
+- **TRON**: 3 films & 1 series, 4 branches (ENCOM's 1982 mainframe and the MCP, Flynn's Grid from Clu's coup to the portal incl. Uprising, the Dillinger Grid and the permanence code, and Flynn's original Grid with Ares's open threads)
 
 ## Files
 

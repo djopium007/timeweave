@@ -3590,5 +3590,127 @@
     ]
    }
   }
+ },
+ "tron": {
+  "id": "tron",
+  "intro": "Three films and one animated series, in a line that is easy to follow: the only real choice is where to slot the series.",
+  "orders": {
+   "first": {
+    "note": "Release order works best for a first watch. Each film assumes you know the one before, and Ares lands harder once you've met Flynn twice.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "tron82",
+        "title": "TRON",
+        "year": 1982,
+        "branch": "The MCP's System: ENCOM, 1982",
+        "why": "Where the Users, the programs, the Light Cycles and Flynn's Arcade all start. <b>Dated effects, essential setup.</b>"
+       },
+       {
+        "id": "legacy",
+        "title": "TRON: Legacy",
+        "year": 2010,
+        "branch": "Flynn's Grid: Clu's Coup to the Portal",
+        "why": "Twenty years on, Flynn's son walks into the Grid his father built and lost to Clu."
+       }
+      ]
+     },
+     {
+      "label": "Then",
+      "items": [
+       {
+        "id": "ares",
+        "title": "TRON: Ares",
+        "year": 2025,
+        "branch": "The Dillinger Grid: The Permanence Code",
+        "why": "Programs printed into the real world for 29 minutes, and a Kevin Flynn waiting where you don't expect him."
+       }
+      ]
+     },
+     {
+      "label": "Optional",
+      "items": [
+       {
+        "id": "uprising",
+        "title": "TRON: Uprising",
+        "year": 2012,
+        "kind": "tv",
+        "branch": "Flynn's Grid: Clu's Coup to the Portal",
+        "why": "Animated series set between the coup and Legacy: Tron trains a successor. Ended after 19 episodes, so it stops mid-story."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order they came out. Uprising arrived two years after Legacy, but its story happens before it.",
+    "items": [
+     {
+      "id": "tron82",
+      "title": "TRON",
+      "year": 1982,
+      "branch": "The MCP's System: ENCOM, 1982"
+     },
+     {
+      "id": "legacy",
+      "title": "TRON: Legacy",
+      "year": 2010,
+      "branch": "Flynn's Grid: Clu's Coup to the Portal",
+      "why": "A 28-year gap between the first two films."
+     },
+     {
+      "id": "uprising",
+      "title": "TRON: Uprising",
+      "year": 2012,
+      "kind": "tv",
+      "branch": "Flynn's Grid: Clu's Coup to the Portal",
+      "why": "A prequel to Legacy, made after it."
+     },
+     {
+      "id": "ares",
+      "title": "TRON: Ares",
+      "year": 2025,
+      "branch": "The Dillinger Grid: The Permanence Code"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order. Uprising runs during the years Flynn is trapped, so it slots in before Legacy's 2010 story (Legacy opens with a short 1989 prologue).",
+    "items": [
+     {
+      "id": "tron82",
+      "title": "TRON",
+      "year": 1982,
+      "branch": "The MCP's System: ENCOM, 1982",
+      "setLabel": "Set 1982"
+     },
+     {
+      "id": "uprising",
+      "title": "TRON: Uprising",
+      "year": 2012,
+      "kind": "tv",
+      "branch": "Flynn's Grid: Clu's Coup to the Portal",
+      "setLabel": "Set after 1989",
+      "why": "Covers the years between Clu's 1989 coup and Sam's arrival."
+     },
+     {
+      "id": "legacy",
+      "title": "TRON: Legacy",
+      "year": 2010,
+      "branch": "Flynn's Grid: Clu's Coup to the Portal",
+      "setLabel": "Set 1989 & 2010"
+     },
+     {
+      "id": "ares",
+      "title": "TRON: Ares",
+      "year": 2025,
+      "branch": "The Dillinger Grid: The Permanence Code",
+      "setLabel": "Set 2025"
+     }
+    ]
+   }
+  }
  }
 }
