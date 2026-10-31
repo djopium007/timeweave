@@ -1013,7 +1013,7 @@
         <div style="max-width:56ch;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#B69CFF;">Community picks</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(32px,5vw,48px);line-height:1.02;margin:8px 0 12px;letter-spacing:0.01em;">The Queue</h1>
-          <p style="margin:0;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">Vote on which franchise gets mapped next. The top of the queue goes to the editors first, and every map has a discussion while it waits. Ones you voted through are marked <b>Mapped</b> and link straight to the finished map.</p>
+          <p style="margin:0;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">Vote on which franchise gets mapped next. The top of the queue goes to the editors first, and every map has a discussion while it waits. Once a franchise is mapped it leaves the queue and joins the hub.</p>
         </div>
         <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b7686;white-space:nowrap;">{{ queueCount }}</span>
       </div>
@@ -9975,7 +9975,9 @@ class Component extends DCLogic {
     const communityComments = (s.comments[a.id]||[]).map(mkComment);
     const statusColors = { 'Mapped':'#54DBFF', 'Mapping now':'#3DDC84', 'In review':'#F5A623', 'Queued':'#9DB0C4', 'Suggested':'#B69CFF' };
     const voteBtn = (active, up) => ({ width:'36px', height:'30px', borderRadius: up?'9px 9px 4px 4px':'4px 4px 9px 9px', border:`1px solid ${active?(up?'rgba(61,220,132,0.55)':'rgba(255,77,125,0.55)'):'rgba(255,255,255,0.12)'}`, background: active?(up?'rgba(61,220,132,0.16)':'rgba(255,77,125,0.16)'):'rgba(255,255,255,0.03)', color: active?(up?'#3DDC84':'#FF4D7D'):'#8b97a6', fontSize:'13px', lineHeight:'1', cursor:'pointer', transition:'all .15s ease' });
+    // Franchises already live in the hub are hidden from the queue (DB rows stay as 'Mapped' for the vote trail)
     const queueItems = (s.pendingList||[])
+      .filter(p => !this.data[p.id])
       .map(p => {
         const v = s.votes[p.id]||0;
         const othersScore = (s.scores[p.id]||0) - (s.serverMine[p.id]||0);
@@ -10286,7 +10288,7 @@ class Component extends DCLogic {
       isQueue: s.screen === 'queue', goQueue:this.goQueue,
       navQueueStyle: this.navBtn(s.screen === 'queue'),
       queueItems,
-      queueCount: (queueItems.length - queueItems.filter(q=>q.isMapped).length) + ' pending \u00b7 ' + queueItems.filter(q=>q.isMapped).length + ' mapped',
+      queueCount: queueItems.length + ' pending',
       suggestTitle: s.suggestTitle, suggestNote: s.suggestNote,
       onSuggestTitle:this.onSuggestTitle, onSuggestNote:this.onSuggestNote, submitSuggest:this.submitSuggest,
       // toast
