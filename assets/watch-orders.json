@@ -3712,5 +3712,445 @@
     ]
    }
   }
+ },
+ "matrix": {
+  "id": "matrix",
+  "intro": "Four films and an anime anthology. The trilogy is a straight line; the questions are where The Animatrix goes and whether Resurrections belongs in a first watch.",
+  "orders": {
+   "first": {
+    "note": "Start with the first film blind, then watch The Animatrix before Reloaded: two of its shorts lead straight into the sequel. Resurrections is a coda, best after the trilogy has sunk in.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "mx1",
+        "title": "The Matrix",
+        "year": 1999,
+        "branch": "The Sixth One: Neo's War",
+        "why": "Go in knowing nothing. <b>The less you know about the twist, the better.</b>"
+       }
+      ]
+     },
+     {
+      "label": "Then",
+      "items": [
+       {
+        "id": "animatrix",
+        "title": "The Animatrix",
+        "year": 2003,
+        "branch": "The Second Renaissance: The Machine War",
+        "why": "Nine shorts. The Second Renaissance shows the war, and Final Flight of the Osiris sets up Reloaded's opening."
+       },
+       {
+        "id": "mx2",
+        "title": "The Matrix Reloaded",
+        "year": 2003,
+        "branch": "The Sixth One: Neo's War",
+        "why": "Zion, the Merovingian and the Architect, who reveals what the One really is."
+       },
+       {
+        "id": "mx3",
+        "title": "The Matrix Revolutions",
+        "year": 2003,
+        "branch": "The Sixth One: Neo's War",
+        "why": "Shot back to back with Reloaded; watch them close together."
+       }
+      ]
+     },
+     {
+      "label": "Later",
+      "items": [
+       {
+        "id": "mx4",
+        "title": "The Matrix Resurrections",
+        "year": 2021,
+        "branch": "Resurrections: The Analyst's Matrix",
+        "why": "Sixty years on, a new Matrix built around Neo and Trinity. Lands best with the trilogy fresh in your mind."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order they came out. The Animatrix was released between Reloaded and Revolutions in 2003.",
+    "items": [
+     {
+      "id": "mx1",
+      "title": "The Matrix",
+      "year": 1999,
+      "branch": "The Sixth One: Neo's War"
+     },
+     {
+      "id": "mx2",
+      "title": "The Matrix Reloaded",
+      "year": 2003,
+      "branch": "The Sixth One: Neo's War"
+     },
+     {
+      "id": "animatrix",
+      "title": "The Animatrix",
+      "year": 2003,
+      "branch": "The Second Renaissance: The Machine War",
+      "why": "Released on home video weeks after Reloaded."
+     },
+     {
+      "id": "mx3",
+      "title": "The Matrix Revolutions",
+      "year": 2003,
+      "branch": "The Sixth One: Neo's War"
+     },
+     {
+      "id": "mx4",
+      "title": "The Matrix Resurrections",
+      "year": 2021,
+      "branch": "Resurrections: The Analyst's Matrix",
+      "why": "An 18-year gap."
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order. The Animatrix is an anthology: its war shorts come long before the first film, while Kid's Story and Final Flight of the Osiris sit between The Matrix and Reloaded.",
+    "items": [
+     {
+      "id": "animatrix",
+      "title": "The Animatrix",
+      "year": 2003,
+      "branch": "The Second Renaissance: The Machine War",
+      "setLabel": "Set in the 21st century and after The Matrix",
+      "why": "Watch The Second Renaissance first; the other shorts fit between the first two films."
+     },
+     {
+      "id": "mx1",
+      "title": "The Matrix",
+      "year": 1999,
+      "branch": "The Sixth One: Neo's War",
+      "setLabel": "Around 2199, by Morpheus's best guess"
+     },
+     {
+      "id": "mx2",
+      "title": "The Matrix Reloaded",
+      "year": 2003,
+      "branch": "The Sixth One: Neo's War",
+      "setLabel": "Six months after The Matrix"
+     },
+     {
+      "id": "mx3",
+      "title": "The Matrix Revolutions",
+      "year": 2003,
+      "branch": "The Sixth One: Neo's War",
+      "setLabel": "Straight after Reloaded"
+     },
+     {
+      "id": "mx4",
+      "title": "The Matrix Resurrections",
+      "year": 2021,
+      "branch": "Resurrections: The Analyst's Matrix",
+      "setLabel": "Sixty years after Revolutions"
+     }
+    ]
+   }
+  }
+ },
+ "johnwick": {
+  "id": "johnwick",
+  "intro": "Four chapters that run almost back to back, plus a 1970s prequel series and a spin-off set between Chapter 3 and Chapter 4. The only real decisions are where Ballerina goes and whether to bother with The Continental.",
+  "orders": {
+   "first": {
+    "note": "Watch the four chapters in order and slot Ballerina in before Chapter 4, where it is set. Save The Continental for the end: it explains Winston and Charon, but works best once you know them.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "jw1",
+        "title": "John Wick",
+        "year": 2014,
+        "branch": "The Comeback: Iosef to Excommunicado",
+        "why": "A small revenge film about a car and a dog that quietly builds a whole underworld. <b>Everything after grows from it.</b>"
+       },
+       {
+        "id": "jw2",
+        "title": "John Wick: Chapter 2",
+        "year": 2017,
+        "branch": "The Comeback: Iosef to Excommunicado",
+        "why": "Markers, the High Table and the Continental's one rule. Picks up days after the first film."
+       },
+       {
+        "id": "jw3",
+        "title": "John Wick: Chapter 3 - Parabellum",
+        "year": 2019,
+        "branch": "The Comeback: Iosef to Excommunicado",
+        "why": "Starts the minute Chapter 2 ends, with John excommunicado and the clock running."
+       }
+      ]
+     },
+     {
+      "label": "Then",
+      "items": [
+       {
+        "id": "ballerina",
+        "title": "Ballerina",
+        "year": 2025,
+        "branch": "Ballerina: Eve and the Cult",
+        "why": "Set between Parabellum and Chapter 4, with John stepping into Eve's story."
+       },
+       {
+        "id": "jw4",
+        "title": "John Wick: Chapter 4",
+        "year": 2023,
+        "branch": "War on the High Table: Chapter 4",
+        "why": "The war on the Table, and the ending the whole series has been building to."
+       }
+      ]
+     },
+     {
+      "label": "Optional",
+      "items": [
+       {
+        "id": "continental",
+        "title": "The Continental: From the World of John Wick",
+        "year": 2023,
+        "kind": "tv",
+        "branch": "Before the Baba Yaga: The Continental, 1970s",
+        "why": "Three-part prequel series: how a young Winston took the hotel. Fun if you love the world, not needed for the films."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order they came out. Ballerina arrived two years after Chapter 4, though its story happens before it.",
+    "items": [
+     {
+      "id": "jw1",
+      "title": "John Wick",
+      "year": 2014,
+      "branch": "The Comeback: Iosef to Excommunicado"
+     },
+     {
+      "id": "jw2",
+      "title": "John Wick: Chapter 2",
+      "year": 2017,
+      "branch": "The Comeback: Iosef to Excommunicado"
+     },
+     {
+      "id": "jw3",
+      "title": "John Wick: Chapter 3 - Parabellum",
+      "year": 2019,
+      "branch": "The Comeback: Iosef to Excommunicado"
+     },
+     {
+      "id": "jw4",
+      "title": "John Wick: Chapter 4",
+      "year": 2023,
+      "branch": "War on the High Table: Chapter 4"
+     },
+     {
+      "id": "continental",
+      "title": "The Continental: From the World of John Wick",
+      "year": 2023,
+      "kind": "tv",
+      "branch": "Before the Baba Yaga: The Continental, 1970s",
+      "why": "Released on Peacock a few months after Chapter 4."
+     },
+     {
+      "id": "ballerina",
+      "title": "Ballerina",
+      "year": 2025,
+      "branch": "Ballerina: Eve and the Cult",
+      "why": "A spin-off made after Chapter 4 but set before it."
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order. The Continental goes first by decades; the four chapters then run almost without a break, with Ballerina in the gap before Chapter 4.",
+    "items": [
+     {
+      "id": "continental",
+      "title": "The Continental: From the World of John Wick",
+      "year": 2023,
+      "kind": "tv",
+      "branch": "Before the Baba Yaga: The Continental, 1970s",
+      "setLabel": "Set in the 1970s",
+      "why": "Decades before John's story."
+     },
+     {
+      "id": "jw1",
+      "title": "John Wick",
+      "year": 2014,
+      "branch": "The Comeback: Iosef to Excommunicado",
+      "setLabel": "Days after Helen's funeral"
+     },
+     {
+      "id": "jw2",
+      "title": "John Wick: Chapter 2",
+      "year": 2017,
+      "branch": "The Comeback: Iosef to Excommunicado",
+      "setLabel": "Days after John Wick"
+     },
+     {
+      "id": "jw3",
+      "title": "John Wick: Chapter 3 - Parabellum",
+      "year": 2019,
+      "branch": "The Comeback: Iosef to Excommunicado",
+      "setLabel": "Straight after Chapter 2"
+     },
+     {
+      "id": "ballerina",
+      "title": "Ballerina",
+      "year": 2025,
+      "branch": "Ballerina: Eve and the Cult",
+      "setLabel": "Between Parabellum and Chapter 4"
+     },
+     {
+      "id": "jw4",
+      "title": "John Wick: Chapter 4",
+      "year": 2023,
+      "branch": "War on the High Table: Chapter 4",
+      "setLabel": "After Parabellum"
+     }
+    ]
+   }
+  }
+ },
+ "bourne": {
+  "id": "bourne",
+  "intro": "Five films in near release order. The only wrinkles are that Ultimatum overlaps the end of Supremacy, and that The Bourne Legacy runs alongside Ultimatum with a different hero.",
+  "orders": {
+   "first": {
+    "note": "Watch the Matt Damon trilogy first, then Jason Bourne, which follows Bourne directly. The Bourne Legacy is a side story with Jeremy Renner: watch it after Ultimatum if you want the wider conspiracy.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "identity",
+        "title": "The Bourne Identity",
+        "year": 2002,
+        "branch": "The Bourne Trilogy: Memory to Blackbriar",
+        "why": "An amnesiac with a gun and a dozen passports. <b>Start here, no homework needed.</b>"
+       },
+       {
+        "id": "supremacy",
+        "title": "The Bourne Supremacy",
+        "year": 2004,
+        "branch": "The Bourne Trilogy: Memory to Blackbriar",
+        "why": "Two years on, a frame job pulls him back in."
+       },
+       {
+        "id": "ultimatum",
+        "title": "The Bourne Ultimatum",
+        "year": 2007,
+        "branch": "The Bourne Trilogy: Memory to Blackbriar",
+        "why": "Opens inside Supremacy's ending and finally reveals who he was."
+       }
+      ]
+     },
+     {
+      "label": "Then",
+      "items": [
+       {
+        "id": "jasonbourne",
+        "title": "Jason Bourne",
+        "year": 2016,
+        "branch": "Jason Bourne: Iron Hand",
+        "why": "Twelve years later: the truth about his father and Treadstone's origins."
+       }
+      ]
+     },
+     {
+      "label": "Optional",
+      "items": [
+       {
+        "id": "legacy",
+        "title": "The Bourne Legacy",
+        "year": 2012,
+        "branch": "Outcome: The Bourne Legacy",
+        "why": "A different agent, Aaron Cross, in a story that runs alongside Ultimatum. Bourne himself only appears in photos."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "The order they came out. Release order is close to story order, except that Legacy overlaps Ultimatum.",
+    "items": [
+     {
+      "id": "identity",
+      "title": "The Bourne Identity",
+      "year": 2002,
+      "branch": "The Bourne Trilogy: Memory to Blackbriar"
+     },
+     {
+      "id": "supremacy",
+      "title": "The Bourne Supremacy",
+      "year": 2004,
+      "branch": "The Bourne Trilogy: Memory to Blackbriar"
+     },
+     {
+      "id": "ultimatum",
+      "title": "The Bourne Ultimatum",
+      "year": 2007,
+      "branch": "The Bourne Trilogy: Memory to Blackbriar",
+      "why": "Its opening takes place before Supremacy's final scene."
+     },
+     {
+      "id": "legacy",
+      "title": "The Bourne Legacy",
+      "year": 2012,
+      "branch": "Outcome: The Bourne Legacy",
+      "why": "Runs at the same time as Ultimatum."
+     },
+     {
+      "id": "jasonbourne",
+      "title": "Jason Bourne",
+      "year": 2016,
+      "branch": "Jason Bourne: Iron Hand"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order. Ultimatum and Legacy overlap, so either can go first; Legacy's story continues after Ultimatum ends.",
+    "items": [
+     {
+      "id": "identity",
+      "title": "The Bourne Identity",
+      "year": 2002,
+      "branch": "The Bourne Trilogy: Memory to Blackbriar",
+      "setLabel": "The starting point"
+     },
+     {
+      "id": "supremacy",
+      "title": "The Bourne Supremacy",
+      "year": 2004,
+      "branch": "The Bourne Trilogy: Memory to Blackbriar",
+      "setLabel": "Two years after Identity",
+      "why": "Its New York epilogue happens during Ultimatum."
+     },
+     {
+      "id": "ultimatum",
+      "title": "The Bourne Ultimatum",
+      "year": 2007,
+      "branch": "The Bourne Trilogy: Memory to Blackbriar",
+      "setLabel": "Opens during Supremacy's ending"
+     },
+     {
+      "id": "legacy",
+      "title": "The Bourne Legacy",
+      "year": 2012,
+      "branch": "Outcome: The Bourne Legacy",
+      "setLabel": "Alongside Ultimatum"
+     },
+     {
+      "id": "jasonbourne",
+      "title": "Jason Bourne",
+      "year": 2016,
+      "branch": "Jason Bourne: Iron Hand",
+      "setLabel": "Twelve years after Ultimatum"
+     }
+    ]
+   }
+  }
  }
 }

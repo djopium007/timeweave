@@ -23,6 +23,9 @@ Rail ⇄ Fork-map toggle, branch filters, and character / item / theme panels).
 - **Transformers** — 8 films, 4 branches (Bay-era deep lore, the 2007–2017 Bay continuity, the Bumblebee/Rise of the Beasts soft reboot, and Transformers One's animated reboot)
 - **Rambo** — 5 films & 1 series, 5 branches (Baker Team in Vietnam, the film saga after the surrender, Morrell's novel and the cut ending where he dies, and the 1986 Force of Freedom cartoon)
 - **TRON**: 3 films & 1 series, 4 branches (ENCOM's 1982 mainframe and the MCP, Flynn's Grid from Clu's coup to the portal incl. Uprising, the Dillinger Grid and the permanence code, and Flynn's original Grid with Ares's open threads)
+- **The Matrix**: 4 films & The Animatrix, 4 branches (the machine war, the five Ones before Neo, Neo's war through Revolutions, and the Analyst's Matrix in Resurrections)
+- **John Wick**: 5 films & 1 series, 4 branches (the 1970s Continental, the comeback through Parabellum, Ballerina, and Chapter 4's war on the High Table)
+- **Bourne**: 5 films, 4 branches (Treadstone's backstory, the trilogy and its Supremacy/Ultimatum overlap, Outcome in Legacy, and Iron Hand in Jason Bourne)
 
 ## Files
 
