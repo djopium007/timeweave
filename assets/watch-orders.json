@@ -4152,5 +4152,139 @@
     ]
    }
   }
+ },
+ "twilight": {
+  "id": "twilight",
+  "intro": "Five films, one story, one order. Release order and story order are identical, so the only real question is whether to watch Breaking Dawn as one long film or two.",
+  "orders": {
+   "first": {
+    "note": "Watch them as they came out. Each film picks up within months of the last, and nothing is a prequel or a reboot. Set aside the fact that the first film looks very different from the rest; the blue filter goes away after New Moon.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "twilight",
+        "title": "Twilight",
+        "year": 2008,
+        "branch": "Bella's Human Year: Twilight and New Moon",
+        "why": "Bella moves to Forks, meets Edward, and James catches her scent at the baseball game. <b>Everything else depends on this one.</b>"
+       },
+       {
+        "id": "newmoon",
+        "title": "The Twilight Saga: New Moon",
+        "year": 2009,
+        "branch": "Bella's Human Year: Twilight and New Moon",
+        "why": "Edward leaves, Jacob turns into a wolf, and the Volturi are introduced in Volterra. The saga's rules get written here."
+       },
+       {
+        "id": "eclipse",
+        "title": "The Twilight Saga: Eclipse",
+        "year": 2010,
+        "branch": "The Newborn War: Eclipse",
+        "why": "Victoria's newborn army, the Cullen backstories, and the only real battle of the five films."
+       }
+      ]
+     },
+     {
+      "label": "Then, back to back",
+      "items": [
+       {
+        "id": "bd1",
+        "title": "The Twilight Saga: Breaking Dawn - Part 1",
+        "year": 2011,
+        "branch": "Breaking Dawn: The Wedding, the Birth, the Volturi",
+        "why": "The wedding, Isle Esme and the birth. It ends on Bella's eyes opening, so have Part 2 ready."
+       },
+       {
+        "id": "bd2",
+        "title": "The Twilight Saga: Breaking Dawn - Part 2",
+        "year": 2012,
+        "branch": "Breaking Dawn: The Wedding, the Birth, the Volturi",
+        "why": "Vampire Bella, Renesmee, every coven on Earth in a snowfield, and the fake-out battle the whole fandom still argues about."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "One film a year from 2008 to 2012. Breaking Dawn was split in two, a year apart, so the last two are really one story.",
+    "items": [
+     {
+      "id": "twilight",
+      "title": "Twilight",
+      "year": 2008,
+      "branch": "Bella's Human Year: Twilight and New Moon"
+     },
+     {
+      "id": "newmoon",
+      "title": "The Twilight Saga: New Moon",
+      "year": 2009,
+      "branch": "Bella's Human Year: Twilight and New Moon"
+     },
+     {
+      "id": "eclipse",
+      "title": "The Twilight Saga: Eclipse",
+      "year": 2010,
+      "branch": "The Newborn War: Eclipse"
+     },
+     {
+      "id": "bd1",
+      "title": "The Twilight Saga: Breaking Dawn - Part 1",
+      "year": 2011,
+      "branch": "Breaking Dawn: The Wedding, the Birth, the Volturi",
+      "why": "First half of the final book; ends mid-story."
+     },
+     {
+      "id": "bd2",
+      "title": "The Twilight Saga: Breaking Dawn - Part 2",
+      "year": 2012,
+      "branch": "Breaking Dawn: The Wedding, the Birth, the Volturi"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "Same as release order. The whole saga runs from January 2005 to New Year's Eve 2006; the flashbacks to the Volturi, Carlisle and the wolves sit inside the films that tell them, so there is nothing to reorder.",
+    "items": [
+     {
+      "id": "twilight",
+      "title": "Twilight",
+      "year": 2008,
+      "branch": "Bella's Human Year: Twilight and New Moon",
+      "setLabel": "Set Jan-May 2005"
+     },
+     {
+      "id": "newmoon",
+      "title": "The Twilight Saga: New Moon",
+      "year": 2009,
+      "branch": "Bella's Human Year: Twilight and New Moon",
+      "setLabel": "Set Sept 2005 to Mar 2006",
+      "why": "Skips the six months Edward is gone in one shot of the seasons turning."
+     },
+     {
+      "id": "eclipse",
+      "title": "The Twilight Saga: Eclipse",
+      "year": 2010,
+      "branch": "The Newborn War: Eclipse",
+      "setLabel": "Set spring to June 2006"
+     },
+     {
+      "id": "bd1",
+      "title": "The Twilight Saga: Breaking Dawn - Part 1",
+      "year": 2011,
+      "branch": "Breaking Dawn: The Wedding, the Birth, the Volturi",
+      "setLabel": "Set Aug to Sept 2006"
+     },
+     {
+      "id": "bd2",
+      "title": "The Twilight Saga: Breaking Dawn - Part 2",
+      "year": 2012,
+      "branch": "Breaking Dawn: The Wedding, the Birth, the Volturi",
+      "setLabel": "Set Sept to Dec 31, 2006",
+      "why": "The battle in the snowfield is Alice's vision, shown to Aro; it never happens."
+     }
+    ]
+   }
+  }
  }
 }

@@ -26,6 +26,7 @@ Rail ⇄ Fork-map toggle, branch filters, and character / item / theme panels).
 - **The Matrix**: 4 films & The Animatrix, 4 branches (the machine war, the five Ones before Neo, Neo's war through Revolutions, and the Analyst's Matrix in Resurrections)
 - **John Wick**: 5 films & 1 series, 4 branches (the 1970s Continental, the comeback through Parabellum, Ballerina, and Chapter 4's war on the High Table)
 - **Bourne**: 5 films, 4 branches (Treadstone's backstory, the trilogy and its Supremacy/Ultimatum overlap, Outcome in Legacy, and Iron Hand in Jason Bourne)
+- **Twilight**: 5 films, 6 branches (the immortal world before Bella from the Volturi to the 1936 treaty, Bella's human year across Twilight and New Moon, the newborn war in Eclipse, Breaking Dawn's wedding-birth-Volturi run, Alice's vision as the saga's one fork, and the Midnight Sun / Life and Death retellings)
 
 ## Files
 
