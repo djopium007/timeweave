@@ -8,7 +8,10 @@ parent_topic, seed (the matching-terms seed it came from), country, source, sour
 Blank cells = the source did not give that metric. Sources:
 - ahrefs-session1-blue-card: figures recorded in Blue task cards from the first Ahrefs session (Oct 2026).
 - ahrefs-free-generator: ahrefs.com/keyword-generator (free, top ~100 phrase matches, KD only on some rows).
-- ahrefs-ke: Keywords Explorer matching-terms export (full columns) - needs an active plan.
+- ahrefs-ke-matching-terms-phrase: Keywords Explorer matching-terms via the API connector (phrase mode, US, volume >= 200, top 100 per seed; ~32 units/row).
+- ahrefs-ke-overview: Keywords Explorer overview for hand-picked '<franchise> timeline' / 'chronological order' variants (~32 units/row).
+
+2026-11-06 pull: 250 rows, ~11,300 units of the 200,000/month Lite allowance. The bare 'timeline' seed is useless (sports fixtures dominate), so timeline variants are pulled per franchise via overview instead.
 
 ## 2026-11-06 pull (ahrefs-ke, full columns)
 
@@ -23,7 +26,7 @@ visits/mo; scrmbl.com (DR 32) #5 for 'evangelion watch order' with ~945. Anime r
 
 ## queue-ranking-<date>.csv
 
-Franchise-level roll-up of the same date's keyword CSV. opportunity_score = volume / (KD + 5);
+Franchise-level roll-up of the same date's keyword CSV. From 2026-11-06: head_keyword = highest-volume keyword in the cluster, cluster_volume = sum of all variants, opportunity_score = cluster_volume / (head KD + 5);
 rows with no KD assume 15 (the horror cluster was recorded as "KD 1-17") and say so in kd_assumed.
 Mapped franchises sort to the bottom. Re-run when a fuller export lands.
 
