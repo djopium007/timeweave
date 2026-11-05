@@ -6,13 +6,13 @@
 -- Revert with:  update posters set tagline = null, description = null;
 
 update posters set
-  tagline = 'Every ship, every drop, every xenomorph — one wall.',
+  tagline = 'Every ship, every drop, every xenomorph. One wall.',
   description = 'The full Alien run as a single collection print: the Nostromo, Hadley''s Hope, Fury 161 and beyond, laid out in release order.'
 where id = 'aliens';
 
 update posters set
   tagline = 'Three films, four versions of 1985.',
-  description = 'The whole trilogy on one sheet — 1955, 2015, Hell Valley and 1885, with the DeLorean threading all of it together.'
+  description = 'The whole trilogy on one sheet: 1955, 2015, Hell Valley and 1885, with the DeLorean threading all of it together.'
 where id = 'back-to-the-future';
 
 update posters set
@@ -27,7 +27,7 @@ where id = 'fast-furious';
 
 update posters set
   tagline = 'Fortune and glory, wall-sized.',
-  description = 'Every Indiana Jones adventure in one print — the ark, the stones, the grail and the rest.'
+  description = 'Every Indiana Jones adventure in one print: the ark, the stones, the grail and the rest.'
 where id = 'indiana-jones';
 
 update posters set
@@ -42,7 +42,7 @@ where id = 'lethal-weapon';
 
 update posters set
   tagline = 'Your mission, should you choose to hang it.',
-  description = 'Every Mission: Impossible film in one collection print — masks, ledges, and one man refusing a stunt double.'
+  description = 'Every Mission: Impossible film in one collection print. Masks, ledges, and one man refusing a stunt double.'
 where id = 'mission-impossible';
 
 update posters set
@@ -57,12 +57,12 @@ where id = 'rambo';
 
 update posters set
   tagline = 'Pain don''t hurt.',
-  description = 'The Double Deuce, the philosophy, the throat — Road House collected as a single print.'
+  description = 'The Double Deuce, the philosophy, the throat. Road House collected as a single print.'
 where id = 'road-house';
 
 update posters set
   tagline = 'Six films, four futures, one war.',
-  description = 'The complete Terminator run in one collection print — every attempt to stop Judgment Day, in release order.'
+  description = 'The complete Terminator run in one collection print: every attempt to stop Judgment Day, in release order.'
 where id = 'terminator';
 
 update posters set
