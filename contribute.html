@@ -694,7 +694,7 @@
                 <p style="margin:0;color:#9aa6b4;font-size:13.5px;line-height:1.5;min-height:40px;text-wrap:pretty;">{{ f.tagline }}</p>
                 <div style="display:flex;align-items:center;justify-content:space-between;">
                   <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7a8696;">{{ f.meta }}</span>
-                  <span style="{{ f.ctaStyle }}">{{ f.cta }}</span>
+                  <span style="display:flex;gap:14px;align-items:center;"><sc-if value="{{ f.hasWo }}" hint-placeholder-val="{{ true }}"><a href="{{ f.woHref }}" onclick="{{ f.onWatch }}" title="{{ f.woTitle }}" style="{{ f.woStyle }}" style-hover="color:#fff;">Movies in order</a></sc-if><a href="{{ f.href }}" onclick="{{ f.onOpenLink }}" title="{{ f.linkTitle }}" style="{{ f.ctaStyle }}">{{ f.cta }}</a></span>
                 </div>
               </div>
             </div>
@@ -1719,7 +1719,7 @@
 
       <p style="margin:16px 0 0;color:#A9B4C2;font-size:16px;line-height:1.62;max-width:64ch;text-wrap:pretty;">{{ wo.intro }}</p>
 
-      <div><button onclick="{{ wo.onOpenMap }}" style="{{ wo.mapLinkStyle }}" style-hover="border-color:rgba(255,255,255,0.34);color:#fff;">{{ wo.mapLinkLabel }}</button></div>
+      <div><a href="{{ wo.mapHref }}" onclick="{{ wo.onOpenMap }}" title="{{ wo.mapTitle }}" style="{{ wo.mapLinkStyle }}" style-hover="border-color:rgba(255,255,255,0.34);color:#fff;">{{ wo.mapLinkLabel }}</a></div>
 
       <div style="display:inline-flex;flex-wrap:wrap;gap:4px;margin-top:30px;padding:5px;border:1px solid rgba(255,255,255,0.1);border-radius:999px;background:rgba(255,255,255,0.03);">
         <sc-for list="{{ wo.tabs }}" as="t" hint-placeholder-count="3">
@@ -10523,10 +10523,11 @@ class Component extends DCLogic {
       sub: 'Release order \u00b7 chronological order \u00b7 the best watch order if it is your first time',
       intro: wod ? wod.intro : (s.woLoading ? 'Loading the orders…' : ''),
       onBack: this.goHub,
-      onOpenMap: () => this.openFranchise(s.activeId),
+      onOpenMap: (e) => { try { e && e.preventDefault && e.preventDefault(); } catch(_){} this.openFranchise(s.activeId); },
+      mapHref: '/map/' + s.activeId, mapTitle: this.mapName(s.activeId) || '',
       onReset: () => this.clearWatched(s.activeId),
       mapLinkLabel: 'See the ' + title + ' timeline map \u2192',
-      mapLinkStyle: "display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:9px 15px;border-radius:9px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;",
+      mapLinkStyle: "text-decoration:none;display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:9px 15px;border-radius:9px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;",
       railStyle: 'position:absolute;left:9px;top:16px;bottom:16px;width:2px;background:linear-gradient(' + accent + '66,' + accent + '14);',
       noteStyle: 'margin:24px 0 0;padding:17px 19px 17px 21px;border-radius:12px;background:' + accent + '1A;border-left:3px solid ' + accent + ';color:#D2D9E2;font-size:15.5px;line-height:1.6;max-width:70ch;text-wrap:pretty;',
       footNote: 'Not sure which branch is which? The map lays them out side by side, from the split back to where each one starts.',
@@ -11629,23 +11630,30 @@ class Component extends DCLogic {
     // hub grid
     const liveCards = Object.values(this.data).map(f => ({
       id: f.id, title: f.title, tagline: f.tagline, meta: f.meta,
-      badgeLabel: 'Live', cta: 'Open →',
+      badgeLabel: 'Live', cta: 'Timeline \u2192',
       onOpen: () => this.openFranchise(f.id),
+      href: '/map/' + f.id, linkTitle: this.mapName(f.id),
+      onOpenLink: (e) => { try { e && e.preventDefault(); e && e.stopPropagation(); } catch(_){} this.openFranchise(f.id); },
+      hasWo: this.hasWatchOrder(f.id), woHref: '/watch-order/' + f.id, woTitle: this.woName(f.id),
+      onWatch: (e) => { try { e && e.preventDefault(); e && e.stopPropagation(); } catch(_){} this.goWatchOrder(f.id); },
+      woStyle: { fontFamily:"'Oswald', sans-serif", fontWeight:'500', fontSize:'13px', letterSpacing:'0.05em', textTransform:'uppercase', color:'#9DB0C4', textDecoration:'none' },
       art: this.makeArtEl(this.kindFor(f.id), f.accent, 'card', false),
       cardStyle: { position:'relative', display:'flex', flexDirection:'column', borderRadius:'16px', overflow:'hidden', border:'1px solid rgba(255,255,255,0.1)', background:'#0c0e13', cursor:'pointer', transition:'transform .18s ease, border-color .18s ease' },
       posterStyle: { position:'relative', minHeight:'150px', padding:'18px', display:'flex', alignItems:'flex-end', background:`radial-gradient(125% 130% at 82% 96%, ${this.rgba(f.accent,0.32)}, transparent 58%), linear-gradient(160deg, #100a09, #08090c)` },
       badgeStyle: { position:'absolute', top:'14px', right:'14px', display:'inline-flex', alignItems:'center', gap:'6px', padding:'4px 10px', borderRadius:'999px', fontFamily:"'JetBrains Mono', monospace", fontSize:'10px', fontWeight:'700', letterSpacing:'0.1em', textTransform:'uppercase', color:'#3DDC84', background:this.rgba('#3DDC84',0.14), border:`1px solid ${this.rgba('#3DDC84',0.4)}` },
-      ctaStyle: { fontFamily:"'Oswald', sans-serif", fontWeight:'500', fontSize:'13px', letterSpacing:'0.05em', textTransform:'uppercase', color:'#FF7A6E' },
+      ctaStyle: { fontFamily:"'Oswald', sans-serif", fontWeight:'500', fontSize:'13px', letterSpacing:'0.05em', textTransform:'uppercase', color:'#FF7A6E', textDecoration:'none' },
     }));
     const soonCards = this.comingSoon.map(f => ({
       id: f.id, title: f.title, tagline: f.tagline, meta: f.meta,
-      badgeLabel: 'In the queue', cta: 'Vote →',
+      badgeLabel: 'In the queue', cta: 'Vote \u2192',
       onOpen: () => this.goQueue(),
+      href: '/queue', linkTitle: 'Vote for ' + f.title + ' in the queue', hasWo: false, woHref: '', woTitle: '', woStyle: {}, onWatch: null,
+      onOpenLink: (e) => { try { e && e.preventDefault(); e && e.stopPropagation(); } catch(_){} this.goQueue(); },
       art: this.makeArtEl(this.kindFor(f.id), f.accent, 'card', true),
       cardStyle: { position:'relative', display:'flex', flexDirection:'column', borderRadius:'16px', overflow:'hidden', border:'1px dashed rgba(255,255,255,0.14)', background:'#0a0c10', cursor:'pointer', transition:'transform .18s ease, border-color .18s ease' },
       posterStyle: { position:'relative', minHeight:'150px', padding:'18px', display:'flex', alignItems:'flex-end', background:`radial-gradient(125% 130% at 82% 96%, ${this.rgba(f.accent,0.16)}, transparent 60%), linear-gradient(160deg, #0e0f13, #08090b)` },
       badgeStyle: { position:'absolute', top:'14px', right:'14px', display:'inline-flex', alignItems:'center', padding:'4px 10px', borderRadius:'999px', fontFamily:"'JetBrains Mono', monospace", fontSize:'10px', fontWeight:'700', letterSpacing:'0.1em', textTransform:'uppercase', color:'#9DB0C4', background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.16)' },
-      ctaStyle: { fontFamily:"'Oswald', sans-serif", fontWeight:'500', fontSize:'13px', letterSpacing:'0.05em', textTransform:'uppercase', color:'#9DB0C4' },
+      ctaStyle: { fontFamily:"'Oswald', sans-serif", fontWeight:'500', fontSize:'13px', letterSpacing:'0.05em', textTransform:'uppercase', color:'#9DB0C4', textDecoration:'none' },
     }));
     const franchises = [...liveCards, ...soonCards];
     // ---- Timeline tab index ----
