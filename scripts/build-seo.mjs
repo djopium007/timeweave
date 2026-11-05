@@ -60,9 +60,12 @@ try {
   console.warn('build-seo: no assets/watch-orders.json, skipping watch-order routes');
 }
 const WO_NOUN = { dune: ['read and watch', 'Read and Watch'] };
-/* Search-phrase names for "<X> Movies in Order" titles. Keep in sync with WO_KW in index.html. */
-const WO_KW = { marvel: 'Marvel', matrix: 'Matrix', dune: 'Dune Books and' };
-const woName = (f) => `${WO_KW[f.id] || f.title} Movies in Order`;
+/* Search-phrase page names (Ahrefs US, keywords/ CSV). Keep in sync with WO_KW / MAP_KW in index.html. */
+const WO_KW = { marvel: 'Marvel Movies in Order', matrix: 'Matrix Movies in Order', dune: 'Dune Books in Order (and Movies)', bourne: 'Jason Bourne Movies in Order' };
+const woName = (f) => WO_KW[f.id] || `${f.title} Movies in Order`;
+const woPhrase = (f) => woName(f).replace(/(Movies|Books) in Order( \(and Movies\))?/, (m) => m.toLowerCase());
+const MAP_KW = { marvel: 'MCU Timeline Explained' };
+const mapName = (f) => MAP_KW[f.id] || `${f.title} Timeline Explained`;
 const stripTags = (t) => String(t || '').replace(/<[^>]+>/g, '');
 
 /* ---------- the same copy the app generates client-side ---------- */
@@ -70,14 +73,13 @@ const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const DEFAULT_DESC =
-  'Sequels, reboots, time-loops and multiverse forks: every movie timeline mapped as clean, ' +
-  'interactive branch diagrams. Search a film and follow the threads.';
+  'Every movie franchise in order: release order, chronological order and the best watch order for a first-timer, plus every timeline mapped as a clean, interactive branch diagram. Search a film and follow the threads.';
 
 const ogUrl = (name) => `${SITE}/assets/og/${name}.png`;
 
 const routes = [
   { url: '/', file: 'index.html', inPlace: true,
-    title: 'ReelOrder | Movie Timeline Maps', desc: DEFAULT_DESC, og: 'og-default', priority: '1.0' },
+    title: 'ReelOrder | Movies in Order & Timeline Maps', desc: DEFAULT_DESC, og: 'og-default', priority: '1.0' },
   { url: '/queue', file: 'queue.html',
     title: 'The Queue · ReelOrder',
     desc: 'Vote on which movie franchise gets its timeline mapped next, or suggest one. Live community rankings on ReelOrder.',
@@ -108,7 +110,7 @@ for (const id of Object.keys(watchOrders)) {
     url: `/watch-order/${id}`,
     file: path.join('watch-order', `${id}.html`),
     title: `${woName(f)} \u00b7 ReelOrder`,
-    desc: `${woName(f).replace(' Movies in Order', ' movies in order')}: release order vs chronological order, plus the order we would give a first-timer, with a reason for every entry.`,
+    desc: `${woPhrase(f)}: release order, chronological order, and the best watch order for a first-timer, with a reason for every entry.`,
     og: fs.existsSync(path.join(ROOT, 'assets', 'og', `og-wo-${id}.png`)) ? `og-wo-${id}` : (fs.existsSync(path.join(ROOT, 'assets', 'og', `og-${id}.png`)) ? `og-${id}` : 'og-default'),
     priority: '0.9',
     franchise: f,
@@ -121,8 +123,8 @@ for (const id of ids) {
   routes.push({
     url: `/map/${id}`,
     file: path.join('map', `${id}.html`),
-    title: `${f.title} Timeline Explained · ReelOrder`,
-    desc: `${f.title} timeline explained: ${f.meta}. ${f.tagline}`,
+    title: `${mapName(f)} · ReelOrder`,
+    desc: `${f.title} timeline explained: ${f.meta}. ${f.tagline}${watchOrders[id] ? ` Plus the ${woPhrase(f)}.` : ''}`,
     og: fs.existsSync(path.join(ROOT, 'assets', 'og', `og-${id}.png`)) ? `og-${id}` : 'og-default',
     priority: '0.9',
     franchise: f,
@@ -314,7 +316,7 @@ function noscriptBlock(r) {
       .map((g) => `<h3>${esc(g.label)}</h3>` + listOf(g.items || [])).join('');
     return `<noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">
 <h1>${esc(woName(f))}</h1>
-<p><strong>Release order vs chronological order</strong> &middot; plus the order to ${esc(noun)} it for the first time.</p>
+<p><strong>Release order</strong> &middot; <strong>chronological order</strong> &middot; the best watch order if it is your first time ${esc(noun === 'watch' ? 'watching' : noun + 'ing')} it.</p>
 <p>${esc(stripTags(wo.intro))}</p>
 ${section('If you are watching it for the first time', `<p>${esc(stripTags(wo.orders.first.note))}</p>` + firstGroups)}
 ${section('Release order', `<p>${esc(stripTags(wo.orders.release.note))}</p>` + listOf(wo.orders.release.items || []))}
@@ -329,12 +331,12 @@ ${section('Chronological order', `<p>${esc(stripTags(wo.orders.chrono.note))}</p
     .join('');
   const films = (f.films || []).map((x) => `<li>${esc(x)}</li>`).join('');
   return `<noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">
-<h1>${esc(f.title)} timeline explained</h1>
+<h1>${esc(mapName(f))}</h1>
 <p>${esc(f.meta)}</p>
 <p>${esc(f.framing || f.blurb || f.tagline)}</p>
 <h2>Branches</h2><ul>${branches}</ul>
 ${films ? `<h2>Films</h2><ul>${films}</ul>` : ''}
-<p><a href="${SITE}/">All ReelOrder timeline maps</a></p>
+<p>${watchOrders[f.id] ? `<a href="${SITE}/watch-order/${f.id}">${esc(woName(f))}</a>: release order vs chronological order, plus the order to watch it for the first time. &middot; ` : ''}<a href="${SITE}/">All ReelOrder timeline maps</a></p>
 </article></noscript>`;
 }
 

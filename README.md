@@ -209,7 +209,7 @@ diagram in the franchise accent colour — deliberately no studio logos or chara
 
 ## Watch orders
 
-`/watch-order/<id>` answers the highest-volume query in this niche — "what order do I watch X in".
+`/watch-order/<id>` answers the highest-volume query in this niche — "<franchise> movies in order" (title + H1 use that exact phrase; `WO_KW` in build-seo.mjs/index.html overrides the franchise name for marvel, matrix, dune). Keyword data lives in `keywords/`.
 Eleven franchises have one (everything except Tenet, which is a single film).
 
 - **Content lives in `assets/watch-orders.json`**, not in `index.html` — it is ~110 KB and would otherwise

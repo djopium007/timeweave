@@ -18,7 +18,8 @@ const MARK = fs.readFileSync(path.join(DIR, 'mark.svg'), 'utf8');
 const franchises = JSON.parse(fs.readFileSync(path.join(DIR, 'franchises.json'), 'utf8'));
 let watchOrders = {};
 try { watchOrders = JSON.parse(fs.readFileSync(path.join(DIR, 'watch-orders.json'), 'utf8')); } catch (e) {}
-const WO_NOUN = { dune: 'Read & watch order' };
+const WO_NAME = { marvel: 'Marvel Movies in Order', matrix: 'Matrix Movies in Order', dune: 'Dune Books in Order', bourne: 'Jason Bourne Movies in Order' };
+const woName = (f) => WO_NAME[f.id] || `${f.title} Movies in Order`;
 
 const BG = '#070809';
 const INK = '#E9EDF3';
@@ -151,15 +152,15 @@ function simpleCard(eyebrow, title, sub, accent) {
 }
 
 function watchOrderCard(f, wo) {
-  const t = f.title.toUpperCase();
-  const size = t.length > 26 ? 84 : t.length > 18 ? 96 : t.length > 12 ? 110 : 124;
+  const t = woName(f).toUpperCase();
+  const size = t.length > 30 ? 72 : t.length > 24 ? 84 : t.length > 18 ? 96 : 110;
   const first = (wo.orders.first.groups || []).reduce((a, g) => a.concat(g.items || []), []);
   const picks = first.slice(0, 3).map((it, i) =>
     `<div class="step"><span class="n">${i + 1}</span>${esc(it.title)}</div>`).join('');
   return shell(
     f.accent,
     `<div class="body">
-      <div class="eyebrow">${esc(WO_NOUN[f.id] || 'Watch order')}</div>
+      <div class="eyebrow">${esc(f.id === 'dune' ? 'Reading & watch order' : 'Watch order')}</div>
       <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:${size}px;line-height:1.02;margin:20px 0 0;letter-spacing:.005em">${esc(t)}</h1>
       <div style="font-family:'JetBrains Mono',monospace;font-size:23px;color:${MUTED};margin-top:20px;letter-spacing:.02em">Release &nbsp;·&nbsp; Chronological &nbsp;·&nbsp; First-time</div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-top:26px;max-width:640px">${picks}</div>
