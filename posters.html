@@ -1713,6 +1713,7 @@
         <div style="min-width:0;flex:1;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#9DB0C4;">{{ wo.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.03;margin:8px 0 0;letter-spacing:0.01em;text-transform:uppercase;text-wrap:balance;">{{ wo.heading }}</h1>
+          <div style="margin-top:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:#9DB0C4;letter-spacing:0.01em;">{{ wo.sub }}</div>
         </div>
       </div>
 
@@ -10458,6 +10459,9 @@ class Component extends DCLogic {
   WO_IDS = ['terminator','xmen','bttf','apes','predator','alien','transformers','dune','marvel','starwars','startrek','rambo','tron','matrix','johnwick','bourne'];
   WO_NOUN = { dune: 'read and watch' };
   WO_NOUN_TITLE = { dune: 'Read and Watch' };
+  // Search-phrase names for "<X> Movies in Order" titles. Keep in sync with WO_KW in scripts/build-seo.mjs.
+  WO_KW = { marvel: 'Marvel', matrix: 'Matrix', dune: 'Dune Books and' };
+  woName = (id) => { const f = this.data[id]; return f ? (this.WO_KW[id] || f.title) + ' Movies in Order' : null; };
   WO_KEY = 'reelorder_watched_';
   hasWatchOrder = (id) => this.WO_IDS.indexOf(id) >= 0;
   loadWatchOrders = async () => {
@@ -10512,7 +10516,8 @@ class Component extends DCLogic {
       sigil: title ? title.slice(0,1).toUpperCase() : '?',
       sigilStyle: "flex:none;width:58px;height:58px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:700;font-size:26px;color:#fff;background:linear-gradient(150deg," + accent + ",rgba(0,0,0,0.6));box-shadow:0 0 0 1px rgba(255,255,255,0.1);",
       meta: f ? f.meta : '',
-      heading: 'What order to ' + noun + ' ' + title,
+      heading: f ? this.woName(s.activeId) : '',
+      sub: 'Release order vs chronological order \u00b7 plus the order to ' + noun + ' it for the first time',
       intro: wod ? wod.intro : (s.woLoading ? 'Loading the orders…' : ''),
       onBack: this.goHub,
       onOpenMap: () => this.openFranchise(s.activeId),
@@ -10611,8 +10616,7 @@ class Component extends DCLogic {
     }
     if (path.indexOf('/watch-order/') === 0) {
       const wf = this.data[path.slice(13)];
-      const wn = this.WO_NOUN_TITLE[path.slice(13)] || 'Watch';
-      return (wf ? 'What Order to ' + wn + ' ' + wf.title : 'Watch Order') + ' \u00b7 ReelOrder';
+      return (wf ? this.woName(path.slice(13)) : 'Watch Order') + ' \u00b7 ReelOrder';
     }
     if (path.indexOf('/map/') === 0) {
       const f = this.data[path.slice(5)];
@@ -10642,8 +10646,7 @@ class Component extends DCLogic {
     }
     if (path.indexOf('/watch-order/') === 0) {
       const wf = this.data[path.slice(13)];
-      const wn = this.WO_NOUN[path.slice(13)] || 'watch';
-      if (wf) return 'What order to ' + wn + ' ' + wf.title + ': release order, chronological order, and the order we would give a first-timer, with a reason for every entry.';
+      if (wf) return this.woName(path.slice(13)).replace(' Movies in Order', ' movies in order') + ': release order vs chronological order, plus the order we would give a first-timer, with a reason for every entry.';
     }
     if (path.indexOf('/map/') === 0) {
       const f = this.data[path.slice(5)];

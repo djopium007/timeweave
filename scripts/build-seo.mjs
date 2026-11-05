@@ -60,6 +60,9 @@ try {
   console.warn('build-seo: no assets/watch-orders.json, skipping watch-order routes');
 }
 const WO_NOUN = { dune: ['read and watch', 'Read and Watch'] };
+/* Search-phrase names for "<X> Movies in Order" titles. Keep in sync with WO_KW in index.html. */
+const WO_KW = { marvel: 'Marvel', matrix: 'Matrix', dune: 'Dune Books and' };
+const woName = (f) => `${WO_KW[f.id] || f.title} Movies in Order`;
 const stripTags = (t) => String(t || '').replace(/<[^>]+>/g, '');
 
 /* ---------- the same copy the app generates client-side ---------- */
@@ -104,8 +107,8 @@ for (const id of Object.keys(watchOrders)) {
   routes.push({
     url: `/watch-order/${id}`,
     file: path.join('watch-order', `${id}.html`),
-    title: `What Order to ${noun[1]} ${f.title} \u00b7 ReelOrder`,
-    desc: `What order to ${noun[0]} ${f.title}: release order, chronological order, and the order we would give a first-timer, with a reason for every entry.`,
+    title: `${woName(f)} \u00b7 ReelOrder`,
+    desc: `${woName(f).replace(' Movies in Order', ' movies in order')}: release order vs chronological order, plus the order we would give a first-timer, with a reason for every entry.`,
     og: fs.existsSync(path.join(ROOT, 'assets', 'og', `og-wo-${id}.png`)) ? `og-wo-${id}` : (fs.existsSync(path.join(ROOT, 'assets', 'og', `og-${id}.png`)) ? `og-${id}` : 'og-default'),
     priority: '0.9',
     franchise: f,
@@ -212,7 +215,7 @@ function jsonLd(r) {
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Timeline maps', item: SITE + '/' },
         { '@type': 'ListItem', position: 2, name: `${f.title} Timeline`, item: `${SITE}/map/${f.id}` },
-        { '@type': 'ListItem', position: 3, name: `${f.title} watch order`, item: url },
+        { '@type': 'ListItem', position: 3, name: woName(f), item: url },
       ],
     });
     graph[0].breadcrumb = { '@id': url + '#breadcrumb' };
@@ -310,7 +313,8 @@ function noscriptBlock(r) {
     const firstGroups = (wo.orders.first.groups || [])
       .map((g) => `<h3>${esc(g.label)}</h3>` + listOf(g.items || [])).join('');
     return `<noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">
-<h1>What order to ${esc(noun)} ${esc(f.title)}</h1>
+<h1>${esc(woName(f))}</h1>
+<p><strong>Release order vs chronological order</strong> &middot; plus the order to ${esc(noun)} it for the first time.</p>
 <p>${esc(stripTags(wo.intro))}</p>
 ${section('If you are watching it for the first time', `<p>${esc(stripTags(wo.orders.first.note))}</p>` + firstGroups)}
 ${section('Release order', `<p>${esc(stripTags(wo.orders.release.note))}</p>` + listOf(wo.orders.release.items || []))}
