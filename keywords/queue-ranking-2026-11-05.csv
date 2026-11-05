@@ -1,0 +1,18 @@
+rank,franchise,volume,kd,kd_assumed,opportunity_score,status,keywords
+1,conjuring,55000,1,,9167,Unmapped,conjuring movies in order; the conjuring movies in order
+2,twilight,60000,7,,5000,In ToDo folder,twilight movies in order
+3,maze runner,45000,5,,4500,Unmapped,maze runner movies in order
+4,avatar,29000,4,,3222,Unmapped,avatar movies in order
+5,jurassic park,37000,14,,1947,Unmapped,jurassic park movies in order
+6,halloween,32000,,"15 (cluster avg, unverified)",1600,Unmapped,halloween movies in order
+7,saw,26000,,"15 (cluster avg, unverified)",1300,Unmapped,saw movies in order
+8,evangelion,7800,2,,1114,Gated: anime DR test,evangelion watch order
+9,monogatari,6000,1,,1000,Gated: anime DR test,monogatari watch order
+10,fate,4800,0,,960,Gated: anime DR test,fate series watch order
+11,insidious,17000,,"15 (cluster avg, unverified)",850,Unmapped,insidious movies in order
+12,scream,17000,,"15 (cluster avg, unverified)",850,Unmapped,scream movies in order
+13,friday the 13th,16000,,"15 (cluster avg, unverified)",800,Unmapped,friday the 13th movies in order
+14,alien,28000,0,,5600,Mapped (live),alien movies in order
+15,x-men,109000,29,,3206,Mapped (live),x-men movies in order
+16,star wars,20000,,"15 (cluster avg, unverified)",1000,Mapped (live),star wars chronological order
+17,marvel,4200,,"15 (cluster avg, unverified)",210,Mapped (live),marvel timeline order
