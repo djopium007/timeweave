@@ -27,6 +27,8 @@ Rail ⇄ Fork-map toggle, branch filters, and character / item / theme panels).
 - **John Wick**: 5 films & 1 series, 4 branches (the 1970s Continental, the comeback through Parabellum, Ballerina, and Chapter 4's war on the High Table)
 - **Bourne**: 5 films, 4 branches (Treadstone's backstory, the trilogy and its Supremacy/Ultimatum overlap, Outcome in Legacy, and Iron Hand in Jason Bourne)
 - **Twilight**: 5 films, 6 branches (the immortal world before Bella from the Volturi to the 1936 treaty, Bella's human year across Twilight and New Moon, the newborn war in Eclipse, Breaking Dawn's wedding-birth-Volturi run, Alice's vision as the saga's one fork, and the Midnight Sun / Life and Death retellings)
+- **The Conjuring Universe**: 9 films + La Llorona as a disputed branch, 5 branches (Valak's road through the two Nun films and Enfield, the Annabelle doll's chain of custody from 1943 to the artifact room, the Warrens' four main-line cases from Harrisville to West Pittston, Judy's birth and the 2027 prequel / HBO Max series, and the disputed La Llorona and Crooked Man thread)
+- **Fast & Furious**: 11 films + 2 shorts, 6 branches (the street-racing years, the crew going global across Fast 4 to 6, the Tokyo Drift fold and Han's three deaths, the spy era from Furious 7 to Fast X, the Hobbs & Shaw side road, and what is confirmed about the 2027 finale Fast Forever)
 
 ## Files
 

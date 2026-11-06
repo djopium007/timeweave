@@ -18,7 +18,7 @@ const MARK = fs.readFileSync(path.join(DIR, 'mark.svg'), 'utf8');
 const franchises = JSON.parse(fs.readFileSync(path.join(DIR, 'franchises.json'), 'utf8'));
 let watchOrders = {};
 try { watchOrders = JSON.parse(fs.readFileSync(path.join(DIR, 'watch-orders.json'), 'utf8')); } catch (e) {}
-const WO_NAME = { marvel: 'Marvel Movies in Order', matrix: 'Matrix Movies in Order', dune: 'Dune Books in Order', bourne: 'Jason Bourne Movies in Order' };
+const WO_NAME = { marvel: 'Marvel Movies in Order', matrix: 'Matrix Movies in Order', dune: 'Dune Books in Order', bourne: 'Jason Bourne Movies in Order', conjuring: 'The Conjuring Movies in Order', fast: 'Fast and Furious Movies in Order' };
 const woName = (f) => WO_NAME[f.id] || `${f.title} Movies in Order`;
 
 const BG = '#070809';

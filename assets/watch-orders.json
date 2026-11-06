@@ -4632,5 +4632,577 @@
     "a": "An animated series adapting Midnight Sun is in development at Netflix and Lionsgate, written by Sinead Daly. No premiere date or cast has been announced. No sixth live-action film is planned."
    }
   ]
+ },
+ "conjuring": {
+  "id": "conjuring",
+  "intro": "Nine films plus one disputed cousin, set between 1952 and 1986 and released in almost the opposite order. The good news: the two Conjuring films stand on their own, and every spin-off tells you which thread it belongs to in its first ten minutes.",
+  "orders": {
+   "first": {
+    "note": "Start with the Warrens, then follow the doll, then the nun. The main-line Conjuring films are the best made and explain the artifact room, the Warrens and Valak; the spin-offs make more sense once you have met the things they are about.",
+    "groups": [
+     {
+      "label": "Start with the Warrens",
+      "items": [
+       {
+        "id": "conjuring",
+        "title": "The Conjuring",
+        "year": 2013,
+        "branch": "The Warrens' Case Files",
+        "why": "The Perron case, the artifact room, and the doll behind glass. <b>Everything in the universe points back here.</b>"
+       },
+       {
+        "id": "conjuring2",
+        "title": "The Conjuring 2",
+        "year": 2016,
+        "branch": "The Warrens' Case Files",
+        "why": "Enfield, the Crooked Man, and the first look at the demon nun. Lorraine learns Valak's name; you will need it for the spin-offs."
+       }
+      ]
+     },
+     {
+      "label": "The doll",
+      "items": [
+       {
+        "id": "creation",
+        "title": "Annabelle: Creation",
+        "year": 2017,
+        "branch": "The Doll: Annabelle's Line",
+        "why": "The origin: a toymaker, a dead daughter and an orphanage in 1943. Watch it before Annabelle even though it came out three years later; it ends where that film begins."
+       },
+       {
+        "id": "annabelle",
+        "title": "Annabelle",
+        "year": 2014,
+        "branch": "The Doll: Annabelle's Line",
+        "why": "1967, the cult, the Forms' apartment and how the doll reached the nursing students from The Conjuring's prologue."
+       },
+       {
+        "id": "comeshome",
+        "title": "Annabelle Comes Home",
+        "year": 2019,
+        "branch": "The Doll: Annabelle's Line",
+        "why": "One night in the Warrens' artifact room with Judy, the babysitter and every cursed object at once. The lightest of the ten; a good breather."
+       }
+      ]
+     },
+     {
+      "label": "The Nun",
+      "items": [
+       {
+        "id": "nun",
+        "title": "The Nun",
+        "year": 2018,
+        "branch": "Valak's Road: The Nun Films",
+        "why": "Romania, 1952, and where Valak came from. Frenchie's last scene explains the exorcism footage in The Conjuring's opening lecture."
+       },
+       {
+        "id": "nun2",
+        "title": "The Nun II",
+        "year": 2023,
+        "branch": "Valak's Road: The Nun Films",
+        "why": "France, 1956. Irene versus Valak again, and the post-credits phone call that hands Maurice's case to the Warrens."
+       }
+      ]
+     },
+     {
+      "label": "The last cases",
+      "items": [
+       {
+        "id": "devil",
+        "title": "The Conjuring: The Devil Made Me Do It",
+        "year": 2021,
+        "branch": "The Warrens' Case Files",
+        "why": "1981, the Arne Johnson trial. The first main-line film without a haunted house; a curse and a courtroom instead."
+       },
+       {
+        "id": "lastrites",
+        "title": "The Conjuring: Last Rites",
+        "year": 2025,
+        "branch": "The Warrens' Case Files",
+        "why": "1986, the Smurl house, and the Warrens' final case. It opens with Judy's birth in 1964, so save it for last."
+       }
+      ]
+     },
+     {
+      "label": "Optional",
+      "items": [
+       {
+        "id": "llorona",
+        "title": "The Curse of La Llorona",
+        "year": 2019,
+        "branch": "Disputed: La Llorona and the Crooked Man",
+        "why": "Father Perez from Annabelle and a glimpse of the doll, but Warner Bros. does not count it as an installment. Skip it unless you are completing the set."
+       }
+      ]
+     }
+    ],
+    "items": []
+   },
+   "release": {
+    "note": "The order the films came out, 2013 to 2025. Expect the years to jump: 1971, then 1967, then 1977, then 1943.",
+    "groups": [],
+    "items": [
+     {
+      "id": "conjuring",
+      "title": "The Conjuring",
+      "year": 2013,
+      "branch": "The Warrens' Case Files"
+     },
+     {
+      "id": "annabelle",
+      "title": "Annabelle",
+      "year": 2014,
+      "branch": "The Doll: Annabelle's Line"
+     },
+     {
+      "id": "conjuring2",
+      "title": "The Conjuring 2",
+      "year": 2016,
+      "branch": "The Warrens' Case Files"
+     },
+     {
+      "id": "creation",
+      "title": "Annabelle: Creation",
+      "year": 2017,
+      "branch": "The Doll: Annabelle's Line"
+     },
+     {
+      "id": "nun",
+      "title": "The Nun",
+      "year": 2018,
+      "branch": "Valak's Road: The Nun Films"
+     },
+     {
+      "id": "llorona",
+      "title": "The Curse of La Llorona",
+      "year": 2019,
+      "branch": "Disputed: La Llorona and the Crooked Man"
+     },
+     {
+      "id": "comeshome",
+      "title": "Annabelle Comes Home",
+      "year": 2019,
+      "branch": "The Doll: Annabelle's Line"
+     },
+     {
+      "id": "devil",
+      "title": "The Conjuring: The Devil Made Me Do It",
+      "year": 2021,
+      "branch": "The Warrens' Case Files"
+     },
+     {
+      "id": "nun2",
+      "title": "The Nun II",
+      "year": 2023,
+      "branch": "Valak's Road: The Nun Films"
+     },
+     {
+      "id": "lastrites",
+      "title": "The Conjuring: Last Rites",
+      "year": 2025,
+      "branch": "The Warrens' Case Files"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "By the year each film is set. The Nun films come first, the doll's story runs through the middle, and the Warrens' cases close it out. Three films have prologues set earlier than their main story; the labels say so.",
+    "groups": [],
+    "items": [
+     {
+      "id": "nun",
+      "title": "The Nun",
+      "year": 2018,
+      "branch": "Valak's Road: The Nun Films",
+      "setLabel": "Set 1952"
+     },
+     {
+      "id": "creation",
+      "title": "Annabelle: Creation",
+      "year": 2017,
+      "branch": "The Doll: Annabelle's Line",
+      "setLabel": "Set 1943, then 'twelve years later'",
+      "why": "The film dates the orphanage story only as twelve years after 1943; it ends in 1967, the night Annabelle begins."
+     },
+     {
+      "id": "nun2",
+      "title": "The Nun II",
+      "year": 2023,
+      "branch": "Valak's Road: The Nun Films",
+      "setLabel": "Set 1956"
+     },
+     {
+      "id": "annabelle",
+      "title": "Annabelle",
+      "year": 2014,
+      "branch": "The Doll: Annabelle's Line",
+      "setLabel": "Set 1967"
+     },
+     {
+      "id": "conjuring",
+      "title": "The Conjuring",
+      "year": 2013,
+      "branch": "The Warrens' Case Files",
+      "setLabel": "Set 1971 (prologue 1968)",
+      "why": "The nursing-student prologue is the end of Annabelle's story; the Perron case is the main event."
+     },
+     {
+      "id": "comeshome",
+      "title": "Annabelle Comes Home",
+      "year": 2019,
+      "branch": "The Doll: Annabelle's Line",
+      "setLabel": "Set 1972"
+     },
+     {
+      "id": "llorona",
+      "title": "The Curse of La Llorona",
+      "year": 2019,
+      "branch": "Disputed: La Llorona and the Crooked Man",
+      "setLabel": "Set 1973 · not an official installment"
+     },
+     {
+      "id": "conjuring2",
+      "title": "The Conjuring 2",
+      "year": 2016,
+      "branch": "The Warrens' Case Files",
+      "setLabel": "Set 1977 (prologue 1976)",
+      "why": "Opens at Amityville in 1976, where Lorraine first sees Valak."
+     },
+     {
+      "id": "devil",
+      "title": "The Conjuring: The Devil Made Me Do It",
+      "year": 2021,
+      "branch": "The Warrens' Case Files",
+      "setLabel": "Set 1981"
+     },
+     {
+      "id": "lastrites",
+      "title": "The Conjuring: Last Rites",
+      "year": 2025,
+      "branch": "The Warrens' Case Files",
+      "setLabel": "Set 1986 (prologue 1964)",
+      "why": "The 1964 prologue is the earliest Warren scene in the series, but the film belongs at the end."
+     }
+    ]
+   }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Conjuring movies in?",
+    "a": "For a first viewing: The Conjuring, The Conjuring 2, Annabelle: Creation, Annabelle, Annabelle Comes Home, The Nun, The Nun II, The Devil Made Me Do It, then Last Rites. That is release order with the two Annabelle prequels swapped so the doll's story runs forwards."
+   },
+   {
+    "q": "What is the chronological order of the Conjuring Universe?",
+    "a": "The Nun (1952), Annabelle: Creation (1943 and twelve years later), The Nun II (1956), Annabelle (1967), The Conjuring (1971), Annabelle Comes Home (1972), The Conjuring 2 (1977), The Devil Made Me Do It (1981), The Conjuring: Last Rites (1986). The Curse of La Llorona (1973) is not an official installment."
+   },
+   {
+    "q": "How many Conjuring movies are there?",
+    "a": "Nine official films: three Conjuring films plus Last Rites, three Annabelle films and two Nun films. The Curse of La Llorona shares a priest and a cameo but Warner Bros. does not count it. A prequel, The Conjuring: First Communion, is dated for September 2027."
+   },
+   {
+    "q": "Is The Conjuring: Last Rites the last movie?",
+    "a": "It is the last case for Patrick Wilson and Vera Farmiga's Ed and Lorraine Warren, and the highest-grossing film in the series. The universe continues with the 2027 prequel First Communion, about the young Warrens, and an HBO Max series in development."
+   },
+   {
+    "q": "Do I need to watch Annabelle before The Conjuring?",
+    "a": "No. The Conjuring explains the doll in its first scene, and the Annabelle films were made afterwards to fill in the backstory. Watch the two Conjuring films first, then Annabelle: Creation and Annabelle."
+   },
+   {
+    "q": "Is The Nun connected to The Conjuring?",
+    "a": "Yes. Valak, the demon in the nun's habit, is the villain of The Conjuring 2; The Nun is its origin in 1952 and The Nun II follows it to 1956. The Nun's final scene is the Maurice exorcism footage the Warrens show in The Conjuring's opening lecture."
+   }
+  ]
+ },
+ "fast": {
+  "id": "fast",
+  "intro": "Eleven films in a nearly straight line. The one thing to know before you start: Tokyo Drift, the third film released, happens after the sixth. Watch it there and the saga's biggest death, and its reversal, land the way they were meant to.",
+  "orders": {
+   "first": {
+    "note": "Release order with one move: Tokyo Drift slides to after Fast & Furious 6, where it is set. Hobbs & Shaw is a side road you can skip or take between Fate and F9. The two short films are a bonus, not a requirement.",
+    "groups": [
+     {
+      "label": "The street-racing years",
+      "items": [
+       {
+        "id": "tfatf",
+        "title": "The Fast and the Furious",
+        "year": 2001,
+        "branch": "Street Racers: LA and Miami",
+        "why": "Undercover cop, truck hijacks, the ten-second race. <b>Smaller than everything that follows and the reason the rest exists.</b>"
+       },
+       {
+        "id": "2fast",
+        "title": "2 Fast 2 Furious",
+        "year": 2003,
+        "branch": "Street Racers: LA and Miami",
+        "why": "Brian alone in Miami, Roman and Tej introduced. Dom sits this one out; the short film The Turbo-Charged Prelude bridges the gap if you want it."
+       }
+      ]
+     },
+     {
+      "label": "The crew goes global",
+      "items": [
+       {
+        "id": "fast4",
+        "title": "Fast & Furious",
+        "year": 2009,
+        "branch": "The Crew Goes Global: Fast 4 to 6",
+        "why": "The reunion film: Letty's 'death', Dom and Brian back together, and the start of the serialised story. The short Los Bandoleros sits just before it."
+       },
+       {
+        "id": "five",
+        "title": "Fast Five",
+        "year": 2011,
+        "branch": "The Crew Goes Global: Fast 4 to 6",
+        "why": "Rio, the vault, Hobbs, and the whole family in one place. The film that turned a racing series into a heist series."
+       },
+       {
+        "id": "six",
+        "title": "Fast & Furious 6",
+        "year": 2013,
+        "branch": "The Crew Goes Global: Fast 4 to 6",
+        "why": "London, Owen Shaw and Letty's amnesia. Stay for the mid-credits scene: it replays Han's Tokyo crash and sets up the next two films."
+       }
+      ]
+     },
+     {
+      "label": "Now Tokyo Drift",
+      "items": [
+       {
+        "id": "tokyo",
+        "title": "The Fast and the Furious: Tokyo Drift",
+        "year": 2006,
+        "branch": "The Tokyo Fold: Han's Story",
+        "why": "Made in 2006 but set here. Han's year in Tokyo, the crash you just saw from the other side, and Dom's cameo at the end finally make sense."
+       }
+      ]
+     },
+     {
+      "label": "Outlaws to spies",
+      "items": [
+       {
+        "id": "seven",
+        "title": "Furious 7",
+        "year": 2015,
+        "branch": "Outlaws to Spies: 7 to X",
+        "why": "Deckard Shaw's revenge for Han, God's Eye, and the farewell to Brian. Watch it straight after Tokyo Drift."
+       },
+       {
+        "id": "fate",
+        "title": "The Fate of the Furious",
+        "year": 2017,
+        "branch": "Outlaws to Spies: 7 to X",
+        "why": "Dom turns on the crew, Cipher is revealed, and Dom's son is born."
+       },
+       {
+        "id": "hobbsshaw",
+        "title": "Fast & Furious Presents: Hobbs & Shaw",
+        "year": 2019,
+        "branch": "Side Road: Hobbs & Shaw",
+        "why": "Optional detour: the Hobbs and Shaw buddy film, set after Fate. Nothing in F9 depends on it."
+       },
+       {
+        "id": "f9",
+        "title": "F9",
+        "year": 2021,
+        "branch": "Outlaws to Spies: 7 to X",
+        "why": "Jakob Toretto, the 1989 flashbacks, a car in space, and Han alive. The film that rewrites Tokyo Drift's ending."
+       },
+       {
+        "id": "fastx",
+        "title": "Fast X",
+        "year": 2023,
+        "branch": "Outlaws to Spies: 7 to X",
+        "why": "Dante Reyes, the son of Fast Five's villain, and a cliffhanger that waits for Fast Forever in 2027."
+       }
+      ]
+     }
+    ],
+    "items": []
+   },
+   "release": {
+    "note": "The order the films came out. Tokyo Drift is third here and nowhere near third in the story; everything else is in sequence.",
+    "groups": [],
+    "items": [
+     {
+      "id": "tfatf",
+      "title": "The Fast and the Furious",
+      "year": 2001,
+      "branch": "Street Racers: LA and Miami"
+     },
+     {
+      "id": "2fast",
+      "title": "2 Fast 2 Furious",
+      "year": 2003,
+      "branch": "Street Racers: LA and Miami"
+     },
+     {
+      "id": "tokyo",
+      "title": "The Fast and the Furious: Tokyo Drift",
+      "year": 2006,
+      "branch": "The Tokyo Fold: Han's Story"
+     },
+     {
+      "id": "fast4",
+      "title": "Fast & Furious",
+      "year": 2009,
+      "branch": "The Crew Goes Global: Fast 4 to 6"
+     },
+     {
+      "id": "five",
+      "title": "Fast Five",
+      "year": 2011,
+      "branch": "The Crew Goes Global: Fast 4 to 6"
+     },
+     {
+      "id": "six",
+      "title": "Fast & Furious 6",
+      "year": 2013,
+      "branch": "The Crew Goes Global: Fast 4 to 6"
+     },
+     {
+      "id": "seven",
+      "title": "Furious 7",
+      "year": 2015,
+      "branch": "Outlaws to Spies: 7 to X"
+     },
+     {
+      "id": "fate",
+      "title": "The Fate of the Furious",
+      "year": 2017,
+      "branch": "Outlaws to Spies: 7 to X"
+     },
+     {
+      "id": "hobbsshaw",
+      "title": "Fast & Furious Presents: Hobbs & Shaw",
+      "year": 2019,
+      "branch": "Side Road: Hobbs & Shaw"
+     },
+     {
+      "id": "f9",
+      "title": "F9",
+      "year": 2021,
+      "branch": "Outlaws to Spies: 7 to X"
+     },
+     {
+      "id": "fastx",
+      "title": "Fast X",
+      "year": 2023,
+      "branch": "Outlaws to Spies: 7 to X"
+     }
+    ]
+   },
+   "chrono": {
+    "note": "Story order. The films never state in-story years apart from the 1989 flashback in F9, so this is ordered by what happens, not by date. The shorts slot in where the labels say.",
+    "groups": [],
+    "items": [
+     {
+      "id": "tfatf",
+      "title": "The Fast and the Furious",
+      "year": 2001,
+      "branch": "Street Racers: LA and Miami",
+      "setLabel": "Los Angeles",
+      "why": "F9's 1989 flashback, Jack Toretto's death, is the earliest scene in the saga."
+     },
+     {
+      "id": "2fast",
+      "title": "2 Fast 2 Furious",
+      "year": 2003,
+      "branch": "Street Racers: LA and Miami",
+      "setLabel": "Miami · after The Turbo-Charged Prelude (2003 short)"
+     },
+     {
+      "id": "fast4",
+      "title": "Fast & Furious",
+      "year": 2009,
+      "branch": "The Crew Goes Global: Fast 4 to 6",
+      "setLabel": "Dominican Republic and LA · after Los Bandoleros (2009 short)"
+     },
+     {
+      "id": "five",
+      "title": "Fast Five",
+      "year": 2011,
+      "branch": "The Crew Goes Global: Fast 4 to 6",
+      "setLabel": "Rio de Janeiro"
+     },
+     {
+      "id": "six",
+      "title": "Fast & Furious 6",
+      "year": 2013,
+      "branch": "The Crew Goes Global: Fast 4 to 6",
+      "setLabel": "London"
+     },
+     {
+      "id": "tokyo",
+      "title": "The Fast and the Furious: Tokyo Drift",
+      "year": 2006,
+      "branch": "The Tokyo Fold: Han's Story",
+      "setLabel": "Tokyo · set after Fast & Furious 6",
+      "why": "Han leaves the crew after Gisele's death in 6 and dies in Tokyo; the crash is replayed in 6's mid-credits scene."
+     },
+     {
+      "id": "seven",
+      "title": "Furious 7",
+      "year": 2015,
+      "branch": "Outlaws to Spies: 7 to X",
+      "setLabel": "Tokyo, Abu Dhabi, LA"
+     },
+     {
+      "id": "fate",
+      "title": "The Fate of the Furious",
+      "year": 2017,
+      "branch": "Outlaws to Spies: 7 to X",
+      "setLabel": "Havana, Berlin, New York, Russia"
+     },
+     {
+      "id": "hobbsshaw",
+      "title": "Fast & Furious Presents: Hobbs & Shaw",
+      "year": 2019,
+      "branch": "Side Road: Hobbs & Shaw",
+      "setLabel": "London and Samoa · set after Fate"
+     },
+     {
+      "id": "f9",
+      "title": "F9",
+      "year": 2021,
+      "branch": "Outlaws to Spies: 7 to X",
+      "setLabel": "Montequinto, Edinburgh, Tbilisi, orbit",
+      "why": "Reveals that Mr. Nobody faked Han's death."
+     },
+     {
+      "id": "fastx",
+      "title": "Fast X",
+      "year": 2023,
+      "branch": "Outlaws to Spies: 7 to X",
+      "setLabel": "Rome, Rio, Portugal, Antarctica"
+     }
+    ]
+   }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Fast and Furious movies in?",
+    "a": "Release order with one change: The Fast and the Furious, 2 Fast 2 Furious, Fast & Furious, Fast Five, Fast & Furious 6, then Tokyo Drift, then Furious 7, The Fate of the Furious, Hobbs & Shaw (optional), F9 and Fast X. Tokyo Drift is set after the sixth film even though it was released third."
+   },
+   {
+    "q": "Where does Tokyo Drift fit in the Fast and Furious timeline?",
+    "a": "Between Fast & Furious 6 and Furious 7. Han leaves the crew after the sixth film, his Tokyo crash is replayed in that film's mid-credits scene, and Furious 7 opens with Dom collecting his body. F9 later reveals the crash was faked."
+   },
+   {
+    "q": "How many Fast and Furious movies are there?",
+    "a": "Eleven: ten main films from The Fast and the Furious (2001) to Fast X (2023), plus the spin-off Hobbs & Shaw (2019). There are also two short films, The Turbo-Charged Prelude (2003) and Los Bandoleros (2009). The finale, Fast Forever, is dated for April 2027."
+   },
+   {
+    "q": "Is Han really dead in Fast and Furious?",
+    "a": "No. He dies in Tokyo Drift, the death is replayed in Fast & Furious 6 and avenged in Furious 7, then F9 reveals Mr. Nobody staged the crash to hide him. He is back with the crew from F9 on."
+   },
+   {
+    "q": "Do I need to watch Hobbs & Shaw?",
+    "a": "No. It is a side story about the two characters set after The Fate of the Furious, and F9 does not depend on it. Watch it between Fate and F9 if you want the full set."
+   },
+   {
+    "q": "Is Fast X the last Fast and Furious movie?",
+    "a": "No. Fast X ends on a cliffhanger. The finale, titled Fast Forever, is scheduled for April 2027, and Vin Diesel has said it returns to Los Angeles street racing and brings back Brian O'Conner."
+   }
+  ]
  }
 }
