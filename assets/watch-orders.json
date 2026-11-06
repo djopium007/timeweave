@@ -163,7 +163,29 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Terminator movies in?",
+    "a": "Release order: The Terminator (1984), T2: Judgment Day (1991), then your pick of the three restarts. Only the first two films share one timeline, so after T2 every sequel starts its own version of the war. If you only watch two, watch those two."
+   },
+   {
+    "q": "Is Terminator: Dark Fate a sequel to T2?",
+    "a": "Yes. Dark Fate ignores T3, Salvation and Genisys and picks up directly after Judgment Day, with Sarah Connor and the original T-800 cast returning. It is the only later film that treats T2 as the last thing that happened."
+   },
+   {
+    "q": "Do I need to watch Terminator 3, Salvation and Genisys?",
+    "a": "No. Each one sits in its own branch and none of them lead anywhere: T3 and Salvation form one line that stops, and Genisys rewrites 1984 and then stops. They are for completionists, not for the story."
+   },
+   {
+    "q": "Can the Terminator movies be watched in chronological order?",
+    "a": "Only loosely. The films occupy four incompatible timelines, so a single chronological list means choosing which branch counts at each step. Our chronological tab orders them by the year each film mainly takes place, which shows the shape but is not one story."
+   },
+   {
+    "q": "How many Terminator movies are there?",
+    "a": "Six films: The Terminator, T2: Judgment Day, T3: Rise of the Machines, Salvation, Genisys and Dark Fate. The Sarah Connor Chronicles TV series is a seventh, separate branch that the films do not acknowledge."
+   }
+  ]
  },
  "xmen": {
   "id": "xmen",
@@ -476,7 +498,29 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the X-Men movies in?",
+    "a": "For a first watch: X-Men, X2, then First Class and Days of Future Past, then Logan, with the two Deadpool films on the side. That is the five-film spine; The Last Stand, Origins, Apocalypse, Dark Phoenix and The New Mutants either get erased or contradict it."
+   },
+   {
+    "q": "Is there a chronological order for the X-Men movies?",
+    "a": "Yes, from 1845 (Origins: Wolverine) to 2029 (Logan), but it breaks at 1973: Days of Future Past rewrites the past, so every film set after that exists twice, once in the erased timeline and once in the replacement. Our chronological tab marks where the cut is."
+   },
+   {
+    "q": "Are the Deadpool movies part of the X-Men timeline?",
+    "a": "Loosely. Deadpool and Deadpool 2 are set in the post-Days of Future Past timeline and openly joke about the continuity; Deadpool & Wolverine then moves him into the Marvel Cinematic Universe. Watch them after the main films; nothing in them is required."
+   },
+   {
+    "q": "Which X-Men movies can I skip?",
+    "a": "The Last Stand (erased by Days of Future Past), X-Men Origins: Wolverine (contradicted by everything after it), Apocalypse and Dark Phoenix (the rebooted cast's weakest two), and The New Mutants (a standalone that connects to nothing)."
+   },
+   {
+    "q": "Does Logan connect to the other X-Men movies?",
+    "a": "It is set in 2029 in a future where most mutants are gone, and it works as the ending to Hugh Jackman's Wolverine regardless of which timeline you think it follows. Watch it last; it is better for everything you have seen before it."
+   }
+  ]
  },
  "bttf": {
   "id": "bttf",
@@ -571,7 +615,25 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Back to the Future movies in?",
+    "a": "1, 2, 3. There is no alternative order and the trilogy is one continuous story. Parts II and III were shot together and Part II ends on a cliffhanger that III picks up immediately, so watch those two close together."
+   },
+   {
+    "q": "Is there a chronological order for Back to the Future?",
+    "a": "Not a useful one. The trilogy is not a line through time; it is one week in 1985 that branches into four different versions. Listing the films by setting (1955, 2015, 1885) just scrambles a story that already plays in the right order."
+   },
+   {
+    "q": "How many versions of 1985 are there in Back to the Future?",
+    "a": "Four: the original 1985 Marty leaves, the improved 1985 he returns to at the end of Part I, Biff's dystopian 1985-A in Part II, and the restored 1985 at the end of Part III. Most arguments about the trilogy are really about which of these someone is looking at."
+   },
+   {
+    "q": "Is there a Back to the Future Part 4?",
+    "a": "No. The trilogy ended in 1990 and Robert Zemeckis and Bob Gale have said there will not be a fourth film while they control the rights. The 1991 animated series and the 2020 stage musical are the only continuations, and neither is part of the film story."
+   }
+  ]
  },
  "apes": {
   "id": "apes",
@@ -799,7 +861,29 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Planet of the Apes movies in?",
+    "a": "Start with the modern trilogy: Rise (2011), Dawn (2014), War (2017), then Kingdom (2024). Watch the 1968 original after that, and the other four classic films only if you want the full loop. The two runs are separate stories, so there is no wrong place to switch between them."
+   },
+   {
+    "q": "Is Kingdom of the Planet of the Apes a sequel?",
+    "a": "Yes. Kingdom is set about 300 years after War for the Planet of the Apes, long after Caesar's death, and continues the reboot series. It does not connect to the 1968 films or the 2001 Tim Burton remake."
+   },
+   {
+    "q": "Are the new Planet of the Apes movies connected to the original?",
+    "a": "No. The 2011 reboot restarts the story from scratch with Caesar's rise; it borrows names and ideas from the original five films but shares no timeline with them. The original series is its own closed time loop that ends by leading back into its own beginning."
+   },
+   {
+    "q": "Should I watch Planet of the Apes in chronological order?",
+    "a": "There are two chronologies, not one. The reboot runs 2011 to roughly the 2300s; the original loop runs from Escape (1973) through Conquest and Battle to the 1968 film and Beneath (3978). Our chronological tab lists each run in its own internal order."
+   },
+   {
+    "q": "Is the 2001 Planet of the Apes in the timeline?",
+    "a": "No. Tim Burton's 2001 film is a standalone remake with a different ending that was never followed up. It is not part of the original loop or the reboot series, so it is not in the order."
+   }
+  ]
  },
  "predator": {
   "id": "predator",
@@ -1027,7 +1111,29 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Predator movies in?",
+    "a": "Predator (1987) first, then Prey (2022), then Predator 2 and Predators. The Predator, Killer of Killers and Badlands are for those who are staying, and the two Alien vs. Predator crossovers are their own argument. Nothing requires anything before it, so this is a quality order more than a story order."
+   },
+   {
+    "q": "Is Prey a prequel to Predator?",
+    "a": "Yes. Prey is set in 1719 on the Northern Great Plains, making it the earliest film in the timeline, but it was made to stand alone. Watching it second rather than first keeps the 1987 film's reveal intact."
+   },
+   {
+    "q": "Are the Alien vs. Predator movies canon?",
+    "a": "Disputed. AVP (2004) and Requiem (2007) were made as crossovers and neither the later Predator films nor the Alien prequels acknowledge them. They sit on the chronological list at 2004 because that is when they are set, but you can skip them without missing a thread."
+   },
+   {
+    "q": "What is the chronological order of the Predator movies?",
+    "a": "Prey (1719), Killer of Killers (841, 1609 and 1942 segments inside a far-future frame), Predator (1987), Predator 2 (1997), AVP and Requiem (2004), Predators (around 2010), The Predator (2018), then Badlands in the far future."
+   },
+   {
+    "q": "Is Predator: Badlands connected to the other movies?",
+    "a": "It is set in the far future on a Predator world and follows a young Yautja rather than a human cast, so it stands alone. It sits last on the chronological list and is only for viewers who have already done the earlier films."
+   }
+  ]
  },
  "alien": {
   "id": "alien",
@@ -1263,7 +1369,29 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Alien movies in?",
+    "a": "Alien (1979) and Aliens (1986) first, then Alien: Romulus, then Prometheus and Covenant if you want the mythology. Alien 3 and Resurrection are for completionists. Start with Alien blind; the prequels exist to explain things that are better left unexplained the first time."
+   },
+   {
+    "q": "Should I watch Prometheus before Alien?",
+    "a": "No. Prometheus is set in 2093, before Alien, but it was made 33 years later and spends its running time answering a question Alien never asked. Watch it after the original two films, as the prequel it is."
+   },
+   {
+    "q": "What is the chronological order of the Alien movies?",
+    "a": "Prometheus (2093), Covenant (2104), Alien: Earth (2120), Alien (2122), Alien: Isolation (2137), Romulus (2142), Aliens and Alien 3 (2179), Resurrection (2379). It is a coherent line and a bad first watch, because it opens with the answers."
+   },
+   {
+    "q": "Where does Alien: Romulus fit in the timeline?",
+    "a": "Between Alien and Aliens: it is set in 2142, twenty years after the Nostromo and 37 years before Ripley is found. It stands on its own and is the one modern entry that earns a place in a first watch."
+   },
+   {
+    "q": "Are the Alien vs. Predator movies part of the Alien timeline?",
+    "a": "Not in this map. The two AVP films contradict the Alien prequels and nothing in the main series refers to them. They live in the Predator map as a disputed branch; the Alien order leaves them out."
+   }
+  ]
  },
  "transformers": {
   "id": "transformers",
@@ -1463,7 +1591,25 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Transformers movies in?",
+    "a": "Start with Bumblebee (2018) and Rise of the Beasts (2023), which are a self-contained pair. Transformers One is a separate animated origin story. The five Michael Bay films, from Transformers (2007) to The Last Knight (2017), are their own continuity and can be watched in release order or skipped."
+   },
+   {
+    "q": "Is Bumblebee a prequel or a reboot?",
+    "a": "Both in practice. It was sold as a 1987 prequel to the Bay films but quietly contradicts them, and Rise of the Beasts continues from Bumblebee rather than from The Last Knight. Treat Bumblebee as the start of a new continuity."
+   },
+   {
+    "q": "Is Transformers One connected to the live-action movies?",
+    "a": "No. Transformers One (2024) is an animated origin story set entirely on Cybertron, before the war reaches Earth, and it does not share a timeline with either the Bay films or the Bumblebee reboot."
+   },
+   {
+    "q": "What is the chronological order of the Transformers movies?",
+    "a": "Transformers One (Cybertron, before Earth), Bumblebee (1987), Rise of the Beasts (1994), then the Bay films: Transformers (2007), Revenge of the Fallen (2009), Dark of the Moon (2011), Age of Extinction (2015), The Last Knight (2017). Placing all three continuities on one line is a convenience, not a claim that they connect."
+   }
+  ]
  },
  "dune": {
   "id": "dune",
@@ -1738,7 +1884,29 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I read the Dune books in?",
+    "a": "Publication order of Frank Herbert's six: Dune, Dune Messiah, Children of Dune, God Emperor of Dune, Heretics of Dune, Chapterhouse: Dune. Read the Brian Herbert and Kevin J. Anderson prequels last, if at all, even though they come first in story time."
+   },
+   {
+    "q": "Should I read Dune before watching the movies?",
+    "a": "Either works, but the films are the easier way in: Dune: Part One and Part Two cover the first novel faithfully. Most people are better off watching both films, then reading from Dune Messiah onward, which the films have not reached."
+   },
+   {
+    "q": "How many Dune books are there?",
+    "a": "Six by Frank Herbert, published between 1965 and 1985. Brian Herbert and Kevin J. Anderson have since written more than a dozen prequels and sequels, starting with the Legends of Dune trilogy (The Butlerian Jihad, The Machine Crusade, The Battle of Corrin), which this order lists but does not recommend first."
+   },
+   {
+    "q": "Which Dune book do the movies cover?",
+    "a": "Only the first novel. Dune: Part One (2021) covers roughly the first half and Part Two (2024) the second. A third film adapting Dune Messiah has been announced; nothing beyond Messiah has been filmed."
+   },
+   {
+    "q": "Is there a chronological order for Dune?",
+    "a": "Yes, and it spans more than fifteen thousand years, from the Butlerian Jihad prequels to Chapterhouse. It is a terrible reading order: the prequels explain things the original novels deliberately leave mysterious. Our chronological tab is a map, not a recommendation."
+   }
+  ]
  },
  "marvel": {
   "id": "marvel",
@@ -2500,7 +2668,29 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Marvel movies in?",
+    "a": "Release order is the safe answer, but 37 films is a lot of homework. Our first-time path keeps the 18 films that change what a later film means, from Iron Man through Infinity War and Endgame to The Fantastic Four: First Steps, and lists the other 12 as optional."
+   },
+   {
+    "q": "Should I watch the Marvel movies in chronological order?",
+    "a": "Not for a first watch. Chronological order starts with Captain America: The First Avenger (1943) and Captain Marvel (1995), which land better once you know the characters they set up. It also stops being a line after Endgame's time heist. Use it for a rewatch."
+   },
+   {
+    "q": "How many Marvel movies are there?",
+    "a": "37 films in the Marvel Cinematic Universe as of The Fantastic Four: First Steps (2025), starting with Iron Man in 2008. That count does not include the earlier Spider-Man, X-Men or Fantastic Four films from other studios, or the Disney+ series."
+   },
+   {
+    "q": "Do I need to watch the Disney+ shows to follow the movies?",
+    "a": "Mostly no, with one real seam: Doctor Strange in the Multiverse of Madness picks up Wanda where WandaVision left her, so her turn can feel abrupt without it. Everything else on the film path explains itself."
+   },
+   {
+    "q": "Which Marvel movies can I skip?",
+    "a": "The ones that introduce a character you would meet again anyway: Captain Marvel, Iron Man 3, Guardians Vol. 2, Spider-Man: Homecoming, Ant-Man and the Wasp, Black Widow, Far From Home, Shang-Chi, Eternals, Quantumania, Guardians Vol. 3 and Brave New World. Good films among them; none of them is required."
+   }
+  ]
  },
  "starwars": {
   "id": "starwars",
@@ -2928,7 +3118,29 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Star Wars movies in?",
+    "a": "A New Hope, The Empire Strikes Back and Return of the Jedi first, then the prequels (skip The Phantom Menace), then Andor and Rogue One, then The Clone Wars and The Mandalorian, then the sequel trilogy if you are still going. The original trilogy's reveal only works if you meet it cold."
+   },
+   {
+    "q": "What is machete order for Star Wars?",
+    "a": "Watching IV, V, then II and III as a flashback, then VI, skipping Episode I. It is right that The Empire Strikes Back's reveal is the reason chronological order fails a newcomer; we think it is wrong to interleave, because Return of the Jedi lands best while you only know what the originals have told you."
+   },
+   {
+    "q": "What is the chronological order of Star Wars?",
+    "a": "By in-story date: The Acolyte (132 BBY), The Phantom Menace (32 BBY), Attack of the Clones and The Clone Wars (22 to 19 BBY), Revenge of the Sith (19 BBY), The Bad Batch, Solo (10 BBY), Obi-Wan Kenobi (9 BBY), Andor and Rebels (5 to 0 BBY), Rogue One and A New Hope (0 BBY), Empire (3 ABY), Jedi (4 ABY), The Mandalorian, Boba Fett, Ahsoka and Skeleton Crew (9 ABY), then the sequels (34 to 35 ABY)."
+   },
+   {
+    "q": "Should I watch Star Wars in release order or chronological order?",
+    "a": "Release order for a first watch, with the prequels after the originals. Chronological order reads well on a second pass and wrecks two reveals on a first. Our chronological tab is there for the rewatch."
+   },
+   {
+    "q": "Do I need to watch the Star Wars TV shows?",
+    "a": "Two of them earn a place in a first watch: Andor (which leads straight into Rogue One) and The Clone Wars (which makes Revenge of the Sith land). The Mandalorian is the best entry point to the post-Jedi era. The rest can wait until you know which era you like."
+   }
+  ]
  },
  "startrek": {
   "id": "startrek",
@@ -3425,7 +3637,29 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "Where should I start with Star Trek?",
+    "a": "Strange New Worlds (2022), then The Next Generation from season 3. Star Trek is a television franchise with films attached, and those two series tell you within a few hours whether it is for you. Starting at the 1966 original or at The Motion Picture is the slow road."
+   },
+   {
+    "q": "What order should I watch the Star Trek movies in?",
+    "a": "Release order within each cast: the six Original Series films (1979 to 1991), the four Next Generation films (1994 to 2002), then the three Kelvin reboot films (2009 to 2016). For a first watch, sample II: The Wrath of Khan, IV: The Voyage Home, VI: The Undiscovered Country and First Contact; the rest are for later."
+   },
+   {
+    "q": "Is the 2009 Star Trek a reboot?",
+    "a": "A branch, not a reboot. The 2009 film creates an alternate timeline (the Kelvin timeline) when Nero arrives in 2233, so Into Darkness and Beyond happen alongside the original universe rather than replacing it. The Prime timeline continues in Discovery, Picard and Strange New Worlds."
+   },
+   {
+    "q": "What is the chronological order of Star Trek?",
+    "a": "Enterprise (2151), the Kelvin films (2233 to 2263), Discovery seasons 1 and 2 (2256), Strange New Worlds (2259), The Original Series (2266), the six TOS films (2273 to 2293), The Next Generation (2364), Deep Space Nine and Voyager (2369 to 2378), the TNG films, Lower Decks, Prodigy, Picard (2399), then Discovery from season 3 in the 32nd century."
+   },
+   {
+    "q": "Do I need to watch Star Trek in order?",
+    "a": "No. Each series stands on its own and most episodes are self-contained; the films assume you know the series cast but nothing more. Pick an era, start there, and use the chronological tab to see where it sits."
+   }
+  ]
  },
  "rambo": {
   "id": "rambo",
@@ -3589,7 +3823,25 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Rambo movies in?",
+    "a": "Release order: First Blood (1982), Rambo: First Blood Part II (1985), Rambo III (1988), Rambo (2008), Rambo: Last Blood (2019). It is one straight line, and release order is story order."
+   },
+   {
+    "q": "How many Rambo movies are there?",
+    "a": "Five, all starring Sylvester Stallone, plus the 1986 animated series Rambo: The Force of Freedom, which sits outside the film continuity. A prequel, John Rambo, with a younger actor in the Vietnam years, is dated for June 2027."
+   },
+   {
+    "q": "Is First Blood different from the other Rambo movies?",
+    "a": "Yes. First Blood is a small-town thriller about a traumatised veteran, closer to a drama than an action film, and it was adapted from David Morrell's novel, where Rambo dies. Everything from Part II onward is the action franchise people picture when they hear the name."
+   },
+   {
+    "q": "Is Rambo: Last Blood the end of the series?",
+    "a": "It ends John Rambo's story in the present day, but not the franchise: the Vietnam-era prequel John Rambo is in production. Last Blood is still the last film in both release and story order until that arrives."
+   }
+  ]
  },
  "tron": {
   "id": "tron",
@@ -3711,7 +3963,25 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the TRON movies in?",
+    "a": "Release order: TRON (1982), TRON: Legacy (2010), TRON: Ares (2025). The animated series TRON: Uprising is optional and sits between the first two films in story time. Each film assumes you know the one before."
+   },
+   {
+    "q": "Is TRON: Ares a sequel to TRON: Legacy?",
+    "a": "Yes, set in 2025, fifteen years after Legacy, and it brings back Kevin Flynn in a way that depends on knowing both earlier films. It is mainly set on a different system, the Dillinger Grid, run by Ed Dillinger's grandson."
+   },
+   {
+    "q": "Do I need to watch the 1982 TRON before Legacy?",
+    "a": "It helps. Legacy is about Sam Flynn finding the world his father built, and the father is the hero of the 1982 film. The effects have aged, but the setup (Users, programs, identity discs, Flynn's Arcade) all comes from there."
+   },
+   {
+    "q": "Where does TRON: Uprising fit in the timeline?",
+    "a": "Between Clu's 1989 coup, shown in Legacy's prologue, and Sam's arrival in 2010. It follows Tron training a successor on Flynn's Grid and ended after one season, mid-story, so it is an optional watch rather than a required one."
+   }
+  ]
  },
  "matrix": {
   "id": "matrix",
@@ -3850,7 +4120,25 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Matrix movies in?",
+    "a": "The Matrix (1999) first and blind, then The Animatrix, then Reloaded and Revolutions (both 2003), then Resurrections (2021) once the trilogy has sunk in. Two of the Animatrix shorts lead straight into Reloaded, which is why it goes before the sequel."
+   },
+   {
+    "q": "Should I watch The Animatrix before Reloaded?",
+    "a": "Yes. Final Flight of the Osiris sets up the opening of Reloaded and Kid's Story introduces a character who appears in it. The two Second Renaissance shorts explain the war with the machines, which the trilogy only sketches."
+   },
+   {
+    "q": "Is The Matrix Resurrections a sequel or a reboot?",
+    "a": "A sequel, set about sixty years after Revolutions, with Neo and Trinity back in a rebuilt Matrix. It is also partly a commentary on sequels and reboots, which is why it works better as a coda after the trilogy than as a fourth chapter watched cold."
+   },
+   {
+    "q": "What is the chronological order of the Matrix movies?",
+    "a": "The Animatrix's war shorts come first (the 21st century), then The Matrix (around 2199 by Morpheus's guess, though the machines lie about dates), the rest of The Animatrix, Reloaded six months later, Revolutions straight after, and Resurrections sixty years on."
+   }
+  ]
  },
  "johnwick": {
   "id": "johnwick",
@@ -4012,7 +4300,25 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the John Wick movies in?",
+    "a": "John Wick (2014), Chapter 2 (2017), Chapter 3: Parabellum (2019), then Ballerina (2025), then Chapter 4 (2023). Ballerina is set between Parabellum and Chapter 4, which is where it fits best. The Continental series is optional and goes last."
+   },
+   {
+    "q": "Where does Ballerina fit in the John Wick timeline?",
+    "a": "Between Chapter 3: Parabellum and Chapter 4. It follows Eve, the dancer glimpsed in Parabellum, and John Wick appears in it during his excommunicado period. Watching it before Chapter 4 keeps the story in order."
+   },
+   {
+    "q": "Is The Continental connected to the John Wick movies?",
+    "a": "Yes, as a prequel set in the 1970s about how Winston came to run the New York Continental, with a young Charon. It explains two characters the films take for granted, which is why it works best after you know them."
+   },
+   {
+    "q": "How much time passes across the John Wick movies?",
+    "a": "Very little. The first film starts days after Helen's funeral; Chapter 2 picks up days later; Parabellum starts the minute Chapter 2 ends; Chapter 4 follows after a gap. The whole four-film run is weeks of story time, not years."
+   }
+  ]
  },
  "bourne": {
   "id": "bourne",
@@ -4151,7 +4457,25 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Bourne movies in?",
+    "a": "The Bourne Identity (2002), Supremacy (2004), Ultimatum (2007), then Jason Bourne (2016). The Bourne Legacy (2012), with Jeremy Renner, runs alongside Ultimatum and is optional; watch it after Ultimatum if you want the wider conspiracy."
+   },
+   {
+    "q": "Is The Bourne Legacy part of the Jason Bourne story?",
+    "a": "A side story. Legacy follows Aaron Cross, an agent from a different programme, during and after the events of Ultimatum; Bourne himself does not appear. Jason Bourne (2016) ignores it and continues directly from Ultimatum."
+   },
+   {
+    "q": "Does The Bourne Ultimatum overlap with Supremacy?",
+    "a": "Yes. Ultimatum opens in Moscow during the final scenes of Supremacy, then runs past them. The phone call to Pamela Landy that ends Supremacy is shown again from a new angle in Ultimatum."
+   },
+   {
+    "q": "How many Bourne movies are there?",
+    "a": "Five: the Matt Damon trilogy, The Bourne Legacy and Jason Bourne. The 2019 series Treadstone and Robert Ludlum's novels tell different stories and are not part of the film order."
+   }
+  ]
  },
  "twilight": {
   "id": "twilight",
@@ -4285,6 +4609,28 @@
      }
     ]
    }
-  }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the Twilight movies in?",
+    "a": "Twilight (2008), New Moon (2009), Eclipse (2010), Breaking Dawn Part 1 (2011), Breaking Dawn Part 2 (2012). Release order and story order are the same, and Breaking Dawn is one story split in two, so watch the last two back to back."
+   },
+   {
+    "q": "How many Twilight movies are there?",
+    "a": "Five, adapting Stephenie Meyer's four novels, with Breaking Dawn split into two films. Midnight Sun, the 2020 novel retelling the first book from Edward's point of view, is being adapted as an animated series for Netflix; it has no release date yet."
+   },
+   {
+    "q": "Is there a chronological order for Twilight?",
+    "a": "It is the same as release order. The whole saga runs from January 2005 to New Year's Eve 2006, and the flashbacks to the Volturi, Carlisle and the Quileute wolves sit inside the films that tell them, so there is nothing to reorder."
+   },
+   {
+    "q": "Does the battle at the end of Breaking Dawn Part 2 really happen?",
+    "a": "No. The snowfield battle is the vision Alice shows Aro of what will happen if the Volturi attack. The film plays it as real and then rewinds; in the story, Aro sees the outcome and withdraws without a fight."
+   },
+   {
+    "q": "Is there a new Twilight movie or series coming?",
+    "a": "An animated series adapting Midnight Sun is in development at Netflix and Lionsgate, written by Sinead Daly. No premiere date or cast has been announced. No sixth live-action film is planned."
+   }
+  ]
  }
 }

@@ -1741,6 +1741,7 @@
         <button onclick="{{ wo.onReset }}" style="background:none;border:none;cursor:pointer;color:#6b7686;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.13em;text-transform:uppercase;padding:4px 2px;" style-hover="color:#FF2A1F;">Clear</button>
       </div>
 
+      <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(20px,3vw,26px);letter-spacing:0.02em;text-transform:uppercase;color:#E9EDF3;margin:30px 0 0;line-height:1.15;">{{ wo.sectionHeading }}</h2>
       <p style="{{ wo.noteStyle }}">{{ wo.note }}</p>
 
       <sc-for list="{{ wo.groups }}" as="g" hint-placeholder-count="2">
@@ -1769,6 +1770,18 @@
           </div>
         </div>
       </sc-for>
+
+      <sc-if value="{{ wo.hasFaq }}" hint-placeholder-val="{{ true }}">
+      <section style="margin-top:46px;">
+        <h2 style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(20px,3vw,26px);letter-spacing:0.02em;text-transform:uppercase;color:#E9EDF3;margin:0;line-height:1.15;">{{ wo.faqHeading }}</h2>
+        <sc-for list="{{ wo.faq }}" as="q" hint-placeholder-count="3">
+          <div style="margin-top:16px;padding:17px 19px;border:1px solid rgba(255,255,255,0.09);border-radius:14px;background:rgba(13,15,20,0.6);">
+            <h3 style="margin:0;font-family:'DM Sans',sans-serif;font-weight:600;font-size:16.5px;color:#E9EDF3;line-height:1.35;">{{ q.q }}</h3>
+            <p style="margin:8px 0 0;color:#A9B4C2;font-size:15px;line-height:1.6;max-width:68ch;text-wrap:pretty;">{{ q.a }}</p>
+          </div>
+        </sc-for>
+      </section>
+      </sc-if>
 
       <div style="margin-top:42px;padding:24px;border:1px dashed rgba(255,255,255,0.15);border-radius:16px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;">
         <p style="margin:0;color:#9aa6b4;font-size:15px;max-width:52ch;line-height:1.55;">{{ wo.footNote }}</p>
@@ -11427,9 +11440,12 @@ class Component extends DCLogic {
       footBtnLabel: 'Open the ' + title + ' map',
       footBtnStyle: "flex:none;padding:12px 21px;border-radius:999px;border:1px solid " + accent + ";background:" + accent + ";color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;white-space:nowrap;transition:filter .15s ease;",
       progressText: '', barStyle: 'display:block;height:100%;width:0%;background:' + accent + ';border-radius:999px;transition:width .35s ease;',
-      note: '', tabs: [], groups: []
+      note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: ''
     };
     if (!wod) return wo;
+    wo.hasFaq = !!(wod.faq && wod.faq.length);
+    wo.faq = (wod.faq || []).map((q, i) => ({ key: i, q: q.q, a: q.a }));
+    wo.faqHeading = 'Common questions about the ' + (this.woPhrase(s.activeId) || title + ' movies in order');
 
     const TABS = [['release','Release'], ['chrono','Chronological'], ['first','First-time']];
     const active = wod.orders[s.woOrder] ? s.woOrder : 'first';
@@ -11441,6 +11457,7 @@ class Component extends DCLogic {
 
     const order = wod.orders[active];
     wo.note = order.note || '';
+    wo.sectionHeading = active === 'release' ? title + ' in release order' : active === 'chrono' ? title + ' in chronological order' : 'The order to ' + noun + ' ' + title + ' for the first time';
     const raw = order.groups || [{ label: '', items: order.items }];
 
     const seen = {};

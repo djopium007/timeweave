@@ -235,6 +235,16 @@ function jsonLd(r) {
         description: stripTags(it.why) || undefined,
       })),
     });
+    if (r.watchOrder.faq && r.watchOrder.faq.length) {
+      graph.push({
+        '@type': 'FAQPage',
+        '@id': url + '#faq',
+        mainEntity: r.watchOrder.faq.map((q) => ({
+          '@type': 'Question', name: q.q,
+          acceptedAnswer: { '@type': 'Answer', text: q.a },
+        })),
+      });
+    }
     return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
   }
   if (r.franchise) {
@@ -318,9 +328,10 @@ function noscriptBlock(r) {
 <h1>${esc(woName(f))}</h1>
 <p><strong>Release order</strong> &middot; <strong>chronological order</strong> &middot; the best watch order if it is your first time ${esc(noun === 'watch' ? 'watching' : noun + 'ing')} it.</p>
 <p>${esc(stripTags(wo.intro))}</p>
-${section('If you are watching it for the first time', `<p>${esc(stripTags(wo.orders.first.note))}</p>` + firstGroups)}
-${section('Release order', `<p>${esc(stripTags(wo.orders.release.note))}</p>` + listOf(wo.orders.release.items || []))}
-${section('Chronological order', `<p>${esc(stripTags(wo.orders.chrono.note))}</p>` + listOf(wo.orders.chrono.items || []))}
+${section(`The order to ${noun} ${f.title} for the first time`, `<p>${esc(stripTags(wo.orders.first.note))}</p>` + firstGroups)}
+${section(`${f.title} in release order`, `<p>${esc(stripTags(wo.orders.release.note))}</p>` + listOf(wo.orders.release.items || []))}
+${section(`${f.title} in chronological order`, `<p>${esc(stripTags(wo.orders.chrono.note))}</p>` + listOf(wo.orders.chrono.items || []))}
+${(wo.faq && wo.faq.length) ? section('Common questions about the ' + woPhrase(f), wo.faq.map((q) => `<h3>${esc(q.q)}</h3><p>${esc(q.a)}</p>`).join('')) : ''}
 <p><a href="${SITE}/map/${f.id}">The ${esc(f.title)} branch map</a> &middot; <a href="${SITE}/">All ReelOrder timeline maps</a></p>
 </article></noscript>`;
   }
