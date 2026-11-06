@@ -12770,7 +12770,7 @@ class Component extends DCLogic {
       onOpenMap: (e) => { try { e && e.preventDefault && e.preventDefault(); } catch(_){} this.openFranchise(s.activeId); },
       mapHref: '/map/' + s.activeId, mapTitle: this.mapName(s.activeId) || '',
       onReset: () => this.clearWatched(s.activeId),
-      mapLinkLabel: 'See the ' + title + ' timeline map \u2192',
+      mapLinkLabel: 'See the ' + title.replace(/^The /, '') + ' timeline map \u2192',
       mapLinkStyle: "text-decoration:none;display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:9px 15px;border-radius:9px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;",
       railStyle: 'position:absolute;left:9px;top:16px;bottom:16px;width:2px;background:linear-gradient(' + accent + '66,' + accent + '14);',
       noteStyle: 'margin:24px 0 0;padding:17px 19px 17px 21px;border-radius:12px;background:' + accent + '1A;border-left:3px solid ' + accent + ';color:#D2D9E2;font-size:15.5px;line-height:1.6;max-width:70ch;text-wrap:pretty;',
