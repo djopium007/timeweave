@@ -27,6 +27,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/apple-touch-icon-180.png">
 <script src="/assets/asset-00.js"></script>
 <script src="/assets/supabase-js-2.115.0.js"></script>
+<script src="/assets/binge-time.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -800,6 +801,13 @@
         <div style="flex:1;min-width:260px;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#6b7686;">{{ active.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1;margin:6px 0 0;text-transform:uppercase;letter-spacing:0.01em;">{{ active.title }}</h1>
+          <sc-if value="{{ active.hasBinge }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:14px 0 0;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(18px,2.4vw,22px);letter-spacing:0.01em;color:#E9EDF3;line-height:1.25;">{{ active.bingeLine }}</p>
+            <p style="margin:6px 0 0;max-width:68ch;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.55;color:#6b7686;">{{ active.bingeBasis }}</p>
+            <sc-if value="{{ active.hasBingeNote }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:6px 0 0;max-width:68ch;color:#9aa6b4;font-size:14px;line-height:1.5;text-wrap:pretty;">{{ active.bingeNote }}</p>
+            </sc-if>
+          </sc-if>
           <p style="margin:14px 0 0;max-width:72ch;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">{{ active.framing }}</p>
           <sc-if value="{{ hasWatchOrder }}" hint-placeholder-val="{{ true }}">
             <a href="{{ watchOrderHref }}" onclick="{{ goWatchOrder }}" style="{{ watchOrderBtnStyle }}" style-hover="border-color:rgba(255,255,255,0.4);color:#fff;">▶ {{ watchOrderBtnLabel }}</a>
@@ -1712,6 +1720,13 @@
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#9DB0C4;">{{ wo.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.03;margin:8px 0 0;letter-spacing:0.01em;text-transform:uppercase;text-wrap:balance;">{{ wo.heading }}</h1>
           <div style="margin-top:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:#9DB0C4;letter-spacing:0.01em;">{{ wo.sub }}</div>
+          <sc-if value="{{ wo.hasBinge }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:14px 0 0;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(18px,2.4vw,22px);letter-spacing:0.01em;color:#E9EDF3;line-height:1.25;">{{ wo.bingeLine }}</p>
+            <p style="margin:6px 0 0;max-width:68ch;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.55;color:#6b7686;">{{ wo.bingeBasis }}</p>
+            <sc-if value="{{ wo.hasBingeNote }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:6px 0 0;max-width:68ch;color:#9aa6b4;font-size:14px;line-height:1.5;text-wrap:pretty;">{{ wo.bingeNote }}</p>
+            </sc-if>
+          </sc-if>
         </div>
       </div>
 
@@ -1934,7 +1949,7 @@ class Component extends DCLogic {
     screen: 'hub',
     navOpen: false,
     isNarrow: (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth <= 1000 : false,
-    woOrder: 'first', woData: null, woLoading: false, woWatched: {},
+    woOrder: 'first', woData: null, woLoading: false, woWatched: {}, runtimes: null,
     activeId: 'terminator',
     // Timeline tab index: filter, sort, and the last map actually opened this session
     mapsQ: '', mapsSort: 'az', lastViewedId: null,
@@ -12710,6 +12725,28 @@ class Component extends DCLogic {
       this.setState({ woData: json, woLoading: false });
     } catch (e) { this.setState({ woLoading: false }); }
   };
+  loadRuntimes = async () => {
+    if (this.state.runtimes || this._runtimesLoading) return;
+    this._runtimesLoading = true;
+    try {
+      const res = await fetch('/assets/runtimes.json');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      this.setState({ runtimes: await res.json() });
+    } catch (e) { this._runtimesLoading = false; }
+  };
+  bingeFor = (id, title) => {
+    const api = (typeof globalThis !== 'undefined' && globalThis.reelOrderBinge) || null;
+    const empty = { hasBinge: false, hasBingeNote: false, line: '', note: '', basis: '' };
+    if (!api) return empty;
+    const f = this.data[id];
+    return api.summarize({
+      id: id,
+      title: title || (f && f.title) || '',
+      hasWatchOrder: this.hasWatchOrder(id),
+      watchOrder: (this.state.woData || {})[id] || null,
+      runtimes: this.state.runtimes,
+    });
+  };
   readWatched = (fid) => { try { return JSON.parse(localStorage.getItem(this.WO_KEY + fid) || '{}') || {}; } catch(e) { return {}; } };
   toggleWatched = (fid, key) => {
     const w = Object.assign({}, this.state.woWatched);
@@ -12767,8 +12804,15 @@ class Component extends DCLogic {
       footBtnLabel: 'Open the ' + title + ' map',
       footBtnStyle: "flex:none;padding:12px 21px;border-radius:999px;border:1px solid " + accent + ";background:" + accent + ";color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;white-space:nowrap;transition:filter .15s ease;",
       progressText: '', barStyle: 'display:block;height:100%;width:0%;background:' + accent + ';border-radius:999px;transition:width .35s ease;',
-      note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: ''
+      note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: '',
+      hasBinge: false, hasBingeNote: false, bingeLine: '', bingeNote: '', bingeBasis: ''
     };
+    const binge = this.bingeFor(s.activeId, title);
+    wo.hasBinge = !!binge.hasBinge;
+    wo.hasBingeNote = !!binge.hasBingeNote;
+    wo.bingeLine = binge.line || '';
+    wo.bingeNote = binge.note || '';
+    wo.bingeBasis = binge.basis || '';
     if (!wod) return wo;
     wo.hasFaq = !!(wod.faq && wod.faq.length);
     wo.faq = (wod.faq || []).map((q, i) => ({ key: i, q: q.q, a: q.a }));
@@ -13281,6 +13325,8 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    this.loadRuntimes();
+    this.loadWatchOrders();
     this.initRouting();
     this.startSpotTimer();
     try {
@@ -14243,7 +14289,10 @@ class Component extends DCLogic {
       mapsSoonLabel: `${this.comingSoon.length} more franchises are waiting to be mapped.`,
       hasContinue: !!lastF, continueTitle: lastF ? lastF.title : '', continueOpen: () => lastF && this.openFranchise(lastF.id), continueStyle,
       // timeline
-      active: { title:a.title, meta:a.meta, framing:a.framing, initials:this.initials(a.title), crestStyle, forkLabel:a.forkLabel, branchCount:a.branches.length },
+      active: (() => {
+        const binge = this.bingeFor(s.activeId, a.title);
+        return { title:a.title, meta:a.meta, framing:a.framing, initials:this.initials(a.title), crestStyle, forkLabel:a.forkLabel, branchCount:a.branches.length, hasBinge: !!binge.hasBinge, hasBingeNote: !!binge.hasBingeNote, bingeLine: binge.line || '', bingeNote: binge.note || '', bingeBasis: binge.basis || '' };
+      })(),
       filterButtons,
       railTabStyle:this.tabBtn(!isTree), treeTabStyle:this.tabBtn(isTree),
       setRailView:this.setRailView, setTreeView:this.setTreeView,

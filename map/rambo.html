@@ -29,6 +29,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/apple-touch-icon-180.png">
 <script src="/assets/asset-00.js"></script>
 <script src="/assets/supabase-js-2.115.0.js"></script>
+<script src="/assets/binge-time.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -36,6 +37,7 @@
 <noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">
 <h1>Rambo Timeline Explained</h1>
 <p>5 films · 1 series · 5 branches</p>
+<p><strong>About 6 hours across 4 of the 5 Rambo films.</strong> Theatrical runtimes added together, then rounded to the nearest hour. Checked 8 Nov 2026. Rambo: The Force of Freedom is not included, because its episode runtimes are not verified. Rambo: Last Blood has two theatrical runtimes on its Wikipedia infobox, 89 minutes in the US, UK and Canada and 101 minutes internationally, so it is left out.</p>
 <p>Rambo runs in a straight line: Hope, Washington to Vietnam, Afghanistan, Burma and finally home to Arizona, but that line only exists because of a rewrite. In David Morrell's 1972 novel Rambo dies, and First Blood shot an ending where he dies too. Test audiences rejected it, Stallone refused it, and the surrender we got is the fork every sequel hangs from. The branches below are the backstory in Vietnam, the film saga that follows the surrender, the two deaths that closed the story before it began, and a 1986 cartoon that spun off on its own.</p>
 <h2>Branches</h2><ul><li><strong>Vietnam: Baker Team</strong>: The war before the war: never shown in full, only in flashbacks and one breakdown, until a prequel arrives in 2027.</li><li><strong>He Surrenders: The Film Saga</strong>: Trautman talks him down, he walks out alive, and spends the next four decades being pulled back into war.</li><li><strong>Morrell's Novel: Rambo Dies</strong>: The source story: a darker Rambo who kills, and a manhunt that ends with both men dead.</li><li><strong>The Abandoned Ending</strong>: Filmed, test-screened and dropped: the version of First Blood where the story ends in Hope.</li><li><strong>Force of Freedom: The Cartoon</strong>: A family-friendly spin-off where Rambo leads a team and nobody dies: its own continuity, not the films'.</li></ul>
 <h2>Films</h2><ul><li>First Blood (1982)</li><li>Rambo: First Blood Part II (1985)</li><li>Rambo: The Force of Freedom (1986)</li><li>Rambo III (1988)</li><li>Rambo (2008)</li><li>Rambo: Last Blood (2019)</li></ul>
@@ -810,6 +812,13 @@
         <div style="flex:1;min-width:260px;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#6b7686;">{{ active.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1;margin:6px 0 0;text-transform:uppercase;letter-spacing:0.01em;">{{ active.title }}</h1>
+          <sc-if value="{{ active.hasBinge }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:14px 0 0;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(18px,2.4vw,22px);letter-spacing:0.01em;color:#E9EDF3;line-height:1.25;">{{ active.bingeLine }}</p>
+            <p style="margin:6px 0 0;max-width:68ch;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.55;color:#6b7686;">{{ active.bingeBasis }}</p>
+            <sc-if value="{{ active.hasBingeNote }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:6px 0 0;max-width:68ch;color:#9aa6b4;font-size:14px;line-height:1.5;text-wrap:pretty;">{{ active.bingeNote }}</p>
+            </sc-if>
+          </sc-if>
           <p style="margin:14px 0 0;max-width:72ch;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">{{ active.framing }}</p>
           <sc-if value="{{ hasWatchOrder }}" hint-placeholder-val="{{ true }}">
             <a href="{{ watchOrderHref }}" onclick="{{ goWatchOrder }}" style="{{ watchOrderBtnStyle }}" style-hover="border-color:rgba(255,255,255,0.4);color:#fff;">▶ {{ watchOrderBtnLabel }}</a>
@@ -1722,6 +1731,13 @@
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#9DB0C4;">{{ wo.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.03;margin:8px 0 0;letter-spacing:0.01em;text-transform:uppercase;text-wrap:balance;">{{ wo.heading }}</h1>
           <div style="margin-top:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:#9DB0C4;letter-spacing:0.01em;">{{ wo.sub }}</div>
+          <sc-if value="{{ wo.hasBinge }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:14px 0 0;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(18px,2.4vw,22px);letter-spacing:0.01em;color:#E9EDF3;line-height:1.25;">{{ wo.bingeLine }}</p>
+            <p style="margin:6px 0 0;max-width:68ch;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.55;color:#6b7686;">{{ wo.bingeBasis }}</p>
+            <sc-if value="{{ wo.hasBingeNote }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:6px 0 0;max-width:68ch;color:#9aa6b4;font-size:14px;line-height:1.5;text-wrap:pretty;">{{ wo.bingeNote }}</p>
+            </sc-if>
+          </sc-if>
         </div>
       </div>
 
@@ -1944,7 +1960,7 @@ class Component extends DCLogic {
     screen: 'hub',
     navOpen: false,
     isNarrow: (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth <= 1000 : false,
-    woOrder: 'first', woData: null, woLoading: false, woWatched: {},
+    woOrder: 'first', woData: null, woLoading: false, woWatched: {}, runtimes: null,
     activeId: 'terminator',
     // Timeline tab index: filter, sort, and the last map actually opened this session
     mapsQ: '', mapsSort: 'az', lastViewedId: null,
@@ -12720,6 +12736,28 @@ class Component extends DCLogic {
       this.setState({ woData: json, woLoading: false });
     } catch (e) { this.setState({ woLoading: false }); }
   };
+  loadRuntimes = async () => {
+    if (this.state.runtimes || this._runtimesLoading) return;
+    this._runtimesLoading = true;
+    try {
+      const res = await fetch('/assets/runtimes.json');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      this.setState({ runtimes: await res.json() });
+    } catch (e) { this._runtimesLoading = false; }
+  };
+  bingeFor = (id, title) => {
+    const api = (typeof globalThis !== 'undefined' && globalThis.reelOrderBinge) || null;
+    const empty = { hasBinge: false, hasBingeNote: false, line: '', note: '', basis: '' };
+    if (!api) return empty;
+    const f = this.data[id];
+    return api.summarize({
+      id: id,
+      title: title || (f && f.title) || '',
+      hasWatchOrder: this.hasWatchOrder(id),
+      watchOrder: (this.state.woData || {})[id] || null,
+      runtimes: this.state.runtimes,
+    });
+  };
   readWatched = (fid) => { try { return JSON.parse(localStorage.getItem(this.WO_KEY + fid) || '{}') || {}; } catch(e) { return {}; } };
   toggleWatched = (fid, key) => {
     const w = Object.assign({}, this.state.woWatched);
@@ -12777,8 +12815,15 @@ class Component extends DCLogic {
       footBtnLabel: 'Open the ' + title + ' map',
       footBtnStyle: "flex:none;padding:12px 21px;border-radius:999px;border:1px solid " + accent + ";background:" + accent + ";color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;white-space:nowrap;transition:filter .15s ease;",
       progressText: '', barStyle: 'display:block;height:100%;width:0%;background:' + accent + ';border-radius:999px;transition:width .35s ease;',
-      note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: ''
+      note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: '',
+      hasBinge: false, hasBingeNote: false, bingeLine: '', bingeNote: '', bingeBasis: ''
     };
+    const binge = this.bingeFor(s.activeId, title);
+    wo.hasBinge = !!binge.hasBinge;
+    wo.hasBingeNote = !!binge.hasBingeNote;
+    wo.bingeLine = binge.line || '';
+    wo.bingeNote = binge.note || '';
+    wo.bingeBasis = binge.basis || '';
     if (!wod) return wo;
     wo.hasFaq = !!(wod.faq && wod.faq.length);
     wo.faq = (wod.faq || []).map((q, i) => ({ key: i, q: q.q, a: q.a }));
@@ -13291,6 +13336,8 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    this.loadRuntimes();
+    this.loadWatchOrders();
     this.initRouting();
     this.startSpotTimer();
     try {
@@ -14253,7 +14300,10 @@ class Component extends DCLogic {
       mapsSoonLabel: `${this.comingSoon.length} more franchises are waiting to be mapped.`,
       hasContinue: !!lastF, continueTitle: lastF ? lastF.title : '', continueOpen: () => lastF && this.openFranchise(lastF.id), continueStyle,
       // timeline
-      active: { title:a.title, meta:a.meta, framing:a.framing, initials:this.initials(a.title), crestStyle, forkLabel:a.forkLabel, branchCount:a.branches.length },
+      active: (() => {
+        const binge = this.bingeFor(s.activeId, a.title);
+        return { title:a.title, meta:a.meta, framing:a.framing, initials:this.initials(a.title), crestStyle, forkLabel:a.forkLabel, branchCount:a.branches.length, hasBinge: !!binge.hasBinge, hasBingeNote: !!binge.hasBingeNote, bingeLine: binge.line || '', bingeNote: binge.note || '', bingeBasis: binge.basis || '' };
+      })(),
       filterButtons,
       railTabStyle:this.tabBtn(!isTree), treeTabStyle:this.tabBtn(isTree),
       setRailView:this.setRailView, setTreeView:this.setTreeView,
