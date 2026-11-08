@@ -12692,11 +12692,55 @@ class Component extends DCLogic {
   WO_IDS = ['terminator','xmen','bttf','apes','predator','alien','transformers','dune','marvel','starwars','startrek','rambo','tron','matrix','johnwick','bourne','twilight','conjuring','fast'];
   WO_NOUN = { dune: 'read and watch' };
   WO_NOUN_TITLE = { dune: 'Read and Watch' };
+  // Public URL slugs: the searched phrase (Ahrefs US, keywords/ CSV), lowercase + hyphens.
+  // LOCKED once live: backlinks point at these. Never rename one; add a redirect in vercel.json instead.
+  // Internal ids (data keys, og-<id>.png, votes, watched-state) stay as they are.
+  // scripts/build-seo.mjs reads this block, so it is the single source of truth.
+  SLUGS = {
+    terminator:   { wo: 'terminator-movies-in-order',         map: 'terminator-timeline' },
+    xmen:         { wo: 'x-men-movies-in-order',              map: 'x-men-timeline' },
+    dune:         { wo: 'dune-books-in-order',                map: 'dune-timeline' },
+    tenet:        {                                           map: 'tenet-timeline' },
+    bttf:         { wo: 'back-to-the-future-movies-in-order', map: 'back-to-the-future-timeline' },
+    apes:         { wo: 'planet-of-the-apes-movies-in-order', map: 'planet-of-the-apes-timeline' },
+    predator:     { wo: 'predator-movies-in-order',           map: 'predator-timeline' },
+    startrek:     { wo: 'star-trek-movies-in-order',          map: 'star-trek-timeline' },
+    marvel:       { wo: 'marvel-movies-in-order',             map: 'mcu-timeline' },
+    starwars:     { wo: 'star-wars-movies-in-order',          map: 'star-wars-timeline' },
+    transformers: { wo: 'transformers-movies-in-order',       map: 'transformers-timeline' },
+    alien:        { wo: 'alien-movies-in-order',              map: 'alien-timeline' },
+    rambo:        { wo: 'rambo-movies-in-order',              map: 'rambo-timeline' },
+    tron:         { wo: 'tron-movies-in-order',               map: 'tron-timeline' },
+    matrix:       { wo: 'matrix-movies-in-order',             map: 'matrix-timeline' },
+    johnwick:     { wo: 'john-wick-movies-in-order',          map: 'john-wick-timeline' },
+    bourne:       { wo: 'jason-bourne-movies-in-order',       map: 'jason-bourne-timeline' },
+    twilight:     { wo: 'twilight-movies-in-order',           map: 'twilight-timeline' },
+    conjuring:    { wo: 'conjuring-movies-in-order',          map: 'conjuring-timeline' },
+    fast:         { wo: 'fast-and-furious-movies-in-order',   map: 'fast-and-furious-timeline' },
+  };
+  woPath = (id) => { const s = this.SLUGS[id]; return s && s.wo ? '/' + s.wo : '/'; };
+  mapPath = (id) => { const s = this.SLUGS[id]; return s && s.map ? '/' + s.map : '/timeline'; };
+  slugIndex = null;
+  // '/john-wick-movies-in-order' -> { kind:'wo', id:'johnwick' }; also reads the pre-2026-11-08
+  // '/watch-order/<id>' and '/map/<id>' shapes (the server 308s those, this is belt and braces).
+  pageFor = (path) => {
+    if (!this.slugIndex) {
+      const ix = {};
+      for (const id in this.SLUGS) { const x = this.SLUGS[id]; if (x.wo) ix[x.wo] = { kind:'wo', id }; if (x.map) ix[x.map] = { kind:'map', id }; }
+      this.slugIndex = ix;
+    }
+    const seg = String(path || '').split('?')[0].replace(/^\/+|\/+$/g, '').toLowerCase();
+    let hit = this.slugIndex[seg] || null;
+    if (!hit) { const m = seg.match(/^(watch-order|map|timeline)\/([a-z0-9-]+)$/); if (m) hit = { kind: m[1] === 'watch-order' ? 'wo' : 'map', id: m[2] }; }
+    if (!hit || !this.data[hit.id]) return null;
+    if (hit.kind === 'wo' && !this.hasWatchOrder(hit.id)) return null;
+    return hit;
+  };
   // Search-phrase page names (Ahrefs US, see keywords/). Keep in sync with WO_KW / MAP_KW in scripts/build-seo.mjs.
   WO_KW = { marvel: 'Marvel Movies in Order', matrix: 'Matrix Movies in Order', dune: 'Dune Books in Order (and Movies)', bourne: 'Jason Bourne Movies in Order', conjuring: 'The Conjuring Movies in Order', fast: 'Fast and Furious Movies in Order' };
   woName = (id) => { const f = this.data[id]; return f ? (this.WO_KW[id] || f.title + ' Movies in Order') : null; };
   woPhrase = (id) => (this.woName(id) || '').replace(/(Movies|Books) in Order( \(and Movies\))?/, (m) => m.toLowerCase());
-  MAP_KW = { marvel: 'MCU Timeline Explained', conjuring: 'The Conjuring Timeline Explained', fast: 'Fast and Furious Timeline Explained' };
+  MAP_KW = { marvel: 'MCU Timeline Explained', bourne: 'Jason Bourne Timeline Explained', conjuring: 'The Conjuring Timeline Explained', fast: 'Fast and Furious Timeline Explained' };
   mapName = (id) => { const f = this.data[id]; return f ? (this.MAP_KW[id] || f.title + ' Timeline Explained') : null; };
   WO_KEY = 'reelorder_watched_';
   hasWatchOrder = (id) => this.WO_IDS.indexOf(id) >= 0;
@@ -12725,7 +12769,7 @@ class Component extends DCLogic {
   goWatchOrder = (id) => {
     if (!this.data[id] || !this.hasWatchOrder(id)) return;
     this.setState({ screen:'watchOrder', activeId:id, woOrder:'first', woWatched:this.readWatched(id) });
-    this.pushRoute('/watch-order/' + id);
+    this.pushRoute(this.woPath(id));
     this.loadWatchOrders();
     this.toTop();
   };
@@ -12757,7 +12801,7 @@ class Component extends DCLogic {
       intro: wod ? wod.intro : (s.woLoading ? 'Loading the orders…' : ''),
       onBack: this.goHub,
       onOpenMap: (e) => { try { e && e.preventDefault && e.preventDefault(); } catch(_){} this.openFranchise(s.activeId); },
-      mapHref: '/map/' + s.activeId, mapTitle: this.mapName(s.activeId) || '',
+      mapHref: this.mapPath(s.activeId), mapTitle: this.mapName(s.activeId) || '',
       onReset: () => this.clearWatched(s.activeId),
       mapLinkLabel: 'See the ' + title.replace(/^The /, '') + ' timeline map \u2192',
       mapLinkStyle: "text-decoration:none;display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:9px 15px;border-radius:9px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.03);color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all .16s ease;",
@@ -12834,9 +12878,9 @@ class Component extends DCLogic {
     if (screen === 'posters') return '/posters';
     if (screen === 'poster') return activeId ? '/posters/' + activeId : '/posters';
     if (screen === 'posterThanks') return '/posters/thanks';
-    if (screen === 'watchOrder') return activeId ? '/watch-order/' + activeId : '/';
+    if (screen === 'watchOrder') return activeId ? this.woPath(activeId) : '/';
     if (screen === 'maps') return '/timeline';
-    if (screen === 'timeline') return activeId && this.data[activeId] ? '/map/' + activeId : '/timeline';
+    if (screen === 'timeline') return activeId && this.data[activeId] ? this.mapPath(activeId) : '/timeline';
     return '/';
   };
   titleFor = (path) => {
@@ -12855,14 +12899,8 @@ class Component extends DCLogic {
       // DB call lands, and that is what a JS-rendering crawler indexes.
       return pp ? pp.title + ' Poster \u00b7 ReelOrder' : null;
     }
-    if (path.indexOf('/watch-order/') === 0) {
-      const wf = this.data[path.slice(13)];
-      return (wf ? this.woName(path.slice(13)) : 'Watch Order') + ' \u00b7 ReelOrder';
-    }
-    if (path.indexOf('/map/') === 0) {
-      const f = this.data[path.slice(5)];
-      return (f ? this.mapName(path.slice(5)) : 'Timeline') + ' \u00b7 ReelOrder';
-    }
+    { const pg = this.pageFor(path);
+      if (pg) return (pg.kind === 'wo' ? this.woName(pg.id) : this.mapName(pg.id)) + ' \u00b7 ReelOrder'; }
     return 'ReelOrder | Movies in Order & Timeline Maps';
   };
   SITE = 'https://reelorder.com';
@@ -12871,8 +12909,7 @@ class Component extends DCLogic {
     if (path === '/queue') n = 'og-queue';
     else if (path === '/contribute') n = 'og-contribute';
     else if (path.indexOf('/posters') === 0) n = 'og-posters';
-    else if (path.indexOf('/map/') === 0 && this.data[path.slice(5)]) n = 'og-' + path.slice(5);
-    else if (path.indexOf('/watch-order/') === 0 && this.data[path.slice(13)]) n = 'og-wo-' + path.slice(13);
+    else { const pg = this.pageFor(path); if (pg) n = (pg.kind === 'wo' ? 'og-wo-' : 'og-') + pg.id; }
     return this.SITE + '/assets/og/' + n + '.png';
   };
   descFor = (path) => {
@@ -12885,14 +12922,9 @@ class Component extends DCLogic {
       const pp = (this.state.posters||[]).find(x => x.id === path.slice(9));
       return pp ? (pp.tagline || pp.description || null) : null;
     }
-    if (path.indexOf('/watch-order/') === 0) {
-      const wf = this.data[path.slice(13)];
-      if (wf) return this.woPhrase(path.slice(13)) + ': release order, chronological order, and the best watch order for a first-timer, with a reason for every entry.';
-    }
-    if (path.indexOf('/map/') === 0) {
-      const f = this.data[path.slice(5)];
-      if (f) return f.title + ' timeline explained: ' + f.meta + '. ' + f.tagline + (this.hasWatchOrder(path.slice(5)) ? ' Plus the ' + this.woPhrase(path.slice(5)) + '.' : '');
-    }
+    { const pg = this.pageFor(path);
+      if (pg && pg.kind === 'wo') return this.woPhrase(pg.id) + ': release order, chronological order, and the best watch order for a first-timer, with a reason for every entry.';
+      if (pg) { const f = this.data[pg.id]; return f.title + ' timeline explained: ' + f.meta + '. ' + f.tagline + (this.hasWatchOrder(pg.id) ? ' Plus the ' + this.woPhrase(pg.id) + '.' : ''); } }
     return 'Every movie franchise in order: release order, chronological order and the best watch order for a first-timer, plus every timeline mapped as a clean, interactive branch diagram. Search a film and follow the threads.';
   };
   setMeta = (path) => {
@@ -12951,7 +12983,11 @@ class Component extends DCLogic {
     if (a === 'timeline' || a === 'map') {
       return this.data[b] ? { screen:'timeline', activeId:b, lastViewedId:b } : { screen:'maps' };
     }
-    if (this.data[a]) return { screen:'timeline', activeId:a, lastViewedId:a };
+    if (!b) {
+      const pg = this.pageFor('/' + a);
+      if (pg && pg.kind === 'wo') return { screen:'watchOrder', activeId:pg.id };
+      if (pg) return { screen:'timeline', activeId:pg.id, lastViewedId:pg.id };
+    }
     return null;
   };
   onPopState = () => {
@@ -13100,6 +13136,7 @@ class Component extends DCLogic {
   // One beacon per route change. No cookies, no IP stored (api/hit.js hashes ip+ua+day).
   // Admin accounts are excluded so the numbers stay honest.
   lastTracked = null;
+  utmSent = false;
   trackView = (path, referrer) => {
     try {
       path = path || location.pathname;
@@ -13107,7 +13144,17 @@ class Component extends DCLogic {
       if (localStorage.getItem('reelorder_notrack')) return;
       if (this.state.admin && this.state.admin.isAdmin) return;
       this.lastTracked = path;
-      const payload = JSON.stringify({ p: path, r: referrer || '' });
+      const pl = { p: path, r: referrer || '' };
+      if (!this.utmSent) {
+        this.utmSent = true;
+        try {
+          const q = new URLSearchParams(location.search);
+          const u = {};
+          ['source','medium','campaign','content','term'].forEach(k => { const v = q.get('utm_' + k); if (v) u[k] = v.slice(0, 80); });
+          if (Object.keys(u).length) pl.u = u;
+        } catch(e){}
+      }
+      const payload = JSON.stringify(pl);
       if (navigator.sendBeacon) navigator.sendBeacon('/api/hit', new Blob([payload], { type:'application/json' }));
       else fetch('/api/hit', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: payload, keepalive:true }).catch(()=>{});
     } catch(e){}
@@ -13234,6 +13281,7 @@ class Component extends DCLogic {
       trafficFirstDay: daily.length ? daily[0].d : '', trafficLastDay: daily.length ? daily[daily.length - 1].d : '',
       trafficLists: t ? [
         list('Top pages', t.pages), list('Referrers', t.referrers, k => k === '(direct)' ? 'Direct / none' : k),
+        ...((t.campaigns && t.campaigns.length) ? [list('Campaigns (utm source / medium / campaign)', t.campaigns)] : []),
         list('Countries', t.countries, k => this.countryName(k)), list('Devices', t.devices), list('Browsers', t.browsers),
       ] : [],
       trafficEmpty: !a.loading && !!t && Number(t.views) === 0,
@@ -13869,9 +13917,9 @@ class Component extends DCLogic {
       id: f.id, title: f.title, tagline: f.tagline, meta: f.meta,
       badgeLabel: 'Live', cta: 'Timeline \u2192',
       onOpen: () => this.openFranchise(f.id),
-      href: '/map/' + f.id, linkTitle: this.mapName(f.id),
+      href: this.mapPath(f.id), linkTitle: this.mapName(f.id),
       onOpenLink: (e) => { try { e && e.preventDefault(); e && e.stopPropagation(); } catch(_){} this.openFranchise(f.id); },
-      hasWo: this.hasWatchOrder(f.id), woHref: '/watch-order/' + f.id, woTitle: this.woName(f.id),
+      hasWo: this.hasWatchOrder(f.id), woHref: this.woPath(f.id), woTitle: this.woName(f.id),
       onWatch: (e) => { try { e && e.preventDefault(); e && e.stopPropagation(); } catch(_){} this.goWatchOrder(f.id); },
       woStyle: { fontFamily:"'Oswald', sans-serif", fontWeight:'500', fontSize:'13px', letterSpacing:'0.05em', textTransform:'uppercase', color:'#9DB0C4', textDecoration:'none' },
       art: this.makeArtEl(this.kindFor(f.id), f.accent, 'card', false),
@@ -13911,7 +13959,7 @@ class Component extends DCLogic {
       sub: hit ? 'Includes ' + hit : f.tagline,
       films, filmsLabel: films === 1 ? 'film' : 'films', branches, branchesLabel: branches === 1 ? 'branch' : 'branches',
       hasWo: this.hasWatchOrder(f.id),
-      woHref: '/watch-order/' + f.id, woTitle: this.woName(f.id),
+      woHref: this.woPath(f.id), woTitle: this.woName(f.id),
       onOpen: () => this.openFranchise(f.id),
       onWatch: (e) => { try { e && e.preventDefault && e.preventDefault(); e && e.stopPropagation && e.stopPropagation(); } catch(_){} this.goWatchOrder(f.id); },
       rowStyle: { display:'flex', alignItems:'center', gap:'16px', flexWrap:'wrap', padding:'14px 18px 14px 14px', borderRadius:'14px', border:'1px solid rgba(255,255,255,0.09)', borderLeft:`3px solid ${f.accent}`, background:'rgba(13,15,20,0.85)', cursor:'pointer', transition:'transform .16s ease, border-color .16s ease, background .16s ease' },
@@ -14327,7 +14375,7 @@ class Component extends DCLogic {
       // queue
       isWatchOrder: s.screen === 'watchOrder', wo: this.buildWO(s),
       watchOrderBtnLabel: (this.woName(s.activeId) || 'Watch order') + ' \u2192',
-      watchOrderHref: '/watch-order/' + s.activeId,
+      watchOrderHref: this.woPath(s.activeId),
       watchOrderBtnStyle: "text-decoration:none;display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:10px 17px;border-radius:999px;border:1px solid " + ((this.data[s.activeId]||{}).accent || '#FF2A1F') + "66;background:" + ((this.data[s.activeId]||{}).accent || '#FF2A1F') + "14;color:#D2D9E2;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .16s ease;",
       hasWatchOrder: this.hasWatchOrder(s.activeId), goWatchOrder: (e) => { try { e && e.preventDefault && e.preventDefault(); } catch(_){} this.goWatchOrder(s.activeId); },
       isQueue: s.screen === 'queue', goQueue:this.goQueue,

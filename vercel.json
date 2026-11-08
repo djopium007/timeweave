@@ -1,31 +1,485 @@
 {
-  "cleanUrls": false,
+  "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.reelorder.com"
+        }
+      ],
+      "destination": "https://reelorder.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/terminator",
+      "destination": "/terminator-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/terminator",
+      "destination": "/terminator-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/terminator",
+      "destination": "/terminator-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/xmen",
+      "destination": "/x-men-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/xmen",
+      "destination": "/x-men-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/xmen",
+      "destination": "/x-men-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/dune",
+      "destination": "/dune-books-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/dune",
+      "destination": "/dune-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/dune",
+      "destination": "/dune-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/map/tenet",
+      "destination": "/tenet-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/tenet",
+      "destination": "/tenet-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/bttf",
+      "destination": "/back-to-the-future-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/bttf",
+      "destination": "/back-to-the-future-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/bttf",
+      "destination": "/back-to-the-future-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/apes",
+      "destination": "/planet-of-the-apes-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/apes",
+      "destination": "/planet-of-the-apes-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/apes",
+      "destination": "/planet-of-the-apes-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/predator",
+      "destination": "/predator-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/predator",
+      "destination": "/predator-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/predator",
+      "destination": "/predator-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/startrek",
+      "destination": "/star-trek-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/startrek",
+      "destination": "/star-trek-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/startrek",
+      "destination": "/star-trek-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/marvel",
+      "destination": "/marvel-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/marvel",
+      "destination": "/mcu-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/marvel",
+      "destination": "/mcu-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/starwars",
+      "destination": "/star-wars-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/starwars",
+      "destination": "/star-wars-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/starwars",
+      "destination": "/star-wars-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/transformers",
+      "destination": "/transformers-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/transformers",
+      "destination": "/transformers-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/transformers",
+      "destination": "/transformers-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/alien",
+      "destination": "/alien-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/alien",
+      "destination": "/alien-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/alien",
+      "destination": "/alien-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/rambo",
+      "destination": "/rambo-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/rambo",
+      "destination": "/rambo-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/rambo",
+      "destination": "/rambo-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/tron",
+      "destination": "/tron-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/tron",
+      "destination": "/tron-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/tron",
+      "destination": "/tron-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/matrix",
+      "destination": "/matrix-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/matrix",
+      "destination": "/matrix-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/matrix",
+      "destination": "/matrix-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/johnwick",
+      "destination": "/john-wick-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/johnwick",
+      "destination": "/john-wick-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/johnwick",
+      "destination": "/john-wick-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/bourne",
+      "destination": "/jason-bourne-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/bourne",
+      "destination": "/jason-bourne-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/bourne",
+      "destination": "/jason-bourne-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/twilight",
+      "destination": "/twilight-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/twilight",
+      "destination": "/twilight-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/twilight",
+      "destination": "/twilight-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/conjuring",
+      "destination": "/conjuring-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/conjuring",
+      "destination": "/conjuring-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/conjuring",
+      "destination": "/conjuring-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order/fast",
+      "destination": "/fast-and-furious-movies-in-order",
+      "permanent": true
+    },
+    {
+      "source": "/map/fast",
+      "destination": "/fast-and-furious-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/timeline/fast",
+      "destination": "/fast-and-furious-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/alien-timeline-map.html",
+      "destination": "/alien-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/alien-timeline-map",
+      "destination": "/alien-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/apes-timeline-map.html",
+      "destination": "/planet-of-the-apes-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/apes-timeline-map",
+      "destination": "/planet-of-the-apes-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/bourne-timeline-map.html",
+      "destination": "/jason-bourne-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/bourne-timeline-map",
+      "destination": "/jason-bourne-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/bttf-timeline-map.html",
+      "destination": "/back-to-the-future-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/bttf-timeline-map",
+      "destination": "/back-to-the-future-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/john-wick-timeline-map.html",
+      "destination": "/john-wick-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/john-wick-timeline-map",
+      "destination": "/john-wick-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/matrix-timeline-map.html",
+      "destination": "/matrix-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/matrix-timeline-map",
+      "destination": "/matrix-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/mcu-timeline-map.html",
+      "destination": "/mcu-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/mcu-timeline-map",
+      "destination": "/mcu-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/predator-timeline-map.html",
+      "destination": "/predator-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/predator-timeline-map",
+      "destination": "/predator-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/rambo-timeline-map.html",
+      "destination": "/rambo-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/rambo-timeline-map",
+      "destination": "/rambo-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/star-trek-timeline-map.html",
+      "destination": "/star-trek-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/star-trek-timeline-map",
+      "destination": "/star-trek-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/star-wars-timeline-map.html",
+      "destination": "/star-wars-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/star-wars-timeline-map",
+      "destination": "/star-wars-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/tenet-timeline-map.html",
+      "destination": "/tenet-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/tenet-timeline-map",
+      "destination": "/tenet-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/terminator-timeline-map.html",
+      "destination": "/terminator-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/terminator-timeline-map",
+      "destination": "/terminator-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/transformers-timeline-map.html",
+      "destination": "/transformers-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/transformers-timeline-map",
+      "destination": "/transformers-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/xmen-timeline-map.html",
+      "destination": "/x-men-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/xmen-timeline-map",
+      "destination": "/x-men-timeline",
+      "permanent": true
+    },
+    {
+      "source": "/watch-order",
+      "destination": "/all-franchises",
+      "permanent": true
+    },
+    {
+      "source": "/map",
+      "destination": "/timeline",
+      "permanent": true
+    },
+    {
+      "source": "/realorder",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/realorder.html",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    {
-      "source": "/queue",
-      "destination": "/queue.html"
-    },
-    {
-      "source": "/contribute",
-      "destination": "/contribute.html"
-    },
-    {
-      "source": "/contact",
-      "destination": "/contact.html"
-    },
-    {
-      "source": "/privacy",
-      "destination": "/privacy.html"
-    },
-    {
-      "source": "/terms",
-      "destination": "/terms.html"
-    },
-    {
-      "source": "/print-guide",
-      "destination": "/print-guide.html"
-    },
     {
       "source": "/check-email",
       "destination": "/index.html"
@@ -35,32 +489,8 @@
       "destination": "/index.html"
     },
     {
-      "source": "/timeline",
-      "destination": "/timeline.html"
-    },
-    {
-      "source": "/all-franchises",
-      "destination": "/all-franchises.html"
-    },
-    {
-      "source": "/map/:id",
-      "destination": "/map/:id.html"
-    },
-    {
-      "source": "/watch-order/:id",
-      "destination": "/watch-order/:id.html"
-    },
-    {
-      "source": "/posters",
-      "destination": "/posters.html"
-    },
-    {
       "source": "/posters/thanks",
       "destination": "/index.html"
-    },
-    {
-      "source": "/posters/:id",
-      "destination": "/posters/:id.html"
     }
   ],
   "headers": [

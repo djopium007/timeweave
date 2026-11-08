@@ -29,9 +29,9 @@ const CACHE = path.join(ROOT, 'scripts', 'posters-cache.json');
 const html = fs.readFileSync(SRC, 'utf8');
 
 /* ---------- pull the franchise data straight out of the app ---------- */
-function extractData(src) {
-  const start = src.indexOf('\n  data = {');
-  if (start < 0) throw new Error('build-seo: data block not found in index.html');
+function extractData(src, marker = '\n  data = {') {
+  const start = src.indexOf(marker);
+  if (start < 0) throw new Error('build-seo: ' + marker.trim() + ' block not found in index.html');
   const open = src.indexOf('{', start);
   let depth = 0, i = open, quote = null, esc = false;
   for (; i < src.length; i++) {
@@ -52,6 +52,26 @@ function extractData(src) {
 const data = extractData(html);
 const ids = Object.keys(data);
 
+/* ---------- public URL slugs (SLUGS in index.html is the single source of truth) ----------
+   Locked once live. A franchise without a slug fails the build rather than shipping a guessed URL. */
+const SLUGS = extractData(html, '\n  SLUGS = {');
+{
+  const seen = new Map(), bad = [];
+  for (const id of ids) {
+    const s = SLUGS[id];
+    if (!s || !s.map) { bad.push(`${id}: no SLUGS entry with a map slug`); continue; }
+    for (const k of ['wo', 'map']) {
+      if (!s[k]) continue;
+      if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(s[k])) bad.push(`${id}.${k}: "${s[k]}" is not lowercase-hyphenated`);
+      if (seen.has(s[k])) bad.push(`${id}.${k}: "${s[k]}" already used by ${seen.get(s[k])}`);
+      seen.set(s[k], id);
+    }
+  }
+  if (bad.length) throw new Error('build-seo: SLUGS problems in index.html ->\n  ' + bad.join('\n  '));
+}
+const woUrl = (f) => '/' + SLUGS[f.id].wo;
+const mapUrl = (f) => '/' + SLUGS[f.id].map;
+
 /* ---------- watch orders live in their own file (too big to inline per route) ---------- */
 let watchOrders = {};
 try {
@@ -64,7 +84,7 @@ const WO_NOUN = { dune: ['read and watch', 'Read and Watch'] };
 const WO_KW = { marvel: 'Marvel Movies in Order', matrix: 'Matrix Movies in Order', dune: 'Dune Books in Order (and Movies)', bourne: 'Jason Bourne Movies in Order', conjuring: 'The Conjuring Movies in Order', fast: 'Fast and Furious Movies in Order' };
 const woName = (f) => WO_KW[f.id] || `${f.title} Movies in Order`;
 const woPhrase = (f) => woName(f).replace(/(Movies|Books) in Order( \(and Movies\))?/, (m) => m.toLowerCase());
-const MAP_KW = { marvel: 'MCU Timeline Explained', conjuring: 'The Conjuring Timeline Explained', fast: 'Fast and Furious Timeline Explained' };
+const MAP_KW = { marvel: 'MCU Timeline Explained', bourne: 'Jason Bourne Timeline Explained', conjuring: 'The Conjuring Timeline Explained', fast: 'Fast and Furious Timeline Explained' };
 const mapName = (f) => MAP_KW[f.id] || `${f.title} Timeline Explained`;
 const stripTags = (t) => String(t || '').replace(/<[^>]+>/g, '');
 
@@ -105,10 +125,11 @@ const routes = [
 for (const id of Object.keys(watchOrders)) {
   const f = data[id];
   if (!f) { console.warn('build-seo: watch order for unknown franchise ' + id); continue; }
+  if (!SLUGS[id].wo) throw new Error('build-seo: ' + id + ' has a watch order but no SLUGS.' + id + '.wo');
   const noun = WO_NOUN[id] || ['watch', 'Watch'];
   routes.push({
-    url: `/watch-order/${id}`,
-    file: path.join('watch-order', `${id}.html`),
+    url: woUrl(f),
+    file: `${SLUGS[id].wo}.html`,
     title: `${woName(f)} \u00b7 ReelOrder`,
     desc: `${woPhrase(f)}: release order, chronological order, and the best watch order for a first-timer, with a reason for every entry.`,
     og: fs.existsSync(path.join(ROOT, 'assets', 'og', `og-wo-${id}.png`)) ? `og-wo-${id}` : (fs.existsSync(path.join(ROOT, 'assets', 'og', `og-${id}.png`)) ? `og-${id}` : 'og-default'),
@@ -121,8 +142,8 @@ for (const id of Object.keys(watchOrders)) {
 for (const id of ids) {
   const f = data[id];
   routes.push({
-    url: `/map/${id}`,
-    file: path.join('map', `${id}.html`),
+    url: mapUrl(f),
+    file: `${SLUGS[id].map}.html`,
     title: `${mapName(f)} · ReelOrder`,
     desc: `${f.title} timeline explained: ${f.meta}. ${f.tagline}${watchOrders[id] ? ` Plus the ${woPhrase(f)}.` : ''}`,
     og: fs.existsSync(path.join(ROOT, 'assets', 'og', `og-${id}.png`)) ? `og-${id}` : 'og-default',
@@ -217,7 +238,7 @@ function jsonLd(r) {
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'ReelOrder', item: SITE + '/' },
         { '@type': 'ListItem', position: 2, name: 'All franchises', item: SITE + '/all-franchises' },
-        { '@type': 'ListItem', position: 3, name: `${f.title} Timeline`, item: `${SITE}/map/${f.id}` },
+        { '@type': 'ListItem', position: 3, name: `${f.title} Timeline`, item: SITE + mapUrl(f) },
         { '@type': 'ListItem', position: 4, name: woName(f), item: url },
       ],
     });
@@ -334,7 +355,7 @@ ${section(`The order to ${noun} ${f.title} for the first time`, `<p>${esc(stripT
 ${section(`${f.title} in release order`, `<p>${esc(stripTags(wo.orders.release.note))}</p>` + listOf(wo.orders.release.items || []))}
 ${section(`${f.title} in chronological order`, `<p>${esc(stripTags(wo.orders.chrono.note))}</p>` + listOf(wo.orders.chrono.items || []))}
 ${(wo.faq && wo.faq.length) ? section('Common questions about the ' + woPhrase(f), wo.faq.map((q) => `<h3>${esc(q.q)}</h3><p>${esc(q.a)}</p>`).join('')) : ''}
-<p><a href="${SITE}/map/${f.id}">The ${esc(f.title)} branch map</a> &middot; <a href="${SITE}/all-franchises">All movie franchises in order</a></p>
+<p><a href="${SITE}${mapUrl(f)}">The ${esc(f.title)} branch map</a> &middot; <a href="${SITE}/all-franchises">All movie franchises in order</a></p>
 </article></noscript>`;
   }
   if (!r.franchise) return '';
@@ -349,7 +370,7 @@ ${(wo.faq && wo.faq.length) ? section('Common questions about the ' + woPhrase(f
 <p>${esc(f.framing || f.blurb || f.tagline)}</p>
 <h2>Branches</h2><ul>${branches}</ul>
 ${films ? `<h2>Films</h2><ul>${films}</ul>` : ''}
-<p>${watchOrders[f.id] ? `<a href="${SITE}/watch-order/${f.id}">${esc(woName(f))}</a>: release order vs chronological order, plus the order to watch it for the first time. &middot; ` : ''}<a href="${SITE}/all-franchises">All movie franchises in order</a></p>
+<p>${watchOrders[f.id] ? `<a href="${SITE}${woUrl(f)}">${esc(woName(f))}</a>: release order vs chronological order, plus the order to watch it for the first time. &middot; ` : ''}<a href="${SITE}/all-franchises">All movie franchises in order</a></p>
 </article></noscript>`;
 }
 
@@ -450,7 +471,7 @@ function directoryPage() {
   const url = SITE + '/all-franchises';
   const title = 'All Movie Franchises in Order · ReelOrder';
   const desc = `${total} movie franchises in order, grouped by genre: ${genreText}. Each one has its release order, chronological order and best first-time watch order, plus a timeline map of where the story splits.`;
-  const primaryUrl = (f) => watchOrders[f.id] ? `/watch-order/${f.id}` : `/map/${f.id}`;
+  const primaryUrl = (f) => watchOrders[f.id] ? woUrl(f) : mapUrl(f);
 
   const ld = { '@context': 'https://schema.org', '@graph': [
     { '@type': 'CollectionPage', '@id': url + '#webpage', url, name: title, description: desc,
@@ -470,7 +491,7 @@ function directoryPage() {
       <li class="fr" style="--a:${esc(f.accent || '#FF2A1F')}">
         <div class="fr-top"><h3><a href="${primaryUrl(f)}">${esc(f.title)}</a></h3><span class="meta">${esc(f.meta || '')}</span></div>
         <p>${esc(stripTags(f.tagline || ''))}</p>
-        <div class="links">${watchOrders[f.id] ? `<a class="wo" href="/watch-order/${f.id}">${esc(woName(f))}</a>` : ''}<a href="/map/${f.id}">${esc(mapName(f))}</a></div>
+        <div class="links">${watchOrders[f.id] ? `<a class="wo" href="${woUrl(f)}">${esc(woName(f))}</a>` : ''}<a href="${mapUrl(f)}">${esc(mapName(f))}</a></div>
       </li>`;
   const section = (g) => `
   <section class="genre" id="${g.id}" aria-labelledby="h-${g.id}">
@@ -605,6 +626,17 @@ ${soon.length ? `
 `;
 }
 emit('all-franchises.html', directoryPage());
+
+/* ---------- 404 page: keep its "Live maps" list current ---------- */
+{
+  const p404 = path.join(ROOT, '404.html');
+  const src404 = fs.readFileSync(p404, 'utf8');
+  const RE404 = /<!--RO:MAPS-->[\s\S]*?<!--\/RO:MAPS-->/;
+  if (!RE404.test(src404)) throw new Error('build-seo: RO:MAPS markers missing from 404.html');
+  const items = ids.map((id) => data[id]).sort((a, b) => a.title.replace(/^The /, '').localeCompare(b.title.replace(/^The /, '')))
+    .map((f) => `      <li><a href="${watchOrders[f.id] ? woUrl(f) : mapUrl(f)}">${esc(f.title)}</a></li>`).join('\n');
+  emit('404.html', src404.replace(RE404, `<!--RO:MAPS-->\n${items}\n      <!--/RO:MAPS-->`));
+}
 
 /* ---------- sitemap + robots ---------- */
 async function fetchPosters() {

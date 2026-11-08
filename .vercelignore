@@ -1,0 +1,11 @@
+# Internal working files - never serve these on reelorder.com
+# (added 2026-11-08: /keywords/serp-teardown-*.md and /scripts/*.sql were publicly reachable)
+keywords/
+scripts/
+_to_delete/
+Claude outputs/
+*.bak-*
+index.html.bak*
+README.md
+deploy.command
+ship.sh

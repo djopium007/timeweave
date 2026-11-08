@@ -1,4 +1,4 @@
-// POST /api/hit  { p: "/path", r: "https://referrer" }
+// POST /api/hit  { p: "/path", r: "https://referrer", u?: { source, medium, campaign } }
 // First-party page-view beacon for the admin Traffic tab. Stores no IP and no cookie:
 // the visitor id is an HMAC of ip + user-agent + UTC day, so it rotates every day and cannot be
 // reversed. Geo comes from Vercel's edge headers. Obvious bots are dropped before insert.
@@ -63,6 +63,13 @@ export default async function handler(req, res) {
       browser: browser(ua),
       visitor_hash,
     };
+    // utm_* tags from the landing URL (first beacon of a visit only) - see README "Sharing links"
+    const tag = (v) => { const t = String(v || '').toLowerCase().trim().replace(/[^\w.\-+ ]/g, '').slice(0, 60); return t || null; };
+    if (b.u && typeof b.u === 'object') {
+      row.utm_source = tag(b.u.source);
+      row.utm_medium = tag(b.u.medium);
+      row.utm_campaign = tag(b.u.campaign);
+    }
     const { error } = await db().from('page_views').insert(row);
     if (error) throw error;
     return done(res);

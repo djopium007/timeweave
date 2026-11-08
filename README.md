@@ -130,18 +130,26 @@ The hub is a single-page app, but the address bar stays in step with it:
 | `/` | Hub |
 | `/queue` | The Queue |
 | `/contribute` | Contribute |
-| `/map/<id>` | A franchise map (`/map/alien`, `/map/starwars`, …) |
-| `/timeline` | Timeline view, no franchise selected |
+| `/<slug>-movies-in-order` | A watch order (`/john-wick-movies-in-order`, `/dune-books-in-order`) |
+| `/<slug>-timeline` | A franchise map (`/alien-timeline`, `/mcu-timeline`) |
+| `/timeline` | All maps (picker) |
+| `/all-franchises` | Directory grouped by genre |
+
+**URL slugs are locked (2026-11-08).** They live in `SLUGS` in `index.html`, follow the searched
+phrase in `keywords/` (lowercase, hyphens), and are read by `build-seo.mjs` (the build fails if a
+franchise has none). Backlinks point at them: never rename one; add a 308 in `vercel.json` instead.
+Internal ids (`johnwick`, `bttf`…) are unchanged: data keys, `og-<id>.png`, votes and watched state.
+The pre-2026-11-08 `/watch-order/<id>`, `/map/<id>`, root `*-timeline-map.html` and `www.` URLs all
+308 to the new ones. New franchise: add a `SLUGS` entry, no redirect needed.
 
 `history.pushState` drives it, `popstate` handles back/forward, and `document.title`
-follows the screen. `vercel.json` rewrites those paths to `/index.html` so deep links
-survive a refresh — every other path still resolves to a real file first (the standalone
-`*-timeline-map.html` exports, `privacy.html`, `terms.html`, `assets/*`).
+follows the screen. Every route is a prerendered `.html` copy of the hub at the site root, and
+`cleanUrls: true` serves it without the extension (and 308s the `.html` spelling away).
 
 Two things to keep in mind when editing `index.html`:
 
 - **Asset URLs must be root-relative** (`/assets/…`). A relative `assets/…` breaks at
-  `/map/alien`, where the browser resolves it to `/map/assets/…`.
+  `/posters/john-wick`, where the browser resolves it to `/posters/assets/…`.
 - **OAuth returns to `/`.** `signInWithOAuth` stashes the current path in
   `sessionStorage.reelorder_route` and redirects to the origin, so only the bare site URL
   needs to be in Supabase's redirect allow-list; `initRouting()` restores the path on load.
@@ -181,12 +189,12 @@ block (between the `<!--RO:META-->` markers) carries that route's title, descrip
 canonical, Open Graph / Twitter tags and JSON-LD. Everything below the head is byte-identical
 to `index.html`, so there is nothing to maintain twice.
 
-- **Generated files** (never edit by hand): `map/<id>.html` (one per franchise), `queue.html`,
+- **Generated files** (never edit by hand): `<slug>-timeline.html` and `<slug>-movies-in-order.html` at the root, `queue.html`,
   `contribute.html`, `contact.html`, `posters.html`, `timeline.html`, `realorder.html`,
-  `sitemap.xml`, `robots.txt`, plus the head block inside `index.html` itself.
+  `all-franchises.html`, `sitemap.xml`, `robots.txt`, the `RO:MAPS` list in `404.html`, plus the head block inside `index.html` itself.
 - **`ship.sh` runs it before every commit**, so the copies can never drift. Run
   `node scripts/build-seo.mjs --check` to fail loudly if they are stale (exit 1).
-- `vercel.json` rewrites each clean URL to its generated file (`/map/:id` → `/map/:id.html`).
+- `cleanUrls` maps each clean URL to its generated file; `vercel.json` only rewrites the app-only routes (`/admin`, `/check-email`, `/posters/thanks`).
   Unknown paths fall through to `404.html`.
 - Franchise copy comes straight out of the `data` map in `index.html` — add a franchise and
   its page, sitemap entry and structured data appear on the next build. **Add its OG image
@@ -212,7 +220,7 @@ diagram in the franchise accent colour — deliberately no studio logos or chara
 
 ## Watch orders
 
-`/watch-order/<id>` answers the highest-volume query in this niche — "<franchise> movies in order" (title + H1 use that exact phrase; `WO_KW` in build-seo.mjs/index.html overrides the franchise name for marvel, matrix, dune). Keyword data lives in `keywords/`.
+`/<slug>-movies-in-order` answers the highest-volume query in this niche — "<franchise> movies in order" (title + H1 use that exact phrase; `WO_KW` in build-seo.mjs/index.html overrides the franchise name for marvel, matrix, dune). Keyword data lives in `keywords/`.
 Eleven franchises have one (everything except Tenet, which is a single film).
 
 - **Content lives in `assets/watch-orders.json`**, not in `index.html` — it is ~110 KB and would otherwise
@@ -232,5 +240,12 @@ Eleven franchises have one (everything except Tenet, which is a single film).
 - Runtimes are deliberately absent: the data model has the field, but filling it means wiring TMDB rather
   than hand-typing ~200 numbers. Progress shows a count until then.
 
-Adding a franchise's watch order: add its key to `assets/watch-orders.json`, add the id to `WO_IDS` in
+Adding a franchise's watch order: add its key to `assets/watch-orders.json`, add the id to `WO_IDS` and a `wo` slug to `SLUGS` in
 `index.html`, generate `assets/og/og-wo-<id>.png` (`scripts/build-og.mjs`), then `node scripts/build-seo.mjs`.
+
+## Sharing links (UTM convention)
+
+Tag every link posted off-site so the admin Traffic tab can attribute it (QR codes, Discord and most apps send no referrer):
+`?utm_source=<site>&utm_medium=<social|forum|qr|email|outreach>&utm_campaign=<name-mmmyy>` — lowercase, hyphens.
+Example: `https://reelorder.com/john-wick-movies-in-order?utm_source=reddit&utm_medium=forum&utm_campaign=launch-nov26`.
+The first beacon of a visit stores the tags in `page_views.utm_*`; the canonical tag strips them, so they never split rankings.
