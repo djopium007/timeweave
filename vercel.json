@@ -513,7 +513,7 @@
         },
         {
           "key": "Content-Security-Policy-Report-Only",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://fqcdslarscuplbdimgzs.supabase.co; connect-src 'self' https://fqcdslarscuplbdimgzs.supabase.co wss://fqcdslarscuplbdimgzs.supabase.co; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https://fqcdslarscuplbdimgzs.supabase.co https://i.ytimg.com; connect-src 'self' https://fqcdslarscuplbdimgzs.supabase.co wss://fqcdslarscuplbdimgzs.supabase.co; frame-src https://www.youtube-nocookie.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
         }
       ]
     },

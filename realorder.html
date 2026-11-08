@@ -561,6 +561,31 @@
   ::-webkit-scrollbar-thumb:hover{background:#2e333d;}
   @keyframes tw-drift{0%{transform:translate3d(0,0,0) scale(1);}50%{transform:translate3d(-3%,2%,0) scale(1.08);}100%{transform:translate3d(0,0,0) scale(1);}}
   @keyframes tw-pulse{0%,100%{opacity:0.55;}50%{opacity:1;}}
+  .ro-trailer{width:168px;height:95px;}
+  .ro-trailer:hover{box-shadow:0 10px 28px -10px rgba(0,0,0,0.9);}
+  @media (max-width:640px){div:has(> .ro-trailer){flex-wrap:wrap;}.ro-trailer{width:calc(100% - 37px);height:auto;aspect-ratio:16/7;margin-left:37px;}}
+  /* Motion layer (map pages listed in MOTION_IDS). Inert unless <html data-motion> is set. */
+  .ro-mo-bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:1;pointer-events:none;opacity:0;transition:opacity 1.4s ease;}
+  html[data-motion] .ro-mo-bg{opacity:0.48;}
+  @keyframes mo-flicker{0%{opacity:0.1;text-shadow:none;}6%{opacity:1;}9%{opacity:0.25;}13%{opacity:1;}18%{opacity:0.45;}24%,100%{opacity:1;text-shadow:0 0 16px var(--mo-accent),0 0 46px color-mix(in srgb,var(--mo-accent) 50%,transparent);}}
+  @keyframes mo-run{0%{top:-80px;}100%{top:100%;}}
+  @keyframes mo-ping{0%{box-shadow:0 0 0 0 var(--mo-c);}100%{box-shadow:0 0 0 12px transparent;}}
+  @keyframes mo-breathe{0%,100%{filter:brightness(1);}50%{filter:brightness(1.5) drop-shadow(0 0 6px var(--mo-c));}}
+  @keyframes mo-forkglow{0%,100%{box-shadow:0 0 0 0 transparent;border-color:rgba(255,255,255,0.14);}50%{box-shadow:0 0 28px -4px var(--mo-accent);border-color:var(--mo-accent);}}
+  html[data-motion] [data-mo=accent]{animation:mo-flicker 1.7s steps(1,end) 0.25s both;}
+  html[data-motion] [data-mo=fork]{animation:mo-forkglow 3s ease-in-out infinite;}
+  html[data-motion] [data-mo=branch]{transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1), filter .25s ease, border-color .25s ease !important;}
+  html[data-motion] [data-mo=branch]{background-color:rgba(8,10,13,0.9) !important;}
+  html[data-motion] [data-mo=branch]:not([data-mo-in]){opacity:0 !important;transform:translateY(28px);}
+  html[data-motion] [data-mo=dot]{animation:mo-breathe 3.4s ease-in-out infinite;}
+  html[data-motion] [data-mo=rail],html[data-motion] [data-mo=conn]{transform-origin:top;transform:scaleY(0);transition:transform 1.5s cubic-bezier(.3,.7,.2,1) .2s;}
+  html[data-motion] [data-mo=branch][data-mo-in] [data-mo=rail],html[data-motion] [data-mo=branch][data-mo-in] [data-mo=conn]{transform:scaleY(1);}
+  html[data-motion] [data-mo=rail]{clip-path:inset(0 -14px);}
+  html[data-motion] [data-mo=rail]::after{content:'';position:absolute;left:-2px;width:6px;height:80px;top:-80px;border-radius:3px;background:linear-gradient(transparent,#fff);box-shadow:0 0 14px 2px var(--mo-c);animation:mo-run 6s linear 1.8s infinite;}
+  html[data-motion] [data-mo=node]{transition:opacity .65s ease var(--mo-d,0ms), transform .65s cubic-bezier(.2,.7,.2,1) var(--mo-d,0ms);}
+  html[data-motion] [data-mo=node]:not([data-mo-in]){opacity:0;transform:translateY(18px);}
+  html[data-motion] [data-mo=node][data-mo-in] [data-mo=marker]{animation:mo-ping 1s ease-out calc(var(--mo-d,0ms) + 250ms) 1;}
+  @media (prefers-reduced-motion: reduce){.ro-mo-bg{display:none;}}
   input::placeholder,textarea::placeholder{color:#5a6573;}
   input:focus,textarea:focus,button:focus-visible{outline:none;}
 </style>
@@ -801,7 +826,7 @@
         </div>
         <div style="flex:1;min-width:260px;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#6b7686;">{{ active.meta }}</div>
-          <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1;margin:6px 0 0;text-transform:uppercase;letter-spacing:0.01em;">{{ active.headName }}<span style="{{ active.headAccentStyle }}"> Timeline</span></h1>
+          <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1;margin:6px 0 0;text-transform:uppercase;letter-spacing:0.01em;">{{ active.headName }}<span data-mo="accent" style="{{ active.headAccentStyle }}"> Timeline</span></h1>
           <p style="margin:14px 0 0;max-width:72ch;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">{{ active.framing }}</p>
           <sc-if value="{{ hasWatchOrder }}" hint-placeholder-val="{{ true }}">
             <a href="{{ watchOrderHref }}" onclick="{{ goWatchOrder }}" style="{{ watchOrderBtnStyle }}" style-hover="border-color:rgba(255,255,255,0.4);color:#fff;">▶ {{ watchOrderBtnLabel }}</a>
@@ -839,7 +864,7 @@
 
           <sc-if value="{{ isTree }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:6px;">
-              <div style="display:inline-flex;align-items:center;gap:9px;padding:9px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.14);background:rgba(13,15,20,0.9);">
+              <div data-mo="fork" style="display:inline-flex;align-items:center;gap:9px;padding:9px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.14);background:rgba(13,15,20,0.9);">
                 <span style="width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff;"></span>
                 <span style="font-family:'Oswald',sans-serif;font-weight:500;font-size:15px;letter-spacing:0.05em;text-transform:uppercase;">{{ active.forkLabel }}</span>
               </div>
@@ -850,14 +875,14 @@
 
           <div style="{{ branchesContainerStyle }}">
             <sc-for list="{{ branches }}" as="br" hint-placeholder-count="4">
-              <div style="{{ br.wrapperStyle }}">
+              <div data-mo="branch" style="{{ br.wrapperStyle }}">
                 <sc-if value="{{ br.showConnector }}" hint-placeholder-val="{{ false }}">
-                  <div style="{{ br.connectorStyle }}"></div>
+                  <div data-mo="conn" style="{{ br.connectorStyle }}"></div>
                 </sc-if>
                 <!-- branch header -->
                 <div onclick="{{ br.onToggle }}" style="{{ br.headerStyle }}">
                   <div style="display:flex;align-items:center;gap:12px;min-width:0;">
-                    <span style="{{ br.dotStyle }}"></span>
+                    <span data-mo="dot" style="{{ br.dotStyle }}"></span>
                     <div style="min-width:0;">
                       <div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(18px,2.4vw,23px);letter-spacing:0.01em;text-transform:uppercase;line-height:1.05;">{{ br.title }}</div>
                       <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#7a8696;margin-top:3px;">{{ br.filmsLabel }}</div>
@@ -873,12 +898,12 @@
                     <div style="{{ br.bodyPadStyle }}">
                       <p style="margin:0 0 18px;color:#9aa6b4;font-size:14.5px;line-height:1.55;font-style:italic;text-wrap:pretty;">{{ br.summary }}</p>
                       <div style="position:relative;">
-                        <div style="{{ br.railLineStyle }}"></div>
+                        <div data-mo="rail" style="{{ br.railLineStyle }}"></div>
                         <div style="display:flex;flex-direction:column;gap:{{ br.nodeGap }};">
                           <sc-for list="{{ br.nodes }}" as="n" hint-placeholder-count="4">
-                            <div style="position:relative;display:flex;gap:16px;align-items:flex-start;">
+                            <div data-mo="node" style="position:relative;display:flex;gap:16px;align-items:flex-start;">
                               <div style="flex:none;width:34px;display:flex;justify-content:center;padding-top:5px;">
-                                <span style="{{ n.markerStyle }}"></span>
+                                <span data-mo="marker" style="{{ n.markerStyle }}"></span>
                               </div>
                               <div style="flex:1;min-width:0;padding-bottom:2px;">
                                 <span style="{{ n.eraStyle }}">{{ n.era }}</span>
@@ -1757,6 +1782,13 @@
                   </sc-if>
                   <span style="{{ f.branchStyle }}">{{ f.branch }}</span>
                 </div>
+                <sc-if value="{{ f.hasTrailer }}" hint-placeholder-val="{{ false }}">
+                  <button class="ro-trailer" onclick="{{ f.onTrailer }}" aria-label="{{ f.trailerAlt }}" title="{{ f.trailerAlt }}" style="{{ f.trailerBtnStyle }}" style-hover="transform:translateY(-2px);">
+                    <img src="{{ f.trailerThumb }}" alt="" loading="lazy" width="320" height="180" style="display:block;width:100%;height:100%;object-fit:cover;opacity:0.82;">
+                    <span style="{{ f.trailerPlayStyle }}">▶</span>
+                    <span class="ro-trailer-label" style="position:absolute;left:0;right:0;bottom:0;padding:14px 8px 6px;background:linear-gradient(transparent,rgba(0,0,0,0.85));font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#E9EDF3;text-align:center;">Trailer</span>
+                  </button>
+                </sc-if>
               </div>
             </sc-for>
           </div>
@@ -1779,6 +1811,38 @@
         <p style="margin:0;color:#9aa6b4;font-size:15px;max-width:52ch;line-height:1.55;">{{ wo.footNote }}</p>
         <button onclick="{{ wo.onOpenMap }}" style="{{ wo.footBtnStyle }}" style-hover="filter:brightness(1.14);">{{ wo.footBtnLabel }}</button>
       </div>
+
+      <sc-if value="{{ wo.trailerOpen }}" hint-placeholder-val="{{ false }}">
+      <div onclick="{{ wo.onTrailerClose }}" role="dialog" aria-modal="true" aria-label="{{ wo.trailerTitle }}" style="position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:clamp(14px,4vw,40px);background:rgba(3,4,6,0.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);">
+        <div onclick="{{ wo.onTrailerStop }}" style="width:min(980px,100%);">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:12px;">
+            <div style="min-width:0;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#9DB0C4;">{{ wo.trailerKicker }}</div>
+              <div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(20px,3vw,28px);letter-spacing:0.01em;text-transform:uppercase;color:#E9EDF3;line-height:1.1;margin-top:4px;">{{ wo.trailerTitle }}</div>
+            </div>
+            <button onclick="{{ wo.onTrailerClose }}" aria-label="Close trailer" style="flex:none;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#E9EDF3;font-size:18px;line-height:1;cursor:pointer;" style-hover="background:rgba(255,255,255,0.14);">✕</button>
+          </div>
+          <div style="{{ wo.trailerFrameStyle }}">
+            <sc-if value="{{ wo.trailerPlaying }}" hint-placeholder-val="{{ false }}">
+              <iframe data-ro-yt="1" src="{{ wo.trailerSrc }}" title="{{ wo.trailerTitle }}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen="" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+            </sc-if>
+            <sc-if value="{{ wo.trailerEnded }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center;background:radial-gradient(70% 70% at 50% 40%,rgba(255,255,255,0.06),rgba(0,0,0,0.92));">
+                <div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(20px,3vw,30px);text-transform:uppercase;letter-spacing:0.02em;color:#E9EDF3;">That was the trailer</div>
+                <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+                  <sc-if value="{{ wo.hasNextTrailer }}" hint-placeholder-val="{{ true }}">
+                    <button onclick="{{ wo.onTrailerNext }}" style="{{ wo.trailerNextStyle }}" style-hover="filter:brightness(1.14);">{{ wo.nextTrailerLabel }}</button>
+                  </sc-if>
+                  <button onclick="{{ wo.onTrailerClose }}" style="padding:12px 20px;border-radius:999px;border:1px solid rgba(255,255,255,0.22);background:rgba(255,255,255,0.05);color:#E9EDF3;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;" style-hover="background:rgba(255,255,255,0.12);">Back to the watch order</button>
+                  <button onclick="{{ wo.onTrailerReplay }}" style="padding:12px 16px;border-radius:999px;border:none;background:transparent;color:#9DB0C4;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;" style-hover="color:#fff;">↻ Replay</button>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+          <div style="margin-top:12px;font-family:'DM Sans',sans-serif;font-size:12.5px;color:#7a8696;line-height:1.5;">{{ wo.trailerCredit }}</div>
+        </div>
+      </div>
+      </sc-if>
 
     </div>
     </sc-if>
@@ -1936,7 +2000,7 @@ class Component extends DCLogic {
     screen: 'hub',
     navOpen: false,
     isNarrow: (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth <= 1000 : false,
-    woOrder: 'first', woData: null, woLoading: false, woWatched: {},
+    woOrder: 'first', woData: null, woLoading: false, woWatched: {}, trailer: null,
     activeId: 'terminator',
     // Timeline tab index: filter, sort, and the last map actually opened this session
     mapsQ: '', mapsSort: 'az', lastViewedId: null,
@@ -12918,9 +12982,71 @@ class Component extends DCLogic {
     try { localStorage.removeItem(this.WO_KEY + fid); } catch(e){}
   };
   setWoOrder = (k) => this.setState({ woOrder: k });
+
+  // ---------- trailers: official YouTube trailers played in an on-page player ----------
+  // The video never sends people to youtube.com: it plays in a modal, and when it ends
+  // our own end card replaces YouTube's suggested-videos wall (next trailer / back to list).
+  trailerList = (s) => {
+    const wod = (s.woData || {})[s.activeId];
+    const tr = wod && wod.trailers;
+    if (!tr) return [];
+    const order = wod.orders[s.woOrder] || wod.orders.first;
+    const raw = order.groups || [{ items: order.items }];
+    const out = [], seen = {};
+    raw.forEach(g => (g.items || []).forEach(it => { if (tr[it.id] && !seen[it.id]) { seen[it.id] = 1; out.push({ id: it.id, title: it.title, yt: tr[it.id] }); } }));
+    return out;
+  };
+  openTrailer = (itemId) => {
+    const t = this.trailerList(this.state).find(x => x.id === itemId);
+    if (!t) return;
+    this.setState({ trailer: { id: t.id, title: t.title, yt: t.yt, ended: false } });
+    this.trailerHandshake();
+    if (!this._trailerKeys) {
+      this._trailerKeys = (e) => { if (e.key === 'Escape' && this.state.trailer) this.closeTrailer(); };
+      window.addEventListener('keydown', this._trailerKeys);
+    }
+    if (!this._trailerMsg) {
+      this._trailerMsg = (e) => {
+        if (!this.state.trailer || !/^https:\/\/www\.youtube(-nocookie)?\.com$/.test(e.origin)) return;
+        let m; try { m = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (_) { return; }
+        if (!m) return;
+        if (m.event === 'onReady' || m.event === 'initialDelivery' || m.event === 'infoDelivery') this._trailerHeard = true;
+        const ended = (m.event === 'onStateChange' && m.info === 0) || (m.event === 'infoDelivery' && m.info && m.info.playerState === 0);
+        if (ended && !this.state.trailer.ended) this.setState(s => ({ trailer: Object.assign({}, s.trailer, { ended: true }) }));
+      };
+      window.addEventListener('message', this._trailerMsg);
+    }
+  };
+  // YouTube only reports player state to a parent that says it is listening. Same
+  // handshake its iframe_api script does, without loading that script.
+  trailerHandshake = () => {
+    this._trailerHeard = false;
+    if (this._trailerPing) clearInterval(this._trailerPing);
+    let n = 0;
+    this._trailerPing = setInterval(() => {
+      const f = document.querySelector('iframe[data-ro-yt]');
+      if (++n > 40 || this._trailerHeard || !this.state.trailer) { clearInterval(this._trailerPing); this._trailerPing = null; if (!f || !this._trailerHeard) return; }
+      if (!f || !f.contentWindow) return;
+      try {
+        f.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), '*');
+        f.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'addEventListener', args: ['onStateChange'], id: 1, channel: 'widget' }), '*');
+      } catch (_) {}
+    }, 250);
+  };
+  closeTrailer = () => {
+    if (this._trailerPing) { clearInterval(this._trailerPing); this._trailerPing = null; }
+    this.setState({ trailer: null });
+  };
+  replayTrailer = () => { const t = this.state.trailer; if (!t) return; this.setState({ trailer: Object.assign({}, t, { ended: false, n: (t.n || 0) + 1 }) }); this.trailerHandshake(); };
+  nextTrailer = () => {
+    const list = this.trailerList(this.state), t = this.state.trailer;
+    const i = t ? list.findIndex(x => x.id === t.id) : -1;
+    const nx = list[i + 1];
+    if (nx) this.openTrailer(nx.id); else this.closeTrailer();
+  };
   goWatchOrder = (id) => {
     if (!this.data[id] || !this.hasWatchOrder(id)) return;
-    this.setState({ screen:'watchOrder', activeId:id, woOrder:'first', woWatched:this.readWatched(id) });
+    this.setState({ screen:'watchOrder', activeId:id, woOrder:'first', woWatched:this.readWatched(id), trailer:null });
     this.pushRoute(this.woPath(id));
     this.loadWatchOrders();
     this.toTop();
@@ -12965,7 +13091,30 @@ class Component extends DCLogic {
       progressText: '', barStyle: 'display:block;height:100%;width:0%;background:' + accent + ';border-radius:999px;transition:width .35s ease;',
       note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: ''
     };
+    // trailer modal (closed unless s.trailer is set)
+    const tr = s.trailer;
+    const tList = this.trailerList(s);
+    const tIdx = tr ? tList.findIndex(x => x.id === tr.id) : -1;
+    const tNext = tIdx >= 0 ? tList[tIdx + 1] : null;
+    Object.assign(wo, {
+      trailerOpen: !!tr,
+      trailerPlaying: !!tr && !tr.ended,
+      trailerEnded: !!tr && !!tr.ended,
+      trailerSrc: tr ? 'https://www.youtube-nocookie.com/embed/' + tr.yt + '?autoplay=1&rel=0&playsinline=1&enablejsapi=1&iv_load_policy=3&origin=' + encodeURIComponent(location.origin) + '&r=' + (tr.n || 0) : '',
+      trailerTitle: tr ? tr.title : '',
+      trailerKicker: tr ? 'Official trailer' + (tList.length > 1 ? ' · ' + (tIdx + 1) + ' of ' + tList.length : '') : '',
+      trailerCredit: 'Official trailer from ' + ((wod && wod.trailerSource) || title) + ' on YouTube. It plays here, so your place in the list is kept.',
+      hasNextTrailer: !!tNext,
+      nextTrailerLabel: tNext ? 'Next: ' + tNext.title + ' trailer ▶' : '',
+      onTrailerClose: () => this.closeTrailer(),
+      onTrailerStop: (e) => { try { e.stopPropagation(); } catch (_) {} },
+      onTrailerNext: () => this.nextTrailer(),
+      onTrailerReplay: () => this.replayTrailer(),
+      trailerFrameStyle: 'position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 0 0 1px ' + accent + '55,0 30px 90px -24px ' + accent + '88;',
+      trailerNextStyle: "padding:12px 20px;border-radius:999px;border:1px solid " + accent + ";background:" + accent + ";color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;",
+    });
     if (!wod) return wo;
+    const trailers = wod.trailers || {};
     wo.hasFaq = !!(wod.faq && wod.faq.length);
     wo.faq = (wod.faq || []).map((q, i) => ({ key: i, q: q.q, a: q.a }));
     wo.faqHeading = 'Common questions about the ' + (this.woPhrase(s.activeId) || title + ' movies in order');
@@ -13005,6 +13154,12 @@ class Component extends DCLogic {
           title: it.title,
           meta: bits.join(' · '),
           branch: it.branch,
+          hasTrailer: !!trailers[it.id],
+          trailerThumb: trailers[it.id] ? 'https://i.ytimg.com/vi/' + trailers[it.id] + '/mqdefault.jpg' : '',
+          trailerAlt: 'Play the official ' + it.title + ' trailer',
+          onTrailer: () => this.openTrailer(it.id),
+          trailerBtnStyle: 'flex:none;align-self:center;position:relative;padding:0;border:1px solid ' + accent + '55;border-radius:11px;overflow:hidden;cursor:pointer;background:#000;transition:transform .18s ease, box-shadow .18s ease;',
+          trailerPlayStyle: 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:' + accent + ';color:#fff;font-size:14px;padding-left:3px;box-shadow:0 0 0 4px rgba(0,0,0,0.35),0 0 22px ' + accent + ';',
           hasWhy: !!it.why,
           whyParts: this.woParts(it.why),
           tickMark: on ? '✓' : '',
@@ -13148,7 +13303,7 @@ class Component extends DCLogic {
     this.setState({ filter:'all', collapsed:{}, view:'rail', seriesTab:'map', ...r });
     this.setTitle(this.routeFor(r.screen, r.posterId || r.activeId || this.state.activeId));
     if (r.screen === 'posterThanks') this.loadThanks(); else if (r.screen === 'posters' || r.screen === 'poster') this.loadPosters(); else if (r.screen === 'admin') this.loadAdmin();
-    if (r.screen === 'watchOrder') { this.setState({ woWatched: this.readWatched(r.activeId), woOrder:'first' }); this.loadWatchOrders(); }
+    if (r.screen === 'watchOrder') { this.setState({ woWatched: this.readWatched(r.activeId), woOrder:'first', trailer:null }); this.loadWatchOrders(); }
     this.trackView(location.pathname);
     this.toTop();
   };
@@ -13483,6 +13638,7 @@ class Component extends DCLogic {
   componentDidMount() {
     this.initRouting();
     this.startSpotTimer();
+    try { this.initMotion(); } catch (e) {}
     try {
       const mq = window.matchMedia('(max-width: 1000px)');
       const applyMQ = () => this.setState({ isNarrow: mq.matches, navOpen: false });
@@ -13516,7 +13672,120 @@ class Component extends DCLogic {
     this.refreshCommunity();
   }
 
+  // ---------- motion layer ----------
+  // Map ids that get the animated treatment. Add an id here to roll it out to another map.
+  MOTION_IDS = { tron: 1 };
+  initMotion = () => {
+    if (this._moObs || typeof MutationObserver === 'undefined' || typeof IntersectionObserver === 'undefined') return;
+    this._moObs = new MutationObserver(() => {
+      if (this._moQueued) return;
+      this._moQueued = true;
+      requestAnimationFrame(() => { this._moQueued = false; this.syncMotion(); });
+    });
+    this._moObs.observe(document.body, { childList: true, subtree: true });
+    this.syncMotion();
+  };
+  syncMotion = () => {
+    const s = this.state, root = document.documentElement;
+    let reduce = false; try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    const id = (s.screen === 'timeline' && this.MOTION_IDS[s.activeId] && !reduce && this.props.ambientMotion !== false) ? s.activeId : null;
+    if (!id) { if (root.dataset.motion) { delete root.dataset.motion; this.stopMotionBg(); } return; }
+    if (root.dataset.motion !== id) {
+      const accent = (this.data[id] && this.data[id].accent) || '#FFFFFF';
+      root.dataset.motion = id;
+      root.style.setProperty('--mo-accent', accent);
+      this.startMotionBg(accent);
+    }
+    if (!this._moIO) this._moIO = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.setAttribute('data-mo-in', ''); this._moIO.unobserve(e.target); }
+    }), { rootMargin: '0px 0px -6% 0px', threshold: 0.04 });
+    document.querySelectorAll('[data-mo="branch"]:not([data-mo-seen]),[data-mo="node"]:not([data-mo-seen])').forEach(el => {
+      el.setAttribute('data-mo-seen', '');
+      if (el.getAttribute('data-mo') === 'node' && el.parentElement) el.style.setProperty('--mo-d', Math.min(Array.prototype.indexOf.call(el.parentElement.children, el), 6) * 80 + 'ms');
+      this._moIO.observe(el);
+    });
+  };
+  // Animated backdrop: a perspective floor grid rolling toward the viewer, a horizon glow
+  // and a couple of light streaks crossing the floor. Original drawing code, no assets.
+  startMotionBg = (accent) => {
+    this.stopMotionBg();
+    const c = document.createElement('canvas');
+    c.className = 'ro-mo-bg'; c.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(c);
+    const ctx = c.getContext('2d');
+    if (!ctx) return;
+    const hx = accent.replace('#', ''), A = [0, 2, 4].map(i => parseInt(hx.substr(i, 2), 16) || 255);
+    const col = (a) => 'rgba(' + A[0] + ',' + A[1] + ',' + A[2] + ',' + a + ')';
+    let w = 0, h = 0;
+    const size = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      w = window.innerWidth; h = window.innerHeight;
+      c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    size();
+    window.addEventListener('resize', size);
+    const streaks = [0, 1, 2].map(i => ({ z: 0.25 + i * 0.27, speed: 0.07 + i * 0.035, dir: i % 2 ? -1 : 1, off: i * 0.37, white: i === 1 }));
+    const draw = (t) => {
+      ctx.clearRect(0, 0, w, h);
+      const sy = window.scrollY || 0;
+      const hz = Math.round(h * 0.56 + Math.min(sy * 0.04, h * 0.08));
+      const floor = h - hz, vx = w / 2;
+      // horizon glow
+      const g = ctx.createLinearGradient(0, hz - 120, 0, hz + 60);
+      g.addColorStop(0, col(0)); g.addColorStop(0.7, col(0.16)); g.addColorStop(1, col(0));
+      ctx.fillStyle = g; ctx.fillRect(0, hz - 120, w, 180);
+      ctx.fillStyle = col(0.35); ctx.fillRect(0, hz, w, 1);
+      // converging lines
+      ctx.lineWidth = 1;
+      const span = w * 2.4, cols = 28;
+      for (let i = 0; i <= cols; i++) {
+        const bx = vx - span / 2 + (span / cols) * i;
+        const lg = ctx.createLinearGradient(0, hz, 0, h);
+        lg.addColorStop(0, col(0)); lg.addColorStop(1, col(0.26));
+        ctx.strokeStyle = lg; ctx.beginPath(); ctx.moveTo(vx + (bx - vx) * 0.02, hz); ctx.lineTo(bx, h); ctx.stroke();
+      }
+      // rows rolling toward the viewer
+      const rows = 16, roll = (t * 0.22) % 1;
+      for (let i = 0; i < rows; i++) {
+        const z = (i + roll) / rows, y = hz + floor * Math.pow(z, 2.3);
+        ctx.strokeStyle = col(0.04 + 0.24 * z);
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+      // light streaks
+      streaks.forEach(st => {
+        const y = hz + floor * Math.pow(st.z, 2.3);
+        const p = ((t * st.speed + st.off) % 1.4) - 0.2;
+        const x = st.dir > 0 ? p * w : w - p * w;
+        const len = 140 + 260 * st.z;
+        const sg = ctx.createLinearGradient(x - st.dir * len, 0, x, 0);
+        const head = st.white ? 'rgba(255,255,255,0.9)' : col(0.95);
+        sg.addColorStop(0, col(0)); sg.addColorStop(1, head);
+        ctx.strokeStyle = sg; ctx.lineWidth = 1.5 + 2.5 * st.z;
+        ctx.shadowColor = col(0.9); ctx.shadowBlur = 12;
+        ctx.beginPath(); ctx.moveTo(x - st.dir * len, y); ctx.lineTo(x, y); ctx.stroke();
+        ctx.shadowBlur = 0; ctx.lineWidth = 1;
+      });
+    };
+    const t0 = performance.now();
+    let last = 0;
+    const frame = (now) => {
+      this._moRaf = requestAnimationFrame(frame);
+      if (document.hidden || now - last < 33) return;
+      last = now;
+      draw((now - t0) / 1000);
+    };
+    this._moRaf = requestAnimationFrame(frame);
+    this._moBg = { c, size };
+  };
+  stopMotionBg = () => {
+    if (this._moRaf) { cancelAnimationFrame(this._moRaf); this._moRaf = null; }
+    if (this._moBg) { window.removeEventListener('resize', this._moBg.size); try { this._moBg.c.remove(); } catch (e) {} this._moBg = null; }
+  };
+
   componentWillUnmount() {
+    if (this._moObs) { this._moObs.disconnect(); this._moObs = null; }
+    this.stopMotionBg();
     this.stopSpotTimer();
     if (this.spotT1) { clearTimeout(this.spotT1); this.spotT1 = null; }
     if (this.spotT2) { clearTimeout(this.spotT2); this.spotT2 = null; }
@@ -13800,7 +14069,7 @@ class Component extends DCLogic {
     const r = this.readRoute(back) || { screen:'hub' };
     this.setState({ filter:'all', collapsed:{}, view:'rail', seriesTab:'map', otpCode:'', ...r });
     this.pushRoute(this.routeFor(r.screen, r.posterId || r.activeId || this.state.activeId));
-    if (r.screen === 'posters' || r.screen === 'poster') this.loadPosters(); else if (r.screen === 'admin') this.loadAdmin(); else if (r.screen === 'watchOrder') { this.setState({ woWatched: this.readWatched(r.activeId), woOrder:'first' }); this.loadWatchOrders(); }
+    if (r.screen === 'posters' || r.screen === 'poster') this.loadPosters(); else if (r.screen === 'admin') this.loadAdmin(); else if (r.screen === 'watchOrder') { this.setState({ woWatched: this.readWatched(r.activeId), woOrder:'first', trailer:null }); this.loadWatchOrders(); }
     this.toTop();
   };
   changeAuthEmail = () => { this.setState({ authEmail: this.state.pendingEmail || '', authOpen:true }); };
@@ -14165,6 +14434,7 @@ class Component extends DCLogic {
           filter: dimmed ? 'saturate(0.5)' : 'none',
           transition:'opacity .25s ease, filter .25s ease, border-color .25s ease',
           overflow:'hidden',
+          '--mo-c': b.color,
         },
         connectorStyle: { position:'absolute', top:'-24px', left:'50%', width:'1px', height:'24px', background:`linear-gradient(${b.color}, ${this.rgba(b.color,0.1)})` },
         headerStyle: {

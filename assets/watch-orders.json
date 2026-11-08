@@ -4655,7 +4655,15 @@
     "q": "Is there a new Twilight movie or series coming?",
     "a": "An animated series adapting Midnight Sun is in development at Netflix and Lionsgate, written by Sinead Daly. No premiere date or cast has been announced. No sixth live-action film is planned."
    }
-  ]
+  ],
+  "trailers": {
+   "twilight": "uxjNDE2fMjI",
+   "newmoon": "q58iQSHhZGg",
+   "eclipse": "hZxJzhIPTTg",
+   "bd1": "PQNLfo-SOR4",
+   "bd2": "bUXjqQ4GKRg"
+  },
+  "trailerSource": "The Twilight Saga"
  },
  "conjuring": {
   "id": "conjuring",
