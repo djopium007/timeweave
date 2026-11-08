@@ -39,6 +39,10 @@
       "destination": "/timeline.html"
     },
     {
+      "source": "/all-franchises",
+      "destination": "/all-franchises.html"
+    },
+    {
       "source": "/map/:id",
       "destination": "/map/:id.html"
     },
