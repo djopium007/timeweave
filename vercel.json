@@ -479,20 +479,6 @@
       "permanent": true
     }
   ],
-  "rewrites": [
-    {
-      "source": "/check-email",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/admin",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/posters/thanks",
-      "destination": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",

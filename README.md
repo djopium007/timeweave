@@ -194,7 +194,7 @@ to `index.html`, so there is nothing to maintain twice.
   `all-franchises.html`, `sitemap.xml`, `robots.txt`, the `RO:MAPS` list in `404.html`, plus the head block inside `index.html` itself.
 - **`ship.sh` runs it before every commit**, so the copies can never drift. Run
   `node scripts/build-seo.mjs --check` to fail loudly if they are stale (exit 1).
-- `cleanUrls` maps each clean URL to its generated file; `vercel.json` only rewrites the app-only routes (`/admin`, `/check-email`, `/posters/thanks`).
+- `cleanUrls` maps each clean URL to its generated file. The app-only routes (`/admin`, `/check-email`, `/posters/thanks`) are hub copies on disk too: with `cleanUrls` on, a rewrite to `/index.html` 404s.
   Unknown paths fall through to `404.html`.
 - Franchise copy comes straight out of the `data` map in `index.html` — add a franchise and
   its page, sitemap entry and structured data appear on the next build. **Add its OG image

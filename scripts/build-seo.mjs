@@ -407,6 +407,9 @@ for (const r of routes) {
 
 // realorder.html is a byte-identical mirror of the hub
 emit('realorder.html', hubPage);
+// App-only routes (Stripe return, magic-link wait screen, admin) get a real file each.
+// With cleanUrls on, a rewrite to /index.html 404s, so these must exist on disk (2026-11-08).
+for (const f of ['posters/thanks.html', 'check-email.html', 'admin.html']) emit(f, hubPage);
 
 /* ---------- /all-franchises: the directory page every map and watch order hangs off ----------
    A plain static page (no SPA), so every link is a real <a href> a crawler follows on first
