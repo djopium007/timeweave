@@ -1910,7 +1910,7 @@
  },
  "marvel": {
   "id": "marvel",
-  "intro": "The MCU was built in release order but doesn't play in one: Captain America starts in 1943, Captain Marvel in 1995, and Endgame ends by splitting the timeline into branches the later films keep wandering between. Thirty-seven films in any single order also means sitting through several that carry nothing forward.",
+  "intro": "The MCU was built in release order but doesn't play in one: Captain America starts in 1943, Captain Marvel in 1995, and Endgame ends by splitting the timeline into branches the later films keep wandering between. Thirty-eight films in any single order also means sitting through several that carry nothing forward.",
   "orders": {
    "first": {
     "note": "Roughly half the MCU is setup for the two Avengers films that close it, and the other half is homework. This path keeps every film that changes what a later film means and drops the ones that only introduce someone you'd meet again anyway. It also leaves out the Disney+ series, which means Multiverse of Madness picks Wanda up mid-arc. That is the one real seam in the whole route.",
@@ -2063,6 +2063,13 @@
         "year": 2025,
         "branch": "Earth-828: First Steps",
         "why": "A <b>separate universe</b> with its own 1960s and no shared history with anything above, until the ending reaches across."
+       },
+       {
+        "id": "bnd",
+        "title": "Spider-Man: Brand New Day",
+        "year": 2026,
+        "branch": "The Sacred Timeline (Earth-616)",
+        "why": "Four years after No Way Home, Peter is still on his own. It picks up the ending of that film, so watch them in this order."
        }
       ]
      },
@@ -2158,7 +2165,7 @@
     ]
    },
    "release": {
-    "note": "Straight release order, 2008 to 2025. It is how the films were built and how each one assumes you saw the last, but it puts a 1943 origin fifth and a 1995 origin twenty-first.",
+    "note": "Straight release order, 2008 to 2026. It is how the films were built and how each one assumes you saw the last, but it puts a 1943 origin fifth and a 1995 origin twenty-first.",
     "items": [
      {
       "id": "ironman",
@@ -2391,6 +2398,12 @@
       "year": 2025,
       "branch": "Earth-828: First Steps",
       "why": "A <b>different universe</b>, cold-started with its own history and no cast in common."
+     },
+     {
+      "id": "bnd",
+      "title": "Spider-Man: Brand New Day",
+      "year": 2026,
+      "branch": "The Sacred Timeline (Earth-616)"
      }
     ]
    },
@@ -2659,6 +2672,13 @@
       "branch": "The Sacred Timeline (Earth-616)"
      },
      {
+      "id": "bnd",
+      "title": "Spider-Man: Brand New Day",
+      "year": 2026,
+      "branch": "The Sacred Timeline (Earth-616)",
+      "setLabel": "Four years after No Way Home"
+     },
+     {
       "id": "f4first",
       "title": "The Fantastic Four: First Steps",
       "year": 2025,
@@ -2672,7 +2692,7 @@
   "faq": [
    {
     "q": "What order should I watch the Marvel movies in?",
-    "a": "Release order is the safe answer, but 37 films is a lot of homework. Our first-time path keeps the 18 films that change what a later film means, from Iron Man through Infinity War and Endgame to The Fantastic Four: First Steps, and lists the other 12 as optional."
+    "a": "Release order is the safe answer, but 38 films is a lot of homework. Our first-time path keeps the 19 films that change what a later film means, from Iron Man through Infinity War and Endgame to Spider-Man: Brand New Day, and lists the other 12 as optional."
    },
    {
     "q": "Should I watch the Marvel movies in chronological order?",
@@ -2680,7 +2700,7 @@
    },
    {
     "q": "How many Marvel movies are there?",
-    "a": "37 films in the Marvel Cinematic Universe as of The Fantastic Four: First Steps (2025), starting with Iron Man in 2008. That count does not include the earlier Spider-Man, X-Men or Fantastic Four films from other studios, or the Disney+ series."
+    "a": "38 films in the Marvel Cinematic Universe as of Spider-Man: Brand New Day (2026), starting with Iron Man in 2008. That count does not include the earlier Spider-Man, X-Men or Fantastic Four films from other studios, or the Disney+ series."
    },
    {
     "q": "Do I need to watch the Disney+ shows to follow the movies?",
@@ -2689,6 +2709,10 @@
    {
     "q": "Which Marvel movies can I skip?",
     "a": "The ones that introduce a character you would meet again anyway: Captain Marvel, Iron Man 3, Guardians Vol. 2, Spider-Man: Homecoming, Ant-Man and the Wasp, Black Widow, Far From Home, Shang-Chi, Eternals, Quantumania, Guardians Vol. 3 and Brave New World. Good films among them; none of them is required."
+   },
+   {
+    "q": "What is the next Marvel movie?",
+    "a": "Avengers: Doomsday, due in cinemas on 18 December 2026. It follows the warning about 'the others' at the end of Captain America: Brave New World and Doctor Doom's arrival at the end of The Fantastic Four: First Steps. We will add it to these lists after release."
    }
   ]
  },

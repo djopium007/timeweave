@@ -3861,9 +3861,9 @@ class Component extends DCLogic {
       "id": "marvel",
       "title": "Marvel Cinematic Universe",
       "accent": "#E23636",
-      "tagline": "Seventeen years, one Sacred Timeline, and a multiverse that refuses to stay pruned.",
+      "tagline": "Eighteen years, one Sacred Timeline, and a multiverse that refuses to stay pruned.",
       "blurb": "One policed timeline from before the Big Bang to the New Avengers, until the time heist splinters the past and one murder at the End of Time sets the multiverse loose.",
-      "meta": "37 films · 5 branches",
+      "meta": "38 films · 5 branches",
       "framing": "The MCU mostly plays out on a single line (Earth-616, the 'Sacred Timeline') in roughly release order. Then Endgame proves time travel splits branches instead of rewriting them, Sylvie kills the being who kept every branch pruned, and neighbouring universes (Sony's Spider-Men, Earth-838's Illuminati, the Fantastic Four's Earth-828) start leaking in. Pick a branch to isolate one thread.",
       "forkLabel": "2023 · The Sacred Timeline Fractures",
       "films": [
@@ -3903,7 +3903,8 @@ class Component extends DCLogic {
         "Deadpool & Wolverine (2024)",
         "Captain America: Brave New World (2025)",
         "Thunderbolts* (2025)",
-        "The Fantastic Four: First Steps (2025)"
+        "The Fantastic Four: First Steps (2025)",
+        "Spider-Man: Brand New Day (2026)"
       ],
       "branches": [
         {
@@ -3945,12 +3946,13 @@ class Component extends DCLogic {
             "Guardians of the Galaxy Vol. 3",
             "The Marvels",
             "Captain America: Brave New World",
-            "Thunderbolts*"
+            "Thunderbolts*",
+            "Spider-Man: Brand New Day"
           ],
           "summary": "The main MCU line: from the Celestials and the six singularities to the New Avengers, roughly release order once 2008 hits.",
           "nodes": [
             {
-              "era": "Pre–Big Bang",
+              "era": "Pre-Big Bang",
               "type": "event",
               "text": "The Celestials, led by Arishem the Judge, predate the universe; the six singularities of the Big Bang become the Infinity Stones.",
               "tags": [
@@ -3963,7 +3965,8 @@ class Component extends DCLogic {
             {
               "era": "Aeons ago",
               "type": "event",
-              "text": "Celestials seed planets with embryonic gods; their Deviant monsters run amok, so they build the synthetic Eternals to keep worlds alive until each 'Emergence' destroys them."
+              "text": "Celestials seed planets with embryonic gods; their Deviant monsters run amok, so they build the synthetic Eternals to keep worlds alive until each 'Emergence' destroys them.",
+              "tags": []
             },
             {
               "era": "Millions of years ago",
@@ -3979,12 +3982,14 @@ class Component extends DCLogic {
             {
               "era": "5000 BC",
               "type": "event",
-              "text": "Ten Eternals (Sersi, Ikaris, Ajak and company) arrive on Earth to hunt Deviants, unknowingly ripening the planet for the Celestial Tiamut's Emergence."
+              "text": "Ten Eternals, Sersi, Ikaris, Ajak and company, arrive on Earth to hunt Deviants, unknowingly ripening the planet for the Celestial Tiamut's Emergence.",
+              "tags": []
             },
             {
-              "era": "2988 BC",
+              "era": "c. 3000 BC",
               "type": "event",
-              "text": "Bor of Asgard defeats Malekith and buries the Aether (the Reality Stone); the Dark Elves hibernate for five millennia."
+              "text": "Bor of Asgard defeats Malekith and buries the Aether (the Reality Stone); the Dark Elves hibernate for five millennia.",
+              "tags": []
             },
             {
               "era": "Millennia ago",
@@ -4000,14 +4005,10 @@ class Component extends DCLogic {
             {
               "era": "~1000 AD",
               "type": "event",
-              "text": "Warlord Xu Wenwu finds the Ten Rings and builds a millennium-spanning shadow empire; Chthon's spells are copied into the Darkhold.",
+              "text": "Warlord Xu Wenwu finds the Ten Rings, which keep him young, and builds a shadow empire that lasts a thousand years.",
               "tags": [
                 {
                   "label": "Ten Rings",
-                  "kind": "tech"
-                },
-                {
-                  "label": "Darkhold",
                   "kind": "tech"
                 }
               ]
@@ -4035,7 +4036,18 @@ class Component extends DCLogic {
               ]
             },
             {
-              "era": "1942–1945",
+              "era": "1750s",
+              "type": "event",
+              "text": "Agatha's son Nicholas Scratch makes up a song about a Witches' Road. After he dies, Agatha uses the legend as a trap for other witches.",
+              "tags": [
+                {
+                  "label": "Witches' Road",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "1942-1945",
               "type": "turning-point",
               "text": "Steve Rogers becomes Captain America; the Red Skull is cast to Vormir by the Tesseract; Bucky falls and is rebuilt as the Winter Soldier; Steve crashes into the Arctic ice.",
               "tags": [
@@ -4050,7 +4062,7 @@ class Component extends DCLogic {
               ]
             },
             {
-              "era": "1946–1970",
+              "era": "1946-1970s",
               "type": "event",
               "text": "HYDRA secretly infiltrates S.H.I.E.L.D.; Zola's mind is digitised; Hank Pym develops Pym Particles; the Red Room churns out Black Widows; Isaiah Bradley is experimented on and erased.",
               "tags": [
@@ -4059,6 +4071,12 @@ class Component extends DCLogic {
                   "kind": "event"
                 }
               ]
+            },
+            {
+              "era": "1980-1995",
+              "type": "event",
+              "text": "Ego fathers and abandons Peter Quill, who is taken from Earth by Yondu's Ravagers in 1988; Thanos adopts Gamora and Nebula.",
+              "tags": []
             },
             {
               "era": "1987",
@@ -4074,11 +4092,6 @@ class Component extends DCLogic {
                   "kind": "tech"
                 }
               ]
-            },
-            {
-              "era": "1988–1995",
-              "type": "event",
-              "text": "Ego fathers and abandons Peter Quill (abducted by Yondu's Ravagers, 1988); Thanos adopts Gamora and Nebula; Rocket escapes the High Evolutionary."
             },
             {
               "era": "1991",
@@ -4109,7 +4122,7 @@ class Component extends DCLogic {
             {
               "era": "2008",
               "type": "turning-point",
-              "text": "Tony Stark builds the Iron Man armour in a cave, escapes, and announces 'I am Iron Man'; gamma radiation turns Bruce Banner into the Hulk.",
+              "text": "Tony Stark builds the Iron Man armour in a cave, escapes, and announces 'I am Iron Man'.",
               "tags": [
                 {
                   "label": "Iron Man",
@@ -4118,9 +4131,10 @@ class Component extends DCLogic {
               ]
             },
             {
-              "era": "2010–2011",
+              "era": "2010-2011",
               "type": "event",
-              "text": "War Machine debuts; Thor is exiled to Earth and proves worthy of Mjolnir; Captain America is thawed after 66 years in the ice."
+              "text": "Bruce Banner, on the run as the Hulk, fights the Abomination in Harlem; War Machine debuts; Thor is exiled to Earth and proves worthy of Mjolnir; Captain America is thawed after 66 years in the ice.",
+              "tags": []
             },
             {
               "era": "2012",
@@ -4140,7 +4154,8 @@ class Component extends DCLogic {
             {
               "era": "2013",
               "type": "event",
-              "text": "Killian's Extremis plot behind the fake Mandarin is exposed; Malekith returns and falls; Loki fakes his death and takes Odin's throne."
+              "text": "Killian's Extremis plot behind the fake Mandarin is exposed; Malekith returns and falls; Loki fakes his death and takes Odin's throne.",
+              "tags": []
             },
             {
               "era": "2014",
@@ -4150,6 +4165,17 @@ class Component extends DCLogic {
                 {
                   "label": "S.H.I.E.L.D. falls",
                   "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2014",
+              "type": "death",
+              "text": "Months after the team forms, the Guardians kill Peter Quill's father, the Celestial Ego, before he can remake the galaxy in his image.",
+              "tags": [
+                {
+                  "label": "Ego",
+                  "kind": "character"
                 }
               ]
             },
@@ -4176,14 +4202,26 @@ class Component extends DCLogic {
               ]
             },
             {
+              "era": "2016",
+              "type": "event",
+              "text": "Spider-Man downs the Vulture; T'Challa defeats Killmonger's coup in Wakanda; on the run after Civil War, Natasha and Yelena destroy the Red Room and free its Widows.",
+              "tags": [
+                {
+                  "label": "Red Room",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
               "era": "2017",
               "type": "event",
-              "text": "The Guardians kill Ego; Spider-Man downs the Vulture; Hela destroys Mjolnir and Ragnarok razes Asgard; Killmonger's coup in Wakanda fails."
+              "text": "Hela destroys Mjolnir and Ragnarok razes Asgard; Thor leads its survivors into space, straight into Thanos.",
+              "tags": []
             },
             {
               "era": "2018",
               "type": "death",
-              "text": "Thanos gathers all six Stones and snaps away half of all life; Gamora, Loki and Vision die; Ant-Man is stranded in the Quantum Realm.",
+              "text": "Janet van Dyne is rescued from the Quantum Realm; then Thanos gathers all six Stones and snaps away half of all life. Gamora, Loki and Vision die, and Ant-Man is stranded in the Quantum Realm.",
               "tags": [
                 {
                   "label": "The Snap",
@@ -4198,7 +4236,7 @@ class Component extends DCLogic {
             {
               "era": "2023",
               "type": "turning-point",
-              "text": "The Time Heist retrieves past Stones; Hulk snaps everyone back; every hero alive beats the invading 2014 Thanos.",
+              "text": "The Time Heist retrieves past Stones, and Natasha Romanoff gives her life on Vormir for the Soul Stone; Hulk snaps everyone back; every hero alive beats the invading 2014 Thanos.",
               "tags": [
                 {
                   "label": "The Blip",
@@ -4218,7 +4256,7 @@ class Component extends DCLogic {
               ]
             },
             {
-              "era": "2024",
+              "era": "2023",
               "type": "event",
               "text": "Grieving Wanda warps Westview into a sitcom Hex, then embraces the Scarlet Witch and takes Agatha's Darkhold; the Hex rewires Monica Rambeau's cells.",
               "tags": [
@@ -4236,6 +4274,17 @@ class Component extends DCLogic {
                 {
                   "label": "Tiamut",
                   "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "Christmas 2024",
+              "type": "event",
+              "text": "Clint Barton mentors Kate Bishop, the archer who has idolised him since the Battle of New York; together they take on the Tracksuit Mafia, Yelena Belova and Kingpin.",
+              "tags": [
+                {
+                  "label": "Kate Bishop",
+                  "kind": "character"
                 }
               ]
             },
@@ -4264,7 +4313,19 @@ class Component extends DCLogic {
             {
               "era": "2025",
               "type": "event",
-              "text": "New heroes surge: Ms. Marvel, She-Hulk, Moon Knight, Echo; Thor defeats Gorr the God Butcher but loses Jane Foster to Valhalla."
+              "text": "New heroes surge: Ms. Marvel, She-Hulk and Moon Knight; Thor stops Gorr the God Butcher, who wishes his daughter back instead of taking revenge, but loses Jane Foster to Valhalla.",
+              "tags": []
+            },
+            {
+              "era": "2025",
+              "type": "event",
+              "text": "Echo: five months after Hawkeye, Maya Lopez goes home to Oklahoma, gains healing powers and confronts Wilson Fisk, who leaves with an eye on the New York mayor's race.",
+              "tags": [
+                {
+                  "label": "Kingpin",
+                  "kind": "character"
+                }
+              ]
             },
             {
               "era": "2025",
@@ -4280,7 +4341,7 @@ class Component extends DCLogic {
             {
               "era": "2025",
               "type": "turning-point",
-              "text": "In the Quantum Realm, the Lang–Pym family destroys Kang the Conqueror and his power core, while Kang variants stir across the multiverse.",
+              "text": "In the Quantum Realm, the Lang-Pym family destroys Kang the Conqueror and his power core, while Kang variants stir across the multiverse.",
               "tags": [
                 {
                   "label": "Kang",
@@ -4291,10 +4352,11 @@ class Component extends DCLogic {
             {
               "era": "2025",
               "type": "event",
-              "text": "The Guardians defeat the High Evolutionary and save Rocket, who becomes captain of a new Guardians roster."
+              "text": "The Guardians defeat the High Evolutionary and save Rocket, who becomes captain of a new Guardians roster.",
+              "tags": []
             },
             {
-              "era": "2025–2026",
+              "era": "2025-2026",
               "type": "event",
               "text": "Gravik's Skrull invasion is crushed by G'iah; the Marvels entangle powers to stop Dar-Benn, and Monica Rambeau is stranded in another universe.",
               "tags": [
@@ -4305,9 +4367,20 @@ class Component extends DCLogic {
               ]
             },
             {
+              "era": "Years after WandaVision",
+              "type": "event",
+              "text": "Billy Maximoff, Wanda's son, has been living in the body of a teenager killed in a car crash as the Hex fell. He makes Agatha take him down the Witches' Road to find his brother Tommy.",
+              "tags": [
+                {
+                  "label": "Agatha",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
               "era": "2026",
               "type": "event",
-              "text": "Riri Williams builds Ironheart, unmasks the Hood, and strikes a bargain with Mephisto to resurrect her friend Natalie; Mayor Fisk wages war on New York's vigilantes.",
+              "text": "Riri Williams builds the Ironheart armour, takes down the Hood, learns his power came from Mephisto, and accepts Mephisto's deal to bring back her friend Natalie.",
               "tags": [
                 {
                   "label": "Mephisto",
@@ -4316,7 +4389,18 @@ class Component extends DCLogic {
               ]
             },
             {
-              "era": "2026–2027",
+              "era": "2026",
+              "type": "event",
+              "text": "Wilson Fisk is mayor of New York and turns City Hall against vigilantes. Matt Murdock puts the Daredevil suit back on to fight him.",
+              "tags": [
+                {
+                  "label": "Daredevil",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2026-2027",
               "type": "turning-point",
               "text": "President Thaddeus Ross champions mining adamantium from Tiamut's corpse, then Sterns' gamma-laced revenge turns him into the Red Hulk.",
               "tags": [
@@ -4329,10 +4413,54 @@ class Component extends DCLogic {
             {
               "era": "2027",
               "type": "resolution",
-              "text": "The Thunderbolts pull Bob back from the Void; Valentina rebrands them the New Avengers, just as the Fantastic Four's ship appears in Earth's orbit.",
+              "text": "The Thunderbolts pull Bob back from the Void and Valentina rebrands them the New Avengers.",
               "tags": [
                 {
                   "label": "New Avengers",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "About 14 months later",
+              "type": "turning-point",
+              "text": "A ship from another universe, carrying the Fantastic Four's emblem, appears in Earth's orbit.",
+              "tags": [
+                {
+                  "label": "Fantastic Four",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "Four years after No Way Home",
+              "type": "event",
+              "text": "Still forgotten by everyone, Peter Parker protects New York alone. Under the strain his body changes and he starts producing organic webs.",
+              "tags": [
+                {
+                  "label": "Spider-Man",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Four years after No Way Home",
+              "type": "turning-point",
+              "text": "A young telepath, Jean Grey, tears through the city looking for answers about her sister's death in government custody. Peter calms a rampaging Hulk, clashes with the Punisher and is nearly killed shielding her.",
+              "tags": [
+                {
+                  "label": "Jean Grey",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Four years after No Way Home",
+              "type": "resolution",
+              "text": "Jean leaves New York and Peter decides to stop doing it all alone. He reintroduces himself to Ned with their old handshake, and Ned says his name.",
+              "tags": [
+                {
+                  "label": "Brand New Day",
                   "kind": "event"
                 }
               ]
@@ -4346,7 +4474,7 @@ class Component extends DCLogic {
           "films": [
             "Avengers: Endgame"
           ],
-          "summary": "Endgame's rule: travelling to the past doesn't rewrite it; it splits off a new branch.",
+          "summary": "Endgame's rule: travelling to the past doesn't rewrite it, it splits off a new branch.",
           "nodes": [
             {
               "era": "Alt 2012",
@@ -4366,7 +4494,7 @@ class Component extends DCLogic {
             {
               "era": "Alt 2014",
               "type": "turning-point",
-              "text": "The 2014 Thanos and his entire armada abandon their timeline to invade 2023, a branch whose own Snap now never happens.",
+              "text": "The 2014 Thanos and his entire armada abandon their timeline to invade 2023, leaving a branch whose own Snap never happens.",
               "tags": [
                 {
                   "label": "Thanos",
@@ -4386,7 +4514,7 @@ class Component extends DCLogic {
               ]
             },
             {
-              "era": "Alt 1949 onward",
+              "era": "Late 1940s onward",
               "type": "resolution",
               "text": "Steve Rogers stays in a branched past to live a full life with Peggy Carter, returning as an old man only to pass on the shield.",
               "tags": [
@@ -4422,7 +4550,7 @@ class Component extends DCLogic {
             {
               "era": "End of Time",
               "type": "turning-point",
-              "text": "Loki and Sylvie reach the Citadel at the End of Time; Sylvie kills He Who Remains (a Kang variant) and infinite timelines bloom.",
+              "text": "Loki and Sylvie reach the Citadel at the End of Time; Sylvie kills He Who Remains, a Kang variant, and infinite timelines bloom.",
               "tags": [
                 {
                   "label": "Nexus event",
@@ -4470,7 +4598,7 @@ class Component extends DCLogic {
             {
               "era": "Aftermath",
               "type": "resolution",
-              "text": "The reformed TVA stops pruning, monitors Kang variants across the free multiverse, and keeps Deadpool and Wolverine on call.",
+              "text": "The reformed TVA stops pruning and monitors Kang variants across the free multiverse; Deadpool and Wolverine become Earth-10005's new anchor beings.",
               "tags": [
                 {
                   "label": "TVA",
@@ -4487,14 +4615,15 @@ class Component extends DCLogic {
           "films": [
             "Spider-Man: No Way Home",
             "Doctor Strange in the Multiverse of Madness",
-            "The Marvels"
+            "The Marvels",
+            "Captain America: Brave New World"
           ],
-          "summary": "Once the multiverse runs free, other realities start leaking into (and out of) Earth-616.",
+          "summary": "Once the multiverse runs free, other realities start leaking into, and out of, Earth-616.",
           "nodes": [
             {
               "era": "2024",
               "type": "paradox",
-              "text": "Strange's broken spell pulls Spider-Man villains (and two other Peter Parkers) from Sony's universes into the MCU before the world forgets Peter.",
+              "text": "Strange's broken spell pulls Spider-Man villains, and two other Peter Parkers, from Sony's universes into the MCU before the world forgets Peter.",
               "tags": [
                 {
                   "label": "No Way Home",
@@ -4505,7 +4634,7 @@ class Component extends DCLogic {
             {
               "era": "2025 · Earth-838",
               "type": "death",
-              "text": "Dreamwalking through her variant's body, the Scarlet Witch slaughters Earth-838's Illuminati: Professor X, Reed Richards, Captain Carter and all.",
+              "text": "Dreamwalking through her variant's body, the Scarlet Witch slaughters Earth-838's Illuminati, Professor X, Reed Richards, Captain Carter and all.",
               "tags": [
                 {
                   "label": "Illuminati",
@@ -4525,13 +4654,24 @@ class Component extends DCLogic {
               ]
             },
             {
-              "era": "2025–2026",
+              "era": "2025-2026",
               "type": "event",
               "text": "Closing Dar-Benn's rifts strands Monica Rambeau in a universe where Hank McCoy and the X-Men exist.",
               "tags": [
                 {
                   "label": "Monica Rambeau",
                   "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2027",
+              "type": "turning-point",
+              "text": "In the Raft, Samuel Sterns warns the new Captain America that this world is not the only one, and that the others are coming.",
+              "tags": [
+                {
+                  "label": "The others",
+                  "kind": "paradox"
                 }
               ]
             }
@@ -4571,7 +4711,7 @@ class Component extends DCLogic {
             {
               "era": "Earth-828",
               "type": "resolution",
-              "text": "With a repentant Silver Surfer's help, Sue pushes Galactus through a teleport portal to the universe's edge, dying in the effort, until newborn Franklin resurrects her.",
+              "text": "With a repentant Silver Surfer's help, Sue pushes Galactus through a teleport portal to the universe's edge. She dies in the effort until newborn Franklin resurrects her.",
               "tags": [
                 {
                   "label": "Franklin Richards",
@@ -4582,7 +4722,7 @@ class Component extends DCLogic {
             {
               "era": "Years later",
               "type": "turning-point",
-              "text": "Doctor Doom appears in the Baxter Building nursery, studying Franklin; the child's power has drawn exactly the wrong attention.",
+              "text": "Doctor Doom appears in the Baxter Building nursery, studying Franklin: the child's power has drawn exactly the wrong attention.",
               "tags": [
                 {
                   "label": "Doctor Doom",
@@ -4599,7 +4739,7 @@ class Component extends DCLogic {
           "role": "Launched the MCU in a cave with a box of scraps; died wielding the Stones to end Thanos."
         },
         {
-          "name": "Steve Rogers → Sam Wilson",
+          "name": "Steve Rogers / Sam Wilson",
           "role": "Captain America is a mantle: Steve retires into a branched past, Sam carries the shield forward."
         },
         {
@@ -4632,7 +4772,15 @@ class Component extends DCLogic {
         },
         {
           "name": "Peter Parker / Spider-Man",
-          "role": "Outed by Mysterio, then erased from every memory on Earth to seal the multiverse."
+          "role": "Outed by Mysterio, erased from every memory on Earth to seal the multiverse, and still going it alone four years later."
+        },
+        {
+          "name": "Wilson Fisk / Kingpin",
+          "role": "Hawkeye's crime boss and Echo's father figure, then mayor of New York at war with its vigilantes."
+        },
+        {
+          "name": "Agatha Harkness",
+          "role": "Salem-era witch who stole the Darkhold, lost it to Wanda, and walked the Witches' Road with Wanda's son."
         },
         {
           "name": "Franklin Richards",
@@ -4646,7 +4794,7 @@ class Component extends DCLogic {
         },
         {
           "name": "Infinity Gauntlet",
-          "desc": "The Dwarf-forged glove that channels all six Stones, used by Thanos, Hulk, and Tony Stark."
+          "desc": "Thanos's Dwarf-forged glove; the Avengers' own nano gauntlet carried the Stones for Hulk's snap and Tony's."
         },
         {
           "name": "Tesseract / Space Stone",
@@ -4682,11 +4830,13 @@ class Component extends DCLogic {
         }
       ],
       "themes": [
-        "Branches, not rewrites: Endgame time travel never changes your own past; it splits a new timeline, which is exactly what the TVA existed to prune.",
-        "The Snap is the hinge: a five-year hole (2018–2023) in the main timeline drives nearly every story that follows, from the Flag Smashers to the Emergence.",
+        "Branches, not rewrites: Endgame time travel never changes your own past, it splits a new timeline, which is exactly what the TVA existed to prune.",
+        "The Snap is the hinge: a five-year hole (2018-2023) in the main timeline drives nearly every story that follows, from the Flag Smashers to the Emergence.",
         "Mantles outlive heroes: the shield passes to Sam, Hawkeye to Kate, Black Panther to Shuri, and a Young Avengers roster is quietly assembling.",
         "One murder freed the multiverse: Sylvie killing He Who Remains turned a single policed timeline into infinite branches, and every incursion since traces back to it.",
-        "The calendar drifts: the MCU runs 'roughly release order', but retcons (a 2026 presidential election, Secret Invasion's placement) keep fans arguing about exact years."
+        "The calendar drifts: the MCU runs 'roughly release order', but retcons (a 2026 presidential election, Secret Invasion's placement) keep fans arguing about exact years.",
+        "Next: Avengers: Doomsday (18 December 2026) follows up Brave New World's warning about 'the others' and Doctor Doom's arrival at the end of First Steps. This map will add it after release.",
+        "Not in the map as separate beats: Wonder Man (2026), Marvel Zombies, Eyes of Wakanda and the What If...? side-universes beyond the Watcher's team."
       ]
     },
     starwars: {
