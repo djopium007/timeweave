@@ -12962,7 +12962,7 @@ class Component extends DCLogic {
     if (this.state.woData || this.state.woLoading) return;
     this.setState({ woLoading: true });
     try {
-      const res = await fetch('/assets/watch-orders.json');
+      const res = await fetch('/assets/watch-orders.json?v=731dfd1f2e');
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const json = await res.json();
       this.setState({ woData: json, woLoading: false });

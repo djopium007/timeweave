@@ -27,7 +27,17 @@ const CHECK = process.argv.includes('--check');
 const SRC = path.join(ROOT, 'index.html');
 const CACHE = path.join(ROOT, 'scripts', 'posters-cache.json');
 
-const html = fs.readFileSync(SRC, 'utf8');
+let html = fs.readFileSync(SRC, 'utf8');
+
+/* ---------- cache-bust the lazily fetched watch-orders.json ----------
+   /assets/* is served with max-age=3600 + stale-while-revalidate=86400, so a returning
+   visitor can get yesterday's JSON (e.g. no trailers) after a deploy. Stamp the fetch URL
+   with a content hash so any change to the file is a new URL. */
+try {
+  const woHash = crypto.createHash('sha1').update(fs.readFileSync(path.join(ROOT, 'assets', 'watch-orders.json'))).digest('hex').slice(0, 10);
+  const stamped = html.replace(/\/assets\/watch-orders\.json(\?v=[0-9a-f]+)?'/g, "/assets/watch-orders.json?v=" + woHash + "'");
+  if (stamped !== html) { html = stamped; if (!CHECK) fs.writeFileSync(SRC, html); }
+} catch (e) { console.warn('build-seo: could not stamp watch-orders.json version', e.message); }
 
 /* ---------- pull the franchise data straight out of the app ---------- */
 function extractData(src, marker = '\n  data = {') {
