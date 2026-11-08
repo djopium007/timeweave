@@ -29,6 +29,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/apple-touch-icon-180.png">
 <script src="/assets/asset-00.js"></script>
 <script src="/assets/supabase-js-2.115.0.js"></script>
+<script src="/assets/binge-time.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -36,6 +37,7 @@
 <noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">
 <h1>Fast and Furious Movies in Order</h1>
 <p><strong>Release order</strong> &middot; <strong>chronological order</strong> &middot; the best watch order if it is your first time watching it.</p>
+<p><strong>Watch all 11 Fast &amp; Furious films in about 23 hours.</strong> Theatrical runtimes added together, then rounded to the nearest hour. Checked 8 Nov 2026.</p>
 <p>Eleven films in a nearly straight line. The one thing to know before you start: Tokyo Drift, the third film released, happens after the sixth. Watch it there and the saga's biggest death, and its reversal, land the way they were meant to.</p>
 <h2>The order to watch Fast &amp; Furious for the first time</h2><p>Release order with one move: Tokyo Drift slides to after Fast &amp; Furious 6, where it is set. Hobbs &amp; Shaw is a side road you can skip or take between Fate and F9. The two short films are a bonus, not a requirement.</p><h3>The street-racing years</h3><ol><li><strong>The Fast and the Furious</strong> (2001): Undercover cop, truck hijacks, the ten-second race. Smaller than everything that follows and the reason the rest exists. <em>[Street Racers: LA and Miami]</em></li><li><strong>2 Fast 2 Furious</strong> (2003): Brian alone in Miami, Roman and Tej introduced. Dom sits this one out; the short film The Turbo-Charged Prelude bridges the gap if you want it. <em>[Street Racers: LA and Miami]</em></li></ol><h3>The crew goes global</h3><ol><li><strong>Fast &amp; Furious</strong> (2009): The reunion film: Letty's 'death', Dom and Brian back together, and the start of the serialised story. The short Los Bandoleros sits just before it. <em>[The Crew Goes Global: Fast 4 to 6]</em></li><li><strong>Fast Five</strong> (2011): Rio, the vault, Hobbs, and the whole family in one place. The film that turned a racing series into a heist series. <em>[The Crew Goes Global: Fast 4 to 6]</em></li><li><strong>Fast &amp; Furious 6</strong> (2013): London, Owen Shaw and Letty's amnesia. Stay for the mid-credits scene: it replays Han's Tokyo crash and sets up the next two films. <em>[The Crew Goes Global: Fast 4 to 6]</em></li></ol><h3>Now Tokyo Drift</h3><ol><li><strong>The Fast and the Furious: Tokyo Drift</strong> (2006): Made in 2006 but set here. Han's year in Tokyo, the crash you just saw from the other side, and Dom's cameo at the end finally make sense. <em>[The Tokyo Fold: Han's Story]</em></li></ol><h3>Outlaws to spies</h3><ol><li><strong>Furious 7</strong> (2015): Deckard Shaw's revenge for Han, God's Eye, and the farewell to Brian. Watch it straight after Tokyo Drift. <em>[Outlaws to Spies: 7 to X]</em></li><li><strong>The Fate of the Furious</strong> (2017): Dom turns on the crew, Cipher is revealed, and Dom's son is born. <em>[Outlaws to Spies: 7 to X]</em></li><li><strong>Fast &amp; Furious Presents: Hobbs &amp; Shaw</strong> (2019): Optional detour: the Hobbs and Shaw buddy film, set after Fate. Nothing in F9 depends on it. <em>[Side Road: Hobbs &amp; Shaw]</em></li><li><strong>F9</strong> (2021): Jakob Toretto, the 1989 flashbacks, a car in space, and Han alive. The film that rewrites Tokyo Drift's ending. <em>[Outlaws to Spies: 7 to X]</em></li><li><strong>Fast X</strong> (2023): Dante Reyes, the son of Fast Five's villain, and a cliffhanger that waits for Fast Forever in 2027. <em>[Outlaws to Spies: 7 to X]</em></li></ol>
 <h2>Fast &amp; Furious in release order</h2><p>The order the films came out. Tokyo Drift is third here and nowhere near third in the story; everything else is in sequence.</p><ol><li><strong>The Fast and the Furious</strong> (2001) <em>[Street Racers: LA and Miami]</em></li><li><strong>2 Fast 2 Furious</strong> (2003) <em>[Street Racers: LA and Miami]</em></li><li><strong>The Fast and the Furious: Tokyo Drift</strong> (2006) <em>[The Tokyo Fold: Han's Story]</em></li><li><strong>Fast &amp; Furious</strong> (2009) <em>[The Crew Goes Global: Fast 4 to 6]</em></li><li><strong>Fast Five</strong> (2011) <em>[The Crew Goes Global: Fast 4 to 6]</em></li><li><strong>Fast &amp; Furious 6</strong> (2013) <em>[The Crew Goes Global: Fast 4 to 6]</em></li><li><strong>Furious 7</strong> (2015) <em>[Outlaws to Spies: 7 to X]</em></li><li><strong>The Fate of the Furious</strong> (2017) <em>[Outlaws to Spies: 7 to X]</em></li><li><strong>Fast &amp; Furious Presents: Hobbs &amp; Shaw</strong> (2019) <em>[Side Road: Hobbs &amp; Shaw]</em></li><li><strong>F9</strong> (2021) <em>[Outlaws to Spies: 7 to X]</em></li><li><strong>Fast X</strong> (2023) <em>[Outlaws to Spies: 7 to X]</em></li></ol>
@@ -812,6 +814,13 @@
         <div style="flex:1;min-width:260px;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#6b7686;">{{ active.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1;margin:6px 0 0;text-transform:uppercase;letter-spacing:0.01em;">{{ active.title }}</h1>
+          <sc-if value="{{ active.hasBinge }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:14px 0 0;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(18px,2.4vw,22px);letter-spacing:0.01em;color:#E9EDF3;line-height:1.25;">{{ active.bingeLine }}</p>
+            <p style="margin:6px 0 0;max-width:68ch;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.55;color:#6b7686;">{{ active.bingeBasis }}</p>
+            <sc-if value="{{ active.hasBingeNote }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:6px 0 0;max-width:68ch;color:#9aa6b4;font-size:14px;line-height:1.5;text-wrap:pretty;">{{ active.bingeNote }}</p>
+            </sc-if>
+          </sc-if>
           <p style="margin:14px 0 0;max-width:72ch;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">{{ active.framing }}</p>
           <sc-if value="{{ hasWatchOrder }}" hint-placeholder-val="{{ true }}">
             <a href="{{ watchOrderHref }}" onclick="{{ goWatchOrder }}" style="{{ watchOrderBtnStyle }}" style-hover="border-color:rgba(255,255,255,0.4);color:#fff;">▶ {{ watchOrderBtnLabel }}</a>
@@ -1724,6 +1733,13 @@
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#9DB0C4;">{{ wo.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.03;margin:8px 0 0;letter-spacing:0.01em;text-transform:uppercase;text-wrap:balance;">{{ wo.heading }}</h1>
           <div style="margin-top:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:#9DB0C4;letter-spacing:0.01em;">{{ wo.sub }}</div>
+          <sc-if value="{{ wo.hasBinge }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:14px 0 0;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(18px,2.4vw,22px);letter-spacing:0.01em;color:#E9EDF3;line-height:1.25;">{{ wo.bingeLine }}</p>
+            <p style="margin:6px 0 0;max-width:68ch;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.55;color:#6b7686;">{{ wo.bingeBasis }}</p>
+            <sc-if value="{{ wo.hasBingeNote }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:6px 0 0;max-width:68ch;color:#9aa6b4;font-size:14px;line-height:1.5;text-wrap:pretty;">{{ wo.bingeNote }}</p>
+            </sc-if>
+          </sc-if>
         </div>
       </div>
 
@@ -1946,7 +1962,7 @@ class Component extends DCLogic {
     screen: 'hub',
     navOpen: false,
     isNarrow: (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth <= 1000 : false,
-    woOrder: 'first', woData: null, woLoading: false, woWatched: {},
+    woOrder: 'first', woData: null, woLoading: false, woWatched: {}, runtimes: null,
     activeId: 'terminator',
     // Timeline tab index: filter, sort, and the last map actually opened this session
     mapsQ: '', mapsSort: 'az', lastViewedId: null,
@@ -12722,6 +12738,28 @@ class Component extends DCLogic {
       this.setState({ woData: json, woLoading: false });
     } catch (e) { this.setState({ woLoading: false }); }
   };
+  loadRuntimes = async () => {
+    if (this.state.runtimes || this._runtimesLoading) return;
+    this._runtimesLoading = true;
+    try {
+      const res = await fetch('/assets/runtimes.json');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      this.setState({ runtimes: await res.json() });
+    } catch (e) { this._runtimesLoading = false; }
+  };
+  bingeFor = (id, title) => {
+    const api = (typeof globalThis !== 'undefined' && globalThis.reelOrderBinge) || null;
+    const empty = { hasBinge: false, hasBingeNote: false, line: '', note: '', basis: '' };
+    if (!api) return empty;
+    const f = this.data[id];
+    return api.summarize({
+      id: id,
+      title: title || (f && f.title) || '',
+      hasWatchOrder: this.hasWatchOrder(id),
+      watchOrder: (this.state.woData || {})[id] || null,
+      runtimes: this.state.runtimes,
+    });
+  };
   readWatched = (fid) => { try { return JSON.parse(localStorage.getItem(this.WO_KEY + fid) || '{}') || {}; } catch(e) { return {}; } };
   toggleWatched = (fid, key) => {
     const w = Object.assign({}, this.state.woWatched);
@@ -12779,8 +12817,15 @@ class Component extends DCLogic {
       footBtnLabel: 'Open the ' + title + ' map',
       footBtnStyle: "flex:none;padding:12px 21px;border-radius:999px;border:1px solid " + accent + ";background:" + accent + ";color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;white-space:nowrap;transition:filter .15s ease;",
       progressText: '', barStyle: 'display:block;height:100%;width:0%;background:' + accent + ';border-radius:999px;transition:width .35s ease;',
-      note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: ''
+      note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: '',
+      hasBinge: false, hasBingeNote: false, bingeLine: '', bingeNote: '', bingeBasis: ''
     };
+    const binge = this.bingeFor(s.activeId, title);
+    wo.hasBinge = !!binge.hasBinge;
+    wo.hasBingeNote = !!binge.hasBingeNote;
+    wo.bingeLine = binge.line || '';
+    wo.bingeNote = binge.note || '';
+    wo.bingeBasis = binge.basis || '';
     if (!wod) return wo;
     wo.hasFaq = !!(wod.faq && wod.faq.length);
     wo.faq = (wod.faq || []).map((q, i) => ({ key: i, q: q.q, a: q.a }));
@@ -13293,6 +13338,8 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    this.loadRuntimes();
+    this.loadWatchOrders();
     this.initRouting();
     this.startSpotTimer();
     try {
@@ -14255,7 +14302,10 @@ class Component extends DCLogic {
       mapsSoonLabel: `${this.comingSoon.length} more franchises are waiting to be mapped.`,
       hasContinue: !!lastF, continueTitle: lastF ? lastF.title : '', continueOpen: () => lastF && this.openFranchise(lastF.id), continueStyle,
       // timeline
-      active: { title:a.title, meta:a.meta, framing:a.framing, initials:this.initials(a.title), crestStyle, forkLabel:a.forkLabel, branchCount:a.branches.length },
+      active: (() => {
+        const binge = this.bingeFor(s.activeId, a.title);
+        return { title:a.title, meta:a.meta, framing:a.framing, initials:this.initials(a.title), crestStyle, forkLabel:a.forkLabel, branchCount:a.branches.length, hasBinge: !!binge.hasBinge, hasBingeNote: !!binge.hasBingeNote, bingeLine: binge.line || '', bingeNote: binge.note || '', bingeBasis: binge.basis || '' };
+      })(),
       filterButtons,
       railTabStyle:this.tabBtn(!isTree), treeTabStyle:this.tabBtn(isTree),
       setRailView:this.setRailView, setTreeView:this.setTreeView,

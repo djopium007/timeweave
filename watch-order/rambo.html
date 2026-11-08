@@ -29,6 +29,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/apple-touch-icon-180.png">
 <script src="/assets/asset-00.js"></script>
 <script src="/assets/supabase-js-2.115.0.js"></script>
+<script src="/assets/binge-time.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -36,6 +37,7 @@
 <noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">
 <h1>Rambo Movies in Order</h1>
 <p><strong>Release order</strong> &middot; <strong>chronological order</strong> &middot; the best watch order if it is your first time watching it.</p>
+<p><strong>About 6 hours across 4 of the 5 Rambo films.</strong> Theatrical runtimes added together, then rounded to the nearest hour. Checked 8 Nov 2026. Rambo: The Force of Freedom is not included, because its episode runtimes are not verified. Rambo: Last Blood has two theatrical runtimes on its Wikipedia infobox, 89 minutes in the US, UK and Canada and 101 minutes internationally, so it is left out.</p>
 <p>Five films in one straight line, which makes this the easiest order on the site: the only real choices are whether to bother with the 1986 cartoon and how long to wait before the 2027 prequel.</p>
 <h2>The order to watch Rambo for the first time</h2><p>Release order is story order here, so a first-timer just goes in sequence. The quality curve is steep, though: the first film is a different kind of movie from everything after it.</p><h3>Start here</h3><ol><li><strong>First Blood</strong> (1982): A small, sad film about a veteran nobody wants home. One person dies in it. Watch it before the sequels reshape what the name means. <em>[He Surrenders: The Film Saga]</em></li><li><strong>Rambo: First Blood Part II</strong> (1985): The one that turned him into the icon: back into Vietnam for POWs, and the template a decade of action films borrowed from. <em>[He Surrenders: The Film Saga]</em></li></ol><h3>The rest of the saga</h3><ol><li><strong>Rambo III</strong> (1988): Afghanistan, Trautman in a Soviet cell, and the biggest version of the formula. <em>[He Surrenders: The Film Saga]</em></li><li><strong>Rambo</strong> (2008): Twenty years later and far more brutal: the film that brings him home to Arizona. <em>[He Surrenders: The Film Saga]</em></li><li><strong>Rambo: Last Blood</strong> (2019): A border revenge story on the family ranch. Works as an ending if you want one. <em>[He Surrenders: The Film Saga]</em></li></ol><h3>Optional</h3><ol><li><strong>Rambo: The Force of Freedom</strong> (1986): A syndicated '80s kids' cartoon in its own continuity: a curiosity, not required viewing. <em>[Force of Freedom: The Cartoon]</em></li></ol>
 <h2>Rambo in release order</h2><p>The order they came out. Identical to the story order, with the 1986 cartoon slotting in between Part II and Rambo III.</p><ol><li><strong>First Blood</strong> (1982): Ends with a surrender the novel and the first cut didn't have: the reason there are sequels at all. <em>[He Surrenders: The Film Saga]</em></li><li><strong>Rambo: First Blood Part II</strong> (1985) <em>[He Surrenders: The Film Saga]</em></li><li><strong>Rambo: The Force of Freedom</strong> (1986): Launched a year after Part II, while the character was at peak popularity. <em>[Force of Freedom: The Cartoon]</em></li><li><strong>Rambo III</strong> (1988) <em>[He Surrenders: The Film Saga]</em></li><li><strong>Rambo</strong> (2008): A twenty-year gap on screen and in the story. <em>[He Surrenders: The Film Saga]</em></li><li><strong>Rambo: Last Blood</strong> (2019) <em>[He Surrenders: The Film Saga]</em></li></ol>
@@ -812,6 +814,13 @@
         <div style="flex:1;min-width:260px;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#6b7686;">{{ active.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1;margin:6px 0 0;text-transform:uppercase;letter-spacing:0.01em;">{{ active.title }}</h1>
+          <sc-if value="{{ active.hasBinge }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:14px 0 0;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(18px,2.4vw,22px);letter-spacing:0.01em;color:#E9EDF3;line-height:1.25;">{{ active.bingeLine }}</p>
+            <p style="margin:6px 0 0;max-width:68ch;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.55;color:#6b7686;">{{ active.bingeBasis }}</p>
+            <sc-if value="{{ active.hasBingeNote }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:6px 0 0;max-width:68ch;color:#9aa6b4;font-size:14px;line-height:1.5;text-wrap:pretty;">{{ active.bingeNote }}</p>
+            </sc-if>
+          </sc-if>
           <p style="margin:14px 0 0;max-width:72ch;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">{{ active.framing }}</p>
           <sc-if value="{{ hasWatchOrder }}" hint-placeholder-val="{{ true }}">
             <a href="{{ watchOrderHref }}" onclick="{{ goWatchOrder }}" style="{{ watchOrderBtnStyle }}" style-hover="border-color:rgba(255,255,255,0.4);color:#fff;">▶ {{ watchOrderBtnLabel }}</a>
@@ -1724,6 +1733,13 @@
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#9DB0C4;">{{ wo.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.03;margin:8px 0 0;letter-spacing:0.01em;text-transform:uppercase;text-wrap:balance;">{{ wo.heading }}</h1>
           <div style="margin-top:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:#9DB0C4;letter-spacing:0.01em;">{{ wo.sub }}</div>
+          <sc-if value="{{ wo.hasBinge }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:14px 0 0;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(18px,2.4vw,22px);letter-spacing:0.01em;color:#E9EDF3;line-height:1.25;">{{ wo.bingeLine }}</p>
+            <p style="margin:6px 0 0;max-width:68ch;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.55;color:#6b7686;">{{ wo.bingeBasis }}</p>
+            <sc-if value="{{ wo.hasBingeNote }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:6px 0 0;max-width:68ch;color:#9aa6b4;font-size:14px;line-height:1.5;text-wrap:pretty;">{{ wo.bingeNote }}</p>
+            </sc-if>
+          </sc-if>
         </div>
       </div>
 
@@ -1946,7 +1962,7 @@ class Component extends DCLogic {
     screen: 'hub',
     navOpen: false,
     isNarrow: (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth <= 1000 : false,
-    woOrder: 'first', woData: null, woLoading: false, woWatched: {},
+    woOrder: 'first', woData: null, woLoading: false, woWatched: {}, runtimes: null,
     activeId: 'terminator',
     // Timeline tab index: filter, sort, and the last map actually opened this session
     mapsQ: '', mapsSort: 'az', lastViewedId: null,
@@ -12722,6 +12738,28 @@ class Component extends DCLogic {
       this.setState({ woData: json, woLoading: false });
     } catch (e) { this.setState({ woLoading: false }); }
   };
+  loadRuntimes = async () => {
+    if (this.state.runtimes || this._runtimesLoading) return;
+    this._runtimesLoading = true;
+    try {
+      const res = await fetch('/assets/runtimes.json');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      this.setState({ runtimes: await res.json() });
+    } catch (e) { this._runtimesLoading = false; }
+  };
+  bingeFor = (id, title) => {
+    const api = (typeof globalThis !== 'undefined' && globalThis.reelOrderBinge) || null;
+    const empty = { hasBinge: false, hasBingeNote: false, line: '', note: '', basis: '' };
+    if (!api) return empty;
+    const f = this.data[id];
+    return api.summarize({
+      id: id,
+      title: title || (f && f.title) || '',
+      hasWatchOrder: this.hasWatchOrder(id),
+      watchOrder: (this.state.woData || {})[id] || null,
+      runtimes: this.state.runtimes,
+    });
+  };
   readWatched = (fid) => { try { return JSON.parse(localStorage.getItem(this.WO_KEY + fid) || '{}') || {}; } catch(e) { return {}; } };
   toggleWatched = (fid, key) => {
     const w = Object.assign({}, this.state.woWatched);
@@ -12779,8 +12817,15 @@ class Component extends DCLogic {
       footBtnLabel: 'Open the ' + title + ' map',
       footBtnStyle: "flex:none;padding:12px 21px;border-radius:999px;border:1px solid " + accent + ";background:" + accent + ";color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;white-space:nowrap;transition:filter .15s ease;",
       progressText: '', barStyle: 'display:block;height:100%;width:0%;background:' + accent + ';border-radius:999px;transition:width .35s ease;',
-      note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: ''
+      note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: '',
+      hasBinge: false, hasBingeNote: false, bingeLine: '', bingeNote: '', bingeBasis: ''
     };
+    const binge = this.bingeFor(s.activeId, title);
+    wo.hasBinge = !!binge.hasBinge;
+    wo.hasBingeNote = !!binge.hasBingeNote;
+    wo.bingeLine = binge.line || '';
+    wo.bingeNote = binge.note || '';
+    wo.bingeBasis = binge.basis || '';
     if (!wod) return wo;
     wo.hasFaq = !!(wod.faq && wod.faq.length);
     wo.faq = (wod.faq || []).map((q, i) => ({ key: i, q: q.q, a: q.a }));
@@ -13293,6 +13338,8 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    this.loadRuntimes();
+    this.loadWatchOrders();
     this.initRouting();
     this.startSpotTimer();
     try {
@@ -14255,7 +14302,10 @@ class Component extends DCLogic {
       mapsSoonLabel: `${this.comingSoon.length} more franchises are waiting to be mapped.`,
       hasContinue: !!lastF, continueTitle: lastF ? lastF.title : '', continueOpen: () => lastF && this.openFranchise(lastF.id), continueStyle,
       // timeline
-      active: { title:a.title, meta:a.meta, framing:a.framing, initials:this.initials(a.title), crestStyle, forkLabel:a.forkLabel, branchCount:a.branches.length },
+      active: (() => {
+        const binge = this.bingeFor(s.activeId, a.title);
+        return { title:a.title, meta:a.meta, framing:a.framing, initials:this.initials(a.title), crestStyle, forkLabel:a.forkLabel, branchCount:a.branches.length, hasBinge: !!binge.hasBinge, hasBingeNote: !!binge.hasBingeNote, bingeLine: binge.line || '', bingeNote: binge.note || '', bingeBasis: binge.basis || '' };
+      })(),
       filterButtons,
       railTabStyle:this.tabBtn(!isTree), treeTabStyle:this.tabBtn(isTree),
       setRailView:this.setRailView, setTreeView:this.setTreeView,

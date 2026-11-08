@@ -18,6 +18,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import vm from 'vm';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -51,6 +52,36 @@ function extractData(src) {
 }
 const data = extractData(html);
 const ids = Object.keys(data);
+
+/* Same calculator the pages use. Kept out of the SPA bundle as a classic script. */
+const bingeSandbox = { module: { exports: {} }, exports: {} };
+bingeSandbox.globalThis = bingeSandbox;
+vm.runInNewContext(fs.readFileSync(path.join(ROOT, 'assets', 'binge-time.js'), 'utf8'), bingeSandbox, { filename: 'binge-time.js' });
+const bingeTime = bingeSandbox.module.exports;
+let runtimes = null;
+try {
+  runtimes = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets', 'runtimes.json'), 'utf8'));
+} catch (e) {
+  console.warn('build-seo: no assets/runtimes.json, binge totals omitted');
+}
+function bingeFor(id) {
+  const f = data[id];
+  if (!f || !bingeTime || !runtimes) return { hasBinge: false, line: '', note: '', basis: '' };
+  const summary = bingeTime.summarize({
+    id,
+    title: f.title,
+    hasWatchOrder: Object.prototype.hasOwnProperty.call(watchOrders, id),
+    watchOrder: watchOrders[id] || null,
+    runtimes,
+  });
+  if (summary.hasBinge && !/\babout\b/i.test(summary.line)) {
+    throw new Error('build-seo: binge line for ' + id + ' is missing "about"');
+  }
+  if (summary.line && /[\u2014\u2013]/.test(summary.line + summary.note + summary.basis)) {
+    throw new Error('build-seo: binge copy for ' + id + ' contains a dash the site does not use');
+  }
+  return summary;
+}
 
 /* ---------- watch orders live in their own file (too big to inline per route) ---------- */
 let watchOrders = {};
@@ -326,9 +357,14 @@ function noscriptBlock(r) {
         `${it.why ? ': ' + esc(stripTags(it.why)) : ''} <em>[${esc(it.branch)}]</em></li>`).join('') + '</ol>';
     const firstGroups = (wo.orders.first.groups || [])
       .map((g) => `<h3>${esc(g.label)}</h3>` + listOf(g.items || [])).join('');
+    const binge = bingeFor(f.id);
+    const bingeHtml = binge.hasBinge
+      ? `<p><strong>${esc(binge.line)}</strong> ${esc(binge.basis)}${binge.note ? ' ' + esc(binge.note) : ''}</p>`
+      : '';
     return `<noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">
 <h1>${esc(woName(f))}</h1>
 <p><strong>Release order</strong> &middot; <strong>chronological order</strong> &middot; the best watch order if it is your first time ${esc(noun === 'watch' ? 'watching' : noun + 'ing')} it.</p>
+${bingeHtml}
 <p>${esc(stripTags(wo.intro))}</p>
 ${section(`The order to ${noun} ${f.title} for the first time`, `<p>${esc(stripTags(wo.orders.first.note))}</p>` + firstGroups)}
 ${section(`${f.title} in release order`, `<p>${esc(stripTags(wo.orders.release.note))}</p>` + listOf(wo.orders.release.items || []))}
@@ -343,9 +379,14 @@ ${(wo.faq && wo.faq.length) ? section('Common questions about the ' + woPhrase(f
     .map((b) => `<li><strong>${esc(b.title)}</strong>${b.summary ? ': ' + esc(b.summary) : ''}</li>`)
     .join('');
   const films = (f.films || []).map((x) => `<li>${esc(x)}</li>`).join('');
+  const binge = bingeFor(f.id);
+  const bingeHtml = binge.hasBinge
+    ? `<p><strong>${esc(binge.line)}</strong> ${esc(binge.basis)}${binge.note ? ' ' + esc(binge.note) : ''}</p>`
+    : '';
   return `<noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">
 <h1>${esc(mapName(f))}</h1>
 <p>${esc(f.meta)}</p>
+${bingeHtml}
 <p>${esc(f.framing || f.blurb || f.tagline)}</p>
 <h2>Branches</h2><ul>${branches}</ul>
 ${films ? `<h2>Films</h2><ul>${films}</ul>` : ''}

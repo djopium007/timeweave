@@ -29,6 +29,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/apple-touch-icon-180.png">
 <script src="/assets/asset-00.js"></script>
 <script src="/assets/supabase-js-2.115.0.js"></script>
+<script src="/assets/binge-time.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -36,6 +37,7 @@
 <noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">
 <h1>X-Men Movies in Order</h1>
 <p><strong>Release order</strong> &middot; <strong>chronological order</strong> &middot; the best watch order if it is your first time watching it.</p>
+<p><strong>Watch all 13 X-Men films in about 26 hours.</strong> Theatrical runtimes added together, then rounded to the nearest hour. Checked 8 Nov 2026.</p>
 <p>Twenty years of films that changed their own past twice, kept recasting the same characters at different ages, and absorbed two Deadpool films that openly mock the continuity. There is no order in which all thirteen agree with each other.</p>
 <h2>The order to watch X-Men for the first time</h2><p>Five films. The series has two genuinely good stretches: the first two films, and the First Class run, plus one great ending, and everything else either contradicts them or gets quietly erased. This path skips The Last Stand, Origins, Apocalypse, Dark Phoenix and The New Mutants, none of which you will miss.</p><h3>Start here</h3><ol><li><strong>X-Men</strong> (2000): The film that started the modern superhero era, and it still explains its own premise better than most of its sequels. <em>[Original Timeline → Dark Future]</em></li><li><strong>X2: X-Men United</strong> (2003): The high point of the original run. Stop here and skip The Last Stand: Days of Future Past erases it anyway. <em>[Original Timeline → Dark Future]</em></li></ol><h3>The reset</h3><ol><li><strong>X-Men: First Class</strong> (2011): A 1962 prequel with a new cast that works as a standalone film; you could start here instead and lose very little. <em>[Shared Origins (3600 BC – 1973)]</em></li><li><strong>X-Men: Days of Future Past</strong> (2014): Joins both casts, then deletes the original timeline outright, the single most important film in the series for understanding the map. <em>[Original Timeline → Dark Future]</em></li></ol><h3>The ending</h3><ol><li><strong>Logan</strong> (2017): Set in 2029 and unconcerned with which timeline it belongs to. The best film in the franchise, and it works with only the two you started with. <em>[Original Timeline → Dark Future]</em></li></ol><h3>Deadpool, separately</h3><ol><li><strong>Deadpool</strong> (2016): Barely connected to any of the above and does not want to be; watch it whenever. <em>[Revised Timeline (post-1973)]</em></li><li><strong>Deadpool 2</strong> (2018): Ends by using time travel as a joke to undo things it did not like, including in other films. <em>[Revised Timeline (post-1973)]</em></li></ol><h3>Completionists only</h3><ol><li><strong>X-Men: The Last Stand</strong> (2006): Days of Future Past exists largely to undo this. <em>[Original Timeline → Dark Future]</em></li><li><strong>X-Men Origins: Wolverine</strong> (2009): Contradicted by nearly every film after it, including its own sequel. <em>[Original Timeline → Dark Future]</em></li><li><strong>The Wolverine</strong> (2013): A self-contained detour set after The Last Stand; its ending leads into Days of Future Past. <em>[Original Timeline → Dark Future]</em></li><li><strong>X-Men: Apocalypse</strong> (2016) <em>[Revised Timeline (post-1973)]</em></li><li><strong>Dark Phoenix</strong> (2019): The second attempt at the story The Last Stand already failed at. <em>[Revised Timeline (post-1973)]</em></li><li><strong>The New Mutants</strong> (2020): Connected to nothing, released after the series had already ended. <em>[Revised Timeline (post-1973)]</em></li></ol>
 <h2>X-Men in release order</h2><p>The order they came out, which is the only order in which the timeline reset lands as a surprise rather than as a footnote.</p><ol><li><strong>X-Men</strong> (2000) <em>[Original Timeline → Dark Future]</em></li><li><strong>X2: X-Men United</strong> (2003) <em>[Original Timeline → Dark Future]</em></li><li><strong>X-Men: The Last Stand</strong> (2006): Ends the original trilogy in a way the series spends the next decade walking back. <em>[Original Timeline → Dark Future]</em></li><li><strong>X-Men Origins: Wolverine</strong> (2009) <em>[Original Timeline → Dark Future]</em></li><li><strong>X-Men: First Class</strong> (2011): Restarts the series as a 1960s prequel with a second cast playing the same people. <em>[Shared Origins (3600 BC – 1973)]</em></li><li><strong>The Wolverine</strong> (2013) <em>[Original Timeline → Dark Future]</em></li><li><strong>X-Men: Days of Future Past</strong> (2014): Merges both casts and then erases everything after 1973: the fork that splits the whole map. <em>[Original Timeline → Dark Future]</em></li><li><strong>Deadpool</strong> (2016) <em>[Revised Timeline (post-1973)]</em></li><li><strong>X-Men: Apocalypse</strong> (2016) <em>[Revised Timeline (post-1973)]</em></li><li><strong>Logan</strong> (2017): Deliberately refuses to say which timeline it is in. <em>[Original Timeline → Dark Future]</em></li><li><strong>Deadpool 2</strong> (2018) <em>[Revised Timeline (post-1973)]</em></li><li><strong>Dark Phoenix</strong> (2019) <em>[Revised Timeline (post-1973)]</em></li><li><strong>The New Mutants</strong> (2020) <em>[Revised Timeline (post-1973)]</em></li></ol>
@@ -812,6 +814,13 @@
         <div style="flex:1;min-width:260px;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#6b7686;">{{ active.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1;margin:6px 0 0;text-transform:uppercase;letter-spacing:0.01em;">{{ active.title }}</h1>
+          <sc-if value="{{ active.hasBinge }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:14px 0 0;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(18px,2.4vw,22px);letter-spacing:0.01em;color:#E9EDF3;line-height:1.25;">{{ active.bingeLine }}</p>
+            <p style="margin:6px 0 0;max-width:68ch;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.55;color:#6b7686;">{{ active.bingeBasis }}</p>
+            <sc-if value="{{ active.hasBingeNote }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:6px 0 0;max-width:68ch;color:#9aa6b4;font-size:14px;line-height:1.5;text-wrap:pretty;">{{ active.bingeNote }}</p>
+            </sc-if>
+          </sc-if>
           <p style="margin:14px 0 0;max-width:72ch;color:#A9B4C2;font-size:16px;line-height:1.6;text-wrap:pretty;">{{ active.framing }}</p>
           <sc-if value="{{ hasWatchOrder }}" hint-placeholder-val="{{ true }}">
             <a href="{{ watchOrderHref }}" onclick="{{ goWatchOrder }}" style="{{ watchOrderBtnStyle }}" style-hover="border-color:rgba(255,255,255,0.4);color:#fff;">▶ {{ watchOrderBtnLabel }}</a>
@@ -1724,6 +1733,13 @@
           <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#9DB0C4;">{{ wo.meta }}</div>
           <h1 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,50px);line-height:1.03;margin:8px 0 0;letter-spacing:0.01em;text-transform:uppercase;text-wrap:balance;">{{ wo.heading }}</h1>
           <div style="margin-top:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:#9DB0C4;letter-spacing:0.01em;">{{ wo.sub }}</div>
+          <sc-if value="{{ wo.hasBinge }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:14px 0 0;font-family:'Oswald',sans-serif;font-weight:500;font-size:clamp(18px,2.4vw,22px);letter-spacing:0.01em;color:#E9EDF3;line-height:1.25;">{{ wo.bingeLine }}</p>
+            <p style="margin:6px 0 0;max-width:68ch;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.55;color:#6b7686;">{{ wo.bingeBasis }}</p>
+            <sc-if value="{{ wo.hasBingeNote }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:6px 0 0;max-width:68ch;color:#9aa6b4;font-size:14px;line-height:1.5;text-wrap:pretty;">{{ wo.bingeNote }}</p>
+            </sc-if>
+          </sc-if>
         </div>
       </div>
 
@@ -1946,7 +1962,7 @@ class Component extends DCLogic {
     screen: 'hub',
     navOpen: false,
     isNarrow: (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth <= 1000 : false,
-    woOrder: 'first', woData: null, woLoading: false, woWatched: {},
+    woOrder: 'first', woData: null, woLoading: false, woWatched: {}, runtimes: null,
     activeId: 'terminator',
     // Timeline tab index: filter, sort, and the last map actually opened this session
     mapsQ: '', mapsSort: 'az', lastViewedId: null,
@@ -12722,6 +12738,28 @@ class Component extends DCLogic {
       this.setState({ woData: json, woLoading: false });
     } catch (e) { this.setState({ woLoading: false }); }
   };
+  loadRuntimes = async () => {
+    if (this.state.runtimes || this._runtimesLoading) return;
+    this._runtimesLoading = true;
+    try {
+      const res = await fetch('/assets/runtimes.json');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      this.setState({ runtimes: await res.json() });
+    } catch (e) { this._runtimesLoading = false; }
+  };
+  bingeFor = (id, title) => {
+    const api = (typeof globalThis !== 'undefined' && globalThis.reelOrderBinge) || null;
+    const empty = { hasBinge: false, hasBingeNote: false, line: '', note: '', basis: '' };
+    if (!api) return empty;
+    const f = this.data[id];
+    return api.summarize({
+      id: id,
+      title: title || (f && f.title) || '',
+      hasWatchOrder: this.hasWatchOrder(id),
+      watchOrder: (this.state.woData || {})[id] || null,
+      runtimes: this.state.runtimes,
+    });
+  };
   readWatched = (fid) => { try { return JSON.parse(localStorage.getItem(this.WO_KEY + fid) || '{}') || {}; } catch(e) { return {}; } };
   toggleWatched = (fid, key) => {
     const w = Object.assign({}, this.state.woWatched);
@@ -12779,8 +12817,15 @@ class Component extends DCLogic {
       footBtnLabel: 'Open the ' + title + ' map',
       footBtnStyle: "flex:none;padding:12px 21px;border-radius:999px;border:1px solid " + accent + ";background:" + accent + ";color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;white-space:nowrap;transition:filter .15s ease;",
       progressText: '', barStyle: 'display:block;height:100%;width:0%;background:' + accent + ';border-radius:999px;transition:width .35s ease;',
-      note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: ''
+      note: '', tabs: [], groups: [], sectionHeading: '', hasFaq: false, faq: [], faqHeading: '',
+      hasBinge: false, hasBingeNote: false, bingeLine: '', bingeNote: '', bingeBasis: ''
     };
+    const binge = this.bingeFor(s.activeId, title);
+    wo.hasBinge = !!binge.hasBinge;
+    wo.hasBingeNote = !!binge.hasBingeNote;
+    wo.bingeLine = binge.line || '';
+    wo.bingeNote = binge.note || '';
+    wo.bingeBasis = binge.basis || '';
     if (!wod) return wo;
     wo.hasFaq = !!(wod.faq && wod.faq.length);
     wo.faq = (wod.faq || []).map((q, i) => ({ key: i, q: q.q, a: q.a }));
@@ -13293,6 +13338,8 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    this.loadRuntimes();
+    this.loadWatchOrders();
     this.initRouting();
     this.startSpotTimer();
     try {
@@ -14255,7 +14302,10 @@ class Component extends DCLogic {
       mapsSoonLabel: `${this.comingSoon.length} more franchises are waiting to be mapped.`,
       hasContinue: !!lastF, continueTitle: lastF ? lastF.title : '', continueOpen: () => lastF && this.openFranchise(lastF.id), continueStyle,
       // timeline
-      active: { title:a.title, meta:a.meta, framing:a.framing, initials:this.initials(a.title), crestStyle, forkLabel:a.forkLabel, branchCount:a.branches.length },
+      active: (() => {
+        const binge = this.bingeFor(s.activeId, a.title);
+        return { title:a.title, meta:a.meta, framing:a.framing, initials:this.initials(a.title), crestStyle, forkLabel:a.forkLabel, branchCount:a.branches.length, hasBinge: !!binge.hasBinge, hasBingeNote: !!binge.hasBingeNote, bingeLine: binge.line || '', bingeNote: binge.note || '', bingeBasis: binge.basis || '' };
+      })(),
       filterButtons,
       railTabStyle:this.tabBtn(!isTree), treeTabStyle:this.tabBtn(isTree),
       setRailView:this.setRailView, setTreeView:this.setTreeView,
