@@ -12563,12 +12563,578 @@ class Component extends DCLogic {
         "No false precision: the films give almost no in-story years (the 1989 flashback in F9, and Fast X's 'ten years later' than Rio), so the map orders by film, not by date.",
         "Not in the map: the animated series Fast & Furious Spy Racers and the 2027 finale, which is dated but unreleased."
       ]
+    },
+    dc: {
+      "id": "dc",
+      "title": "DC Universe",
+      "accent": "#2C6FDB",
+      "tagline": "Gunn's DCU: four films, three series, one Earth that already had metahumans for 300 years before Superman showed up.",
+      "blurb": "James Gunn's DCU in order: Creature Commandos to Clayface, plus the two pre-DCU projects it keeps, on one Earth with 300 years of metahumans.",
+      "meta": "4 films · 3 series · 4 branches",
+      "framing": "The DCU runs on a single Earth, with no time travel and no reboots, but it was not released in story order. Creature Commandos came first, Superman picks up three years into his career, Clayface and the 2016 half of Lanterns both happen earlier than they were released, and Gunn's The Suicide Squad and Peacemaker Season 1 are kept as mostly canon. The four branches follow the threads the films and series hand to each other: Waller's task forces, the fallout from Superman, the Green Lanterns, and Gotham's monsters.",
+      "forkLabel": "Three years ago · Superman goes public",
+      "films": [
+        "The Suicide Squad (2021)",
+        "Peacemaker Season 1 (2022)",
+        "Creature Commandos (2024)",
+        "Superman (2025)",
+        "Peacemaker Season 2 (2025)",
+        "Supergirl (2026)",
+        "Lanterns (2026)",
+        "Clayface (2026)"
+      ],
+      "branches": [
+        {
+          "id": "b1",
+          "title": "Waller's Task Forces",
+          "color": "#ffb02e",
+          "films": [
+            "The Suicide Squad",
+            "Peacemaker Season 1",
+            "Creature Commandos",
+            "Peacemaker Season 2"
+          ],
+          "summary": "Amanda Waller's off-the-books squads, from Task Force X to the monsters of Task Force M, until A.R.G.U.S. and Checkmate take over the dirty work.",
+          "nodes": [
+            {
+              "era": "Corto Maltese",
+              "type": "event",
+              "text": "Task Force X is sent to Corto Maltese to bury Project Starfish. Only some of the squad's history survives into the DCU: Gunn keeps it as mostly canon.",
+              "tags": [
+                {
+                  "label": "Mostly canon",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "Corto Maltese",
+              "type": "death",
+              "text": "Peacemaker kills Rick Flag Jr. on Waller's orders to keep the Starfish files secret. The killing drives his whole arc and, later, Rick Flag Sr.'s.",
+              "tags": [
+                {
+                  "label": "Rick Flag Jr.",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "After Corto Maltese",
+              "type": "event",
+              "text": "Peacemaker is drafted into Project Butterfly alongside Waller's daughter Leota Adebayo and kills his father Auggie, the White Dragon.",
+              "tags": [
+                {
+                  "label": "Mostly canon",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "After Corto Maltese",
+              "type": "turning-point",
+              "text": "Adebayo leaks the truth about her mother's black ops. Peacemaker Season 2 later rewrites one beat: the heroes who arrive at the end are the Justice Gang, not the old Justice League.",
+              "tags": [
+                {
+                  "label": "Retcon",
+                  "kind": "paradox"
+                }
+              ]
+            },
+            {
+              "era": "After Peacemaker S1",
+              "type": "turning-point",
+              "text": "With Task Force X shut down by Congress, Waller builds Task Force M from non-humans (the Bride, Weasel, G.I. Robot, Dr. Phosphorus, Nina Mazursky) and puts Rick Flag Sr. in charge.",
+              "tags": [
+                {
+                  "label": "Task Force M",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "Pokolistan",
+              "type": "event",
+              "text": "The team is sent to protect Princess Ilana Rostovic from the sorceress Circe and her Sons of Themyscira.",
+              "tags": [
+                {
+                  "label": "Circe",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Pokolistan",
+              "type": "turning-point",
+              "text": "Circe shows Waller a vision of Ilana conquering the world. Waller orders the princess killed; Flag refuses.",
+              "tags": []
+            },
+            {
+              "era": "Pokolistan",
+              "type": "death",
+              "text": "Ilana kills Nina. The Bride shoots Eric, works out that the prophecy is real and kills Ilana. A rebuilt Task Force M, with King Shark, carries on.",
+              "tags": [
+                {
+                  "label": "Nina Mazursky",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "After Superman",
+              "type": "turning-point",
+              "text": "Rick Flag Sr., now running A.R.G.U.S., hunts Peacemaker for his son's murder and offers the jailed Lex Luthor a transfer to Van Kull in return for help.",
+              "tags": [
+                {
+                  "label": "A.R.G.U.S.",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "After Superman",
+              "type": "event",
+              "text": "Through the Quantum Unfolding Chamber, Chris finds an alternate Earth run by Nazis, where his father and brother are still alive. His other self dies in the chamber; Vigilante later kills that world's Auggie.",
+              "tags": [
+                {
+                  "label": "Quantum Unfolding Chamber",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "After Superman",
+              "type": "resolution",
+              "text": "Chris and his allies found Checkmate. Then A.R.G.U.S. abducts him and strands him on Salvation, a planet in another dimension picked because it was meant to be uninhabited.",
+              "tags": [
+                {
+                  "label": "Checkmate",
+                  "kind": "event"
+                },
+                {
+                  "label": "Salvation",
+                  "kind": "tech"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2",
+          "title": "The Age of Superman",
+          "color": "#2C6FDB",
+          "films": [
+            "Superman",
+            "Peacemaker Season 2",
+            "Supergirl"
+          ],
+          "summary": "Superman is three years into his public career when the DCU film opens; everything after it reacts to what Lex Luthor did to him.",
+          "nodes": [
+            {
+              "era": "300 years ago",
+              "type": "event",
+              "text": "Metahumans first appear on Earth. Superman doesn't open a new world of heroes; he joins one that is centuries old.",
+              "tags": [
+                {
+                  "label": "Metahumans",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "30 years ago",
+              "type": "event",
+              "text": "A child is sent to Earth from the dying planet Krypton.",
+              "tags": [
+                {
+                  "label": "Kal-El",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "3 years ago",
+              "type": "turning-point",
+              "text": "That child, now grown, reveals himself to the world as Superman.",
+              "tags": []
+            },
+            {
+              "era": "Superman",
+              "type": "event",
+              "text": "Superman stops Boravia invading Jarhanpur, then loses his first fight to the Hammer of Boravia and is healed in the Fortress of Solitude with Krypto.",
+              "tags": [
+                {
+                  "label": "Krypto",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Superman",
+              "type": "turning-point",
+              "text": "The Engineer restores the damaged message from Jor-El and Lara, and Lex Luthor broadcasts it: an order to rule Earth. Public opinion turns, and Superman surrenders.",
+              "tags": [
+                {
+                  "label": "Kryptonian message",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "Superman",
+              "type": "death",
+              "text": "Held in Lex's pocket-universe prison and weakened by Metamorpho's forced Kryptonite, Superman watches Lex murder Malik Ali. Metamorpho then helps him escape.",
+              "tags": [
+                {
+                  "label": "Pocket universe",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "Superman",
+              "type": "resolution",
+              "text": "Superman and Krypto knock Ultraman, the Superman clone Lex built, into a black hole. Mr. Terrific seals the rift through Metropolis, and Lois and Jimmy's reporting gets Lex arrested.",
+              "tags": [
+                {
+                  "label": "Lex Luthor",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Superman",
+              "type": "event",
+              "text": "Kara Zor-El lands at the Fortress to collect Krypto: he is her dog.",
+              "tags": [
+                {
+                  "label": "Supergirl",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "After Superman",
+              "type": "event",
+              "text": "Lex sits in Belle Reve until Rick Flag Sr. offers him a move to Van Kull in exchange for helping catch Peacemaker.",
+              "tags": []
+            },
+            {
+              "era": "Supergirl",
+              "type": "turning-point",
+              "text": "On her 23rd-birthday trip across space, Krem of the Yellow Hills' Brigands hijack Kara's ship and shoot Krypto with a poisoned dart. He has three days to live.",
+              "tags": [
+                {
+                  "label": "Krem",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Supergirl",
+              "type": "event",
+              "text": "Kara teams up with Ruthye, whose family Krem killed, and crosses paths with Lobo.",
+              "tags": [
+                {
+                  "label": "Lobo",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Supergirl",
+              "type": "resolution",
+              "text": "Kara kills Krem with Ruthye's sword, Krypto gets the antidote, and Kara comes back to Earth to tell Superman she is staying.",
+              "tags": []
+            }
+          ]
+        },
+        {
+          "id": "b3",
+          "title": "The Green Lanterns",
+          "color": "#39d98a",
+          "films": [
+            "Superman",
+            "Lanterns"
+          ],
+          "summary": "Lanterns runs on two clocks, 2016 and 2026. Superman's whole story happens in the gap between them, while Hal Jordan is in prison.",
+          "nodes": [
+            {
+              "era": "2016",
+              "type": "event",
+              "text": "Hal Jordan, a Green Lantern for decades, brings his trainee John Stewart to Rushville, Nebraska, chasing what he believes is an alien killer.",
+              "tags": [
+                {
+                  "label": "Hal Jordan",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2016",
+              "type": "death",
+              "text": "The trail leads to Zoe, the town's long-time healer, believed to be the last Manhunter and the one who killed Abin Sur. Laser satellites hit the town; John shoots Zoe dead.",
+              "tags": [
+                {
+                  "label": "Manhunters",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2016",
+              "type": "turning-point",
+              "text": "John refuses to become a Lantern. Hal takes the blame for Rushville and serves ten years in federal prison.",
+              "tags": []
+            },
+            {
+              "era": "Superman",
+              "type": "event",
+              "text": "With Hal locked up, Guy Gardner is Earth's Green Lantern, flying with Hawkgirl and Mr. Terrific as the Justice Gang.",
+              "tags": [
+                {
+                  "label": "Justice Gang",
+                  "kind": "event"
+                }
+              ]
+            },
+            {
+              "era": "2026",
+              "type": "death",
+              "text": "Hal, out of prison, is found frozen in the bleachers of Rushville's high-school football field.",
+              "tags": [
+                {
+                  "label": "Hal Jordan",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2026",
+              "type": "turning-point",
+              "text": "John digs up Hal's body and takes the ring, which holds a backup of Hal last updated in 2006.",
+              "tags": [
+                {
+                  "label": "Power ring",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "2026",
+              "type": "event",
+              "text": "A portal in Hal's vault leads to the world Zoe destroyed. Someone has broken Sinestro out and made him forge a fear-powered lantern.",
+              "tags": [
+                {
+                  "label": "Sinestro",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2026",
+              "type": "paradox",
+              "text": "Sheriff Kerry Kane's son Noah is a Manhunter too, and Kerry is the one who shot Hal, to protect him.",
+              "tags": [
+                {
+                  "label": "Noah",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "2026",
+              "type": "resolution",
+              "text": "John recharges the ring with Sinestro's lantern and the backup Hal goes dark for good. John becomes an independent Green Lantern who keeps Earth while Guy takes the stars.",
+              "tags": [
+                {
+                  "label": "John Stewart",
+                  "kind": "character"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b4",
+          "title": "Gotham's Monsters",
+          "color": "#b07cff",
+          "films": [
+            "Clayface",
+            "Creature Commandos"
+          ],
+          "summary": "The DCU's Gotham, seen only through its monsters: Batman is out there, but only ever as a silhouette.",
+          "nodes": [
+            {
+              "era": "Before Creature Commandos",
+              "type": "event",
+              "text": "Actor Matt Hagen is disfigured by a Gotham mob boss and loses his career.",
+              "tags": [
+                {
+                  "label": "Matt Hagen",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Before Creature Commandos",
+              "type": "turning-point",
+              "text": "A scientist, Caitlyn, treats him with an illegal dose of experimental nanites. He can now reshape his body into anyone.",
+              "tags": [
+                {
+                  "label": "Nanites",
+                  "kind": "tech"
+                }
+              ]
+            },
+            {
+              "era": "Before Creature Commandos",
+              "type": "death",
+              "text": "Hagen kills the people who ruined him, then Caitlyn's fiancé, GCPD detective John Borrelli, and takes his face.",
+              "tags": []
+            },
+            {
+              "era": "Before Creature Commandos",
+              "type": "resolution",
+              "text": "Caitlyn triggers a kill switch and Clayface washes into the sewer. Some time later he is still alive, alone and barely holding his shape.",
+              "tags": [
+                {
+                  "label": "Clayface",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Flashback",
+              "type": "event",
+              "text": "Dr. Phosphorus's origin ends with Batman, seen only in silhouette, taking him down. It is the Dark Knight's first DCU appearance.",
+              "tags": [
+                {
+                  "label": "Batman",
+                  "kind": "character"
+                }
+              ]
+            },
+            {
+              "era": "Pokolistan",
+              "type": "paradox",
+              "text": "Ilana hired Clayface to pose as Professor MacPherson so the prophecy against her would look fake once he was exposed. Eric Frankenstein beats him.",
+              "tags": [
+                {
+                  "label": "Clayface",
+                  "kind": "character"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "characters": [
+        {
+          "name": "Superman",
+          "role": "Clark Kent, three years into his public career and losing the public's trust.",
+          "color": "#2C6FDB"
+        },
+        {
+          "name": "Lex Luthor",
+          "role": "Billionaire behind Ultraman and the pocket universe; arrested, then useful to A.R.G.U.S.",
+          "color": "#39d98a"
+        },
+        {
+          "name": "Supergirl",
+          "role": "Kara Zor-El, raised on Argo City, Krypto's real owner.",
+          "color": "#ff2a1f"
+        },
+        {
+          "name": "Krypto",
+          "role": "Kara's dog, on loan to Clark, and the reason for her whole film.",
+          "color": "#ffb02e"
+        },
+        {
+          "name": "Amanda Waller",
+          "role": "Runs the task forces; exposed by her own daughter.",
+          "color": "#ffb02e"
+        },
+        {
+          "name": "Rick Flag Sr.",
+          "role": "Leads Task Force M, then A.R.G.U.S.; wants Peacemaker for his son's death.",
+          "color": "#ffb02e"
+        },
+        {
+          "name": "Peacemaker",
+          "role": "Chris Smith: killed Rick Flag Jr., co-founds Checkmate, ends Season 2 stranded on Salvation.",
+          "color": "#ff2a1f"
+        },
+        {
+          "name": "Hal Jordan",
+          "role": "Veteran Green Lantern; ten years in prison after Rushville, killed in 2026.",
+          "color": "#39d98a"
+        },
+        {
+          "name": "John Stewart",
+          "role": "Hal's trainee who refuses the ring in 2016 and takes it in 2026.",
+          "color": "#39d98a"
+        },
+        {
+          "name": "Guy Gardner",
+          "role": "Earth's Green Lantern while Hal is away; Justice Gang.",
+          "color": "#39d98a"
+        },
+        {
+          "name": "The Bride",
+          "role": "Frankenstein's creation and the field leader of Task Force M.",
+          "color": "#b07cff"
+        },
+        {
+          "name": "Clayface",
+          "role": "Matt Hagen, the actor turned shapeshifter, alive in the sewers.",
+          "color": "#b07cff"
+        }
+      ],
+      "items": [
+        {
+          "name": "Fortress of Solitude",
+          "desc": "Superman's Antarctic base, its robots, and the half-erased message from his parents."
+        },
+        {
+          "name": "Pocket universe",
+          "desc": "Lex's illegal prison dimension, where he holds Superman, Metamorpho and his enemies."
+        },
+        {
+          "name": "Quantum Unfolding Chamber",
+          "desc": "The Smith family's door into other dimensions, including an alternate Earth."
+        },
+        {
+          "name": "Salvation",
+          "desc": "A.R.G.U.S.'s interdimensional prison planet, picked because it was meant to be uninhabited."
+        },
+        {
+          "name": "Task Force M",
+          "desc": "Waller's squad of non-humans, run by Rick Flag Sr."
+        },
+        {
+          "name": "Checkmate",
+          "desc": "The agency Peacemaker and his allies found in Season 2's finale."
+        },
+        {
+          "name": "Green Lantern power ring",
+          "desc": "Passes from Hal to John, and carries a backup of Hal inside it."
+        },
+        {
+          "name": "Manhunters",
+          "desc": "Androids that hide among humans; one was Rushville's healer for years."
+        }
+      ],
+      "themes": [
+        "Superman isn't the first hero: metahumans have been on Earth for 300 years, so the DCU starts mid-story.",
+        "Gunn's pre-DCU work is kept, mostly: The Suicide Squad and Peacemaker Season 1 count except where a DCU project overwrites them, like the Justice League cameo.",
+        "Release order isn't story order: Clayface and the 2016 half of Lanterns both happen before Creature Commandos.",
+        "Every series hands something to the next film: Lex in prison, Flag Sr. at A.R.G.U.S., Kara and Krypto, Guy Gardner's Earth."
+      ]
     }
   };
 
   comingSoon = [
     { id:'spiderverse', title:'Spider-Verse', accent:'#C2185B', tagline:'Spider-people cross between universes along the canon web.', meta:'Multiverse · many worlds' },
-    { id:'dc', title:'DC Universe', accent:'#2C6FDB', tagline:'Flashpoint rewrites reality and forks the DC multiverse.', meta:'Multiverse · rebooted lines' },
     { id:'wizarding', title:'Wizarding World', accent:'#6A4FB3', tagline:'A prequel era, the school years, and a time-turner loop.', meta:'11 films · 2 eras' },
     { id:'avatar', title:'Avatar', accent:'#29A3C9', tagline:'Decades on Pandora as the saga expands sequel by sequel.', meta:'3 films · decade jumps' },
     { id:'jurassic', title:'Jurassic Park', accent:'#C8860D', tagline:'A park that keeps reopening across a sprawling dinosaur saga.', meta:'7 films · park & world eras' },
@@ -12913,7 +13479,7 @@ class Component extends DCLogic {
   };
 
   // ---------- watch order ----------
-  WO_IDS = ['terminator','xmen','bttf','apes','predator','alien','transformers','dune','marvel','starwars','startrek','rambo','tron','matrix','johnwick','bourne','twilight','conjuring','fast'];
+  WO_IDS = ['terminator','xmen','bttf','apes','predator','alien','transformers','dune','marvel','starwars','startrek','rambo','tron','matrix','johnwick','bourne','twilight','conjuring','fast','dc'];
   WO_NOUN = { dune: 'read and watch' };
   WO_NOUN_TITLE = { dune: 'Read and Watch' };
   // Public URL slugs: the searched phrase (Ahrefs US, keywords/ CSV), lowercase + hyphens.
@@ -12921,6 +13487,7 @@ class Component extends DCLogic {
   // Internal ids (data keys, og-<id>.png, votes, watched-state) stay as they are.
   // scripts/build-seo.mjs reads this block, so it is the single source of truth.
   SLUGS = {
+    dc:           { wo: 'dcu-movies-in-order',                map: 'dcu-timeline' },
     terminator:   { wo: 'terminator-movies-in-order',         map: 'terminator-timeline' },
     xmen:         { wo: 'x-men-movies-in-order',              map: 'x-men-timeline' },
     dune:         { wo: 'dune-books-in-order',                map: 'dune-timeline' },
@@ -12961,10 +13528,10 @@ class Component extends DCLogic {
     return hit;
   };
   // Search-phrase page names (Ahrefs US, see keywords/). Keep in sync with WO_KW / MAP_KW in scripts/build-seo.mjs.
-  WO_KW = { marvel: 'Marvel Movies in Order', matrix: 'Matrix Movies in Order', dune: 'Dune Books in Order (and Movies)', bourne: 'Jason Bourne Movies in Order', conjuring: 'The Conjuring Movies in Order', fast: 'Fast and Furious Movies in Order' };
+  WO_KW = { dc: 'DCU Movies in Order', marvel: 'Marvel Movies in Order', matrix: 'Matrix Movies in Order', dune: 'Dune Books in Order (and Movies)', bourne: 'Jason Bourne Movies in Order', conjuring: 'The Conjuring Movies in Order', fast: 'Fast and Furious Movies in Order' };
   woName = (id) => { const f = this.data[id]; return f ? (this.WO_KW[id] || f.title + ' Movies in Order') : null; };
   woPhrase = (id) => (this.woName(id) || '').replace(/(Movies|Books) in Order( \(and Movies\))?/, (m) => m.toLowerCase());
-  MAP_KW = { marvel: 'MCU Timeline Explained', bourne: 'Jason Bourne Timeline Explained', conjuring: 'The Conjuring Timeline Explained', fast: 'Fast and Furious Timeline Explained' };
+  MAP_KW = { dc: 'DCU Timeline Explained', marvel: 'MCU Timeline Explained', bourne: 'Jason Bourne Timeline Explained', conjuring: 'The Conjuring Timeline Explained', fast: 'Fast and Furious Timeline Explained' };
   mapName = (id) => { const f = this.data[id]; return f ? (this.MAP_KW[id] || f.title + ' Timeline Explained') : null; };
   WO_KEY = 'reelorder_watched_';
   hasWatchOrder = (id) => this.WO_IDS.indexOf(id) >= 0;
@@ -12972,7 +13539,7 @@ class Component extends DCLogic {
     if (this.state.woData || this.state.woLoading) return;
     this.setState({ woLoading: true });
     try {
-      const res = await fetch('/assets/watch-orders.json?v=731dfd1f2e');
+      const res = await fetch('/assets/watch-orders.json?v=da19e9aad7');
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const json = await res.json();
       this.setState({ woData: json, woLoading: false });

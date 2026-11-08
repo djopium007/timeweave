@@ -92,10 +92,10 @@ try {
 }
 const WO_NOUN = { dune: ['read and watch', 'Read and Watch'] };
 /* Search-phrase page names (Ahrefs US, keywords/ CSV). Keep in sync with WO_KW / MAP_KW in index.html. */
-const WO_KW = { marvel: 'Marvel Movies in Order', matrix: 'Matrix Movies in Order', dune: 'Dune Books in Order (and Movies)', bourne: 'Jason Bourne Movies in Order', conjuring: 'The Conjuring Movies in Order', fast: 'Fast and Furious Movies in Order' };
+const WO_KW = { dc: 'DCU Movies in Order', marvel: 'Marvel Movies in Order', matrix: 'Matrix Movies in Order', dune: 'Dune Books in Order (and Movies)', bourne: 'Jason Bourne Movies in Order', conjuring: 'The Conjuring Movies in Order', fast: 'Fast and Furious Movies in Order' };
 const woName = (f) => WO_KW[f.id] || `${f.title} Movies in Order`;
 const woPhrase = (f) => woName(f).replace(/(Movies|Books) in Order( \(and Movies\))?/, (m) => m.toLowerCase());
-const MAP_KW = { marvel: 'MCU Timeline Explained', bourne: 'Jason Bourne Timeline Explained', conjuring: 'The Conjuring Timeline Explained', fast: 'Fast and Furious Timeline Explained' };
+const MAP_KW = { dc: 'DCU Timeline Explained', marvel: 'MCU Timeline Explained', bourne: 'Jason Bourne Timeline Explained', conjuring: 'The Conjuring Timeline Explained', fast: 'Fast and Furious Timeline Explained' };
 const mapName = (f) => MAP_KW[f.id] || `${f.title} Timeline Explained`;
 const stripTags = (t) => String(t || '').replace(/<[^>]+>/g, '');
 
@@ -432,7 +432,7 @@ const GENRES = [
     ids: ['starwars', 'startrek', 'dune', 'matrix', 'terminator', 'bttf', 'apes', 'transformers', 'tron', 'tenet'] },
   { id: 'superhero', label: 'Superhero', heading: 'Superhero franchises',
     blurb: 'Shared universes, multiverse resets and the timelines that tie dozens of films together.',
-    ids: ['marvel', 'xmen'] },
+    ids: ['marvel', 'dc', 'xmen'] },
   { id: 'horror', label: 'Horror', heading: 'Horror franchises',
     blurb: 'Haunted case files, prequels that come first, and things that hunt you in the dark.',
     ids: ['conjuring', 'alien', 'predator'] },

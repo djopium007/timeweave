@@ -1,6 +1,6 @@
 {
  "/": {
-  "fp": "deccfd4d51825791",
+  "fp": "839101fb057638ab",
   "lastmod": "2026-11-08"
  },
  "/queue": {
@@ -95,6 +95,10 @@
   "fp": "054adfeeba13b925",
   "lastmod": "2026-11-08"
  },
+ "/dcu-movies-in-order": {
+  "fp": "b0870a2eb939e70d",
+  "lastmod": "2026-11-08"
+ },
  "/terminator-timeline": {
   "fp": "84401ce0b2fc51e8",
   "lastmod": "2026-11-08"
@@ -175,6 +179,10 @@
   "fp": "8caf13abe123cc0e",
   "lastmod": "2026-11-08"
  },
+ "/dcu-timeline": {
+  "fp": "7b6c0676a6533bd3",
+  "lastmod": "2026-11-08"
+ },
  "/posters/die-hard": {
   "fp": "e176adaac4d6ae2f",
   "lastmod": "2026-11-08"
@@ -228,7 +236,7 @@
   "lastmod": "2026-11-08"
  },
  "/all-franchises": {
-  "fp": "9f9cf4fb2cd99421",
+  "fp": "96584dd1b31ca1de",
   "lastmod": "2026-11-08"
  },
  "/print-guide": {

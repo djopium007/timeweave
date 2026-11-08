@@ -5236,5 +5236,262 @@
     "a": "No. Fast X ends on a cliffhanger. The finale, titled Fast Forever, is scheduled for April 2027, and Vin Diesel has said it returns to Los Angeles street racing and brings back Brian O'Conner."
    }
   ]
+ },
+ "dc": {
+  "id": "dc",
+  "intro": "The DCU is barely two years old and already out of order. It opens with an animated series, keeps two Gunn projects from the old DCEU, and its newest film, Clayface, is set before almost everything else. Lanterns splits itself across 2016 and 2026, and Superman lands in the gap. Here are the eight entries three ways.",
+  "orders": {
+   "first": {
+    "note": "Start with Superman, because Gunn made it a front door: he is three years into his career, so there is no origin to sit through, and every later entry reacts to what Lex Luthor does in it. Creature Commandos is the official first chapter, but it plays just as well second and sets up Rick Flag Sr. for Peacemaker. Clayface stands alone. Gunn's two pre-DCU projects are optional extras: if you want them, slot them in before Peacemaker Season 2.",
+    "groups": [
+     {
+      "label": "Start here",
+      "items": [
+       {
+        "id": "superman",
+        "title": "Superman",
+        "year": 2025,
+        "branch": "The Age of Superman",
+        "why": "The front door. Lex, the Justice Gang, Krypto and the last-minute arrival of Kara all <b>feed straight into what comes next</b>."
+       },
+       {
+        "id": "cc1",
+        "title": "Creature Commandos",
+        "year": 2024,
+        "kind": "tv",
+        "branch": "Waller's Task Forces",
+        "why": "Seven half-hour animated episodes. Waller's monster squad, and the debut of Rick Flag Sr., who <b>runs A.R.G.U.S. by Peacemaker Season 2</b>."
+       }
+      ]
+     },
+     {
+      "label": "Then",
+      "items": [
+       {
+        "id": "pm2",
+        "title": "Peacemaker Season 2",
+        "year": 2025,
+        "kind": "tv",
+        "branch": "Waller's Task Forces",
+        "why": "The first story set after Superman: Flag Sr. hunting Peacemaker, Lex cutting a deal from prison, and <b>Checkmate</b> founded in the finale."
+       },
+       {
+        "id": "supergirl",
+        "title": "Supergirl",
+        "year": 2026,
+        "branch": "The Age of Superman",
+        "why": "Picks up Kara and Krypto from Superman's last scene and takes them across space. Ends with her <b>back on Earth to stay</b>."
+       },
+       {
+        "id": "lanterns",
+        "title": "Lanterns",
+        "year": 2026,
+        "kind": "tv",
+        "branch": "The Green Lanterns",
+        "why": "An eight-episode murder mystery in Nebraska. Half of it is set in 2016, so it also explains <b>why Guy Gardner, not Hal, is the Lantern you met in Superman</b>."
+       }
+      ]
+     },
+     {
+      "label": "Anytime",
+      "items": [
+       {
+        "id": "clayface",
+        "title": "Clayface",
+        "year": 2026,
+        "branch": "Gotham's Monsters",
+        "why": "A standalone body-horror film set before Creature Commandos. Watch it last for the release-order payoff, or before Creature Commandos to <b>know who the fake professor really is</b>."
+       }
+      ]
+     },
+     {
+      "label": "Optional: before Peacemaker Season 2",
+      "items": [
+       {
+        "id": "tss",
+        "title": "The Suicide Squad",
+        "year": 2021,
+        "branch": "Waller's Task Forces",
+        "why": "Mostly canon. Watch it for one scene: Peacemaker killing Rick Flag Jr., <b>the murder his father is hunting him for</b>."
+       },
+       {
+        "id": "pm1",
+        "title": "Peacemaker Season 1",
+        "year": 2022,
+        "kind": "tv",
+        "branch": "Waller's Task Forces",
+        "why": "Mostly canon, minus the Justice League cameo, which Season 2 swaps for the Justice Gang. It gives you Adebayo, Vigilante, Economos and Peacemaker's father."
+       }
+      ]
+     }
+    ]
+   },
+   "release": {
+    "note": "Release order, with Gunn's two pre-DCU projects first. Inside the DCU proper, release order and story order agree everywhere except Clayface and the 2016 half of Lanterns.",
+    "items": [
+     {
+      "id": "tss",
+      "title": "The Suicide Squad",
+      "year": 2021,
+      "branch": "Waller's Task Forces",
+      "why": "Pre-DCU, kept as mostly canon."
+     },
+     {
+      "id": "pm1",
+      "title": "Peacemaker Season 1",
+      "year": 2022,
+      "kind": "tv",
+      "branch": "Waller's Task Forces",
+      "why": "Pre-DCU, kept as mostly canon."
+     },
+     {
+      "id": "cc1",
+      "title": "Creature Commandos",
+      "year": 2024,
+      "kind": "tv",
+      "branch": "Waller's Task Forces",
+      "why": "The first official DCU release, on Max in December 2024."
+     },
+     {
+      "id": "superman",
+      "title": "Superman",
+      "year": 2025,
+      "branch": "The Age of Superman",
+      "why": "The first DCU film."
+     },
+     {
+      "id": "pm2",
+      "title": "Peacemaker Season 2",
+      "year": 2025,
+      "kind": "tv",
+      "branch": "Waller's Task Forces"
+     },
+     {
+      "id": "supergirl",
+      "title": "Supergirl",
+      "year": 2026,
+      "branch": "The Age of Superman"
+     },
+     {
+      "id": "lanterns",
+      "title": "Lanterns",
+      "year": 2026,
+      "kind": "tv",
+      "branch": "The Green Lanterns"
+     },
+     {
+      "id": "clayface",
+      "title": "Clayface",
+      "year": 2026,
+      "branch": "Gotham's Monsters",
+      "why": "The newest release, but set before Creature Commandos."
+     }
+    ]
+   },
+   "chrono": {
+    "note": "In-story order. The DCU gives almost no on-screen years, so this follows what the films state and what Gunn and Peter Safran have said. Lanterns sits last because its 2026 half is the latest point in the timeline, even though its 2016 half comes first.",
+    "items": [
+     {
+      "id": "clayface",
+      "title": "Clayface",
+      "year": 2026,
+      "setLabel": "Before Creature Commandos",
+      "branch": "Gotham's Monsters",
+      "why": "Safran places it before Creature Commandos and Gunn before Superman. A fan timeline Gunn approved goes further and puts it before The Suicide Squad."
+     },
+     {
+      "id": "tss",
+      "title": "The Suicide Squad",
+      "year": 2021,
+      "setLabel": "Before Peacemaker Season 1",
+      "branch": "Waller's Task Forces",
+      "why": "Mostly canon."
+     },
+     {
+      "id": "pm1",
+      "title": "Peacemaker Season 1",
+      "year": 2022,
+      "kind": "tv",
+      "setLabel": "After The Suicide Squad",
+      "branch": "Waller's Task Forces",
+      "why": "Ends with Waller exposed, which is why Task Force X is shut down."
+     },
+     {
+      "id": "cc1",
+      "title": "Creature Commandos",
+      "year": 2024,
+      "kind": "tv",
+      "setLabel": "After Peacemaker Season 1",
+      "branch": "Waller's Task Forces"
+     },
+     {
+      "id": "superman",
+      "title": "Superman",
+      "year": 2025,
+      "setLabel": "Three years after Superman goes public",
+      "branch": "The Age of Superman"
+     },
+     {
+      "id": "pm2",
+      "title": "Peacemaker Season 2",
+      "year": 2025,
+      "kind": "tv",
+      "setLabel": "After Superman",
+      "branch": "Waller's Task Forces"
+     },
+     {
+      "id": "supergirl",
+      "title": "Supergirl",
+      "year": 2026,
+      "setLabel": "After Superman",
+      "branch": "The Age of Superman",
+      "why": "Gunn has said Creature Commandos Season 2 will slot in just before this."
+     },
+     {
+      "id": "lanterns",
+      "title": "Lanterns",
+      "year": 2026,
+      "kind": "tv",
+      "setLabel": "Set 2016 and 2026",
+      "branch": "The Green Lanterns",
+      "why": "The 2016 storyline happens before everything else here; Superman falls between its two halves."
+     }
+    ]
+   }
+  },
+  "faq": [
+   {
+    "q": "What order should I watch the DCU in?",
+    "a": "For a first watch: Superman, Creature Commandos, Peacemaker Season 2, Supergirl and Lanterns, with Clayface whenever you like. Add The Suicide Squad and Peacemaker Season 1 before Peacemaker Season 2 if you want the full Peacemaker story."
+   },
+   {
+    "q": "Where does the DCU start?",
+    "a": "Creature Commandos, the animated series released in December 2024, is the first official DCU project. Superman (2025) is the first film, and it works as a starting point on its own."
+   },
+   {
+    "q": "Do I need to watch The Suicide Squad and Peacemaker Season 1?",
+    "a": "No, but they help with Peacemaker Season 2. James Gunn has said both are mostly canon, except where a DCU project overwrites them, like the Justice League cameo at the end of Peacemaker Season 1."
+   },
+   {
+    "q": "Is Blue Beetle part of the DCU?",
+    "a": "Xolo Maridueña's Jaime Reyes is carrying over into the DCU, but the 2023 film has never been confirmed as canon the way The Suicide Squad has, so it is not in our order."
+   },
+   {
+    "q": "Are Man of Steel and the Snyder films part of the DCU?",
+    "a": "No. The DCU is a fresh start from DC Studios. Older films only count where a DCU project directly refers back to them, which so far means Gunn's own The Suicide Squad and Peacemaker."
+   },
+   {
+    "q": "When is Clayface set?",
+    "a": "Before Creature Commandos, according to DC Studios' Peter Safran, and before Superman, according to James Gunn. That makes the newest DCU release one of the earliest in story order."
+   },
+   {
+    "q": "When is Lanterns set?",
+    "a": "In two years, 2016 and 2026. The events of Superman happen between them, while Hal Jordan is in prison, which is why Guy Gardner is the Green Lantern in that film."
+   },
+   {
+    "q": "What comes next in the DCU?",
+    "a": "Man of Tomorrow, the Superman sequel, is due in July 2027. Creature Commandos Season 2 is also coming and, per Gunn, sits between Peacemaker Season 2 and Supergirl in the timeline."
+   }
+  ]
  }
 }
