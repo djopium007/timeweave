@@ -185,7 +185,33 @@
     "q": "How many Terminator movies are there?",
     "a": "Six films: The Terminator, T2: Judgment Day, T3: Rise of the Machines, Salvation, Genisys and Dark Fate. The Sarah Connor Chronicles TV series is a seventh, separate branch that the films do not acknowledge."
    }
-  ]
+  ],
+  "trailers": {
+   "t1": {
+    "yt": "nGrW-OR2uDk",
+    "ch": "Amazon MGM Studios"
+   },
+   "t2": {
+    "yt": "CRRlbK5w8AE",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "tdf": {
+    "yt": "oxy8udgWRmo",
+    "ch": "Paramount Pictures"
+   },
+   "t3": {
+    "yt": "5UgPJhyJmlM",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "ts": {
+    "yt": "-Czz-TcWCkA",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "tg": {
+    "yt": "ZCMOnA2opMc",
+    "ch": "Skydance"
+   }
+  }
  },
  "xmen": {
   "id": "xmen",
@@ -520,7 +546,61 @@
     "q": "Does Logan connect to the other X-Men movies?",
     "a": "It is set in 2029 in a future where most mutants are gone, and it works as the ending to Hugh Jackman's Wolverine regardless of which timeline you think it follows. Watch it last; it is better for everything you have seen before it."
    }
-  ]
+  ],
+  "trailers": {
+   "xmen1": {
+    "yt": "VNxwlx6etXI",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "x2": {
+    "yt": "luHcOYS1HxQ",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "firstclass": {
+    "yt": "kyQKi5-k0UU",
+    "ch": "X-Men Movies"
+   },
+   "dofp": {
+    "yt": "pK2zYHWDZKo",
+    "ch": "X-Men Movies"
+   },
+   "logan": {
+    "yt": "Div0iP65aZo",
+    "ch": "20th Century Studios"
+   },
+   "deadpool": {
+    "yt": "ONHBaC-pfsk",
+    "ch": "20th Century Studios"
+   },
+   "deadpool2": {
+    "yt": "D86RtevtfrA",
+    "ch": "20th Century Studios"
+   },
+   "laststand": {
+    "yt": "ZQ0v5dXbw7M",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "origins": {
+    "yt": "8TQ-gD4UCmI",
+    "ch": "20th Century Studios"
+   },
+   "thewolverine": {
+    "yt": "th1NTVIhUQU",
+    "ch": "X-Men Movies"
+   },
+   "apocalypse": {
+    "yt": "PfBVIHgQbYk",
+    "ch": "20th Century Studios"
+   },
+   "darkphoenix": {
+    "yt": "azvR__GRQic",
+    "ch": "20th Century Studios"
+   },
+   "newmutants": {
+    "yt": "W_vJhUAOFpI",
+    "ch": "20th Century Studios"
+   }
+  }
  },
  "bttf": {
   "id": "bttf",
@@ -633,7 +713,21 @@
     "q": "Is there a Back to the Future Part 4?",
     "a": "No. The trilogy ended in 1990 and Robert Zemeckis and Bob Gale have said there will not be a fourth film while they control the rights. The 1991 animated series and the 2020 stage musical are the only continuations, and neither is part of the film story."
    }
-  ]
+  ],
+  "trailers": {
+   "bttf1": {
+    "yt": "qvsgGtivCgs",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "bttf2": {
+    "yt": "MdENmefJRpw",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "bttf3": {
+    "yt": "3C8c3EoEfw4",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   }
+  }
  },
  "apes": {
   "id": "apes",
@@ -883,7 +977,37 @@
     "q": "Is the 2001 Planet of the Apes in the timeline?",
     "a": "No. Tim Burton's 2001 film is a standalone remake with a different ending that was never followed up. It is not part of the original loop or the reboot series, so it is not in the order."
    }
-  ]
+  ],
+  "trailers": {
+   "rise": {
+    "yt": "P1yKN0llkrY",
+    "ch": "Planet of the Apes"
+   },
+   "dawn": {
+    "yt": "DpSaTrW4leg",
+    "ch": "Planet of the Apes"
+   },
+   "war": {
+    "yt": "qxjPjPzQ1iU",
+    "ch": "Planet of the Apes"
+   },
+   "pota": {
+    "yt": "k0-dUM_A-Cg",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "beneath": {
+    "yt": "qOSEpi8K-XM",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "conquest": {
+    "yt": "CWIbQqbivVc",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "kingdom": {
+    "yt": "XtFI7SNtVpY",
+    "ch": "20th Century Studios"
+   }
+  }
  },
  "predator": {
   "id": "predator",
@@ -1133,7 +1257,41 @@
     "q": "Is Predator: Badlands connected to the other movies?",
     "a": "It is set in the far future on a Predator world and follows a young Yautja rather than a human cast, so it stands alone. It sits last on the chronological list and is only for viewers who have already done the earlier films."
    }
-  ]
+  ],
+  "trailers": {
+   "pred1": {
+    "yt": "Vo3FmkleTEQ",
+    "ch": "20th Century Studios"
+   },
+   "prey": {
+    "yt": "wZ7LytagKlc",
+    "ch": "20th Century Studios"
+   },
+   "predators": {
+    "yt": "uzqYqoVoU74",
+    "ch": "20th Century Studios"
+   },
+   "thepredator": {
+    "yt": "WaG1KZqrLvM",
+    "ch": "20th Century Studios"
+   },
+   "kok": {
+    "yt": "fbddYji1F8s",
+    "ch": "Hulu"
+   },
+   "badlands": {
+    "yt": "43R9l7EkJwE",
+    "ch": "20th Century Studios"
+   },
+   "avp": {
+    "yt": "Cld40qD7HcY",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "avpr": {
+    "yt": "oqLM_21tqyc",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   }
+  }
  },
  "alien": {
   "id": "alien",
@@ -1391,7 +1549,41 @@
     "q": "Are the Alien vs. Predator movies part of the Alien timeline?",
     "a": "Not in this map. The two AVP films contradict the Alien prequels and nothing in the main series refers to them. They live in the Predator map as a disputed branch; the Alien order leaves them out."
    }
-  ]
+  ],
+  "trailers": {
+   "alien1": {
+    "yt": "jQ5lPt9edzQ",
+    "ch": "Rotten Tomatoes Trailers"
+   },
+   "aliens": {
+    "yt": "oSeQQlaCZgU",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "romulus": {
+    "yt": "OzY2r2JXsDM",
+    "ch": "20th Century Studios"
+   },
+   "prometheus": {
+    "yt": "pyz9ktII0dM",
+    "ch": "Alien Anthology"
+   },
+   "covenant": {
+    "yt": "svnAD0TApb8",
+    "ch": "Alien Anthology"
+   },
+   "alien3": {
+    "yt": "e45rAwndek8",
+    "ch": "Alien Anthology"
+   },
+   "resurrection": {
+    "yt": "53If-aOy58A",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "earth": {
+    "yt": "ZbsiKjVAV28",
+    "ch": "FX Networks"
+   }
+  }
  },
  "transformers": {
   "id": "transformers",
@@ -1609,7 +1801,41 @@
     "q": "What is the chronological order of the Transformers movies?",
     "a": "Transformers One (Cybertron, before Earth), Bumblebee (1987), Rise of the Beasts (1994), then the Bay films: Transformers (2007), Revenge of the Fallen (2009), Dark of the Moon (2011), Age of Extinction (2015), The Last Knight (2017). Placing all three continuities on one line is a convenience, not a claim that they connect."
    }
-  ]
+  ],
+  "trailers": {
+   "bumblebee": {
+    "yt": "lcwmDAYt22k",
+    "ch": "Paramount Pictures"
+   },
+   "rotb": {
+    "yt": "itnqEauWQZM",
+    "ch": "Paramount Pictures"
+   },
+   "one": {
+    "yt": "u2NuUWuwPCM",
+    "ch": "Paramount Pictures"
+   },
+   "tf1": {
+    "yt": "CbX_SIz_9fk",
+    "ch": "Paramount Movies"
+   },
+   "rotf": {
+    "yt": "fnXzKwUgDhg",
+    "ch": "Paramount Movies"
+   },
+   "dotm": {
+    "yt": "bTIrEZM-cFE",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "aoe": {
+    "yt": "T9bQCAWahLk",
+    "ch": "Paramount Movies"
+   },
+   "tlk": {
+    "yt": "6Vtf0MszgP8",
+    "ch": "Transformers"
+   }
+  }
  },
  "dune": {
   "id": "dune",
@@ -1906,7 +2132,17 @@
     "q": "Is there a chronological order for Dune?",
     "a": "Yes, and it spans more than fifteen thousand years, from the Butlerian Jihad prequels to Chapterhouse. It is a terrible reading order: the prequels explain things the original novels deliberately leave mysterious. Our chronological tab is a map, not a recommendation."
    }
-  ]
+  ],
+  "trailers": {
+   "d1": {
+    "yt": "n9xhJrPXop4",
+    "ch": "Warner Bros."
+   },
+   "d2": {
+    "yt": "Way9Dexny3w",
+    "ch": "Warner Bros."
+   }
+  }
  },
  "marvel": {
   "id": "marvel",
@@ -2714,7 +2950,161 @@
     "q": "What is the next Marvel movie?",
     "a": "Avengers: Doomsday, due in cinemas on 18 December 2026. It follows the warning about 'the others' at the end of Captain America: Brave New World and Doctor Doom's arrival at the end of The Fantastic Four: First Steps. We will add it to these lists after release."
    }
-  ]
+  ],
+  "trailers": {
+   "ironman": {
+    "yt": "8ugaeA-nMTc",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "capfirst": {
+    "yt": "JerVrbLldXw",
+    "ch": "Marvel Entertainment"
+   },
+   "avengers": {
+    "yt": "eOrNdBpGMv8",
+    "ch": "Marvel Entertainment"
+   },
+   "gotg": {
+    "yt": "d96cjJhvlMA",
+    "ch": "Marvel Entertainment"
+   },
+   "capwinter": {
+    "yt": "7SlILk2WMTI",
+    "ch": "Marvel Entertainment"
+   },
+   "ultron": {
+    "yt": "tmeOjFno6Do",
+    "ch": "Marvel Entertainment"
+   },
+   "antman": {
+    "yt": "pWdKf3MneyI",
+    "ch": "Marvel Entertainment"
+   },
+   "civilwar": {
+    "yt": "dKrVegVI0Us",
+    "ch": "Marvel Entertainment"
+   },
+   "strange": {
+    "yt": "Lt-U_t2pUHI",
+    "ch": "Marvel Entertainment"
+   },
+   "ragnarok": {
+    "yt": "ue80QwXMRHg",
+    "ch": "Marvel Entertainment"
+   },
+   "blackpanther": {
+    "yt": "xjDjIWPwcPU",
+    "ch": "Marvel Entertainment"
+   },
+   "infinitywar": {
+    "yt": "6ZfuNTqbHE8",
+    "ch": "Marvel Entertainment"
+   },
+   "endgame": {
+    "yt": "TcMBFSGVi1c",
+    "ch": "Marvel Entertainment"
+   },
+   "nowayhome": {
+    "yt": "JfVOs4VSpmA",
+    "ch": "Sony Pictures Entertainment"
+   },
+   "strange2": {
+    "yt": "aWzlQ2N6qqg",
+    "ch": "Marvel Entertainment"
+   },
+   "dpw": {
+    "yt": "73_1biulkYk",
+    "ch": "Marvel Entertainment"
+   },
+   "thunderbolts": {
+    "yt": "-sAOWhvheK8",
+    "ch": "Marvel Entertainment"
+   },
+   "f4first": {
+    "yt": "18QQWa5MEcs",
+    "ch": "Marvel Entertainment"
+   },
+   "bnd": {
+    "yt": "tLeBDumanoc",
+    "ch": "Marvel Entertainment"
+   },
+   "captainmarvel": {
+    "yt": "Z1BCujX3pw8",
+    "ch": "Marvel Entertainment"
+   },
+   "ironman3": {
+    "yt": "Ke1Y3P9D0Bc",
+    "ch": "Marvel UK"
+   },
+   "gotg2": {
+    "yt": "dW1BIid8Osg",
+    "ch": "Marvel Entertainment"
+   },
+   "homecoming": {
+    "yt": "rk-dF1lIbIg",
+    "ch": "Sony Pictures Entertainment"
+   },
+   "antman2": {
+    "yt": "UUkn-enk2RU",
+    "ch": "Marvel Entertainment"
+   },
+   "blackwidow": {
+    "yt": "ybji16u608U",
+    "ch": "Marvel Entertainment"
+   },
+   "farfromhome": {
+    "yt": "Nt9L1jCKGnE",
+    "ch": "Sony Pictures Entertainment"
+   },
+   "shangchi": {
+    "yt": "giWIr7U1deA",
+    "ch": "Marvel Entertainment"
+   },
+   "eternals": {
+    "yt": "x_me3xsvDgk",
+    "ch": "Marvel Entertainment"
+   },
+   "quantumania": {
+    "yt": "ZlNFpri-Y40",
+    "ch": "Marvel Entertainment"
+   },
+   "gotg3": {
+    "yt": "u3V5KDHRQvk",
+    "ch": "Marvel Entertainment"
+   },
+   "bnw": {
+    "yt": "1pHDWnXmK7Y",
+    "ch": "Marvel Entertainment"
+   },
+   "hulk": {
+    "yt": "xbqNb2PFKKA",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "ironman2": {
+    "yt": "BoohRoVA9WQ",
+    "ch": "Movieclips"
+   },
+   "thor": {
+    "yt": "JOddp-nlNvQ",
+    "ch": "Marvel Entertainment"
+   },
+   "thordark": {
+    "yt": "npvJ9FTgZbM",
+    "ch": "Marvel Entertainment"
+   },
+   "thor4": {
+    "yt": "Go8nTmfrQd8",
+    "ch": "Marvel Entertainment"
+   },
+   "wakandaforever": {
+    "yt": "_Z3QKkl1WyM",
+    "ch": "Marvel Entertainment"
+   },
+   "marvels": {
+    "yt": "wS_qbDztgVY",
+    "ch": "Marvel Entertainment"
+   }
+  }
  },
  "starwars": {
   "id": "starwars",
@@ -3164,7 +3554,113 @@
     "q": "Do I need to watch the Star Wars TV shows?",
     "a": "Two of them earn a place in a first watch: Andor (which leads straight into Rogue One) and The Clone Wars (which makes Revenge of the Sith land). The Mandalorian is the best entry point to the post-Jedi era. The rest can wait until you know which era you like."
    }
-  ]
+  ],
+  "trailers": {
+   "anh": {
+    "yt": "vZ734NWnAHA",
+    "ch": "Star Wars"
+   },
+   "esb": {
+    "yt": "JNwNXF9Y6kY",
+    "ch": "Star Wars"
+   },
+   "rotj": {
+    "yt": "7L8p7_SLzvU",
+    "ch": "Star Wars"
+   },
+   "aotc": {
+    "yt": "gYbW1F_c9eM",
+    "ch": "Star Wars"
+   },
+   "rots": {
+    "yt": "5UnjrG_N8hU",
+    "ch": "Star Wars"
+   },
+   "andor": {
+    "yt": "cKOegEuCcfw",
+    "ch": "Star Wars"
+   },
+   "r1": {
+    "yt": "frdj1zb9sMY",
+    "ch": "Star Wars"
+   },
+   "tcw": {
+    "yt": "RI7WyhWZkzk",
+    "ch": "Star Wars"
+   },
+   "mando": {
+    "yt": "aOC8E8z_ifw",
+    "ch": "Star Wars"
+   },
+   "tfa": {
+    "yt": "sGbxmsDFVnE",
+    "ch": "Star Wars"
+   },
+   "tlj": {
+    "yt": "Q0CbN8sfihY",
+    "ch": "Star Wars"
+   },
+   "tros": {
+    "yt": "8Qn_spdM5Zg",
+    "ch": "Star Wars"
+   },
+   "tpm": {
+    "yt": "bD7bpG-zDJQ",
+    "ch": "Star Wars"
+   },
+   "tcw-film": {
+    "yt": "Tas9_TYri4w",
+    "ch": "Warner Bros. Rewind"
+   },
+   "solo": {
+    "yt": "jPEYpryMp2s",
+    "ch": "Star Wars"
+   },
+   "acolyte": {
+    "yt": "6tzur6JrUEA",
+    "ch": "Star Wars"
+   },
+   "tales-jedi": {
+    "yt": "-uRRKqQbmw4",
+    "ch": "Star Wars"
+   },
+   "bad-batch": {
+    "yt": "BsOmYpP4UDU",
+    "ch": "Star Wars"
+   },
+   "tales-underworld": {
+    "yt": "GkywNANueew",
+    "ch": "Star Wars"
+   },
+   "tales-empire": {
+    "yt": "8SIST9t72kY",
+    "ch": "Star Wars"
+   },
+   "kenobi": {
+    "yt": "3Yh_6_zItPU",
+    "ch": "Star Wars"
+   },
+   "rebels": {
+    "yt": "xg5YN3LAGw4",
+    "ch": "Star Wars"
+   },
+   "boba": {
+    "yt": "rOJ1cw6mohw",
+    "ch": "Star Wars"
+   },
+   "ahsoka": {
+    "yt": "J_1EXWNETiI",
+    "ch": "Star Wars"
+   },
+   "skeleton-crew": {
+    "yt": "f19gfOMZTtg",
+    "ch": "Star Wars"
+   },
+   "resistance": {
+    "yt": "m7Pls-vYWwM",
+    "ch": "Star Wars"
+   }
+  }
  },
  "startrek": {
   "id": "startrek",
@@ -3683,7 +4179,85 @@
     "q": "Do I need to watch Star Trek in order?",
     "a": "No. Each series stands on its own and most episodes are self-contained; the films assume you know the series cast but nothing more. Pick an era, start there, and use the chronological tab to see where it sits."
    }
-  ]
+  ],
+  "trailers": {
+   "snw": {
+    "yt": "XL4iCAB6MFo",
+    "ch": "Paramount Plus"
+   },
+   "twok": {
+    "yt": "x8X44NRltMM",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "tvh": {
+    "yt": "QOhoIBkOYf0",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "tuc": {
+    "yt": "RYA2q2Sm_Jo",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "fc": {
+    "yt": "B3NJ49VyjDs",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "low": {
+    "yt": "V3RkBKedKWw",
+    "ch": "Paramount Plus"
+   },
+   "st09": {
+    "yt": "iGAHnZ555nI",
+    "ch": "Paramount Movies"
+   },
+   "dsc": {
+    "yt": "oWnYtyNKPsA",
+    "ch": "Netflix"
+   },
+   "tmp": {
+    "yt": "zrXvBaFFu80",
+    "ch": "Paramount Movies"
+   },
+   "tsfs": {
+    "yt": "aCgWzlxnqhc",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "tff": {
+    "yt": "7S5TDrAWBd8",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "gen": {
+    "yt": "KxVyLLHLmz4",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "ins": {
+    "yt": "4rVxjV342W4",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "nem": {
+    "yt": "eX15_g1Kc48",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "into-darkness": {
+    "yt": "RJ1qOs7jkIQ",
+    "ch": "Paramount Pictures"
+   },
+   "beyond": {
+    "yt": "XRVD32rnzOw",
+    "ch": "Paramount Pictures"
+   },
+   "pic": {
+    "yt": "wo2V1cSVj-w",
+    "ch": "Paramount Plus"
+   },
+   "pro": {
+    "yt": "dyTSDDR_1Dk",
+    "ch": "Star Trek"
+   },
+   "s31": {
+    "yt": "63k1Otp9qtM",
+    "ch": "Paramount Plus"
+   }
+  }
  },
  "rambo": {
   "id": "rambo",
@@ -3865,7 +4439,29 @@
     "q": "Is Rambo: Last Blood the end of the series?",
     "a": "It ends John Rambo's story in the present day, but not the franchise: the Vietnam-era prequel John Rambo is in production. Last Blood is still the last film in both release and story order until that arrives."
    }
-  ]
+  ],
+  "trailers": {
+   "fb": {
+    "yt": "oXngES_l_HQ",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "fb2": {
+    "yt": "jtPNhGWxY4g",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "r3": {
+    "yt": "Xt972U5z77w",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "r4": {
+    "yt": "2CRjdwRYQbU",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "lb": {
+    "yt": "4vWg5yJuWfs",
+    "ch": "Lionsgate Movies"
+   }
+  }
  },
  "tron": {
   "id": "tron",
@@ -4005,7 +4601,21 @@
     "q": "Where does TRON: Uprising fit in the timeline?",
     "a": "Between Clu's 1989 coup, shown in Legacy's prologue, and Sam's arrival in 2010. It follows Tron training a successor on Flynn's Grid and ended after one season, mid-story, so it is an optional watch rather than a required one."
    }
-  ]
+  ],
+  "trailers": {
+   "tron82": {
+    "yt": "EtyHX7z8fi8",
+    "ch": "Disney Plus"
+   },
+   "legacy": {
+    "yt": "P78pl1FUXfA",
+    "ch": "Disney UK"
+   },
+   "ares": {
+    "yt": "YShVEXb7-ic",
+    "ch": "Disney"
+   }
+  }
  },
  "matrix": {
   "id": "matrix",
@@ -4162,7 +4772,29 @@
     "q": "What is the chronological order of the Matrix movies?",
     "a": "The Animatrix's war shorts come first (the 21st century), then The Matrix (around 2199 by Morpheus's guess, though the machines lie about dates), the rest of The Animatrix, Reloaded six months later, Revolutions straight after, and Resurrections sixty years on."
    }
-  ]
+  ],
+  "trailers": {
+   "mx1": {
+    "yt": "tGgCqGm_6Hs",
+    "ch": "Warner Bros. Rewind"
+   },
+   "animatrix": {
+    "yt": "94fPVqJqBGA",
+    "ch": "Warner Bros. Rewind"
+   },
+   "mx2": {
+    "yt": "kYzz0FSgpSU",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "mx3": {
+    "yt": "hMbexEPAOQI",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "mx4": {
+    "yt": "9ix7TUGVYIo",
+    "ch": "Warner Bros."
+   }
+  }
  },
  "johnwick": {
   "id": "johnwick",
@@ -4342,7 +4974,33 @@
     "q": "How much time passes across the John Wick movies?",
     "a": "Very little. The first film starts days after Helen's funeral; Chapter 2 picks up days later; Parabellum starts the minute Chapter 2 ends; Chapter 4 follows after a gap. The whole four-film run is weeks of story time, not years."
    }
-  ]
+  ],
+  "trailers": {
+   "jw1": {
+    "yt": "2AUmvWm5ZDQ",
+    "ch": "Lionsgate Movies"
+   },
+   "jw2": {
+    "yt": "ChpLV9AMqm4",
+    "ch": "Lionsgate Movies"
+   },
+   "jw3": {
+    "yt": "M7XM597XO94",
+    "ch": "Lionsgate Movies"
+   },
+   "ballerina": {
+    "yt": "0FSwsrFpkbw",
+    "ch": "Lionsgate Movies"
+   },
+   "jw4": {
+    "yt": "qEVUtrk8_B4",
+    "ch": "Lionsgate Movies"
+   },
+   "continental": {
+    "yt": "y3FzXBkCUAg",
+    "ch": "Peacock"
+   }
+  }
  },
  "bourne": {
   "id": "bourne",
@@ -4499,7 +5157,29 @@
     "q": "How many Bourne movies are there?",
     "a": "Five: the Matt Damon trilogy, The Bourne Legacy and Jason Bourne. The 2019 series Treadstone and Robert Ludlum's novels tell different stories and are not part of the film order."
    }
-  ]
+  ],
+  "trailers": {
+   "identity": {
+    "yt": "FpKaB5dvQ4g",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "supremacy": {
+    "yt": "Y-HqyyfBbSo",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "ultimatum": {
+    "yt": "ZT2ZxjUjSo0",
+    "ch": "Rotten Tomatoes Classic Trailers"
+   },
+   "jasonbourne": {
+    "yt": "7uLVIUuEfFY",
+    "ch": "Universal Pictures UK"
+   },
+   "legacy": {
+    "yt": "PQXzV2z3G7g",
+    "ch": "Universal Pictures"
+   }
+  }
  },
  "twilight": {
   "id": "twilight",
@@ -4657,13 +5337,27 @@
    }
   ],
   "trailers": {
-   "twilight": "uxjNDE2fMjI",
-   "newmoon": "q58iQSHhZGg",
-   "eclipse": "hZxJzhIPTTg",
-   "bd1": "PQNLfo-SOR4",
-   "bd2": "bUXjqQ4GKRg"
-  },
-  "trailerSource": "The Twilight Saga"
+   "twilight": {
+    "yt": "uxjNDE2fMjI",
+    "ch": "The Twilight Saga"
+   },
+   "newmoon": {
+    "yt": "q58iQSHhZGg",
+    "ch": "The Twilight Saga"
+   },
+   "eclipse": {
+    "yt": "hZxJzhIPTTg",
+    "ch": "The Twilight Saga"
+   },
+   "bd1": {
+    "yt": "PQNLfo-SOR4",
+    "ch": "The Twilight Saga"
+   },
+   "bd2": {
+    "yt": "bUXjqQ4GKRg",
+    "ch": "The Twilight Saga"
+   }
+  }
  },
  "conjuring": {
   "id": "conjuring",
@@ -4942,7 +5636,49 @@
     "q": "Is The Nun connected to The Conjuring?",
     "a": "Yes. Valak, the demon in the nun's habit, is the villain of The Conjuring 2; The Nun is its origin in 1952 and The Nun II follows it to 1956. The Nun's final scene is the Maurice exorcism footage the Warrens show in The Conjuring's opening lecture."
    }
-  ]
+  ],
+  "trailers": {
+   "conjuring": {
+    "yt": "k10ETZ41q5o",
+    "ch": "Warner Bros."
+   },
+   "conjuring2": {
+    "yt": "VFsmuRPClr4",
+    "ch": "Warner Bros."
+   },
+   "creation": {
+    "yt": "KisPhy7T__Q",
+    "ch": "Warner Bros."
+   },
+   "annabelle": {
+    "yt": "paFgQNPGlsg",
+    "ch": "Warner Bros."
+   },
+   "comeshome": {
+    "yt": "bCxm7cTpBAs",
+    "ch": "Warner Bros."
+   },
+   "nun": {
+    "yt": "pzD9zGcUNrw",
+    "ch": "Warner Bros."
+   },
+   "nun2": {
+    "yt": "QF-oyCwaArU",
+    "ch": "Warner Bros."
+   },
+   "devil": {
+    "yt": "h9Q4zZS2v1k",
+    "ch": "Warner Bros."
+   },
+   "lastrites": {
+    "yt": "bMgfsdYoEEo",
+    "ch": "Warner Bros."
+   },
+   "llorona": {
+    "yt": "uOV-xMYQ7sk",
+    "ch": "Warner Bros."
+   }
+  }
  },
  "fast": {
   "id": "fast",
@@ -5235,7 +5971,53 @@
     "q": "Is Fast X the last Fast and Furious movie?",
     "a": "No. Fast X ends on a cliffhanger. The finale, titled Fast Forever, is scheduled for April 2027, and Vin Diesel has said it returns to Los Angeles street racing and brings back Brian O'Conner."
    }
-  ]
+  ],
+  "trailers": {
+   "tfatf": {
+    "yt": "ZsJz2TJAPjw",
+    "ch": "The Fast Saga"
+   },
+   "2fast": {
+    "yt": "fDooSsgINLQ",
+    "ch": "The Fast Saga"
+   },
+   "fast4": {
+    "yt": "7GNg6rAg4hg",
+    "ch": "The Fast Saga"
+   },
+   "five": {
+    "yt": "vcn2GOuZCKI",
+    "ch": "Universal Pictures"
+   },
+   "six": {
+    "yt": "oc_P11PNvRs",
+    "ch": "Universal Pictures"
+   },
+   "tokyo": {
+    "yt": "p8HQ2JLlc4E",
+    "ch": "The Fast Saga"
+   },
+   "seven": {
+    "yt": "Skpu5HaVkOc",
+    "ch": "The Fast Saga"
+   },
+   "fate": {
+    "yt": "JwMKRevYa_M",
+    "ch": "The Fast Saga"
+   },
+   "hobbsshaw": {
+    "yt": "HZ7PAyCDwEg",
+    "ch": "The Fast Saga"
+   },
+   "f9": {
+    "yt": "aSiDu3Ywi8E",
+    "ch": "The Fast Saga"
+   },
+   "fastx": {
+    "yt": "32RAq6JzY-w",
+    "ch": "The Fast Saga"
+   }
+  }
  },
  "dc": {
   "id": "dc",
@@ -5492,6 +6274,40 @@
     "q": "What comes next in the DCU?",
     "a": "Man of Tomorrow, the Superman sequel, is due in July 2027. Creature Commandos Season 2 is also coming and, per Gunn, sits between Peacemaker Season 2 and Supergirl in the timeline."
    }
-  ]
+  ],
+  "trailers": {
+   "superman": {
+    "yt": "Ox8ZLF6cGM0",
+    "ch": "DC"
+   },
+   "cc1": {
+    "yt": "VdahDEpqPA8",
+    "ch": "HBO Max"
+   },
+   "pm2": {
+    "yt": "f6AZTfI54OU",
+    "ch": "DC"
+   },
+   "supergirl": {
+    "yt": "s1-pfiVMKAs",
+    "ch": "DC"
+   },
+   "lanterns": {
+    "yt": "7UIBOsuUwc4",
+    "ch": "HBO Max"
+   },
+   "clayface": {
+    "yt": "OGO4Mqvo3jI",
+    "ch": "DC"
+   },
+   "tss": {
+    "yt": "eg5ciqQzmK0",
+    "ch": "Warner Bros."
+   },
+   "pm1": {
+    "yt": "WHXq62VCaCM",
+    "ch": "HBO Max"
+   }
+  }
  }
 }

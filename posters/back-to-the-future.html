@@ -13529,7 +13529,7 @@ class Component extends DCLogic {
     if (this.state.woData || this.state.woLoading) return;
     this.setState({ woLoading: true });
     try {
-      const res = await fetch('/assets/watch-orders.json?v=da19e9aad7');
+      const res = await fetch('/assets/watch-orders.json?v=15275ab832');
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const json = await res.json();
       this.setState({ woData: json, woLoading: false });
@@ -13558,13 +13558,13 @@ class Component extends DCLogic {
     const order = wod.orders[s.woOrder] || wod.orders.first;
     const raw = order.groups || [{ items: order.items }];
     const out = [], seen = {};
-    raw.forEach(g => (g.items || []).forEach(it => { if (tr[it.id] && !seen[it.id]) { seen[it.id] = 1; out.push({ id: it.id, title: it.title, yt: tr[it.id] }); } }));
+    raw.forEach(g => (g.items || []).forEach(it => { const v = tr[it.id]; if (v && !seen[it.id]) { seen[it.id] = 1; out.push({ id: it.id, title: it.title, yt: typeof v === 'string' ? v : v.yt, ch: typeof v === 'string' ? '' : (v.ch || '') }); } }));
     return out;
   };
   openTrailer = (itemId) => {
     const t = this.trailerList(this.state).find(x => x.id === itemId);
     if (!t) return;
-    this.setState({ trailer: { id: t.id, title: t.title, yt: t.yt, ended: false } });
+    this.setState({ trailer: { id: t.id, title: t.title, yt: t.yt, ch: t.ch, ended: false } });
     this.trailerHandshake();
     if (!this._trailerKeys) {
       this._trailerKeys = (e) => { if (e.key === 'Escape' && this.state.trailer) this.closeTrailer(); };
@@ -13692,7 +13692,7 @@ class Component extends DCLogic {
       trailerEnded: !!tr && !!tr.ended,
       trailerTitle: tr ? tr.title : '',
       trailerKicker: tr ? 'Official trailer' + (tList.length > 1 ? ' · ' + (tIdx + 1) + ' of ' + tList.length : '') : '',
-      trailerCredit: 'Official trailer from ' + ((wod && wod.trailerSource) || title) + ' on YouTube. It plays here, so your place in the list is kept.',
+      trailerCredit: 'Official trailer from ' + ((tr && tr.ch) || (wod && wod.trailerSource) || title) + ' on YouTube. It plays here, so your place in the list is kept.',
       hasNextTrailer: !!tNext,
       nextTrailerLabel: tNext ? 'Next: ' + tNext.title + ' trailer ▶' : '',
       onTrailerClose: () => this.closeTrailer(),
@@ -13744,7 +13744,7 @@ class Component extends DCLogic {
           meta: bits.join(' · '),
           branch: it.branch,
           hasTrailer: !!trailers[it.id],
-          trailerThumb: trailers[it.id] ? 'https://i.ytimg.com/vi/' + trailers[it.id] + '/mqdefault.jpg' : '',
+          trailerThumb: trailers[it.id] ? 'https://i.ytimg.com/vi/' + (typeof trailers[it.id] === 'string' ? trailers[it.id] : trailers[it.id].yt) + '/mqdefault.jpg' : '',
           trailerAlt: 'Play the official ' + it.title + ' trailer',
           onTrailer: () => this.openTrailer(it.id),
           trailerBtnStyle: 'flex:none;align-self:center;position:relative;padding:0;border:1px solid ' + accent + '55;border-radius:11px;overflow:hidden;cursor:pointer;background:#000;transition:transform .18s ease, box-shadow .18s ease;',
@@ -14263,7 +14263,12 @@ class Component extends DCLogic {
 
   // ---------- motion layer ----------
   // Map ids that get the animated treatment. Add an id here to roll it out to another map.
-  MOTION_IDS = { tron: 1 };
+  MOTION_IDS = {
+    tron: 'grid', matrix: 'grid', terminator: 'grid', transformers: 'grid', bttf: 'grid', tenet: 'grid', xmen: 'grid',
+    starwars: 'stars', startrek: 'stars', alien: 'stars', dune: 'stars', marvel: 'stars', dc: 'stars',
+    conjuring: 'mist', twilight: 'mist', predator: 'mist', apes: 'mist',
+    fast: 'speed', johnwick: 'speed', bourne: 'speed', rambo: 'speed',
+  };
   initMotion = () => {
     if (this._moObs || typeof MutationObserver === 'undefined' || typeof IntersectionObserver === 'undefined') return;
     this._moObs = new MutationObserver(() => {
@@ -14283,7 +14288,7 @@ class Component extends DCLogic {
       const accent = (this.data[id] && this.data[id].accent) || '#FFFFFF';
       root.dataset.motion = id;
       root.style.setProperty('--mo-accent', accent);
-      this.startMotionBg(accent);
+      this.startMotionBg(accent, this.MOTION_IDS[id]);
     }
     if (!this._moIO) this._moIO = new IntersectionObserver(es => es.forEach(e => {
       if (e.isIntersecting) { e.target.setAttribute('data-mo-in', ''); this._moIO.unobserve(e.target); }
@@ -14294,9 +14299,13 @@ class Component extends DCLogic {
       this._moIO.observe(el);
     });
   };
-  // Animated backdrop: a perspective floor grid rolling toward the viewer, a horizon glow
-  // and a couple of light streaks crossing the floor. Original drawing code, no assets.
-  startMotionBg = (accent) => {
+  // Animated backdrops, one per style in MOTION_IDS. Original drawing code, no assets,
+  // no logos or characters. Colour is the franchise accent.
+  //   grid  : perspective floor grid rolling toward the viewer, horizon glow, light streaks
+  //   stars : layered starfield drifting past, slow nebula glow, occasional shooting star
+  //   mist  : slow fog bands drifting across, embers rising
+  //   speed : horizontal speed lines and passing light trails
+  startMotionBg = (accent, style) => {
     this.stopMotionBg();
     const c = document.createElement('canvas');
     c.className = 'ro-mo-bg'; c.setAttribute('aria-hidden', 'true');
@@ -14305,6 +14314,7 @@ class Component extends DCLogic {
     if (!ctx) return;
     const hx = accent.replace('#', ''), A = [0, 2, 4].map(i => parseInt(hx.substr(i, 2), 16) || 255);
     const col = (a) => 'rgba(' + A[0] + ',' + A[1] + ',' + A[2] + ',' + a + ')';
+    const white = (a) => 'rgba(255,255,255,' + a + ')';
     let w = 0, h = 0;
     const size = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -14314,48 +14324,142 @@ class Component extends DCLogic {
     };
     size();
     window.addEventListener('resize', size);
-    const streaks = [0, 1, 2].map(i => ({ z: 0.25 + i * 0.27, speed: 0.07 + i * 0.035, dir: i % 2 ? -1 : 1, off: i * 0.37, white: i === 1 }));
-    const draw = (t) => {
-      ctx.clearRect(0, 0, w, h);
-      const sy = window.scrollY || 0;
-      const hz = Math.round(h * 0.56 + Math.min(sy * 0.04, h * 0.08));
-      const floor = h - hz, vx = w / 2;
-      // horizon glow
-      const g = ctx.createLinearGradient(0, hz - 120, 0, hz + 60);
-      g.addColorStop(0, col(0)); g.addColorStop(0.7, col(0.16)); g.addColorStop(1, col(0));
-      ctx.fillStyle = g; ctx.fillRect(0, hz - 120, w, 180);
-      ctx.fillStyle = col(0.35); ctx.fillRect(0, hz, w, 1);
-      // converging lines
-      ctx.lineWidth = 1;
-      const span = w * 2.4, cols = 28;
-      for (let i = 0; i <= cols; i++) {
-        const bx = vx - span / 2 + (span / cols) * i;
-        const lg = ctx.createLinearGradient(0, hz, 0, h);
-        lg.addColorStop(0, col(0)); lg.addColorStop(1, col(0.26));
-        ctx.strokeStyle = lg; ctx.beginPath(); ctx.moveTo(vx + (bx - vx) * 0.02, hz); ctx.lineTo(bx, h); ctx.stroke();
-      }
-      // rows rolling toward the viewer
-      const rows = 16, roll = (t * 0.22) % 1;
-      for (let i = 0; i < rows; i++) {
-        const z = (i + roll) / rows, y = hz + floor * Math.pow(z, 2.3);
-        ctx.strokeStyle = col(0.04 + 0.24 * z);
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
-      }
-      // light streaks
-      streaks.forEach(st => {
-        const y = hz + floor * Math.pow(st.z, 2.3);
-        const p = ((t * st.speed + st.off) % 1.4) - 0.2;
-        const x = st.dir > 0 ? p * w : w - p * w;
-        const len = 140 + 260 * st.z;
-        const sg = ctx.createLinearGradient(x - st.dir * len, 0, x, 0);
-        const head = st.white ? 'rgba(255,255,255,0.9)' : col(0.95);
-        sg.addColorStop(0, col(0)); sg.addColorStop(1, head);
-        ctx.strokeStyle = sg; ctx.lineWidth = 1.5 + 2.5 * st.z;
-        ctx.shadowColor = col(0.9); ctx.shadowBlur = 12;
-        ctx.beginPath(); ctx.moveTo(x - st.dir * len, y); ctx.lineTo(x, y); ctx.stroke();
-        ctx.shadowBlur = 0; ctx.lineWidth = 1;
-      });
-    };
+    // seeded random so a page always gets the same layout
+    let seed = 7;
+    const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+
+    const drawGrid = (() => {
+      const streaks = [0, 1, 2].map(i => ({ z: 0.25 + i * 0.27, speed: 0.07 + i * 0.035, dir: i % 2 ? -1 : 1, off: i * 0.37, white: i === 1 }));
+      return (t) => {
+        const sy = window.scrollY || 0;
+        const hz = Math.round(h * 0.56 + Math.min(sy * 0.04, h * 0.08));
+        const floor = h - hz, vx = w / 2;
+        const g = ctx.createLinearGradient(0, hz - 120, 0, hz + 60);
+        g.addColorStop(0, col(0)); g.addColorStop(0.7, col(0.16)); g.addColorStop(1, col(0));
+        ctx.fillStyle = g; ctx.fillRect(0, hz - 120, w, 180);
+        ctx.fillStyle = col(0.35); ctx.fillRect(0, hz, w, 1);
+        ctx.lineWidth = 1;
+        const span = w * 2.4, cols = 28;
+        for (let i = 0; i <= cols; i++) {
+          const bx = vx - span / 2 + (span / cols) * i;
+          const lg = ctx.createLinearGradient(0, hz, 0, h);
+          lg.addColorStop(0, col(0)); lg.addColorStop(1, col(0.26));
+          ctx.strokeStyle = lg; ctx.beginPath(); ctx.moveTo(vx + (bx - vx) * 0.02, hz); ctx.lineTo(bx, h); ctx.stroke();
+        }
+        const rows = 16, roll = (t * 0.22) % 1;
+        for (let i = 0; i < rows; i++) {
+          const z = (i + roll) / rows, y = hz + floor * Math.pow(z, 2.3);
+          ctx.strokeStyle = col(0.04 + 0.24 * z);
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+        }
+        streaks.forEach(st => {
+          const y = hz + floor * Math.pow(st.z, 2.3);
+          const p = ((t * st.speed + st.off) % 1.4) - 0.2;
+          const x = st.dir > 0 ? p * w : w - p * w;
+          const len = 140 + 260 * st.z;
+          const sg = ctx.createLinearGradient(x - st.dir * len, 0, x, 0);
+          sg.addColorStop(0, col(0)); sg.addColorStop(1, st.white ? white(0.9) : col(0.95));
+          ctx.strokeStyle = sg; ctx.lineWidth = 1.5 + 2.5 * st.z;
+          ctx.shadowColor = col(0.9); ctx.shadowBlur = 12;
+          ctx.beginPath(); ctx.moveTo(x - st.dir * len, y); ctx.lineTo(x, y); ctx.stroke();
+          ctx.shadowBlur = 0; ctx.lineWidth = 1;
+        });
+      };
+    })();
+
+    const drawStars = (() => {
+      const layers = [0.25, 0.55, 1].map((depth, li) => Array.from({ length: [140, 70, 28][li] }, () => ({ x: rnd(), y: rnd(), r: (0.5 + rnd() * 0.9) * (0.6 + depth), tw: rnd() * 6.28, depth })));
+      const shoot = { t0: 3, x: 0, y: 0 };
+      return (t) => {
+        const sy = window.scrollY || 0;
+        // nebula glow, two slow-moving soft clouds
+        [[0.78, 0.22, 0.55, 0.22], [0.2, 0.7, 0.45, 0.14]].forEach(([nx, ny, rr, a], k) => {
+          const cx = w * (nx + 0.03 * Math.sin(t * 0.05 + k * 2)), cy = h * (ny + 0.03 * Math.cos(t * 0.04 + k));
+          const R = Math.max(w, h) * rr;
+          const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+          g.addColorStop(0, col(a)); g.addColorStop(1, col(0));
+          ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+        });
+        // stars drift down slowly; nearer layers faster and with scroll parallax
+        layers.forEach(L => L.forEach(s => {
+          const y = ((s.y * h + t * 6 * s.depth - sy * 0.15 * s.depth) % h + h) % h;
+          const x = s.x * w;
+          const a = (0.35 + 0.5 * s.depth) * (0.7 + 0.3 * Math.sin(t * 1.6 + s.tw));
+          ctx.fillStyle = s.depth > 0.9 ? col(a) : white(a);
+          ctx.beginPath(); ctx.arc(x, y, s.r, 0, 6.283); ctx.fill();
+        }));
+        // a shooting star every ~7 s
+        const ph = (t - shoot.t0) % 7;
+        if (ph < 0.9 && t > shoot.t0) {
+          if (ph < 0.04) { shoot.x = w * (0.2 + rnd() * 0.6); shoot.y = h * (0.05 + rnd() * 0.3); }
+          const k = ph / 0.9, x = shoot.x + k * w * 0.25, y = shoot.y + k * h * 0.12;
+          const g = ctx.createLinearGradient(x - 120, y - 58, x, y);
+          g.addColorStop(0, white(0)); g.addColorStop(1, white(0.85 * (1 - k)));
+          ctx.strokeStyle = g; ctx.lineWidth = 1.6;
+          ctx.beginPath(); ctx.moveTo(x - 120, y - 58); ctx.lineTo(x, y); ctx.stroke(); ctx.lineWidth = 1;
+        }
+      };
+    })();
+
+    const drawMist = (() => {
+      const bands = Array.from({ length: 7 }, (_, i) => ({ y: 0.25 + i * 0.11 + rnd() * 0.05, r: 0.28 + rnd() * 0.22, speed: 0.008 + rnd() * 0.012, off: rnd(), a: 0.14 + rnd() * 0.1 }));
+      const embers = Array.from({ length: 38 }, () => ({ x: rnd(), y: rnd(), v: 0.012 + rnd() * 0.03, sway: rnd() * 6.28, r: 0.8 + rnd() * 1.6 }));
+      return (t) => {
+        // dark ground glow
+        const gg = ctx.createLinearGradient(0, h * 0.55, 0, h);
+        gg.addColorStop(0, col(0)); gg.addColorStop(1, col(0.2));
+        ctx.fillStyle = gg; ctx.fillRect(0, h * 0.55, w, h * 0.45);
+        bands.forEach((b, i) => {
+          const R = Math.max(w, h) * b.r;
+          for (let k = 0; k < 3; k++) {
+            const x = (((b.off + k / 3 + t * b.speed * (i % 2 ? -1 : 1)) % 1 + 1) % 1) * (w + 2 * R) - R;
+            const y = h * b.y + Math.sin(t * 0.15 + i + k) * 18;
+            const g = ctx.createRadialGradient(x, y, 0, x, y, R);
+            g.addColorStop(0, i % 2 === 0 ? col(b.a) : white(b.a * 0.6)); g.addColorStop(1, white(0));
+            ctx.fillStyle = g; ctx.fillRect(x - R, y - R, 2 * R, 2 * R);
+          }
+        });
+        embers.forEach(e => {
+          const y = ((e.y - t * e.v) % 1 + 1) % 1;
+          const x = e.x * w + Math.sin(t * 0.7 + e.sway) * 14;
+          const a = Math.min(1, y * 3) * (0.35 + 0.35 * Math.sin(t * 3 + e.sway));
+          ctx.fillStyle = col(Math.max(0, a)); ctx.shadowColor = col(0.9); ctx.shadowBlur = 6;
+          ctx.beginPath(); ctx.arc(x, y * h, e.r, 0, 6.283); ctx.fill();
+        });
+        ctx.shadowBlur = 0;
+      };
+    })();
+
+    const drawSpeed = (() => {
+      const lines = Array.from({ length: 34 }, () => ({ y: rnd(), len: 60 + rnd() * 260, v: 0.25 + rnd() * 0.9, off: rnd(), a: 0.08 + rnd() * 0.22 }));
+      const trails = Array.from({ length: 4 }, (_, i) => ({ y: 0.62 + i * 0.08, v: 0.18 + i * 0.07, off: i * 0.31, dir: i % 2 ? 1 : -1, white: i % 2 === 1 }));
+      return (t) => {
+        // road glow at the bottom
+        const gg = ctx.createLinearGradient(0, h * 0.5, 0, h);
+        gg.addColorStop(0, col(0)); gg.addColorStop(1, col(0.1));
+        ctx.fillStyle = gg; ctx.fillRect(0, h * 0.5, w, h * 0.5);
+        lines.forEach(l => {
+          const x = w + l.len - (((l.off + t * l.v * 0.35) % 1) * (w + 2 * l.len));
+          const y = l.y * h;
+          const g = ctx.createLinearGradient(x, 0, x + l.len, 0);
+          g.addColorStop(0, white(l.a)); g.addColorStop(1, white(0));
+          ctx.strokeStyle = g; ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + l.len, y); ctx.stroke();
+        });
+        trails.forEach(tr => {
+          const p = ((t * tr.v + tr.off) % 1.5) - 0.25;
+          const x = tr.dir > 0 ? p * w : w - p * w, y = tr.y * h, len = 260;
+          const g = ctx.createLinearGradient(x - tr.dir * len, 0, x, 0);
+          g.addColorStop(0, col(0)); g.addColorStop(1, tr.white ? white(0.85) : col(0.95));
+          ctx.strokeStyle = g; ctx.lineWidth = 2.5; ctx.shadowColor = col(0.9); ctx.shadowBlur = 14;
+          ctx.beginPath(); ctx.moveTo(x - tr.dir * len, y); ctx.lineTo(x, y); ctx.stroke();
+          ctx.shadowBlur = 0; ctx.lineWidth = 1;
+        });
+      };
+    })();
+
+    const drawFn = ({ grid: drawGrid, stars: drawStars, mist: drawMist, speed: drawSpeed })[style] || drawGrid;
+    const draw = (t) => { ctx.clearRect(0, 0, w, h); drawFn(t); };
     const t0 = performance.now();
     let last = 0;
     const frame = (now) => {
