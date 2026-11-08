@@ -1832,7 +1832,7 @@
           </div>
           <div style="{{ wo.trailerFrameStyle }}">
             <sc-if value="{{ wo.trailerPlaying }}" hint-placeholder-val="{{ false }}">
-              <iframe data-ro-yt="1" src="{{ wo.trailerSrc }}" title="{{ wo.trailerTitle }}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen="" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+              <div data-ro-yt-slot="1" style="position:absolute;inset:0;"></div>
             </sc-if>
             <sc-if value="{{ wo.trailerEnded }}" hint-placeholder-val="{{ false }}">
               <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center;background:radial-gradient(70% 70% at 50% 40%,rgba(255,255,255,0.06),rgba(0,0,0,0.92));">
@@ -13027,7 +13027,32 @@ class Component extends DCLogic {
   };
   // YouTube only reports player state to a parent that says it is listening. Same
   // handshake its iframe_api script does, without loading that script.
+  // The player iframe is built here, not in the template: a bound src in the template is
+  // requested as a literal "{{ ... }}" URL while the runtime parses the page.
+  mountTrailerFrame = () => {
+    const t = this.state.trailer;
+    const slot = document.querySelector('[data-ro-yt-slot]');
+    if (!t || t.ended || !slot) return false;
+    const src = 'https://www.youtube-nocookie.com/embed/' + t.yt + '?autoplay=1&rel=0&playsinline=1&enablejsapi=1&iv_load_policy=3&origin=' + encodeURIComponent(location.origin);
+    const cur = slot.querySelector('iframe');
+    if (cur && cur.getAttribute('data-key') === t.yt + ':' + (t.n || 0)) return true;
+    slot.textContent = '';
+    const f = document.createElement('iframe');
+    f.setAttribute('data-ro-yt', '1');
+    f.setAttribute('data-key', t.yt + ':' + (t.n || 0));
+    f.src = src;
+    f.title = t.title || 'Trailer';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.setAttribute('allowfullscreen', '');
+    f.referrerPolicy = 'strict-origin-when-cross-origin';
+    f.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
+    slot.appendChild(f);
+    return true;
+  };
   trailerHandshake = () => {
+    let tries = 0;
+    const mount = () => { if (!this.mountTrailerFrame() && ++tries < 20) setTimeout(mount, 50); };
+    setTimeout(mount, 0);
     this._trailerHeard = false;
     if (this._trailerPing) clearInterval(this._trailerPing);
     let n = 0;
@@ -13108,7 +13133,6 @@ class Component extends DCLogic {
       trailerOpen: !!tr,
       trailerPlaying: !!tr && !tr.ended,
       trailerEnded: !!tr && !!tr.ended,
-      trailerSrc: tr ? 'https://www.youtube-nocookie.com/embed/' + tr.yt + '?autoplay=1&rel=0&playsinline=1&enablejsapi=1&iv_load_policy=3&origin=' + encodeURIComponent(location.origin) + '&r=' + (tr.n || 0) : '',
       trailerTitle: tr ? tr.title : '',
       trailerKicker: tr ? 'Official trailer' + (tList.length > 1 ? ' · ' + (tIdx + 1) + ' of ' + tList.length : '') : '',
       trailerCredit: 'Official trailer from ' + ((wod && wod.trailerSource) || title) + ' on YouTube. It plays here, so your place in the list is kept.',
