@@ -17,6 +17,7 @@
  * drift from index.html.
  */
 import fs from 'fs';
+import crypto from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -669,20 +670,39 @@ async function fetchPosters() {
   }
 }
 
+/* ---------- truthful <lastmod> (2026-11-08) ----------
+   Each sitemap URL gets a fingerprint of the content a reader sees there (franchise data, watch
+   order, poster row, page copy). lastmod moves only when that fingerprint changes; template-only
+   rebuilds of index.html do not count. State lives in scripts/sitemap-dates.json (committed).
+   Before this, every URL said "today" on every build, so Google learned to ignore the field. */
 const today = new Date().toISOString().slice(0, 10);
+const DATES = path.join(ROOT, 'scripts', 'sitemap-dates.json');
+let dates = {};
+try { dates = JSON.parse(fs.readFileSync(DATES, 'utf8')); } catch (e) {}
+const sha = (x) => crypto.createHash('sha256').update(typeof x === 'string' ? x : JSON.stringify(x)).digest('hex').slice(0, 16);
+const fileText = (rel) => { try { return fs.readFileSync(path.join(ROOT, rel), 'utf8'); } catch (e) { return ''; } };
+const fingerprint = (r) => sha({ title: r.title, desc: r.desc, franchise: r.franchise || null,
+  watchOrder: r.watchOrder || null, poster: r.poster || null, ids: r.url === '/' ? ids : null });
 const sitemapUrls = [
-  ...routes.filter((r) => !r.noindex).map((r) => ({ loc: r.url, priority: r.priority || '0.5' })),
-  { loc: '/all-franchises', priority: '0.9' },
-  { loc: '/print-guide', priority: '0.3' },
-  { loc: '/privacy', priority: '0.2' },
-  { loc: '/terms', priority: '0.2' },
+  ...routes.filter((r) => !r.noindex).map((r) => ({ loc: r.url, priority: r.priority || '0.5', fp: fingerprint(r) })),
+  { loc: '/all-franchises', priority: '0.9', fp: sha(directoryPage()) },
+  { loc: '/print-guide', priority: '0.3', fp: sha(fileText('print-guide.html')) },
+  { loc: '/privacy', priority: '0.2', fp: sha(fileText('privacy.html')) },
+  { loc: '/terms', priority: '0.2', fp: sha(fileText('terms.html')) },
 ];
+const nextDates = {};
+for (const u of sitemapUrls) {
+  const prev = dates[u.loc];
+  u.lastmod = prev && prev.fp === u.fp ? prev.lastmod : today;
+  nextDates[u.loc] = { fp: u.fp, lastmod: u.lastmod };
+}
+emit(path.join('scripts', 'sitemap-dates.json'), JSON.stringify(nextDates, null, 1) + '\n');
 
 emit('sitemap.xml',
   '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
   sitemapUrls.map((u) =>
-    `  <url><loc>${SITE}${u.loc}</loc><lastmod>${today}</lastmod><priority>${u.priority}</priority></url>`
+    `  <url><loc>${SITE}${u.loc}</loc><lastmod>${u.lastmod}</lastmod><priority>${u.priority}</priority></url>`
   ).join('\n') +
   '\n</urlset>\n');
 
