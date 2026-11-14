@@ -375,12 +375,13 @@ ${(wo.faq && wo.faq.length) ? section('Common questions about the ' + woPhrase(f
     .map((b) => `<li><strong>${esc(b.title)}</strong>${b.summary ? ': ' + esc(b.summary) : ''}</li>`)
     .join('');
   const films = (f.films || []).map((x) => `<li>${esc(x)}</li>`).join('');
+  const filmsHeading = f.filmsHeading || 'Films';
   return `<noscript><article style="max-width:760px;margin:40px auto;padding:0 20px;font-family:system-ui,sans-serif;color:#E9EDF3;background:#070809">
 <h1>${esc(mapName(f))}</h1>
 <p>${esc(f.meta)}</p>
 <p>${esc(f.framing || f.blurb || f.tagline)}</p>
 <h2>Branches</h2><ul>${branches}</ul>
-${films ? `<h2>Films</h2><ul>${films}</ul>` : ''}
+${films ? `<h2>${esc(filmsHeading)}</h2><ul>${films}</ul>` : ''}
 <p>${watchOrders[f.id] ? `<a href="${SITE}${woUrl(f)}">${esc(woName(f))}</a>: release order vs chronological order, plus the order to watch it for the first time. &middot; ` : ''}<a href="${SITE}/all-franchises">All movie franchises in order</a></p>
 </article></noscript>`;
 }
